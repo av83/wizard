@@ -8,19 +8,10 @@
 
 (in-package #:fld)
 
-
-;; Допустимые типы полей, составляющих сущности (TODO: при создании экземпляра entity написать
-;; проверку, чтобы тип входил в этот список)
-(defparameter *types*
-  '(:str ;; строка
-    :num ;; число
-    :lst ;; список
-    ))
-
 (defparameter *validators* nil) ;; Валидаторы, определенные для полей
 
 (defclass field ()
-  ((name         :initarg :name        :initform "unknown"           :accessor name)
+  ((name         :initarg :name        :initform "unknown_fld"       :accessor name)
    (value        :initarg :value       :initform ""                  :accessor value)
    (caption      :initarg :caption     :initform "Неизвестное поле"  :accessor caption)
    (typeclass    :initarg :typeclass   :initform :str                :accessor typeclass)
