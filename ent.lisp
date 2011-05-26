@@ -28,39 +28,44 @@
     :list-of-str          ;; список строк (модификатор: возможность ввода строк пользователем)
     :link                 ;; связанная сущность (модификатор: тип сущности)
     :list-of-links        ;; список связанных сущностей
-    :list-of-entityes     ;; список скопированных сущностей
     :list-of-keys         ;; выпадающий список ключей, с выбором одного из них
     :text-box             ;; текстовое поле
     :tender-period        ;; диапазоны дат, относящиеся к тендеру
     ))
 
 
+;; list-of-keys - выпадаюшие списки ключей
+
 ;; Возможные типы ресурсов: машины, материалы etc
-(defparameter *resource-type*  '(:machine "машина" :material "материал"))
+(defparameter *resource-type*
+  '(:machine "машина" :material "материал"))
 
 ;; Возможные статусы тендеров
-(defparameter *tender-status*    '(:active "активный" :unactive "неактивный"
-                                   :finished "завершенный" :cancelled "отмененный"))
+(defparameter *tender-status*
+  '(:active "активный" :unactive "неактивный" :finished "завершенный" :cancelled "отмененный"))
+
 ;; Возможные статусы поставщиков
-(defparameter *supplier-status*  '(:fair "добросовестный" :unfair "недобросовестный"))
+(defparameter *supplier-status*
+  '(:fair "добросовестный" :unfair "недобросовестный" :request "подана заявка"))
 
 
 ;; Константы для контроля разрешений
-(defconstant +nobody+           #*00000000000000)
-(defconstant +system+           #*00000000000010)
-(defconstant +not-logged+       #*00000000000100)
-(defconstant +logged+           #*00000000001000)
-(defconstant +supplier+         #*00000000010000)
-(defconstant +builder+          #*00000000100000)
-(defconstant +expert+           #*00000001000000)
-(defconstant +admin+            #*00000010000000)
-(defconstant +self+             #*00000100000000)
-(defconstant +owner+            #*00001000000000)
-(defconstant +all+              #*00001111111100)
-(defconstant +active+           #*00010000000000)
-(defconstant +unactive+         #*00100000000000)
-(defconstant +finished+         #*01000000000000)
-(defconstant +cancelled+        #*10000000000000)
+(defconstant +nobody+           #*000000000000000)
+(defconstant +system+           #*000000000000010)
+(defconstant +not-logged+       #*000000000000100)
+(defconstant +logged+           #*000000000001000)
+(defconstant +supplier+         #*000000000010000)
+(defconstant +builder+          #*000000000100000)
+(defconstant +expert+           #*000000001000000)
+(defconstant +admin+            #*000000010000000)
+(defconstant +self+             #*000000100000000)
+(defconstant +owner+            #*000001000000000)
+(defconstant +all+              #*000001111111110)
+(defconstant +active+           #*000010000000000) ;; tender status - если +active+ то время подачи заявок не истекло
+(defconstant +unactive+         #*000100000000000)
+(defconstant +finished+         #*001000000000000)
+(defconstant +cancelled+        #*010000000000000)
+(defconstant +unfair+           #*100000000000000) ;; supplier status
 
 ;; Разрешения полей (если они есть) перекрывают разрешения определенные для сущности,
 ;; в противном случае поля получают разрешения общие для сущности.
@@ -78,6 +83,7 @@
      ((login               "Логин"                      (:str))
       (password            "Пароль"                     (:pswd))))
 
+
     ;; Администратор
     (:entity               admin
      :super                user
@@ -87,24 +93,29 @@
      :perm
      ((:create +nobody+)   (:delete +nobody+)           (:view   +self+)                 (:update +self+)))
 
+
     ;; Эксперт
     (:entity               expert
      :super                user
      :container            user
      :fields
      ((last-tenders        "Последние тендеры"          (:list-of-link tender))          ((:update +system+)))
+     ;; По идее эксперт может оставлять заметки к тендеру - возможно это потребует объект-связку "эксперт-тендер"
      :perm
      ((:create +admin+)    (:delete +admin+)            (:view (or +admin+ +self+))      (:update (or +admin+ +self+))))
+
 
     ;; Поставщик
     (:entity               supplier
      :super                user
      :container            user
      :fields
-     ((referal             "Реферал"                    (:link user)                     ((:view   (or +admin+ +expert+))
-                                                                                          (:update +admin+)))
-      (status              "Статус"                     (:list-of-keys supplier-status)  ((:view   +all+)
-                                                                                          (:update +admin+)))
+     ((referal             "Реферал"                    (:link user)
+                           ((:view   (or +admin+ +expert+))
+                            (:update +admin+)))
+      (status              "Статус"                     (:list-of-keys supplier-status)
+                           ((:view   +all+)
+                            (:update +admin+)))
       (name                "Организация-поставщик"      (:str))
       (juridical-address   "Юридический адрес"          (:str))
       (actual-address      "Фактический адрес"          (:str))
@@ -114,25 +125,112 @@
       (heads               "Руководство"                (:list-of-str))
       (requisites          "Реквизиты"                  (:text-box))
       (addresses           "Адреса офисов и магазинов"  (:list-of-str))
-      (contact-person      "Контактное лицо"            (:str)))
+      (contact-person      "Контактное лицо"            (:str))
+      (resources           "Поставляемые ресурсы"       (:list-of-link supplier-resource-price)
+                           ((:add-resource +self+)
+                            ;; создается связующий объект supplier-resource-price содержащий установленную поставщиком цену
+                            (:del-resource +self+)      ;; удаляется связующий объект
+                            (:change-price +self+)
+                            ))
+      (sale                "Скидки и акции"             (:list-of-link sale))    ;; sale - связующий объект
+      (offers              "Принятые тендеры"           (:list-of-link offer)))  ;; offer - связующий объект?
      :perm
-     ((:create +admin+)    (:delete +admin+)            (:view +all+)                    (:update (+admin+ +self+))))
+     ((:create             (or +admin+ +not-logged+))
+      (:delete             +admin+)
+      (:view               +all+)
+      (:update             (or +admin+ +self+))
+      (:registration       (or +not-logged+))           ;; регистрация в качестве поставщика (возможно по приглашению)
+      (:request-fair       (and +self+ +unfair+))       ;; заявка на статус добросовестного поставщика
+      (:offer              (and +active+ +self+))       ;; отвечает заявкой на тендер - (offer:create)
+      ;; Найти пересечение ресурсов, заявленных поставщиком и ресурсов, и объявленных в тендере.
+      ;; Дать возможность поставщику изменить результирующий список, в т.ч. установить цену каждого ресурса
+      ;;
+      ))
+
+
+    ;; Связуюший объект: Заявка на участие в тендере. Связывает поставщика, тендер и ресурсы заявки
+    (:entity               offer
+     :container            offer
+     :fields
+     ((owner               "Поставщик ресурсов"         (:link supplier)                 (:update +admin+))
+      (tender              "Тендер"                     (:link tender)                   (:update +admin+))
+      (resources           "Ресурсы заявки"             (:list-of-link offer-resource)))
+     :perm
+     ((:create (and +active+ +supplier+)) ;; создается связанные объекты offer-resource, содержащие ресурсы заявки
+      (:delete (and +owner+  +active+))   ;; удаляются связанные объекты offer-resource
+      (:view   +all+)
+      (:update (and +active+ +owner+))))
+
+
+    ;; Связующий объект: Ресурсы и цены для заявки на участие в тендере
+    (:entity               offer-resource
+     :container            offer-resource
+     :fields
+     ((owner               "Поставщик"                  (:link supplier)                 ((:update +admin+)))
+      (offer               "Заявка"                     (:link offer)                    ((:update +admin+)))
+      (resource            "Ресурс"                     (:link resource)                 ((:update +admin+)))
+      (price               "Цена поставщика"            (:num)))
+     :perm
+     ;; Внимание! +active+ относится к тендеру!
+     ((:create +owner+)
+      (:delete +owner+)
+      (:view   +all+)
+      (:update (and +active+ +owner+))))
+
+
+    ;; Связующий объект: Скидки и акции - связывает поставщика, объявленный им ресурс и хранит условия скидки
+    (:entity               sale
+     :container            sale
+     :fields
+     ((owner               "Поставщик"                  (:link supplier)                 ((:update +admin+)))
+      (resource            "Ресурс"                     (:link supplier-resource-price))
+      (procent             "Процент скидки"             (:num))
+      (price               "Цена со скидкой"            (:num))
+      (notes               "Дополнительные условия"     (:text-box)))
+     :perm
+     ((:create +supplier+)
+      (:delete +owner+)
+      (:view   +all+)
+      (:update +owner+)))
+
+
+    ;; Связующий объект - ресурсы, заявленные поставщиком
+    (:entity               supplier-resource-price
+     :container            supplier-resource-price
+     :fields
+     ((owner               "Поставщик"                  (:link supplier)                 ((:update +admin+)))
+      (resource            "Ресурс"                     (:link resource)                 ((:update +admin+)))
+      (price               "Цена поставщика"            (:num)))
+     :perm
+     ;; Внимание! +active+ относится к тендеру!
+     ((:create +owner+)
+      (:delete +owner+)
+      (:view   +all+)
+      (:update +owner+)))
+
 
     ;; Застройщик
     (:entity               builder
      :super                user
      :container            user
      :fields
-     ((referal             "Реферал"                    (:link user)                     ((:view (or +admin+ +expert+))
-                                                                                          (:update +admin+)))
+     ((referal             "Реферал"                    (:link user)
+                           ((:view (or +admin+ +expert+))
+                            (:update +admin+)))
       (name                "Организация-застройщик"     (:str))
       (juridical-address   "Юридический адрес"          (:str))
       (requisites          "Реквизиты"                  (:text-box))
       (tenders             "Тендеры"                    (:list-of-link tender)))
      :perm
-     ((:create +admin+)    (:delete +admin+)            (:view +all+)                    (:update (or +admin+ +self+))))
+     ((:create +admin+)
+      (:delete +admin+)
+      (:view   +all+)
+      (:update (or +admin+ +self+))
+      (:create-tender +self+))
+
 
     ;; Иерархический каталог ресурсов
+
 
     ;; Категория - группа ресурсов, не содержащая в себе ресурсы, а ссылающаяся на них
     (:entity               category
@@ -143,7 +241,11 @@
       (child-categoryes    "Дочерние категории"         (:list-of-links category))
       (resources           "Ресурсы"                    (:list-of-links resource)))
      :perm
-     ((:create +system+)   (:delete +system+)           (:view +all+)                    (:update +system+)))
+     ((:create +system+)
+      (:delete +system+)
+      (:view +all+)
+      (:update +system+)))
+
 
     ;; Ресурсы
     (:entity               resource
@@ -155,9 +257,13 @@
       (unit                "Единица измерения"          (:str))
       (suppliers           "Поставляющие организации"   (:list-box supplier)))
      :perm
-     ((:create +system+)   (:delete +system+)           (:view +all+)                    (:update +system+)))
+     ((:create +system+)
+      (:delete +system+)
+      (:view   +all+)
+      (:update +system+)))
 
-    ;; Связующий объект
+
+    ;; Связующий объект - пока непонятно сколько их и что они связывают?
     (:entity               resource-link
      :container            resource-link
      :fields
@@ -168,6 +274,7 @@
      :perm
      ;; Внимание! +active+ относится к тендеру!
      ((:create +system+   (:delete (and +suplier+ +active+))  (:view +all+)              (:update (and +supplier+ +active+)))))
+
 
     ;; Тендеры
     (:entity               tender
@@ -194,7 +301,14 @@
       (offerts             "Откликнувшиеся поставщики"  (:list-of-links supplier)
                            ((:update-field +system+))))))
      :perm
-     ((:create +builder+)  (:delete +admin+)            (:view +all+)                    (:update (or +admin+ +owner+))))
+     ((:create +builder+)
+      (:delete +admin+)
+      (:view +all+)
+      (:update (or +admin+ +owner+))
+      (:activation (or +owner+ +unactive+))
+      (:finish (or +owner+ +active+))
+      (:cancel (or +owner+ +active+))))
+
 
     ;; Связанные с тендерами документы
     (:entity               document
@@ -204,7 +318,10 @@
       (filename            "Имя файла"                  (:str))
       (tender              "Тендер"                     (:link tender)))
      :perm
-     ((create +supplier+) (:delete (and +supplier+ +unactive+))  (:view +all+)           (update  (and +supplier+ +unactive+))))))
+     ((:create +owner+)
+      (:delete (and +owner+ +unactive+))
+      (:view   +all+)
+      (:update +owner+)))))
 
 
 ;; Из этого всего генерируются объекты и прочий стафф:
