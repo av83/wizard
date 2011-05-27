@@ -1,9 +1,3 @@
-(defpackage #:ent
-  (:use #:cl #:fld)
-  (:export :tmp
-           ))
-
-(in-package #:ent)
 
 #|
 
@@ -99,7 +93,7 @@
      :super                user
      :container            user
      :fields
-     ((last-tenders        "Последние тендеры"          (:list-of-link tender))          ((:update +system+)))
+     ((last-tenders        "Последние тендеры"          (:list-of-link tender)          ((:update +system+))))
      ;; По идее эксперт может оставлять заметки к тендеру - возможно это потребует объект-связку "эксперт-тендер"
      :perm
      ((:create +admin+)    (:delete +admin+)            (:view (or +admin+ +self+))      (:update (or +admin+ +self+))))
@@ -321,24 +315,35 @@
      ((:create +owner+)
       (:delete (and +owner+ +unactive+))
       (:view   +all+)
-      (:update +owner+)))))
+      (:update +owner+))))))
 
 
-;; Из этого всего генерируются объекты и прочий стафф:
+(defun gen (entityes)
+  (with-open-file (output "gen.lisp" :direction :output :if-exists :supersede)
+    (let ((containers)
+          (classes (make-hash-table :test #'equal)))
+      ;; Containers
+      (loop :for entity :in entityes :do
+         (let ((container (getf entity :container)))
+           (unless (null container)
+             (push container containers))))
+      (setf containers (reverse (remove-duplicates containers)))
+      (format output "~%~%;; Containers")
+      (loop :for container :in containers :do
+         (format output "~%~<(defparameter *~A* ~43:T (make-hash-table :test #'equal))~:>"
+                 `(,container)))
+      ;; Classes
+      (format output "~%~%;; Classes")
+      (loop :for entity :in entityes :do
+         (let ((super (getf entity :super)))
+           (when (null super)
+             (setf super 'entity))
+           (format output "~%~%~<(defclass ~A (~A)~%(~{~A~^~%~}))~:>"
+                   `(,(getf entity :entity)
+                      ,super
+                      ,(loop :for field :in (getf entity :fields) :collect
+                          (let ((fld (car field)))
+                            (format nil "~<(~A ~23:T :initarg :~A ~53:T :initform nil :accessor ~A)~:>"
+                                    `(,fld ,fld ,fld)))))))))))
 
-
-(defclass resource (entity)
-  ((parent-group  :initarg :parent-group  :initform nil        :accessor parent-group)
-   (res-type      :initarg :res-type      :initform :material  :accessor res-type)
-   (unit          :initarg :unit          :initform "шт."      :accessor unit)
-   (suppliers     :initarg :suppliers     :initform nil        :accessor suppliers)))
-
-(defparameter *block* (make-instance 'resource
-                                     :name "Блок бетонный"
-                                     :parent-group "Бетонные блоки"))
-
-
-(defmethod view ((res entity))
-  (format nil "<table>~A</table>" "test"))
-
-(view *block*)
+(gen *entityes*)
