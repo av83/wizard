@@ -12,6 +12,7 @@
 (defclass entity ()
   ())
 
+
 ;; Допустимые типы полей, составляющих сущности (TODO: при создании экземпляра entity написать
 ;; проверку, чтобы тип входил в этот список)
 (defparameter *types*
@@ -85,7 +86,8 @@
      :fields
      ((last-visits         "Последние визиты"           (:list-of-str)                   ((:update +system+))))
      :perm
-     ((:create +nobody+)   (:delete +nobody+)           (:view   +self+)                 (:update +self+)))
+     (:view   +self+
+      :update +self+))
 
 
     ;; Эксперт
@@ -96,7 +98,10 @@
      ((last-tenders        "Последние тендеры"          (:list-of-link tender)          ((:update +system+))))
      ;; По идее эксперт может оставлять заметки к тендеру - возможно это потребует объект-связку "эксперт-тендер"
      :perm
-     ((:create +admin+)    (:delete +admin+)            (:view (or +admin+ +self+))      (:update (or +admin+ +self+))))
+     (:create +admin+
+      :delete +admin+
+      :view   (or +admin+ +self+)
+      :update (or +admin+ +self+)))
 
 
     ;; Поставщик
@@ -129,13 +134,13 @@
       (sale                "Скидки и акции"             (:list-of-link sale))    ;; sale - связующий объект
       (offers              "Принятые тендеры"           (:list-of-link offer)))  ;; offer - связующий объект?
      :perm
-     ((:create             (or +admin+ +not-logged+))
-      (:delete             +admin+)
-      (:view               +all+)
-      (:update             (or +admin+ +self+))
-      (:registration       (or +not-logged+))           ;; регистрация в качестве поставщика (возможно по приглашению)
-      (:request-fair       (and +self+ +unfair+))       ;; заявка на статус добросовестного поставщика
-      (:offer              (and +active+ +self+))       ;; отвечает заявкой на тендер - (offer:create)
+     (:create             (or +admin+ +not-logged+)
+      :delete             +admin+
+      :view               +all+
+      :update             (or +admin+ +self+)
+      :registration       (or +not-logged+)            ;; регистрация в качестве поставщика (возможно по приглашению)
+      :request-fair       (and +self+ +unfair+)        ;; заявка на статус добросовестного поставщика
+      :offer              (and +active+ +self+)        ;; отвечает заявкой на тендер - (offer:create)
       ;; Найти пересечение ресурсов, заявленных поставщиком и ресурсов, и объявленных в тендере.
       ;; Дать возможность поставщику изменить результирующий список, в т.ч. установить цену каждого ресурса
       ;;
@@ -150,10 +155,10 @@
       (tender              "Тендер"                     (:link tender)                   (:update +admin+))
       (resources           "Ресурсы заявки"             (:list-of-link offer-resource)))
      :perm
-     ((:create (and +active+ +supplier+)) ;; создается связанные объекты offer-resource, содержащие ресурсы заявки
-      (:delete (and +owner+  +active+))   ;; удаляются связанные объекты offer-resource
-      (:view   +all+)
-      (:update (and +active+ +owner+))))
+     (:create (and +active+ +supplier+) ;; создается связанные объекты offer-resource, содержащие ресурсы заявки
+      :delete (and +owner+  +active+)   ;; удаляются связанные объекты offer-resource
+      :view   +all+
+      :update (and +active+ +owner+)))
 
 
     ;; Связующий объект: Ресурсы и цены для заявки на участие в тендере
@@ -166,10 +171,10 @@
       (price               "Цена поставщика"            (:num)))
      :perm
      ;; Внимание! +active+ относится к тендеру!
-     ((:create +owner+)
-      (:delete +owner+)
-      (:view   +all+)
-      (:update (and +active+ +owner+))))
+     (:create +owner+
+      :delete +owner+
+      :view   +all+
+      :update (and +active+ +owner+)))
 
 
     ;; Связующий объект: Скидки и акции - связывает поставщика, объявленный им ресурс и хранит условия скидки
@@ -182,10 +187,10 @@
       (price               "Цена со скидкой"            (:num))
       (notes               "Дополнительные условия"     (:text-box)))
      :perm
-     ((:create +supplier+)
-      (:delete +owner+)
-      (:view   +all+)
-      (:update +owner+)))
+     (:create +supplier+
+      :delete +owner+
+      :view   +all+
+      :update +owner+))
 
 
     ;; Связующий объект - ресурсы, заявленные поставщиком
@@ -197,10 +202,10 @@
       (price               "Цена поставщика"            (:num)))
      :perm
      ;; Внимание! +active+ относится к тендеру!
-     ((:create +owner+)
-      (:delete +owner+)
-      (:view   +all+)
-      (:update +owner+)))
+     (:create +owner+
+      :delete +owner+
+      :view   +all+
+      :update +owner+))
 
 
     ;; Застройщик
@@ -216,11 +221,11 @@
       (requisites          "Реквизиты"                  (:text-box))
       (tenders             "Тендеры"                    (:list-of-link tender)))
      :perm
-     ((:create +admin+)
-      (:delete +admin+)
-      (:view   +all+)
-      (:update (or +admin+ +self+))
-      (:create-tender +self+))
+     (:create +admin+
+      :delete +admin+
+      :view   +all+
+      :update (or +admin+ +self+)
+      :create-tender +self+))
 
 
     ;; Иерархический каталог ресурсов
@@ -235,10 +240,10 @@
       (child-categoryes    "Дочерние категории"         (:list-of-links category))
       (resources           "Ресурсы"                    (:list-of-links resource)))
      :perm
-     ((:create +system+)
-      (:delete +system+)
-      (:view +all+)
-      (:update +system+)))
+     (:create +system+
+      :delete +system+
+      :view +all+
+      :update +system+))
 
 
     ;; Ресурсы
@@ -251,23 +256,10 @@
       (unit                "Единица измерения"          (:str))
       (suppliers           "Поставляющие организации"   (:list-box supplier)))
      :perm
-     ((:create +system+)
-      (:delete +system+)
-      (:view   +all+)
-      (:update +system+)))
-
-
-    ;; Связующий объект - пока непонятно сколько их и что они связывают?
-    (:entity               resource-link
-     :container            resource-link
-     :fields
-     ((tender              "Тендер"                     (:link tender)                   ((:update +admin+)))
-      (resource            "Ресурс"                     (:link resource)                 ((:update +admin+)))
-      (supplier            "Поставщик"                  (:link supplier)                 ((:update +admin+)))
-      (price               "Цена поставщика"            (:num)))
-     :perm
-     ;; Внимание! +active+ относится к тендеру!
-     ((:create +system+   (:delete (and +suplier+ +active+))  (:view +all+)              (:update (and +supplier+ +active+)))))
+     (:create +system+
+      :delete +system+
+      :view   +all+
+      :update +system+))
 
 
     ;; Тендеры
@@ -295,13 +287,13 @@
       (offerts             "Откликнувшиеся поставщики"  (:list-of-links supplier)
                            ((:update-field +system+))))))
      :perm
-     ((:create +builder+)
-      (:delete +admin+)
-      (:view +all+)
-      (:update (or +admin+ +owner+))
-      (:activation (or +owner+ +unactive+))
-      (:finish (or +owner+ +active+))
-      (:cancel (or +owner+ +active+))))
+     (:create +builder+
+      :delete +admin+
+      :view +all+
+      :update (or +admin+ +owner+)
+      :activation (or +owner+ +unactive+)
+      :finish (or +owner+ +active+)
+      :cancel (or +owner+ +active+)))
 
 
     ;; Связанные с тендерами документы
@@ -312,10 +304,10 @@
       (filename            "Имя файла"                  (:str))
       (tender              "Тендер"                     (:link tender)))
      :perm
-     ((:create +owner+)
-      (:delete (and +owner+ +unactive+))
-      (:view   +all+)
-      (:update +owner+))))))
+     (:create +owner+
+      :delete (and +owner+ +unactive+)
+      :view   +all+
+      :update +owner+))))
 
 
 (defun gen (entityes)
@@ -328,7 +320,7 @@
            (unless (null container)
              (push container containers))))
       (setf containers (reverse (remove-duplicates containers)))
-      (format output "~%~%;; Containers")
+      (format output "~%~%;; Containers~%")
       (loop :for container :in containers :do
          (format output "~%~<(defparameter *~A* ~43:T (make-hash-table :test #'equal))~:>"
                  `(,container)))
@@ -338,12 +330,43 @@
          (let ((super (getf entity :super)))
            (when (null super)
              (setf super 'entity))
-           (format output "~%~%~<(defclass ~A (~A)~%(~{~A~^~%~}))~:>"
+           (format output "~%~%~%~<(defclass ~A (~A)~%(~{~A~^~%~}))~:>"
                    `(,(getf entity :entity)
                       ,super
                       ,(loop :for field :in (getf entity :fields) :collect
                           (let ((fld (car field)))
                             (format nil "~<(~A ~23:T :initarg :~A ~53:T :initform nil :accessor ~A)~:>"
-                                    `(,fld ,fld ,fld)))))))))))
+                                    `(,fld ,fld ,fld)))))))
+         (let ((perm (getf entity :perm)))
+           (unless (null (getf perm :create))
+             (format output "~%~%(defmethod initialize-instance :after ((object ~A) &key)"
+                     (getf entity :entity))
+             (format output "~%  ;; Здесь будет проверка прав~%  ;; ...~%  ;; Запись в контейнер")
+             (format output "~%  (setf (gethash (hash-table-count *~A*) *~A*) object)"
+                     (getf entity :container)
+                     (getf entity :container))
+             (format output ")"))
+           (unless (null (getf perm :view))
+             (format output "~%~%(defmethod view ((object ~A) &key)"
+                     (getf entity :entity))
+             (format output "~%  ;; Здесь будет проверка прав~%  ;; ...~%  ;; Печать")
+             (let ((fields (getf entity :fields)))
+               (loop :for fld :in fields :collect
+                  (let ((caption (cadr fld))
+                        (name    (car fld)))
+                    (format output "~%  (format t \"~A~A : ~A\" (~A object))" "~%" caption "~A" name))))
+
+             (format output ")"))
+           )))))
 
 (gen *entityes*)
+
+(make-instance 'supplier :name "xxx")
+
+(view (gethash 0 *user*))
+
+
+
+
+
+
