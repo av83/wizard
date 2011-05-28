@@ -25,7 +25,7 @@
     :list-of-links        ;; список связанных сущностей
     :list-of-keys         ;; выпадающий список ключей, с выбором одного из них
     :text-box             ;; текстовое поле
-    :tender-period        ;; диапазоны дат, относящиеся к тендеру
+    :interval             ;; диапазоны дат, относящиеся к тендеру
     ))
 
 
@@ -269,13 +269,19 @@
      ((name                "Название"                   (:str))
       (status              "Статус"                     (:list-of-keys tender-status))
       (owner               "Заказчик"                   (:link builder)
-                           ((:update-field +admin+))
-      (uid                 "Номер"                      (:num)
-                           ((:update-field +admin+))
-      (dates               "Периоды проведения"         (:tender-period)
+                           ((:update-field +admin+)))
+      (all-dates           "Срок проведения"            (:interval)
+                           ((:update-field (or +admin+  (and +owner+ +unactive+)))))
+      (request-dates       "Срок подачи заявок"         (:interval)
+                           ((:update-field (or +admin+  (and +owner+ +unactive+)))))
+      (analize-dates       "Срок рассмотрения заявок"   (:interval)
+                           ((:update-field (or +admin+  (and +owner+ +unactive+)))))
+      (interview-dates     "Срок проведения интервью"   (:interval)
+                           ((:update-field (or +admin+  (and +owner+ +unactive+)))))
+      (result              "Срок подведения итогов"     (:interval)
                            ((:update-field (or +admin+ (and +owner+ +unactive+)))))
-      (result              "Оценка результатов"         (:str)
-                           ((:update-field (or +admin (and +owner +active+)))))
+      (winner              "Победитель тендера"         (:link supplier)
+                           ((:view-field    +finished+)))
       (price               "Рекомендуемая стоимость"    (:num) ;; вычисляется автоматически на основании заявленных ресурсов
                            ((:update-field +nobody+)))
       (resources           "Ресурсы"                    (:list-of-links resource)
@@ -308,6 +314,34 @@
       :delete (and +owner+ +unactive+)
       :view   +all+
       :update +owner+))))
+
+
+(defparameter *places*
+  '(
+
+    ;; Страница застройщика
+    (:place               builder
+     :caption             "Застройщик"
+     :interface           (name juridical-address requisites tenders)
+     :actions             (:create-tender      "Объявить тендер"
+                           :goto               create-tender))
+
+    ;; Страница объявления тендера
+    (:place               create-tender
+     :caption             "Объявить тендер"
+     :interface          '(name dates resources documents)
+     :controller         (make-instance 'tender
+                          :status     :unactive
+                          :owner      (get-current-user-id)
+                          :price      (calc-tender-price (request resources))
+                          :suppliers  (calk-suppliers (request resources))
+                          :offerts    nil
+                          :winner     nil
+                          :name       (request :name)
+                          :dates      (request :dates)
+                          :resources  (request :resources)
+                          :documents  (request :documents)))
+
 
 
 (defun gen (entityes)
