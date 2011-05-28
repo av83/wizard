@@ -145,6 +145,8 @@
   ;; Запись в контейнер
   (setf (gethash (hash-table-count *SALE*) *SALE*) object))
 
+
+
 (defmethod view ((object SALE) &key)
   ;; Здесь будет проверка прав
   ;; ...

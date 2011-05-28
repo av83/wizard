@@ -65,6 +65,7 @@
 ;; Разрешения полей (если они есть) перекрывают разрешения определенные для сущности,
 ;; в противном случае поля получают разрешения общие для сущности.
 
+
 ;; Сущности, используемые в программе
 (defparameter *entityes*
   '(
@@ -219,7 +220,9 @@
       (name                "Организация-застройщик"     (:str))
       (juridical-address   "Юридический адрес"          (:str))
       (requisites          "Реквизиты"                  (:text-box))
-      (tenders             "Тендеры"                    (:list-of-link tender)))
+      (tenders             "Тендеры"                    (:list-of-link tender))
+      (rating              "Рейтинг"                    (:num)
+                           ((:update +system+))))
      :perm
      (:create +admin+
       :delete +admin+
@@ -270,13 +273,13 @@
       (status              "Статус"                     (:list-of-keys tender-status))
       (owner               "Заказчик"                   (:link builder)
                            ((:update-field +admin+)))
-      (all-dates           "Срок проведения"            (:interval)
+      (all                 "Срок проведения"            (:interval)
                            ((:update-field (or +admin+  (and +owner+ +unactive+)))))
-      (request-dates       "Срок подачи заявок"         (:interval)
+      (claim               "Срок подачи заявок"         (:interval)
                            ((:update-field (or +admin+  (and +owner+ +unactive+)))))
-      (analize-dates       "Срок рассмотрения заявок"   (:interval)
+      (analize             "Срок рассмотрения заявок"   (:interval)
                            ((:update-field (or +admin+  (and +owner+ +unactive+)))))
-      (interview-dates     "Срок проведения интервью"   (:interval)
+      (interview           "Срок проведения интервью"   (:interval)
                            ((:update-field (or +admin+  (and +owner+ +unactive+)))))
       (result              "Срок подведения итогов"     (:interval)
                            ((:update-field (or +admin+ (and +owner+ +unactive+)))))
@@ -291,7 +294,7 @@
       (suppliers           "Поставщики"                 (:list-of-link  supplier) ;; строится по ресурсам автоматически
                            ((:update-field +system+)))
       (offerts             "Откликнувшиеся поставщики"  (:list-of-links supplier)
-                           ((:update-field +system+))))))
+                           ((:update-field +system+))))
      :perm
      (:create +builder+
       :delete +admin+
@@ -319,28 +322,93 @@
 (defparameter *places*
   '(
 
-    ;; Страница застройщика
-    (:place               builder
-     :caption             "Застройщик"
-     :interface           (name juridical-address requisites tenders)
-     :actions             (:create-tender      "Объявить тендер"
-                           :goto               create-tender))
+    ;; Мы считаем, что если у пользователя есть права на редактирование
+    ;; всего объекта или части его полей - то эти поля показываются как
+    ;; доступные для редактирования.
+
+    ;; Страница застройщиков - коллекция по юзерам с фильтром по типу юзера
+    (:place               builders
+     :caption             "Организации-застройщики"
+     :interface
+     '((:item-type        :collection
+        :element-type     user
+        :filter           (:type-of builder)
+        :sort             "Добросовестность, кол-во открытых тендеров, поле rating элемента"
+        :fields           '((:simple-type  :str
+                             :value        "Поле name элемента"
+                             :link         "Страница элемента")
+                            (:simple-type  :num
+                             :value        "Count от кол-ва тендеров объекта"
+                             :link         "Страница тендеров объекта")))))
+
+
+    ;; Страница застройщика - объект юзер с возможностью объявить тендер
+    (:place               builder/:id
+     :caption             "Застройщик такой-то (name object)"
+     :interface
+     '((:item-type        :object
+        :fields           (name juridical-address requisites tenders))
+       (:item-type        :button
+        :caption          "Объявить тендер"
+        :perm             +builder+
+        :goto             create-tender)))
+
+
+    ;; Страница тендеров застройщика - коллекция по тендерам с фильтром по owner-у
+    (:place               builder-tender/:id
+     :caption             "Тендеры застройщика такого-то (name (owner object))"
+     :interface
+     '((:item-type        :collection
+        :element-type     tender
+        :filter           (:owner :id)
+        :sort             "Дата завершения приема заявок?"
+        :fields           '((:simple-type  :str
+                             :value        "Название тендера"
+                             :link         "Страница тендера")
+                            (:simple-type  :interval
+                             :value        "Дата завершения"
+                             :link         "Страница тендера")
+                            ;; Здесь можно придумать раскрывающийся список ресурсов
+                            (:simple-type  :num
+                             :value        "Кол-во ресурсов"
+                             :link         "Страница тендера")
+                            (:simple-type  :button
+                             :caption      "Откликнуться на тендер"
+                             :perm         "builder"
+                             :link          "Страница оформления заявки"))
+
 
     ;; Страница объявления тендера
     (:place               create-tender
-     :caption             "Объявить тендер"
-     :interface          '(name dates resources documents)
-     :controller         (make-instance 'tender
-                          :status     :unactive
-                          :owner      (get-current-user-id)
-                          :price      (calc-tender-price (request resources))
-                          :suppliers  (calk-suppliers (request resources))
-                          :offerts    nil
-                          :winner     nil
-                          :name       (request :name)
-                          :dates      (request :dates)
-                          :resources  (request :resources)
-                          :documents  (request :documents)))
+     :caption             "Создание нового тендера"
+     :perm                +builder+
+     :interface           (name all claim analize interview result resources documents price suppliers)
+     :hooks
+     (:change resources   (set-field price (calc-tender-price (request resources)))
+      :change resources   (set-field suppliers (calc-suppliers (request resources))))
+     :button              "Объявить тендер"
+     :controller          (:request (all claim analize interview result name resources documents)
+                           :other   '(:owner      (get-current-user-id)
+                                      :price      (calc-tender-price (request resources))
+                                      :suppliers  (calc-suppliers (request resources))
+                                      :offerts    nil
+                                      :winner     nil)
+                           :code    (:make-instance tender)
+                           :status     :unactive))
+
+    ;; Страница тендера
+    (:place               tender
+     :caption             "Тендер"
+     :interface           (name status owner all claim analize interview result winner price resources document suppliers offerts)
+     :button              (:offer              "Оставить заявку"
+                           :perm               +supplier+
+                           :goto               offer-tender))
+
+    ;; Страница "Оставить заявку на тендер"
+    (:place               offer-tender
+     :caption             "Оставить заявку"
+     :interface
+
 
 
 
