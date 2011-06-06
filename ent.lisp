@@ -54,6 +54,7 @@
     :active      "Объект является активным тендером, т.е. время подачи заявок не истекло"
     :unacitve    "Объект является неакивным тендером, т.е. время подачи заявок не наступило"
     :fresh       "Объект является свежим тендером, т.е. недавно стал активным"
+    :stale       "Объект является тендером, который давно стал активным"
     :finished    "Объект является завершенным тендером"
     :cancelled   "Объект является отмененным тендером"
     ;; Mixed
@@ -79,7 +80,6 @@
 
     ;; Эксперт - имеет доступ не ко всем тендерам (в будущем!)
     (:entity               expert
-     :super                user
      :container            user
      :fields
      ((login               "Логин"                      (:str))
@@ -91,10 +91,8 @@
       :view                (or :admin :self)
       :update              (or :admin :self)))
 
-
     ;; Поставщик
     (:entity               supplier
-     :super                user
      :container            user
      :fields
      ((login               "Логин"                      (:str))
@@ -116,13 +114,13 @@
       (email               "Email"                      (:str))             ;; отображение как ссылка mailto://....
       (site                "Сайт организации"           (:str))             ;; отображение как ссылка http://....
       (heads               "Руководство"                (:list-of-str)
-                           '(:view   :logged))                              ;; Гости этого не видят руководство фирм-поставщиков
+                           '(:view   :logged))                              ;; Гости не видят руководство фирм-поставщиков
       (inn                 "Инн"                        (:str)
-                           '(:view   (or :logged :fair)))                   ;; Незалогиенные видят только добросовестных
+                           '(:view   (or :logged :fair)))                   ;; Незалогиненные видят только добросовестных
       (kpp                 "КПП"                        (:str)
-                           '(:view   (or :logged :fair)))                   ;; Незалогиенные видят только добросовестных
+                           '(:view   (or :logged :fair)))                   ;; Незалогиненные видят только добросовестных
       (ogrn                "ОГРН"                       (:str)
-                           '(:view   (or :logged :fair)))                   ;; Незалогиенные видят только добросовестных
+                           '(:view   (or :logged :fair)))                   ;; Незалогиненные видят только добросовестных
       (bank-name           "Название банка"             (:str)
                            '(:view   :logged))                              ;; Гость не видит банковские реквизиты
       (bik                 "Банковский идентификационный код" (:str)
@@ -130,7 +128,7 @@
       (corresp-account     "Корреспондентский счет)"    (:str)
                            '(:view   :logged))                              ;; Гость не видит банковские реквизиты
       (client-account      "Рассчетный счет"            (:str)
-                           '(:view   :logged))                              ;; Гость не видит банковские реквизиты (!)
+                           '(:view   :logged))                              ;; Гость не видит банковские реквизиты
       (addresses           "Адреса офисов и магазинов"  (:list-of-str)
                            '(:view   (or :logged :fair)))                   ;; Гость не видит у недобросовестных
       (contact-person      "Контактное лицо"            (:str)
@@ -157,7 +155,7 @@
       (tender              "Тендер"                     (:link tender)                   (:update :nobody))
       (resources           "Ресурсы заявки"             (:list-of-link offer-resource)))
      :perm
-     (:create (and :active :supplier)  ;; создается связанный объект offer-resource, содержащие ресурсы заявки
+     (:create (and :active :supplier) ;; создается связанный объект offer-resource, содержащие ресурсы заявки
       :delete (and :owner  :active)   ;; удаляются связанный объект offer-resource
       :view   :all
       :update (and :active :owner)    ;; Заявка модет быть отредактирвана пока срок приема заявок не истек.
@@ -168,9 +166,9 @@
     (:entity               offer-resource
      :container            offer-resource
      :fields
-     ((owner               "Поставщик"                  (:link supplier)                 ((:update :admin)))
-      (offer               "Заявка"                     (:link offer)                    ((:update :admin)))
-      (resource            "Ресурс"                     (:link resource)                 ((:update :admin)))
+     ((owner               "Поставщик"                  (:link supplier)                 ((:update :nobody)))
+      (offer               "Заявка"                     (:link offer)                    ((:update :nobody)))
+      (resource            "Ресурс"                     (:link resource)                 ((:update :nobody)))
       (price               "Цена поставщика"            (:num)))
      :perm
      (:create :owner
@@ -199,8 +197,8 @@
     (:entity               supplier-resource-price
      :container            supplier-resource-price
      :fields
-     ((owner               "Поставщик"                  (:link supplier)                 ((:update :admin)))
-      (resource            "Ресурс"                     (:link resource)                 ((:update :admin)))
+     ((owner               "Поставщик"                  (:link supplier)                 ((:update :nobody)))
+      (resource            "Ресурс"                     (:link resource))
       (price               "Цена поставщика"            (:num)))
      :perm
      (:create :owner
@@ -211,7 +209,6 @@
 
     ;; Застройщик - набор полей не утвержден (берем с чужого сайта)
     (:entity               builder
-     :super                user
      :container            user
      :fields
      ((login               "Логин"                      (:str))
@@ -219,11 +216,11 @@
       (name                "Организация-застройщик"     (:str))
       (juridical-address   "Юридический адрес"          (:str))
       (inn                 "Инн"                        (:str)
-                           '(:view   (or :logged :fair)))                   ;; Незалогиенные видят только добросовестных
+                           '(:view   (or :logged :fair)))                   ;; Незалогиненные видят только добросовестных
       (kpp                 "КПП"                        (:str)
-                           '(:view   (or :logged :fair)))                   ;; Незалогиенные видят только добросовестных
+                           '(:view   (or :logged :fair)))                   ;; Незалогиненные видят только добросовестных
       (ogrn                "ОГРН"                       (:str)
-                           '(:view   (or :logged :fair)))                   ;; Незалогиенные видят только добросовестных
+                           '(:view   (or :logged :fair)))                   ;; Незалогиненные видят только добросовестных
       (bank-name           "Название банка"             (:str)
                            '(:view   :logged))                              ;; Гость не видит банковские реквизиты
       (bik                 "Банковский идентификационный код" (:str)
@@ -231,7 +228,7 @@
       (corresp-account     "Корреспондентский счет)"    (:str)
                            '(:view   :logged))                              ;; Гость не видит банковские реквизиты
       (client-account      "Рассчетный счет"            (:str)
-                           '(:view   :logged))                              ;; Гость не видит банковские реквизиты (!)
+                           '(:view   :logged))                              ;; Гость не видит банковские реквизиты
       (tenders             "Тендеры"                    (:list-of-link tender))
       (rating              "Рейтинг"                    (:num)
                            ((:update :system))))
@@ -282,48 +279,42 @@
     (:entity               tender
      :container            tender
      :fields
-     ((name                "Название"                   (:str))
-      (status              "Статус"                     (:list-of-keys tender-status))
+     ((name                "Название"                   (:str)
+                           '(:view   :all))
+      (status              "Статус"                     (:list-of-keys tender-status)
+                           '(:view   :all))
       (owner               "Заказчик"                   (:link builder)
-                           ((:update-field :admin)))
+                           ((:update :admin)))
       ;; Дата, когда тендер стал активным (первые сутки новые тендеры видят только добростовестные поставщики)
       (active-date         "Дата активации"             (:date)
-                           ((:update-field :system)))
+                           ((:update :system)))
       (all                 "Срок проведения"            (:interval)
-                           ((:update-field (or :admin  (and :owner :unactive)))))
+                           ((:view   :all)
+                            (:update (or :admin  (and :owner :unactive)))))
       (claim               "Срок подачи заявок"         (:interval)
-                           ((:view (and :fair :builder :admin :expert))
-                            (:update-field (or :admin  (and :owner :unactive)))))
+                           ((:update (or :admin  (and :owner :unactive)))))
       (analize             "Срок рассмотрения заявок"   (:interval)
-                           ((:view (and :fair :builder :admin :expert))
-                            (:update-field (or :admin  (and :owner :unactive)))))
+                           ((:update (or :admin  (and :owner :unactive)))))
       (interview           "Срок проведения интервью"   (:interval)
-                           ((:view (and :fair :builder :admin :expert))
-                            (:update-field (or :admin  (and :owner :unactive)))))
+                           ((:update (or :admin  (and :owner :unactive)))))
       (result              "Срок подведения итогов"     (:interval)
-                           ((:view (and :fair :builder :admin :expert))
-                            (:update-field (or :admin (and :owner :unactive)))))
+                           ((:update (or :admin (and :owner :unactive)))))
       (winner              "Победитель тендера"         (:link supplier)
-                           ((:view (and :fair :builder :admin :expert))
-                            (:view-field    :finished)))
+                           ((:view   :finished)))
       (price               "Рекомендуемая стоимость"    (:num) ;; вычисляется автоматически на основании заявленных ресурсов
-                           ((:update-field :nobody)))
+                           ((:update :system)))
       (resources           "Ресурсы"                    (:list-of-links resource)
-                           ((:view (and :fair :builder :admin :expert))
-                            (:update-field (and :owner :unactive))))
+                           ((:update (and :owner :unactive))))
       (documents           "Документы"                  (:list-of-links document) ;; закачка и удаление файлов
-                           ((:view (and :fair :builder :admin :expert))
-                            (:update-field (and :owner :unactive))))
+                           ((:update (and :owner :unactive))))
       (suppliers           "Поставщики"                 (:list-of-link  supplier) ;; строится по ресурсам автоматически
-                           ((:view (and :fair :builder :admin :expert))
-                            (:update-field :system)))
+                           ((:update :system)))
       (offerts             "Откликнувшиеся поставщики"  (:list-of-links supplier)
-                           ((:view (and :fair :builder :admin :expert))
-                            (:update-field :system))))
+                           ((:update-field :system))))
      :perm
      (:create :builder
       :delete :admin
-      :view   :all
+      :view   (and :logged (or :stale (and :fresh :fair)))
       :update (or :admin :owner)))
 
 
@@ -420,7 +411,7 @@
                               :actions
                               '((:caption           "Выберите ресурсы"
                                  :perm              (and :active :fair)
-                                 :entity            :intersect
+                                 :entity            resource
                                  :fields
                                  '((:btn "Участвовать в тендере" :act (create-offer :user :form tender))))))))
        (:caption           "Отменить тендер"
@@ -435,37 +426,33 @@
 
 
     ;; Личный кабинет застройщика с возможностью объявить тендер
-    (:place                builder/:id
+    (:place                builder
      :actions
      '((:caption           "Застройщик такой-то (name object)"
         :entity            builder
-        :fields            '(name juridical-address requisites tenders
-                             (:btn "Показать тендеры"
-                              :actions
-                              '((:caption            "Тендеры застройщика"
-                                 :perm               "<?>Кто может видеть тендеры застройщика?"
-                                 :entity             tender
-                                 :filter             (:owner :id)
-                                 :values             :collection
-                                 :sort               "Дата завершения приема заявок<?>"
-                                 :fields             '(name status active-date all claim analize interview))))))
-       (:caption           "Объявить тендер"
+        :fields            '(name juridical-address inn kpp ogrn bank-name bik corresp-account client-account tenders rating))
+       (:caption           "Объявить новый тендер"
         :perm              :self
         :entity            tender
         :fields            '(name all claim analize interview result resources documents price suppliers
-                             (:btn "Объявить тендер" :act (create-tender :user :form)))
-        :hooks
-        (:change resources   (set-field price (calc-tender-price (request resources)))
-         :change resources   (set-field suppliers (calc-suppliers (request resources))))
-        :controller          (:request (all claim analize interview result name resources documents)
-                              :other   '(:owner      (get-current-user-id)
-                                         :price      (calc-tender-price (request resources))
-                                         :suppliers  (calc-suppliers (request resources))
-                                         :offerts    nil
-                                         :winner     nil)
-                              :code    (:make-instance tender)
-                              :status     :unactive))
-       ))
+                             (:btn "Объявить тендер"
+                              :actions
+                              '((:caption           "Создание нового тендера"
+                                 :perm              :self
+                                 :entity            tender
+                                 :values            nil
+                                 :fields
+                                 '(name owner active-date all claim analize interview resources documents
+                                   (:btn "Создать тендер"  :act (create-tender :user :form)))
+                                 :hooks
+                                 '((:change resources   (set-field price (calc-tender-price (request resources))))
+                                   (:change resources   (set-field suppliers (calc-suppliers (request resources)))))
+                                 (:other   '(:owner      (get-current-user-id)
+                                             :price      (calc-tender-price (request resources))
+                                             :suppliers  (calc-suppliers (request resources))
+                                             :offerts    nil
+                                             :winner     nil))
+                                 (:status    :unactive))))))))
 
 
     ;; Страница застройщиков - коллекция по юзерам с фильтром по типу юзера
@@ -473,12 +460,23 @@
      :actions
      '((:caption           "Организации-застройщики"
         :perm              "<?>"
-        :entity            user
+        :entity            builder
         :values            :collection
-        :filter            (:type-of builder)
         :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
         ;; <?> Как будем показывать тендеры застройщика?
         :fields           '((name juridical-address requisites tenders rating)))))
+
+    ;; Страница поставщиков - коллекция по юзерам с фильтром по типу юзера
+    (:place                builders
+     :actions
+     '((:caption           "Организации-поставщики"
+        :perm              "<?>"
+        :entity            supplier
+        :values            :collection
+        :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
+        ;; <?> Как будем показывать тендеры застройщика?
+        :fields           '((name juridical-address requisites tenders rating)))))
+
 
 
 
