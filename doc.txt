@@ -7,3 +7,14 @@ sbcl --lose-on-corruption --disable-ldb --dynamic-space-size 1024
 (swank:create-server :coding-system "utf-8-unix" :dont-close t)
 
 (swank:create-server :coding-system "utf-8-unix" :dont-close t :port 8008)
+
+
+(defun clear ()
+  (loop :for var :being :the :symbols :in :wizard.impl.routes :do (unintern var))
+  (restas:reconnect-all-routes))
+
+(clear)
+
+
+(restas:start '#:wizard :port 8081)
+(restas:debug-mode-on)

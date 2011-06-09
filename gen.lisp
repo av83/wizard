@@ -5,7 +5,6 @@
 (load "ent.lisp") ;; *entityes* *places*
 
 
-;; (restas:start '#:wizard :port 8081)
 
 (with-open-file (out "src/defmodule.lisp" :direction :output :if-exists :supersede)
   ;; Required
@@ -44,9 +43,7 @@
                         (let ((fld (car field))
                               (tpi (car (nth 2 field))))
                           (format nil "~<(~A ~23:T :initarg :~A ~53:T :initform nil :accessor ~A)~:>"
-                                  `(,fld ,fld ,(if (equal tpi :link)
-                                                   (format nil "LNK-~A" fld)
-                                                   fld))))))))
+                                  `(,fld ,fld ,(format nil "A-~A" fld))))))))
        (let ((perm (getf entity :perm)))
          (unless (null (getf perm :create))
            (format out "~%~%(defmethod initialize-instance :after ((object ~A) &key)"
@@ -68,9 +65,15 @@
              (format out ")")))))
   ;; Places
   (loop :for place :in *places* :do
-       (format out "~%~%(restas:define-route ~A-page (\"~A\")~A)"
-               (string-downcase (getf place :place))
-               (getf place :url)
-               (format nil "~%  (format nil \"test\")")
+     (format out "~%~%(restas:define-route ~A-page (\"~A\")"
+             (string-downcase (getf place :place))
+             (getf place :url))
+     (let ((actions (eval (getf place :actions))))
+       (format out "~%  (let ((rs))~{~A~}~%    ~A)"
+               (mapcar #'(lambda (action)
+                           (format nil "~%    (push \"<table border=\\\"1\\\"><tr><td>~A</td></tr></table>\" rs)" (getf action :caption)))
+                       actions)
+               "(format nil \"~{~A~}\" (reverse rs))"))
+     (format out ")")))
 
-     )))
+

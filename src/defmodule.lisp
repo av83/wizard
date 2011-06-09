@@ -3,17 +3,17 @@
 (require 'CLOSURE-TEMPLATE)
 
 (restas:define-module #:WIZARD
-    (:use #:CL #:ITER ))
+  (:use #:CL #:ITER ))
 
 (in-package #:WIZARD)
 
 (let ((path '(:RELATIVE "wizard")))
-  (setf asdf:*central-registry*
-        (remove-duplicates (append asdf:*central-registry*
-                                   (list (merge-pathnames
-                                          (make-pathname :directory path)
-                                          (user-homedir-pathname))))
-                           :test #'equal)))
+    (setf asdf:*central-registry*
+          (remove-duplicates (append asdf:*central-registry*
+                                     (list (merge-pathnames
+                                            (make-pathname :directory path)
+                                            (user-homedir-pathname))))
+                             :test #'equal)))
 
 ;; Containers
 
@@ -31,8 +31,8 @@
 
 
 (defclass ADMIN (entity)
-  ((LOGIN                  :initarg :LOGIN               :initform nil :accessor LOGIN)
-   (PASSWORD               :initarg :PASSWORD            :initform nil :accessor PASSWORD)))
+((LOGIN                  :initarg :LOGIN               :initform nil :accessor A-LOGIN)
+(PASSWORD               :initarg :PASSWORD            :initform nil :accessor A-PASSWORD)))
 
 (defmethod view ((object ADMIN) &key)
   ;; Здесь будет проверка прав
@@ -43,9 +43,9 @@
 
 
 (defclass EXPERT (entity)
-  ((LOGIN                  :initarg :LOGIN               :initform nil :accessor LOGIN)
-   (PASSWORD               :initarg :PASSWORD            :initform nil :accessor PASSWORD)
-   (NAME                   :initarg :NAME                :initform nil :accessor NAME)))
+((LOGIN                  :initarg :LOGIN               :initform nil :accessor A-LOGIN)
+(PASSWORD               :initarg :PASSWORD            :initform nil :accessor A-PASSWORD)
+(NAME                   :initarg :NAME                :initform nil :accessor A-NAME)))
 
 (defmethod initialize-instance :after ((object EXPERT) &key)
   ;; Здесь будет проверка прав
@@ -63,29 +63,29 @@
 
 
 (defclass SUPPLIER (entity)
-  ((LOGIN                  :initarg :LOGIN               :initform nil :accessor LOGIN)
-   (PASSWORD               :initarg :PASSWORD            :initform nil :accessor PASSWORD)
-   (NAME                   :initarg :NAME                :initform nil :accessor NAME)
-   (REFERAL                :initarg :REFERAL             :initform nil :accessor LNK-REFERAL)
-   (STATUS                 :initarg :STATUS              :initform nil :accessor STATUS)
-   (JURIDICAL-ADDRESS      :initarg :JURIDICAL-ADDRESS   :initform nil :accessor JURIDICAL-ADDRESS)
-   (ACTUAL-ADDRESS         :initarg :ACTUAL-ADDRESS      :initform nil :accessor ACTUAL-ADDRESS)
-   (CONTACTS               :initarg :CONTACTS            :initform nil :accessor CONTACTS)
-   (EMAIL                  :initarg :EMAIL               :initform nil :accessor EMAIL)
-   (SITE                   :initarg :SITE                :initform nil :accessor SITE)
-   (HEADS                  :initarg :HEADS               :initform nil :accessor HEADS)
-   (INN                    :initarg :INN                 :initform nil :accessor INN)
-   (KPP                    :initarg :KPP                 :initform nil :accessor KPP)
-   (OGRN                   :initarg :OGRN                :initform nil :accessor OGRN)
-   (BANK-NAME              :initarg :BANK-NAME           :initform nil :accessor BANK-NAME)
-   (BIK                    :initarg :BIK                 :initform nil :accessor BIK)
-   (CORRESP-ACCOUNT        :initarg :CORRESP-ACCOUNT     :initform nil :accessor CORRESP-ACCOUNT)
-   (CLIENT-ACCOUNT         :initarg :CLIENT-ACCOUNT      :initform nil :accessor CLIENT-ACCOUNT)
-   (ADDRESSES              :initarg :ADDRESSES           :initform nil :accessor ADDRESSES)
-   (CONTACT-PERSON         :initarg :CONTACT-PERSON      :initform nil :accessor CONTACT-PERSON)
-   (RESOURCES              :initarg :RESOURCES           :initform nil :accessor RESOURCES)
-   (SALE                   :initarg :SALE                :initform nil :accessor SALE)
-   (OFFERS                 :initarg :OFFERS              :initform nil :accessor OFFERS)))
+((LOGIN                  :initarg :LOGIN               :initform nil :accessor A-LOGIN)
+(PASSWORD               :initarg :PASSWORD            :initform nil :accessor A-PASSWORD)
+(NAME                   :initarg :NAME                :initform nil :accessor A-NAME)
+(REFERAL                :initarg :REFERAL             :initform nil :accessor A-REFERAL)
+(STATUS                 :initarg :STATUS              :initform nil :accessor A-STATUS)
+(JURIDICAL-ADDRESS      :initarg :JURIDICAL-ADDRESS   :initform nil :accessor A-JURIDICAL-ADDRESS)
+(ACTUAL-ADDRESS         :initarg :ACTUAL-ADDRESS      :initform nil :accessor A-ACTUAL-ADDRESS)
+(CONTACTS               :initarg :CONTACTS            :initform nil :accessor A-CONTACTS)
+(EMAIL                  :initarg :EMAIL               :initform nil :accessor A-EMAIL)
+(SITE                   :initarg :SITE                :initform nil :accessor A-SITE)
+(HEADS                  :initarg :HEADS               :initform nil :accessor A-HEADS)
+(INN                    :initarg :INN                 :initform nil :accessor A-INN)
+(KPP                    :initarg :KPP                 :initform nil :accessor A-KPP)
+(OGRN                   :initarg :OGRN                :initform nil :accessor A-OGRN)
+(BANK-NAME              :initarg :BANK-NAME           :initform nil :accessor A-BANK-NAME)
+(BIK                    :initarg :BIK                 :initform nil :accessor A-BIK)
+(CORRESP-ACCOUNT        :initarg :CORRESP-ACCOUNT     :initform nil :accessor A-CORRESP-ACCOUNT)
+(CLIENT-ACCOUNT         :initarg :CLIENT-ACCOUNT      :initform nil :accessor A-CLIENT-ACCOUNT)
+(ADDRESSES              :initarg :ADDRESSES           :initform nil :accessor A-ADDRESSES)
+(CONTACT-PERSON         :initarg :CONTACT-PERSON      :initform nil :accessor A-CONTACT-PERSON)
+(RESOURCES              :initarg :RESOURCES           :initform nil :accessor A-RESOURCES)
+(SALE                   :initarg :SALE                :initform nil :accessor A-SALE)
+(OFFERS                 :initarg :OFFERS              :initform nil :accessor A-OFFERS)))
 
 (defmethod initialize-instance :after ((object SUPPLIER) &key)
   ;; Здесь будет проверка прав
@@ -123,9 +123,9 @@
 
 
 (defclass OFFER (entity)
-  ((OWNER                  :initarg :OWNER               :initform nil :accessor LNK-OWNER)
-   (TENDER                 :initarg :TENDER              :initform nil :accessor LNK-TENDER)
-   (RESOURCES              :initarg :RESOURCES           :initform nil :accessor RESOURCES)))
+((OWNER                  :initarg :OWNER               :initform nil :accessor A-OWNER)
+(TENDER                 :initarg :TENDER              :initform nil :accessor A-TENDER)
+(RESOURCES              :initarg :RESOURCES           :initform nil :accessor A-RESOURCES)))
 
 (defmethod initialize-instance :after ((object OFFER) &key)
   ;; Здесь будет проверка прав
@@ -143,10 +143,10 @@
 
 
 (defclass OFFER-RESOURCE (entity)
-  ((OWNER                  :initarg :OWNER               :initform nil :accessor LNK-OWNER)
-   (OFFER                  :initarg :OFFER               :initform nil :accessor LNK-OFFER)
-   (RESOURCE               :initarg :RESOURCE            :initform nil :accessor LNK-RESOURCE)
-   (PRICE                  :initarg :PRICE               :initform nil :accessor PRICE)))
+((OWNER                  :initarg :OWNER               :initform nil :accessor A-OWNER)
+(OFFER                  :initarg :OFFER               :initform nil :accessor A-OFFER)
+(RESOURCE               :initarg :RESOURCE            :initform nil :accessor A-RESOURCE)
+(PRICE                  :initarg :PRICE               :initform nil :accessor A-PRICE)))
 
 (defmethod initialize-instance :after ((object OFFER-RESOURCE) &key)
   ;; Здесь будет проверка прав
@@ -165,11 +165,11 @@
 
 
 (defclass SALE (entity)
-  ((OWNER                  :initarg :OWNER               :initform nil :accessor LNK-OWNER)
-   (RESOURCE               :initarg :RESOURCE            :initform nil :accessor LNK-RESOURCE)
-   (PROCENT                :initarg :PROCENT             :initform nil :accessor PROCENT)
-   (PRICE                  :initarg :PRICE               :initform nil :accessor PRICE)
-   (NOTES                  :initarg :NOTES               :initform nil :accessor NOTES)))
+((OWNER                  :initarg :OWNER               :initform nil :accessor A-OWNER)
+(RESOURCE               :initarg :RESOURCE            :initform nil :accessor A-RESOURCE)
+(PROCENT                :initarg :PROCENT             :initform nil :accessor A-PROCENT)
+(PRICE                  :initarg :PRICE               :initform nil :accessor A-PRICE)
+(NOTES                  :initarg :NOTES               :initform nil :accessor A-NOTES)))
 
 (defmethod initialize-instance :after ((object SALE) &key)
   ;; Здесь будет проверка прав
@@ -189,9 +189,9 @@
 
 
 (defclass SUPPLIER-RESOURCE-PRICE (entity)
-  ((OWNER                  :initarg :OWNER               :initform nil :accessor LNK-OWNER)
-   (RESOURCE               :initarg :RESOURCE            :initform nil :accessor LNK-RESOURCE)
-   (PRICE                  :initarg :PRICE               :initform nil :accessor PRICE)))
+((OWNER                  :initarg :OWNER               :initform nil :accessor A-OWNER)
+(RESOURCE               :initarg :RESOURCE            :initform nil :accessor A-RESOURCE)
+(PRICE                  :initarg :PRICE               :initform nil :accessor A-PRICE)))
 
 (defmethod initialize-instance :after ((object SUPPLIER-RESOURCE-PRICE) &key)
   ;; Здесь будет проверка прав
@@ -209,19 +209,19 @@
 
 
 (defclass BUILDER (entity)
-  ((LOGIN                  :initarg :LOGIN               :initform nil :accessor LOGIN)
-   (PASSWORD               :initarg :PASSWORD            :initform nil :accessor PASSWORD)
-   (NAME                   :initarg :NAME                :initform nil :accessor NAME)
-   (JURIDICAL-ADDRESS      :initarg :JURIDICAL-ADDRESS   :initform nil :accessor JURIDICAL-ADDRESS)
-   (INN                    :initarg :INN                 :initform nil :accessor INN)
-   (KPP                    :initarg :KPP                 :initform nil :accessor KPP)
-   (OGRN                   :initarg :OGRN                :initform nil :accessor OGRN)
-   (BANK-NAME              :initarg :BANK-NAME           :initform nil :accessor BANK-NAME)
-   (BIK                    :initarg :BIK                 :initform nil :accessor BIK)
-   (CORRESP-ACCOUNT        :initarg :CORRESP-ACCOUNT     :initform nil :accessor CORRESP-ACCOUNT)
-   (CLIENT-ACCOUNT         :initarg :CLIENT-ACCOUNT      :initform nil :accessor CLIENT-ACCOUNT)
-   (TENDERS                :initarg :TENDERS             :initform nil :accessor TENDERS)
-   (RATING                 :initarg :RATING              :initform nil :accessor RATING)))
+((LOGIN                  :initarg :LOGIN               :initform nil :accessor A-LOGIN)
+(PASSWORD               :initarg :PASSWORD            :initform nil :accessor A-PASSWORD)
+(NAME                   :initarg :NAME                :initform nil :accessor A-NAME)
+(JURIDICAL-ADDRESS      :initarg :JURIDICAL-ADDRESS   :initform nil :accessor A-JURIDICAL-ADDRESS)
+(INN                    :initarg :INN                 :initform nil :accessor A-INN)
+(KPP                    :initarg :KPP                 :initform nil :accessor A-KPP)
+(OGRN                   :initarg :OGRN                :initform nil :accessor A-OGRN)
+(BANK-NAME              :initarg :BANK-NAME           :initform nil :accessor A-BANK-NAME)
+(BIK                    :initarg :BIK                 :initform nil :accessor A-BIK)
+(CORRESP-ACCOUNT        :initarg :CORRESP-ACCOUNT     :initform nil :accessor A-CORRESP-ACCOUNT)
+(CLIENT-ACCOUNT         :initarg :CLIENT-ACCOUNT      :initform nil :accessor A-CLIENT-ACCOUNT)
+(TENDERS                :initarg :TENDERS             :initform nil :accessor A-TENDERS)
+(RATING                 :initarg :RATING              :initform nil :accessor A-RATING)))
 
 (defmethod initialize-instance :after ((object BUILDER) &key)
   ;; Здесь будет проверка прав
@@ -249,10 +249,10 @@
 
 
 (defclass CATEGORY (entity)
-  ((NAME                   :initarg :NAME                :initform nil :accessor NAME)
-   (PARENT                 :initarg :PARENT              :initform nil :accessor LNK-PARENT)
-   (CHILD-CATEGORYES       :initarg :CHILD-CATEGORYES    :initform nil :accessor CHILD-CATEGORYES)
-   (RESOURCES              :initarg :RESOURCES           :initform nil :accessor RESOURCES)))
+((NAME                   :initarg :NAME                :initform nil :accessor A-NAME)
+(PARENT                 :initarg :PARENT              :initform nil :accessor A-PARENT)
+(CHILD-CATEGORYES       :initarg :CHILD-CATEGORYES    :initform nil :accessor A-CHILD-CATEGORYES)
+(RESOURCES              :initarg :RESOURCES           :initform nil :accessor A-RESOURCES)))
 
 (defmethod initialize-instance :after ((object CATEGORY) &key)
   ;; Здесь будет проверка прав
@@ -271,11 +271,11 @@
 
 
 (defclass RESOURCE (entity)
-  ((NAME                   :initarg :NAME                :initform nil :accessor NAME)
-   (CATEGORY               :initarg :CATEGORY            :initform nil :accessor LNK-CATEGORY)
-   (RESOURCE-TYPE          :initarg :RESOURCE-TYPE       :initform nil :accessor RESOURCE-TYPE)
-   (UNIT                   :initarg :UNIT                :initform nil :accessor UNIT)
-   (SUPPLIERS              :initarg :SUPPLIERS           :initform nil :accessor SUPPLIERS)))
+((NAME                   :initarg :NAME                :initform nil :accessor A-NAME)
+(CATEGORY               :initarg :CATEGORY            :initform nil :accessor A-CATEGORY)
+(RESOURCE-TYPE          :initarg :RESOURCE-TYPE       :initform nil :accessor A-RESOURCE-TYPE)
+(UNIT                   :initarg :UNIT                :initform nil :accessor A-UNIT)
+(SUPPLIERS              :initarg :SUPPLIERS           :initform nil :accessor A-SUPPLIERS)))
 
 (defmethod initialize-instance :after ((object RESOURCE) &key)
   ;; Здесь будет проверка прав
@@ -295,21 +295,21 @@
 
 
 (defclass TENDER (entity)
-  ((NAME                   :initarg :NAME                :initform nil :accessor NAME)
-   (STATUS                 :initarg :STATUS              :initform nil :accessor STATUS)
-   (OWNER                  :initarg :OWNER               :initform nil :accessor LNK-OWNER)
-   (ACTIVE-DATE            :initarg :ACTIVE-DATE         :initform nil :accessor ACTIVE-DATE)
-   (ALL                    :initarg :ALL                 :initform nil :accessor ALL)
-   (CLAIM                  :initarg :CLAIM               :initform nil :accessor CLAIM)
-   (ANALIZE                :initarg :ANALIZE             :initform nil :accessor ANALIZE)
-   (INTERVIEW              :initarg :INTERVIEW           :initform nil :accessor INTERVIEW)
-   (RESULT                 :initarg :RESULT              :initform nil :accessor RESULT)
-   (WINNER                 :initarg :WINNER              :initform nil :accessor LNK-WINNER)
-   (PRICE                  :initarg :PRICE               :initform nil :accessor PRICE)
-   (RESOURCES              :initarg :RESOURCES           :initform nil :accessor RESOURCES)
-   (DOCUMENTS              :initarg :DOCUMENTS           :initform nil :accessor DOCUMENTS)
-   (SUPPLIERS              :initarg :SUPPLIERS           :initform nil :accessor SUPPLIERS)
-   (OFFERTS                :initarg :OFFERTS             :initform nil :accessor OFFERTS)))
+((NAME                   :initarg :NAME                :initform nil :accessor A-NAME)
+(STATUS                 :initarg :STATUS              :initform nil :accessor A-STATUS)
+(OWNER                  :initarg :OWNER               :initform nil :accessor A-OWNER)
+(ACTIVE-DATE            :initarg :ACTIVE-DATE         :initform nil :accessor A-ACTIVE-DATE)
+(ALL                    :initarg :ALL                 :initform nil :accessor A-ALL)
+(CLAIM                  :initarg :CLAIM               :initform nil :accessor A-CLAIM)
+(ANALIZE                :initarg :ANALIZE             :initform nil :accessor A-ANALIZE)
+(INTERVIEW              :initarg :INTERVIEW           :initform nil :accessor A-INTERVIEW)
+(RESULT                 :initarg :RESULT              :initform nil :accessor A-RESULT)
+(WINNER                 :initarg :WINNER              :initform nil :accessor A-WINNER)
+(PRICE                  :initarg :PRICE               :initform nil :accessor A-PRICE)
+(RESOURCES              :initarg :RESOURCES           :initform nil :accessor A-RESOURCES)
+(DOCUMENTS              :initarg :DOCUMENTS           :initform nil :accessor A-DOCUMENTS)
+(SUPPLIERS              :initarg :SUPPLIERS           :initform nil :accessor A-SUPPLIERS)
+(OFFERTS                :initarg :OFFERTS             :initform nil :accessor A-OFFERTS)))
 
 (defmethod initialize-instance :after ((object TENDER) &key)
   ;; Здесь будет проверка прав
@@ -339,9 +339,9 @@
 
 
 (defclass DOCUMENT (entity)
-  ((NAME                   :initarg :NAME                :initform nil :accessor NAME)
-   (FILENAME               :initarg :FILENAME            :initform nil :accessor FILENAME)
-   (TENDER                 :initarg :TENDER              :initform nil :accessor LNK-TENDER)))
+((NAME                   :initarg :NAME                :initform nil :accessor A-NAME)
+(FILENAME               :initarg :FILENAME            :initform nil :accessor A-FILENAME)
+(TENDER                 :initarg :TENDER              :initform nil :accessor A-TENDER)))
 
 (defmethod initialize-instance :after ((object DOCUMENT) &key)
   ;; Здесь будет проверка прав
@@ -358,19 +358,38 @@
   (format t "~%Тендер : ~A" (TENDER object)))
 
 (restas:define-route main-page ("/")
-  (format nil "test"))
+  (let ((rs))
+    (push "<table border=\"1\"><tr><td>Главная страница</td></tr></table>" rs)
+    (format nil "~{~A~}" (reverse rs))))
 
 (restas:define-route admin-page ("/admin")
-  (format nil "test"))
+  (let ((rs))
+    (push "<table border=\"1\"><tr><td>Изменить пароль</td></tr></table>" rs)
+    (push "<table border=\"1\"><tr><td>Создать аккаунт эксперта</td></tr></table>" rs)
+    (push "<table border=\"1\"><tr><td>Эксперты</td></tr></table>" rs)
+    (push "<table border=\"1\"><tr><td>Заявки поставщиков на добросовестность</td></tr></table>" rs)
+    (format nil "~{~A~}" (reverse rs))))
 
 (restas:define-route supplier-page ("/supplier")
-  (format nil "test"))
+  (let ((rs))
+    (push "<table border=\"1\"><tr><td>Отправить заявку на добросовестность</td></tr></table>" rs)
+    (push "<table border=\"1\"><tr><td>Изменить список ресурсов</td></tr></table>" rs)
+    (push "<table border=\"1\"><tr><td>Заявки на тендеры</td></tr></table>" rs)
+    (format nil "~{~A~}" (reverse rs))))
 
 (restas:define-route tender-page ("/tender")
-  (format nil "test"))
+  (let ((rs))
+    (push "<table border=\"1\"><tr><td>Ответить заявкой на тендер</td></tr></table>" rs)
+    (push "<table border=\"1\"><tr><td>Отменить тендер</td></tr></table>" rs)
+    (format nil "~{~A~}" (reverse rs))))
 
 (restas:define-route builder-page ("/builder")
-  (format nil "test"))
+  (let ((rs))
+    (push "<table border=\"1\"><tr><td>Застройщик такой-то (name object)</td></tr></table>" rs)
+    (push "<table border=\"1\"><tr><td>Объявить новый тендер</td></tr></table>" rs)
+    (format nil "~{~A~}" (reverse rs))))
 
 (restas:define-route builders-page ("/builders")
-  (format nil "test"))
+  (let ((rs))
+    (push "<table border=\"1\"><tr><td>Организации-поставщики</td></tr></table>" rs)
+    (format nil "~{~A~}" (reverse rs))))
