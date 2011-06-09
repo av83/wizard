@@ -344,8 +344,12 @@
 
 (defparameter *places*
   '(
+    ;; Главная страница
+    (:place                main
+     :url                  "/")
     ;; Личный кабинет Администратора
     (:place                admin
+     :url                  "/admin"
      :actions
      '((:caption           "Изменить пароль"
         :perm              :admin
@@ -391,6 +395,7 @@
 
     ;; Личный кабинет Поставщика
     (:place                supplier
+     :url                  "/supplier"
      :actions
      '((:caption           "Отправить заявку на добросовестность" ;; заявка на статус добросовестного поставщика (изменяет статус поставщика)
         :perm              (and :self :unfair)
@@ -413,6 +418,7 @@
 
     ;; Страница тендера
     (:place                tender
+     :url                  "/tender"
      :actions
      '((:caption           "Ответить заявкой на тендер" ;; Добросовестный поставщик отвечает заявкой на тендер
         :perm              (and :active :fair)
@@ -438,6 +444,7 @@
 
     ;; Личный кабинет застройщика с возможностью объявить тендер
     (:place                builder
+     :url                  "/builder"
      :actions
      '((:caption           "Застройщик такой-то (name object)"
         :perm              :self
@@ -468,6 +475,7 @@
 
     ;; Страница поставщиков - коллекция по юзерам с фильтром по типу юзера
     (:place                builders
+     :url                  "/builders"
      :actions
      '((:caption           "Организации-поставщики"
         :perm              "<?>"
@@ -476,59 +484,3 @@
         :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
         ;; <?> Как будем показывать тендеры застройщика?
         :fields           '((name juridical-address requisites tenders rating)))))))
-
-
-;; ;; генератор
-;; (defun gen (entityes)
-;;   (with-open-file (output "gen.lisp" :direction :output :if-exists :supersede)
-;;     (let ((containers)
-;;           (classes (make-hash-table :test #'equal)))
-;;       ;; Containers
-;;       (loop :for entity :in entityes :do
-;;          (let ((container (getf entity :container)))
-;;            (unless (null container)
-;;              (push container containers))))
-;;       (setf containers (reverse (remove-duplicates containers)))
-;;       (format output "~%~%;; Containers~%")
-;;       (loop :for container :in containers :do
-;;          (format output "~%~<(defparameter *~A* ~43:T (make-hash-table :test #'equal))~:>"
-;;                  `(,container)))
-;;       ;; Classes
-;;       (format output "~%~%;; Classes")
-;;       (loop :for entity :in entityes :do
-;;          (let ((super (getf entity :super)))
-;;            (when (null super)
-;;              (setf super 'entity))
-;;            (format output "~%~%~%~<(defclass ~A (~A)~%(~{~A~^~%~}))~:>"
-;;                    `(,(getf entity :entity)
-;;                       ,super
-;;                       ,(loop :for field :in (getf entity :fields) :collect
-;;                           (let ((fld (car field)))
-;;                             (format nil "~<(~A ~23:T :initarg :~A ~53:T :initform nil :accessor ~A)~:>"
-;;                                     `(,fld ,fld ,fld)))))))
-;;          (let ((perm (getf entity :perm)))
-;;            (unless (null (getf perm :create))
-;;              (format output "~%~%(defmethod initialize-instance :after ((object ~A) &key)"
-;;                      (getf entity :entity))
-;;              (format output "~%  ;; Здесь будет проверка прав~%  ;; ...~%  ;; Запись в контейнер")
-;;              (format output "~%  (setf (gethash (hash-table-count *~A*) *~A*) object)"
-;;                      (getf entity :container)
-;;                      (getf entity :container))
-;;              (format output ")"))
-;;            (unless (null (getf perm :view))
-;;              (format output "~%~%(defmethod view ((object ~A) &key)"
-;;                      (getf entity :entity))
-;;              (format output "~%  ;; Здесь будет проверка прав~%  ;; ...~%  ;; Печать")
-;;              (let ((fields (getf entity :fields))               (loop :for fld :in fields :collect
-;;                   (let ((caption (cadr fld))
-;;                         (name    (car fld)))
-;;                     (format output "~%  (format t \"~A~A : ~A\" (~A object))" "~%" caption "~A" name))))
-
-;;              (format output ")"))
-;;            )))))
-
-;; (gen *entityes*)
-
-;; (make-instance 'supplier :name "xxx")
-
-;; (view (gethash 0 *user*))

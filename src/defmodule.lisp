@@ -66,7 +66,7 @@
   ((LOGIN                  :initarg :LOGIN               :initform nil :accessor LOGIN)
    (PASSWORD               :initarg :PASSWORD            :initform nil :accessor PASSWORD)
    (NAME                   :initarg :NAME                :initform nil :accessor NAME)
-   (REFERAL                :initarg :REFERAL             :initform nil :accessor REFERAL)
+   (REFERAL                :initarg :REFERAL             :initform nil :accessor LNK-REFERAL)
    (STATUS                 :initarg :STATUS              :initform nil :accessor STATUS)
    (JURIDICAL-ADDRESS      :initarg :JURIDICAL-ADDRESS   :initform nil :accessor JURIDICAL-ADDRESS)
    (ACTUAL-ADDRESS         :initarg :ACTUAL-ADDRESS      :initform nil :accessor ACTUAL-ADDRESS)
@@ -123,8 +123,8 @@
 
 
 (defclass OFFER (entity)
-  ((OWNER                  :initarg :OWNER               :initform nil :accessor OWNER)
-   (TENDER                 :initarg :TENDER              :initform nil :accessor TENDER)
+  ((OWNER                  :initarg :OWNER               :initform nil :accessor LNK-OWNER)
+   (TENDER                 :initarg :TENDER              :initform nil :accessor LNK-TENDER)
    (RESOURCES              :initarg :RESOURCES           :initform nil :accessor RESOURCES)))
 
 (defmethod initialize-instance :after ((object OFFER) &key)
@@ -143,9 +143,9 @@
 
 
 (defclass OFFER-RESOURCE (entity)
-  ((OWNER                  :initarg :OWNER               :initform nil :accessor OWNER)
-   (OFFER                  :initarg :OFFER               :initform nil :accessor OFFER)
-   (RESOURCE               :initarg :RESOURCE            :initform nil :accessor RESOURCE)
+  ((OWNER                  :initarg :OWNER               :initform nil :accessor LNK-OWNER)
+   (OFFER                  :initarg :OFFER               :initform nil :accessor LNK-OFFER)
+   (RESOURCE               :initarg :RESOURCE            :initform nil :accessor LNK-RESOURCE)
    (PRICE                  :initarg :PRICE               :initform nil :accessor PRICE)))
 
 (defmethod initialize-instance :after ((object OFFER-RESOURCE) &key)
@@ -165,8 +165,8 @@
 
 
 (defclass SALE (entity)
-  ((OWNER                  :initarg :OWNER               :initform nil :accessor OWNER)
-   (RESOURCE               :initarg :RESOURCE            :initform nil :accessor RESOURCE)
+  ((OWNER                  :initarg :OWNER               :initform nil :accessor LNK-OWNER)
+   (RESOURCE               :initarg :RESOURCE            :initform nil :accessor LNK-RESOURCE)
    (PROCENT                :initarg :PROCENT             :initform nil :accessor PROCENT)
    (PRICE                  :initarg :PRICE               :initform nil :accessor PRICE)
    (NOTES                  :initarg :NOTES               :initform nil :accessor NOTES)))
@@ -189,8 +189,8 @@
 
 
 (defclass SUPPLIER-RESOURCE-PRICE (entity)
-  ((OWNER                  :initarg :OWNER               :initform nil :accessor OWNER)
-   (RESOURCE               :initarg :RESOURCE            :initform nil :accessor RESOURCE)
+  ((OWNER                  :initarg :OWNER               :initform nil :accessor LNK-OWNER)
+   (RESOURCE               :initarg :RESOURCE            :initform nil :accessor LNK-RESOURCE)
    (PRICE                  :initarg :PRICE               :initform nil :accessor PRICE)))
 
 (defmethod initialize-instance :after ((object SUPPLIER-RESOURCE-PRICE) &key)
@@ -250,7 +250,7 @@
 
 (defclass CATEGORY (entity)
   ((NAME                   :initarg :NAME                :initform nil :accessor NAME)
-   (PARENT                 :initarg :PARENT              :initform nil :accessor PARENT)
+   (PARENT                 :initarg :PARENT              :initform nil :accessor LNK-PARENT)
    (CHILD-CATEGORYES       :initarg :CHILD-CATEGORYES    :initform nil :accessor CHILD-CATEGORYES)
    (RESOURCES              :initarg :RESOURCES           :initform nil :accessor RESOURCES)))
 
@@ -272,7 +272,7 @@
 
 (defclass RESOURCE (entity)
   ((NAME                   :initarg :NAME                :initform nil :accessor NAME)
-   (CATEGORY               :initarg :CATEGORY            :initform nil :accessor CATEGORY)
+   (CATEGORY               :initarg :CATEGORY            :initform nil :accessor LNK-CATEGORY)
    (RESOURCE-TYPE          :initarg :RESOURCE-TYPE       :initform nil :accessor RESOURCE-TYPE)
    (UNIT                   :initarg :UNIT                :initform nil :accessor UNIT)
    (SUPPLIERS              :initarg :SUPPLIERS           :initform nil :accessor SUPPLIERS)))
@@ -297,14 +297,14 @@
 (defclass TENDER (entity)
   ((NAME                   :initarg :NAME                :initform nil :accessor NAME)
    (STATUS                 :initarg :STATUS              :initform nil :accessor STATUS)
-   (OWNER                  :initarg :OWNER               :initform nil :accessor OWNER)
+   (OWNER                  :initarg :OWNER               :initform nil :accessor LNK-OWNER)
    (ACTIVE-DATE            :initarg :ACTIVE-DATE         :initform nil :accessor ACTIVE-DATE)
    (ALL                    :initarg :ALL                 :initform nil :accessor ALL)
    (CLAIM                  :initarg :CLAIM               :initform nil :accessor CLAIM)
    (ANALIZE                :initarg :ANALIZE             :initform nil :accessor ANALIZE)
    (INTERVIEW              :initarg :INTERVIEW           :initform nil :accessor INTERVIEW)
    (RESULT                 :initarg :RESULT              :initform nil :accessor RESULT)
-   (WINNER                 :initarg :WINNER              :initform nil :accessor WINNER)
+   (WINNER                 :initarg :WINNER              :initform nil :accessor LNK-WINNER)
    (PRICE                  :initarg :PRICE               :initform nil :accessor PRICE)
    (RESOURCES              :initarg :RESOURCES           :initform nil :accessor RESOURCES)
    (DOCUMENTS              :initarg :DOCUMENTS           :initform nil :accessor DOCUMENTS)
@@ -341,7 +341,7 @@
 (defclass DOCUMENT (entity)
   ((NAME                   :initarg :NAME                :initform nil :accessor NAME)
    (FILENAME               :initarg :FILENAME            :initform nil :accessor FILENAME)
-   (TENDER                 :initarg :TENDER              :initform nil :accessor TENDER)))
+   (TENDER                 :initarg :TENDER              :initform nil :accessor LNK-TENDER)))
 
 (defmethod initialize-instance :after ((object DOCUMENT) &key)
   ;; Здесь будет проверка прав
@@ -356,3 +356,21 @@
   (format t "~%Название : ~A" (NAME object))
   (format t "~%Имя файла : ~A" (FILENAME object))
   (format t "~%Тендер : ~A" (TENDER object)))
+
+(restas:define-route main-page ("/")
+  (format nil "test"))
+
+(restas:define-route admin-page ("/admin")
+  (format nil "test"))
+
+(restas:define-route supplier-page ("/supplier")
+  (format nil "test"))
+
+(restas:define-route tender-page ("/tender")
+  (format nil "test"))
+
+(restas:define-route builder-page ("/builder")
+  (format nil "test"))
+
+(restas:define-route builders-page ("/builders")
+  (format nil "test"))

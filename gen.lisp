@@ -5,6 +5,7 @@
 (load "ent.lisp") ;; *entityes* *places*
 
 
+;; (restas:start '#:wizard :port 8081)
 
 (with-open-file (out "src/defmodule.lisp" :direction :output :if-exists :supersede)
   ;; Required
@@ -40,9 +41,12 @@
          (format out "~%~%~%~<(defclass ~A (entity)~%(~{~A~^~%~}))~:>"
                  `(,(getf entity :entity)
                     ,(loop :for field :in (getf entity :fields) :collect
-                        (let ((fld (car field)))
+                        (let ((fld (car field))
+                              (tpi (car (nth 2 field))))
                           (format nil "~<(~A ~23:T :initarg :~A ~53:T :initform nil :accessor ~A)~:>"
-                                  `(,fld ,fld ,fld)))))))
+                                  `(,fld ,fld ,(if (equal tpi :link)
+                                                   (format nil "LNK-~A" fld)
+                                                   fld))))))))
        (let ((perm (getf entity :perm)))
          (unless (null (getf perm :create))
            (format out "~%~%(defmethod initialize-instance :after ((object ~A) &key)"
@@ -61,5 +65,12 @@
                 (let ((caption (cadr fld))
                       (name    (car fld)))
                   (format out "~%  (format t \"~A~A : ~A\" (~A object))" "~%" caption "~A" name))))
-             (format out ")"))
-           ))))
+             (format out ")")))))
+  ;; Places
+  (loop :for place :in *places* :do
+       (format out "~%~%(restas:define-route ~A-page (\"~A\")~A)"
+               (string-downcase (getf place :place))
+               (getf place :url)
+               (format nil "~%  (format nil \"test\")")
+
+     )))
