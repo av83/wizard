@@ -1,0 +1,9 @@
+sbcl --lose-on-corruption --disable-ldb --dynamic-space-size 1024
+
+(require 'asdf)
+(asdf:oos 'asdf:load-op 'swank)
+(setf swank::*loopback-interface* "0.0.0.0")
+
+(swank:create-server :coding-system "utf-8-unix" :dont-close t)
+
+(swank:create-server :coding-system "utf-8-unix" :dont-close t :port 8008)

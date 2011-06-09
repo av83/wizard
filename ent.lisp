@@ -31,6 +31,7 @@
 ;; Возможные статусы поставщиков
 (defparameter *supplier-status*
   '(:fair "добросовестный" :unfair "недобросовестный" :request "подана заявка"))
+;; Пока нет схемы перехода поставщика в добросовестного будем переводить через заявку
 
 
 ;; Перед вызовом действия (даже если это показ поля) в процедуру проверки прав передается правило, субьект действия (пользователь)
@@ -105,14 +106,15 @@
       (status              "Статус"                     (:list-of-keys supplier-status)
                            '(:view   :all
                              :update :admin))
-      (name                "Организация-поставщик"      (:str))
       (juridical-address   "Юридический адрес"          (:str)
                            '(:view   :logged))          ;; Гость не видит
       (actual-address      "Фактический адрес"          (:str))
       (contacts            "Контактные телефоны"        (:list-of-str)      ;; cписок телефонов с возможностью ввода
                            '(:view   (or :logged :fair)))                   ;; незалогиненные могут видеть только тел. добросовестных
-      (email               "Email"                      (:str))             ;; отображение как ссылка mailto://....
-      (site                "Сайт организации"           (:str))             ;; отображение как ссылка http://....
+      (email               "Email"                      (:str)             ;; отображение как ссылка mailto://....
+                           '(:view   (or :logged :fair)))
+      (site                "Сайт организации"           (:str)             ;; отображение как ссылка http://....
+                           '(:view   (or :logged :fair)))
       (heads               "Руководство"                (:list-of-str)
                            '(:view   :logged))                              ;; Гости не видят руководство фирм-поставщиков
       (inn                 "Инн"                        (:str)
@@ -138,7 +140,9 @@
                              :del-resource :self   ;; удаляется связующий объект
                              :change-price :self))
       (sale                "Скидки и акции"             (:list-of-link sale))    ;; sale - связующий объект
-      (offers              "Принятые тендеры"           (:list-of-link offer)))  ;; offer - связующий объект
+      (offers              "Посланные заявки на тендеры"  (:list-of-link offer)
+                           '(:view :self
+                             :update :self)))  ;; offer - связующий объект
      :perm
      (:create             (or :admin :not-logged)
       :delete             :admin
@@ -178,6 +182,7 @@
 
 
     ;; Связующий объект: Скидки и акции - связывает поставщика, объявленный им ресурс и хранит условия скидки
+    ;; (!) Создать страницу скидок и акций
     (:entity               sale
      :container            sale
      :fields
@@ -307,7 +312,7 @@
                            ((:update (and :owner :unactive))))
       (documents           "Документы"                  (:list-of-links document) ;; закачка и удаление файлов
                            ((:update (and :owner :unactive))))
-      (suppliers           "Поставщики"                 (:list-of-link  supplier) ;; строится по ресурсам автоматически
+      (suppliers           "Поставщики"                 (:list-of-links supplier) ;; строится по ресурсам автоматически
                            ((:update :system)))
       (offerts             "Откликнувшиеся поставщики"  (:list-of-links supplier)
                            ((:update-field :system))))
@@ -357,7 +362,7 @@
        (:caption           "Эксперты"
         :perm              :admin
         :entity            expert
-        :values            :collection ;; В коллекции клик на строчке переходит на страницу объекта
+        :values            :collection
         :fields            '(name login
                              (:btn "Удалить аккаунт эксперта"
                               :actions
@@ -396,9 +401,15 @@
         :entity            supplier-resource-price
         :values            :collection
         :fields            '(owner resource price
-                             (:btn "Добавить ресурс")
-                             (:btn "Удалить ресурс")
-                             (:btn "Изменить ресурс")))))
+                             (:btn "Добавить ресурс" act ...?)
+                             (:btn "Удалить ресурс" ?)
+                             (:btn "Изменить ресурс" ?)))
+       (:caption           "Заявки на тендеры"
+        :perm              :self
+        :entity            offer
+        :values            :collection
+        :fields            '(tender))))
+
 
     ;; Страница тендера
     (:place                tender
@@ -429,6 +440,7 @@
     (:place                builder
      :actions
      '((:caption           "Застройщик такой-то (name object)"
+        :perm              :self
         :entity            builder
         :fields            '(name juridical-address inn kpp ogrn bank-name bik corresp-account client-account tenders rating))
        (:caption           "Объявить новый тендер"
@@ -454,18 +466,6 @@
                                              :winner     nil))
                                  (:status    :unactive))))))))
 
-
-    ;; Страница застройщиков - коллекция по юзерам с фильтром по типу юзера
-    (:place                builders
-     :actions
-     '((:caption           "Организации-застройщики"
-        :perm              "<?>"
-        :entity            builder
-        :values            :collection
-        :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
-        ;; <?> Как будем показывать тендеры застройщика?
-        :fields           '((name juridical-address requisites tenders rating)))))
-
     ;; Страница поставщиков - коллекция по юзерам с фильтром по типу юзера
     (:place                builders
      :actions
@@ -475,69 +475,60 @@
         :values            :collection
         :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
         ;; <?> Как будем показывать тендеры застройщика?
-        :fields           '((name juridical-address requisites tenders rating)))))
+        :fields           '((name juridical-address requisites tenders rating)))))))
 
 
+;; ;; генератор
+;; (defun gen (entityes)
+;;   (with-open-file (output "gen.lisp" :direction :output :if-exists :supersede)
+;;     (let ((containers)
+;;           (classes (make-hash-table :test #'equal)))
+;;       ;; Containers
+;;       (loop :for entity :in entityes :do
+;;          (let ((container (getf entity :container)))
+;;            (unless (null container)
+;;              (push container containers))))
+;;       (setf containers (reverse (remove-duplicates containers)))
+;;       (format output "~%~%;; Containers~%")
+;;       (loop :for container :in containers :do
+;;          (format output "~%~<(defparameter *~A* ~43:T (make-hash-table :test #'equal))~:>"
+;;                  `(,container)))
+;;       ;; Classes
+;;       (format output "~%~%;; Classes")
+;;       (loop :for entity :in entityes :do
+;;          (let ((super (getf entity :super)))
+;;            (when (null super)
+;;              (setf super 'entity))
+;;            (format output "~%~%~%~<(defclass ~A (~A)~%(~{~A~^~%~}))~:>"
+;;                    `(,(getf entity :entity)
+;;                       ,super
+;;                       ,(loop :for field :in (getf entity :fields) :collect
+;;                           (let ((fld (car field)))
+;;                             (format nil "~<(~A ~23:T :initarg :~A ~53:T :initform nil :accessor ~A)~:>"
+;;                                     `(,fld ,fld ,fld)))))))
+;;          (let ((perm (getf entity :perm)))
+;;            (unless (null (getf perm :create))
+;;              (format output "~%~%(defmethod initialize-instance :after ((object ~A) &key)"
+;;                      (getf entity :entity))
+;;              (format output "~%  ;; Здесь будет проверка прав~%  ;; ...~%  ;; Запись в контейнер")
+;;              (format output "~%  (setf (gethash (hash-table-count *~A*) *~A*) object)"
+;;                      (getf entity :container)
+;;                      (getf entity :container))
+;;              (format output ")"))
+;;            (unless (null (getf perm :view))
+;;              (format output "~%~%(defmethod view ((object ~A) &key)"
+;;                      (getf entity :entity))
+;;              (format output "~%  ;; Здесь будет проверка прав~%  ;; ...~%  ;; Печать")
+;;              (let ((fields (getf entity :fields))               (loop :for fld :in fields :collect
+;;                   (let ((caption (cadr fld))
+;;                         (name    (car fld)))
+;;                     (format output "~%  (format t \"~A~A : ~A\" (~A object))" "~%" caption "~A" name))))
 
+;;              (format output ")"))
+;;            )))))
 
-;; генератор
-(defun gen (entityes)
-  (with-open-file (output "gen.lisp" :direction :output :if-exists :supersede)
-    (let ((containers)
-          (classes (make-hash-table :test #'equal)))
-      ;; Containers
-      (loop :for entity :in entityes :do
-         (let ((container (getf entity :container)))
-           (unless (null container)
-             (push container containers))))
-      (setf containers (reverse (remove-duplicates containers)))
-      (format output "~%~%;; Containers~%")
-      (loop :for container :in containers :do
-         (format output "~%~<(defparameter *~A* ~43:T (make-hash-table :test #'equal))~:>"
-                 `(,container)))
-      ;; Classes
-      (format output "~%~%;; Classes")
-      (loop :for entity :in entityes :do
-         (let ((super (getf entity :super)))
-           (when (null super)
-             (setf super 'entity))
-           (format output "~%~%~%~<(defclass ~A (~A)~%(~{~A~^~%~}))~:>"
-                   `(,(getf entity :entity)
-                      ,super
-                      ,(loop :for field :in (getf entity :fields) :collect
-                          (let ((fld (car field)))
-                            (format nil "~<(~A ~23:T :initarg :~A ~53:T :initform nil :accessor ~A)~:>"
-                                    `(,fld ,fld ,fld)))))))
-         (let ((perm (getf entity :perm)))
-           (unless (null (getf perm :create))
-             (format output "~%~%(defmethod initialize-instance :after ((object ~A) &key)"
-                     (getf entity :entity))
-             (format output "~%  ;; Здесь будет проверка прав~%  ;; ...~%  ;; Запись в контейнер")
-             (format output "~%  (setf (gethash (hash-table-count *~A*) *~A*) object)"
-                     (getf entity :container)
-                     (getf entity :container))
-             (format output ")"))
-           (unless (null (getf perm :view))
-             (format output "~%~%(defmethod view ((object ~A) &key)"
-                     (getf entity :entity))
-             (format output "~%  ;; Здесь будет проверка прав~%  ;; ...~%  ;; Печать")
-             (let ((fields (getf entity :fields)))
-               (loop :for fld :in fields :collect
-                  (let ((caption (cadr fld))
-                        (name    (car fld)))
-                    (format output "~%  (format t \"~A~A : ~A\" (~A object))" "~%" caption "~A" name))))
+;; (gen *entityes*)
 
-             (format output ")"))
-           )))))
+;; (make-instance 'supplier :name "xxx")
 
-(gen *entityes*)
-
-(make-instance 'supplier :name "xxx")
-
-(view (gethash 0 *user*))
-
-
-
-
-
-
+;; (view (gethash 0 *user*))
