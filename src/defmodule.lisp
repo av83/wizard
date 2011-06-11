@@ -1,19 +1,14 @@
 
 (require 'RESTAS)
 (require 'CLOSURE-TEMPLATE)
+(require 'RESTAS-DIRECTORY-PUBLISHER)
 
 (restas:define-module #:WIZARD
   (:use #:CL #:ITER ))
 
 (in-package #:WIZARD)
 
-(let ((path '(:RELATIVE "wizard")))
-    (setf asdf:*central-registry*
-          (remove-duplicates (append asdf:*central-registry*
-                                     (list (merge-pathnames
-                                            (make-pathname :directory path)
-                                            (user-homedir-pathname))))
-                             :test #'equal)))
+(load "src/lib.lisp")
 
 ;; Containers
 
@@ -360,7 +355,7 @@
 (restas:define-route main-page ("/")
   (let ((rs))
     (push "<table border=\"1\"><tr><td>Главная страница</td></tr></table>" rs)
-    (format nil "~{~A~}" (reverse rs))))
+    (tpl:root (list :content (format nil "~{~A~}" (reverse rs))))))
 
 (restas:define-route admin-page ("/admin")
   (let ((rs))
@@ -368,28 +363,28 @@
     (push "<table border=\"1\"><tr><td>Создать аккаунт эксперта</td></tr></table>" rs)
     (push "<table border=\"1\"><tr><td>Эксперты</td></tr></table>" rs)
     (push "<table border=\"1\"><tr><td>Заявки поставщиков на добросовестность</td></tr></table>" rs)
-    (format nil "~{~A~}" (reverse rs))))
+    (tpl:root (list :content (format nil "~{~A~}" (reverse rs))))))
 
 (restas:define-route supplier-page ("/supplier")
   (let ((rs))
     (push "<table border=\"1\"><tr><td>Отправить заявку на добросовестность</td></tr></table>" rs)
     (push "<table border=\"1\"><tr><td>Изменить список ресурсов</td></tr></table>" rs)
     (push "<table border=\"1\"><tr><td>Заявки на тендеры</td></tr></table>" rs)
-    (format nil "~{~A~}" (reverse rs))))
+    (tpl:root (list :content (format nil "~{~A~}" (reverse rs))))))
 
 (restas:define-route tender-page ("/tender")
   (let ((rs))
     (push "<table border=\"1\"><tr><td>Ответить заявкой на тендер</td></tr></table>" rs)
     (push "<table border=\"1\"><tr><td>Отменить тендер</td></tr></table>" rs)
-    (format nil "~{~A~}" (reverse rs))))
+    (tpl:root (list :content (format nil "~{~A~}" (reverse rs))))))
 
 (restas:define-route builder-page ("/builder")
   (let ((rs))
     (push "<table border=\"1\"><tr><td>Застройщик такой-то (name object)</td></tr></table>" rs)
     (push "<table border=\"1\"><tr><td>Объявить новый тендер</td></tr></table>" rs)
-    (format nil "~{~A~}" (reverse rs))))
+    (tpl:root (list :content (format nil "~{~A~}" (reverse rs))))))
 
 (restas:define-route builders-page ("/builders")
   (let ((rs))
     (push "<table border=\"1\"><tr><td>Организации-поставщики</td></tr></table>" rs)
-    (format nil "~{~A~}" (reverse rs))))
+    (tpl:root (list :content (format nil "~{~A~}" (reverse rs))))))

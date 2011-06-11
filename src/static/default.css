@@ -1,0 +1,525 @@
+/*--------------------------------------------------
+/ Design for Webmaster.spb.ru  2010
+---------------------------------------------------*/
+*
+{
+	margin: 0;
+	padding: 0;
+}
+HTML
+{
+	background: #006BBE;
+	height: 100%;
+	z-index: 10;
+}
+BODY
+{
+	font-family: arial, helvetica, sans-serif;
+	background: transparent;
+	color: #010101;
+	font-size: 12px;
+	line-height: 15px;
+	height: 100%;
+	width: 100%;
+	min-height: 700px;
+	min-width: 990px;
+}
+SELECT, INPUT, TEXTAREA
+{
+	font-family: arial;
+	font-size: 16px;
+	padding: 2px 6px;
+	border: 1px solid #7F9DB9;
+}
+SELECT
+{
+	padding: 1px 1px 1px 4px;
+}
+INPUT[type="radio"], INPUT[type="checkbox"]
+{
+	border: none;
+}
+INPUT[type="radio"], INPUT[type="checkbox"]
+{
+	width: 15px;
+	height: 15px;
+	padding: 0 !important;
+}
+LABEL
+{
+	cursor: pointer;
+}
+OL, UL
+{
+	list-style: none;
+	overflow: hidden;
+}
+A IMG
+{
+	border: none;
+	outline: none;
+}
+/*a:visited {color:#662d91;}*/
+A
+{
+	color: #0074C5;
+	outline: none;
+	text-decoration: underline;
+}
+A:hover
+{
+	color: #F42E00 !important;
+}
+H1, H2, H3, H4, H5, H6
+{
+	font-weight: normal;
+	font-size: 12px;
+}
+BIG
+{
+	font-size: 1.5em;
+}
+SMALL
+{
+	font-size: 0.8em;
+}
+/*================ default=================*/
+.default
+{
+	font-size: 14px;
+	line-height: 19px;
+}
+.default IMG
+{
+	margin: 5px;
+}
+.default P
+{
+	margin-top: 0;
+	margin-bottom: 20px;
+}
+.default H1
+{
+	font-size: 18px;
+	line-height: 25px;
+	color: #000000;
+	font-weight: bold;
+	margin: 0 0 15px;
+}
+.default H2
+{
+	font-size: 16px;
+	line-height: 22px;
+	color: #24211D;
+	font-weight: bold;
+	margin: 0 0 10px;
+}
+.default H3
+{
+	font-size: 14px;
+	line-height: 20px;
+	color: #24211D;
+	font-weight: bold;
+	margin: 0 0 5px;
+}
+.default H4
+{
+	font-size: 12px;
+	line-height: 18px;
+	font-weight: bold;
+	margin: 0 0 5px;
+}
+.default H5
+{
+	font-size: 11px;
+	line-height: 14px;
+	font-weight: bold;
+	margin: 0 0 3px;
+}
+.default H6
+{
+	font-size: 11px;
+	line-height: 14px;
+	margin: 0 0 3px;
+}
+/*================ table =================*/
+.default TABLE
+{
+	font-size: 12px;
+	border-collapse: collapse;
+	margin: 3px 0 30px;
+	border: 1px solid #DCDCDC;
+	border-top: none;
+}
+.default TABLE THEAD TR TD, .default TABLE THEAD TR TH
+{
+	font-size: 11px;
+	font-weight: bold;
+	background: #DCDCDC;
+	padding: 3px 10px 4px 5px;
+	border-right: 1px solid #F7F4EC;
+	border-bottom: 1px solid #B5B5B5;
+}
+.default TABLE TR TD
+{
+	vertical-align: top;
+	padding: 5px 10px 6px 5px;
+	border-left: 1px solid #D5D5D5;
+	border-bottom: 1px solid #D5D5D5;
+}
+.default TABLE THEAD .lastTDright
+{
+	border-right: none;
+}
+/*================ ol =================*/
+.default OL
+{
+	list-style-position: outside;
+	padding-left: 30px;
+	margin-bottom: 17px;
+}
+.default OL LI OL, .default UL LI OL
+{
+	list-style-position: outside;
+	margin: 10px 0 6px;
+}
+.default OL LI
+{
+	list-style-type: decimal;
+	margin-bottom: 3px;
+}
+.default OL LI UL LI
+{
+	list-style-type: none;
+	background: url(/img/ul.gif) no-repeat 0 9px;
+	padding-left: 8px;
+	margin-bottom: 3px;
+}
+/*================ ul ============== ===*/
+.default UL
+{
+	margin-bottom: 17px;
+}
+.default UL LI UL, .default OL LI UL
+{
+	margin: 10px 0 6px 5px;
+}
+.default UL LI
+{
+	background: url(/img/ul.gif) no-repeat 0 9px;
+	padding-left: 8px;
+	margin-bottom: 3px;
+}
+.default UL LI UL LI, .default OL LI UL LI UL LI, .default UL LI OL LI UL LI
+{
+	background: url(/img/ul-ul.gif) no-repeat 0 10px;
+	padding-left: 20px;
+}
+.default UL LI OL LI
+{
+	background: none;
+	padding-left: 0;
+}
+/*================ main blocks =================*/
+.main
+{
+	width: 996px;
+	min-height: 100%;
+/*о*/
+	height: auto !important;
+	position: relative;
+	overflow: hidden;
+	background: #006BBE;
+	margin: 0 auto -102px;
+	z-index: 100;
+}
+.header
+{
+	width: 100%;
+	position: relative;
+	padding-bottom: 0;
+	z-index: 100;
+}
+.main404 .header
+{
+	height: 110px;
+	margin-top: 10px;
+}
+.body
+{
+	position: relative;
+	overflow: hidden;
+	background: #F1F1F1;
+	padding: 0;
+	margin: 0 12px 102px;
+	z-index: 100;
+}
+.main404 .body
+{
+	padding: 40px 239px 250px 246px;
+}
+.main404 .body .pageTitle
+{
+	font-size: 60px;
+	line-height: 70px;
+	color: #DA0000;
+	font-weight: bold;
+	margin-bottom: 30px;
+}
+.sidebarL
+{
+	width: 229px;
+	float: left;
+	overflow: hidden;
+	margin: 0 7px 0 10px;
+}
+.sidebarR
+{
+	width: 229px;
+	float: right;
+	overflow: hidden;
+	margin: 0 10px 0 0;
+}
+.content
+{
+	width: 478px;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+}
+.footer
+{
+	clear: both;
+	width: 990px;
+	height: 151px;
+	position: relative;
+	overflow: hidden;
+	background: #006BBE;
+	font-size: 12px;
+	line-height: 15px;
+	margin: -72px auto 0;
+	z-index: 100;
+}
+.pageTitle
+{
+	font-size: 18px;
+	line-height: 25px;
+	color: #000000;
+	font-weight: bold;
+	margin: 0;
+}
+.pageTitle H1
+{
+	margin: 0;
+}
+.pageTitle H1
+{
+	font-size: 18px;
+	font-weight: bold;
+	font-style: normal;
+}
+/*================ framework =================*/
+.dashedLink
+{
+	text-decoration: none;
+	border-bottom: 1px dashed #0072BC;
+}
+.dashedLink:hover
+{
+	border-bottom: 1px dashed #F42E00 !important;
+}
+.italic
+{
+	font-style: italic;
+}
+.italicText
+{
+	font-size: 11px !important;
+	line-height: 14px;
+	font-style: italic;
+	color: #666666;
+}
+.tahoma
+{
+	font-family: Tahoma, Geneva, Arial, sans-serif;
+}
+.grey, .grey A
+{
+	color: #959595 !important;
+}
+.linkNoDecoration
+{
+	text-decoration: none;
+}
+.noBorder
+{
+	border: none !important;
+}
+.noBold
+{
+	font-weight: normal !important;
+}
+.showBlock
+{
+	top: 0px !important;
+}
+.pt0
+{
+	padding-top: 0 !important;
+}
+.pt4
+{
+	padding-top: 4px !important;
+}
+.pt10
+{
+	padding-top: 10px !important;
+}
+.pt15
+{
+	padding-top: 15px !important;
+}
+.pt20
+{
+	padding-top: 20px !important;
+}
+.pt25
+{
+	padding-top: 25px !important;
+}
+.pt30
+{
+	padding-top: 30px !important;
+}
+.pt40
+{
+	padding-top: 40px !important;
+}
+.pl0
+{
+	padding-left: 0 !important;
+}
+.pl25
+{
+	padding-left: 25px !important;
+}
+.pl30
+{
+	padding-left: 30px !important;
+}
+.pl50
+{
+	padding-left: 50px !important;
+}
+.pl140
+{
+	padding-left: 140px !important;
+}
+.pb0
+{
+	padding-bottom: 0 !important;
+}
+.pb8
+{
+	padding-bottom: 8px !important;
+}
+.pb10
+{
+	padding-bottom: 10px !important;
+}
+.pb20
+{
+	padding-bottom: 20px !important;
+}
+.pb23
+{
+	padding-bottom: 23px !important;
+}
+.pb25
+{
+	padding-bottom: 25px !important;
+}
+.pb30
+{
+	padding-bottom: 30px !important;
+}
+.pb35
+{
+	padding-bottom: 35px !important;
+}
+.pb40
+{
+	padding-bottom: 40px !important;
+}
+.pr20
+{
+	padding-right: 20px !important;
+}
+.mt0
+{
+	margin-top: 0 !important;
+}
+.mt2
+{
+	margin-top: 2px !important;
+}
+.mt5
+{
+	margin-top: 5px !important;
+}
+.mt6
+{
+	margin-top: 6px !important;
+}
+.mt15
+{
+	margin-top: 15px !important;
+}
+.mt20
+{
+	margin-top: 20px !important;
+}
+.mr3
+{
+	margin-right: 3px !important;
+}
+.mr20
+{
+	margin-right: 20px !important;
+}
+.mr25
+{
+	margin-right: 25px !important;
+}
+.mr30
+{
+	margin-right: 30px !important;
+}
+.mb-15
+{
+	margin-bottom: -15px !important;
+}
+.mb0
+{
+	margin-bottom: 0 !important;
+}
+.mb15
+{
+	margin-bottom: 15px !important;
+}
+.mb20
+{
+	margin-bottom: 20px !important;
+}
+.mb25
+{
+	margin-bottom: 25px !important;
+}
+.ml5
+{
+	margin-left: 5px !important;
+}
+.ml20
+{
+	margin-left: 20px !important;
+}

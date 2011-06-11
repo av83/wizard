@@ -1,0 +1,4769 @@
+/*--------------------------------------------------
+/ Design for Webmaster.spb.ru  2010
+---------------------------------------------------
+=========================  FORM STYLE   2010.10.04  =========================*/
+.catalogEditPartBlock
+{
+	overflow: hidden;
+	padding-top: 2px;
+}
+.personEdit .catalogEditPartBlock DIV
+{
+	overflow: hidden;
+	padding-top: 5px;
+	padding-bottom: 20px;
+}
+.personEdit .catalogEditPartBlock DIV DIV
+{
+	float: left;
+	padding: 0 25px 0 0;
+}
+.personEdit .catalogEditPartBlock DIV SPAN
+{
+	display: block;
+	font-weight: bold;
+}
+.personEdit .catalogEditPartBlock .accessBlockEdit DIV SPAN
+{
+	font-weight: normal;
+}
+.personEdit .catalogEditPartBlock .buttonBox DIV, .personEdit .catalogEditPartBlock .wideInputBox DIV, .personEdit .catalogEditPartBlock .wideInput DIV
+{
+	padding-right: 0;
+}
+.calendarPopap
+{
+	padding-top: 28px !important;
+}
+.addFileList OL LI .italicText
+{
+	font-weight: normal;
+}
+.accessBlockEdit .catalogEditPartBlock .wideInputBox SPAN, .companyEdit .catalogEditPartBlock .wideInputBox SPAN
+{
+	font-weight: normal;
+}
+.catalogItemTender .buttonBoxForm
+{
+	padding-top: 30px;
+}
+.personEdit .catalogEditPartBlock .buttonBoxForm .buttonBox
+{
+	padding-right: 0;
+}
+.dataEditBox .shortInput, .dataEditBox .wideInputBox
+{
+	overflow: hidden;
+}
+.catalogPartBlock
+{
+	overflow: hidden;
+	padding-top: 20px;
+}
+.catalogPartBlock SPAN
+{
+	display: block;
+	font-size: 12px;
+}
+.catalogPartBlock .shortInput SPAN
+{
+	font-size: 14px;
+	padding-bottom: 5px;
+}
+/*=========================  end FORM STYLE   2010.10.04  =========================*/
+.strongText
+{
+	font-size: 18px;
+	line-height: 22px;
+	font-weight: bold;
+}
+.strongText P
+{
+	margin-bottom: 8px;
+}
+.main404 .strongText
+{
+	padding: 0 0 30px;
+}
+.content404
+{
+	font-size: 16px;
+	line-height: 20px;
+}
+.main404 .headerSearchBox
+{
+	margin-top: 8px;
+	margin-left: -6px;
+}
+.main404 .headerSearchBox
+{
+	width: 478px;
+}
+.main404 .headerSearchBox INPUT
+{
+	width: 247px;
+}
+.docsList
+{
+	font-size: 12px;
+	line-height: 15px;
+	padding: 0 5px 7px;
+}
+.docsList DIV
+{
+	overflow: hidden;
+	padding-bottom: 7px;
+}
+.docsList DIV DIV
+{
+	float: left;
+	padding: 2px 0 0;
+}
+.docsList IMG
+{
+	border: 0;
+	margin: 0;
+}
+.docsList SPAN
+{
+	display: block;
+	padding-left: 20px;
+}
+.docsList .italicText
+{
+	display: inline;
+	white-space: nowrap;
+	padding-left: 3px;
+}
+.headerTopBlock
+{
+	width: 100%;
+	height: 88px;
+	overflow: hidden;
+	text-align: center;
+	padding-bottom: 12px;
+}
+.headerMainBlock
+{
+	height: 116px;
+	background: #F1F1F1 url(/img/header_line.gif) repeat-x 0 0;
+	padding-bottom: 21px;
+	margin: 0 12px;
+}
+.headerLogoBox
+{
+	width: 335px;
+	float: left;
+	overflow: hidden;
+	font-size: 14px;
+	font-style: italic;
+	padding: 12px 0 0 12px;
+}
+.headerLogoBox IMG
+{
+	padding: 0 0 6px;
+}
+.headerSearchBox
+{
+	width: 373px;
+	height: 41px;
+	float: left;
+	position: relative;
+	background: url(/img/searchBGline.png) repeat-x 0 0;
+	margin: 35px 5px 0;
+}
+.headerSearchBox FORM
+{
+	overflow: hidden;
+	padding: 8px 0 0 4px;
+}
+.headerBGleft
+{
+	width: 5px;
+	height: 41px;
+	background: url(/img/searchBGleft.png) repeat-x 0 0;
+	position: absolute;
+	top: 0;
+	left: -5px;
+}
+.headerBGright
+{
+	width: 5px;
+	height: 41px;
+	background: url(/img/searchBGright.png) repeat-x 0 0;
+	position: absolute;
+	top: 0;
+	right: -5px;
+}
+.headerSearchBox INPUT
+{
+	width: 143px;
+	float: left;
+	margin-right: 5px;
+}
+.headerSearchBox SELECT
+{
+	width: 137px;
+	float: left;
+}
+.buttonBox
+{
+	height: 27px;
+	float: right;
+	background: transparent;
+	color: #FFFFFF;
+	font-size: 11px;
+	line-height: 15px;
+	margin-right: 3px;
+	border: none;
+	cursor: pointer;
+}
+.buttonLeft
+{
+	width: 4px;
+	height: 27px;
+	float: left;
+	background: url(/img/buttonLeft.png) no-repeat 0 0;
+}
+.buttonRight
+{
+	width: 4px;
+	height: 27px;
+	float: left;
+	background: url(/img/buttonRight.png) no-repeat 0 0;
+}
+.buttonText
+{
+	height: 20px;
+	float: left;
+	background: url(/img/buttonLine.png) repeat-x 0 0;
+	padding: 4px 8px 3px !important;
+}
+.buttonBox:hover .buttonLeft
+{
+	background: url(/img/buttonLeft.png) no-repeat 0 -30px;
+}
+.buttonBox:hover .buttonRight
+{
+	background: url(/img/buttonRight.png) no-repeat 0 -30px;
+}
+.buttonBox:hover .buttonText
+{
+	background: url(/img/buttonLine.png) repeat-x 0 -30px;
+}
+.buttonBox.noActive
+{
+	cursor: default;
+}
+.buttonBox.noActive .buttonLeft
+{
+	background: url(/img/buttonLeft.png) no-repeat 0 -60px;
+}
+.buttonBox.noActive .buttonRight
+{
+	background: url(/img/buttonRight.png) no-repeat 0 -60px;
+}
+.buttonBox.noActive .buttonText
+{
+	background: url(/img/buttonLine.png) repeat-x 0 -60px;
+}
+.headerPersonalBox
+{
+	width: 195px;
+	float: right;
+	overflow: hidden;
+	font-size: 13px;
+	line-height: 18px;
+	font-weight: bold;
+	padding: 45px 0 0 30px;
+}
+.headerPersonalBox SPAN
+{
+	font-size: 17px;
+	font-weight: normal;
+	font-style: normal;
+	color: #D5D5D5;
+	padding: 0 3px;
+}
+.icoLink IMG
+{
+	padding-left: 4px;
+}
+.personOut
+{
+}
+.personOut .personEnterBox
+{
+	display: block;
+	padding: 8px 0 2px 23px;
+}
+.personOut .italicText
+{
+	font-weight: bold;
+	color: #000000;
+	font-style: italic;
+	padding-left: 23px;
+}
+.personOut .italicText SPAN
+{
+	font-size: 11px;
+	color: #F10000;
+	font-weight: bold;
+}
+.personOut .italicText A
+{
+	font-weight: normal;
+}
+.sidebarBox
+{
+	overflow: hidden;
+	font-size: 12px;
+	line-height: 14px;
+	color: #24211D;
+	padding: 2px 0 15px;
+}
+.menu
+{
+	font-size: 13px;
+	line-height: 15px;
+	font-weight: bold;
+	color: #FFFFFF;
+	padding: 2px 0 15px;
+}
+.menu A, .sidebarBoxTitle A, .contentBoxTitle A
+{
+	text-decoration: none;
+}
+.sidebarBoxBG
+{
+	width: 221px;
+	position: relative;
+	background: url(/img/sidebarBoxLine.png) repeat-y 0 0;
+	padding: 0 4px;
+}
+.menuLeftLine
+{
+	border-left: 6px solid #006BBE;
+}
+.sidebarBoxTop
+{
+	width: 229px;
+	height: 2px;
+	background: url(/img/sidebarBoxTop.png) no-repeat 0 0;
+	position: absolute;
+	top: -2px;
+	left: 0;
+}
+.sidebarBoxBottom
+{
+	width: 229px;
+	height: 6px;
+	background: url(/img/sidebarBoxBottom.png) no-repeat 0 0;
+	position: absolute;
+	bottom: -6px;
+	left: 0;
+}
+.menuItem
+{
+	border-left: 1px solid #FFFFFF;
+	border-right: 15px solid #FFFFFF;
+}
+.menu SPAN
+{
+	display: block;
+	padding: 6px 0 10px 19px;
+	border-bottom: 1px solid #D5D5D5;
+}
+.fitstItem SPAN
+{
+	padding-top: 11px;
+}
+.lastItem SPAN
+{
+	padding-bottom: 14px;
+	border-bottom: none;
+}
+.menu .active
+{
+	border-right: 15px solid #006BBE;
+}
+.menu .active A
+{
+	color: #FFFFFF;
+}
+.menu .active SPAN
+{
+	background: #006BBE;
+	border-bottom: 1px solid #006BBE;
+}
+.subMenu
+{
+	color: #000101;
+	background: #C3EAFA;
+	border-left: 1px solid #FFFFFF;
+	border-right: 15px solid #C3EAFA;
+}
+.subMenu A
+{
+	font-weight: normal;
+}
+.subMenu SPAN
+{
+	border-bottom: none;
+}
+.subMenu .active
+{
+	border: none;
+}
+.subMenu .active A
+{
+	color: #0074C5;
+	font-weight: bold;
+}
+.subMenu .lastItem
+{
+	border-bottom: 1px solid #D5D5D5;
+}
+.sidebarBoxTitle
+{
+	background: #DCDCDC;
+	font-size: 14px;
+	line-height: 17px;
+	font-weight: bold;
+	padding: 5px 12px 3px;
+	border-bottom: 1px solid #B5B5B5;
+}
+.sidebarBoxContent
+{
+	overflow: hidden;
+	padding: 1px 12px 5px;
+}
+.sidebarBoxContent .contentImg
+{
+	text-align: center;
+	padding: 2px 0 0;
+}
+.sidebarBox .contentQueries
+{
+	padding: 6px 12px 12px;
+}
+.sidebarBox .contentQueries FORM
+{
+	padding: 10px 0;
+}
+.sidebarBox .contentQueries DIV
+{
+	overflow: hidden;
+	padding-bottom: 7px;
+}
+.sidebarBox .contentQueries LABEL
+{
+	display: block;
+	float: left;
+	overflow: hidden;
+}
+.sidebarBox .contentQueries LABEL INPUT
+{
+	float: left;
+	height: 13px;
+}
+.sidebarBox .contentQueries LABEL SPAN
+{
+	display: block;
+	width: 165px;
+	float: left;
+	padding-left: 5px;
+	margin: -1px 0 0;
+	cursor: pointer;
+}
+.sidebarBox .contentQueries .buttonBox
+{
+	float: left;
+	padding: 0;
+	margin-top: 4px;
+}
+.sidebarBox .resultsVoteBlock
+{
+	overflow: hidden;
+	padding: 10px 0 0;
+}
+.sidebarBox .resultsVote
+{
+	height: 2px;
+	width: 100%;
+	overflow: hidden;
+	background: #F1F1F1;
+	padding: 0 !important;
+	margin-top: 3px;
+}
+.sidebarBox .resultsVote DIV
+{
+	height: 2px;
+	float: left;
+	background: #87CEEB;
+	padding: 0;
+}
+.sidebarBox .contentQueries .italicText
+{
+	display: block;
+	padding: 20px 0 3px;
+}
+.sidebarBox .resultsVoteBlock .italicText
+{
+	float: right;
+	width: 60px;
+	text-align: right;
+	padding: 0;
+}
+.sidebarBox .resultsVoteBlock SPAN
+{
+	display: block;
+	padding-right: 50px;
+}
+.sidebarBox .contentQueries .italicText B
+{
+	font-size: 12px;
+	color: #24211D;
+	padding-right: 2px;
+}
+.contentOpinion
+{
+	overflow: hidden;
+	font-size: 12px;
+	line-height: 14px;
+	padding-top: 6px;
+}
+.contentOpinion IMG
+{
+	margin: 4px 10px 8px 0;
+	border: 3px solid #999DA0;
+}
+.contentOpinion P
+{
+	margin-bottom: 9px;
+}
+.textDiscr
+{
+	display: block;
+	font-size: 11px;
+	font-weight: bold;
+	padding-bottom: 2px;
+}
+.sidebarBox .contentJudge
+{
+	padding-top: 5px;
+	padding-bottom: 7px;
+}
+.sidebarBox .textTitle
+{
+	display: block;
+	font-weight: bold;
+	padding-bottom: 6px;
+}
+.sidebarBox .contentRating
+{
+	font-size: 12px;
+}
+.sidebarBox .contentRating OL
+{
+	padding: 10px 0 0 20px;
+}
+.blockLink
+{
+	background: url(/img/icoLink01.gif) no-repeat 0 0;
+	line-height: 16px;
+	padding: 0 0 0 21px;
+	margin: 15px 0 0 4px;
+}
+.blockLink A
+{
+	text-decoration: underline !important;
+	padding: 0 !important;
+}
+.icoLink02
+{
+	background: url(/img/icoLink02.gif) no-repeat 0 0;
+}
+.icoLink03
+{
+	background: url(/img/icoLink03.gif) no-repeat 0 0;
+}
+.icoLink04
+{
+	background: url(/img/icoLink04.gif) no-repeat 0 0;
+}
+.icoLink05
+{
+	background: url(/img/icoLink05.gif) no-repeat 0 0;
+}
+.icoLink06
+{
+	background: url(/img/icoLink06.gif) no-repeat 0 2px;
+}
+.icoLink07
+{
+	background: url(/img/icoLink07.gif) no-repeat 5px 2px;
+}
+.contentBox
+{
+	overflow: hidden;
+	/*[empty]font-size:;*/
+	/*[empty]line-height:;*/
+	/*[empty]color:;*/
+	padding: 2px 0 15px;
+}
+.contentBoxBG
+{
+	width: 470px;
+	position: relative;
+	background: url(/img/contentBoxLine.png) repeat-y 0 0;
+	padding: 0 4px;
+}
+.contentBoxTop
+{
+	width: 478px;
+	height: 2px;
+	background: url(/img/contentBoxTop.png) no-repeat 0 0;
+	position: absolute;
+	top: -2px;
+	left: 0;
+}
+.contentBoxBottom
+{
+	width: 478px;
+	height: 6px;
+	background: url(/img/contentBoxBottom.png) no-repeat 0 0;
+	position: absolute;
+	bottom: -6px;
+	left: 0;
+}
+.contentBoxTitle
+{
+	background: #DCDCDC;
+	padding: 3px 12px;
+	border-bottom: 1px solid #B5B5B5;
+}
+.contentBoxContent
+{
+	overflow: hidden;
+	padding: 25px 0 15px 15px;
+	margin-right: 15px;
+}
+.commentMainBlock
+{
+	margin: 0;
+}
+.commentMainTitle
+{
+	padding: 0 0 10px;
+}
+.commentMainTitle A
+{
+	text-decoration: none;
+}
+.commentMainTitle H2
+{
+	margin: 0 0 2px;
+}
+.commentMainBlock .lineDividerBlock
+{
+	margin-bottom: 17px;
+}
+.commentInner
+{
+	padding-top: 5px;
+	padding-right: 15px;
+	margin-right: 0;
+}
+.commentInner .commentBlock
+{
+	padding-bottom: 0;
+}
+.commentInner .commentText .commentImg
+{
+	padding: 2px 10px 0 0;
+}
+.commentInner .commentText .commentImg IMG
+{
+	margin: 0;
+}
+.commentInner .commentText
+{
+	padding-left: 0;
+}
+.commentInner .commentText .italicText
+{
+	display: block;
+	padding-bottom: 15px;
+}
+.contentBoxSmall
+{
+	padding: 17px 0 10px;
+}
+.contentBoxSmallTitle
+{
+	font-size: 16px;
+	line-height: 22px;
+	color: #24211D;
+	font-weight: bold;
+	margin: 0;
+}
+.contentBoxSmall .contentOpinion
+{
+	padding: 11px 0 0;
+}
+.contentBoxSmall .contentOpinion DIV
+{
+	padding: 0 0 3px;
+}
+.contentBoxSmall .contentOpinion DIV A
+{
+	text-decoration: none;
+}
+.contentBoxSmall .docsList
+{
+	padding: 11px 0 0;
+}
+.contentNewsList
+{
+	padding-top: 11px;
+	padding-bottom: 3px;
+}
+.contentNewsList DIV
+{
+	margin-bottom: 8px;
+}
+.contentNewsList .italicText
+{
+	display: block;
+	float: left;
+	padding-right: 5px;
+}
+.contentNewsList DIV A
+{
+	display: block;
+	text-decoration: none;
+	padding-left: 37px;
+}
+.contentNewsList SPAN
+{
+	display: block;
+	float: left;
+	padding-right: 5px;
+}
+.contentNews
+{
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+}
+.contentNews .contentNewsList
+{
+	font-size: 14px;
+	line-height: 17px;
+	padding: 13px 15px 3px 12px;
+}
+.contentNews .contentNewsList DIV
+{
+	margin-bottom: 15px;
+}
+.contentNews .contentNewsList .italicText
+{
+	padding-top: 1px;
+}
+.contentNews .lineDividerBlock
+{
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+.contentNewsTitle
+{
+	font-size: 12px;
+	font-style: italic;
+	font-weight: bold;
+	background: #D7F2FD;
+	padding: 5px 12px 3px;
+	margin-top: 1px;
+}
+.contentProject
+{
+	padding-top: 14px;
+	padding-left: 13px;
+	padding-bottom: 12px;
+}
+.contentProject DIV
+{
+	width: 150px;
+	overflow: hidden;
+	float: left;
+}
+.contentProject DIV IMG
+{
+	border: 3px solid #999DA0;
+}
+.contentProject SPAN
+{
+	display: block;
+	padding-left: 155px;
+}
+.contentProject .italicText
+{
+	padding: 3px 0 4px;
+}
+.contentCatalogList
+{
+	padding-top: 13px;
+	padding-bottom: 5px;
+}
+.contentCatalogList DIV
+{
+	padding-bottom: 10px;
+}
+.contentCatalogList .textTitle
+{
+	display: block;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 0 0 5px;
+}
+.contentCatalogList .textTitle A
+{
+	text-decoration: none;
+}
+.contentCatalogList .italicText
+{
+	display: block;
+	padding-bottom: 4px;
+}
+.contentAnaliticBox .lineDividerBlock
+{
+	margin-bottom: 20px;
+}
+.commentBlock
+{
+	overflow: hidden;
+	padding-bottom: 22px;
+}
+.commentImg
+{
+	width: 122px;
+	float: left;
+	overflow: hidden;
+	padding-bottom: 5px;
+	margin-top: 3px;
+}
+.commentImg IMG
+{
+	border: 3px solid #999DA0;
+}
+.commentText
+{
+	padding-left: 132px;
+}
+.commentTitle
+{
+	font-size: 12px;
+	line-height: 18px;
+	font-weight: bold;
+	padding-bottom: 3px;
+}
+.commentTitle A
+{
+	text-decoration: none;
+}
+.commentText .default
+{
+	padding: 4px 0 0;
+}
+.lineDividerBlock
+{
+	width: 450px;
+	overflow: hidden;
+	height: 1px;
+	margin: 6px 0 0 -6px;
+	border-bottom: 1px solid #D5D5D5;
+}
+.pagerCommentsBlock
+{
+	overflow: hidden;
+	font-size: 12px;
+	line-height: 15px;
+	padding: 25px 0 0;
+}
+.pagerCommentsBlock DIV
+{
+	float: left;
+	padding-top: 5px;
+	padding-right: 15px;
+}
+.pagerCommentsBlock SPAN
+{
+	display: block;
+	float: left;
+	height: 25px;
+	min-width: 14px;
+	color: #FFFFFF;
+	font-size: 14px;
+	line-height: 16px;
+	text-align: center;
+	padding: 0 0 0 6px;
+	margin-right: 2px;
+}
+.pagerCommentsBlock SPAN SPAN
+{
+	display: block;
+	float: none;
+	padding: 4px 7px 0 0;
+	margin: 0;
+}
+.pagerCommentsBlock .active, .pagerCommentsBlock .active:hover
+{
+	background: #007DC5 url(/img/pagerLeft.gif) no-repeat 0 0;
+	cursor: default;
+}
+.pagerCommentsBlock .active SPAN, .pagerCommentsBlock .active:hover SPAN
+{
+	background: url(/img/pagerRight.gif) no-repeat top right;
+	cursor: default;
+}
+.pagerCommentsBlock SPAN:hover
+{
+	background: #F42E00 url(/img/pagerLeftHover.gif) no-repeat 0 0;
+	cursor: pointer;
+}
+.pagerCommentsBlock SPAN:hover SPAN
+{
+	background: url(/img/pagerRightHover.gif) no-repeat right top;
+}
+.pagerCommentsBlock SPAN:hover A, .pagerCommentsBlock SPAN A.dashedLink:hover
+{
+	color: #FFFFFF !important;
+}
+.pagerCommentsBlock.linkHoverDashed SPAN:hover A, .pagerCommentsBlock.linkHoverDashed SPAN A:hover
+{
+	border-bottom: 1px dashed #FFFFFF !important;
+}
+.pagerCommentsBlock .textPager
+{
+	color: #010101;
+	font-size: 12px;
+	line-height: 15px;
+	padding-top: 5px;
+	padding-right: 5px;
+}
+.pageNavigatorBlock
+{
+	font-size: 12px;
+	line-height: 15px;
+	padding-bottom: 33px;
+}
+.pageNavigatorBlock DIV
+{
+	display: block;
+	line-height: 18px;
+	overflow: hidden;
+	padding: 16px 0 12px;
+}
+.pageNavigatorBlock .prev, .pageNavigatorBlock .next
+{
+	font-size: 14px;
+	color: #0074C5;
+	padding: 0 7px 0 3px;
+}
+.pageNavigatorBlock .prev A, .pageNavigatorBlock .next A
+{
+	font-size: 12px;
+}
+.pageNavigatorBlock .pagerCommentsBlock
+{
+	padding: 0;
+}
+.pageNavigatorBlock .pagerCommentsBlock SPAN
+{
+	margin-right: 1px;
+}
+.pageNavigatorBlock .pagerCommentsBlock SPAN SPAN
+{
+	margin-right: 0px;
+}
+.mentionBlock
+{
+	font-size: 16px;
+	line-height: 19px;
+	padding-bottom: 15px;
+}
+.articles .commentText
+{
+	padding-left: 0;
+}
+.dateList
+{
+	padding-bottom: 5px;
+}
+.dateList SPAN
+{
+	clear: both;
+	font-size: 12px;
+	line-height: 17px;
+	padding-left: 8px;
+}
+.dateList SPAN A
+{
+	text-decoration: none;
+	border-bottom: 1px dashed #0072BC;
+}
+.dateList SPAN A:hover
+{
+	border-bottom: 1px dashed #F42E00 !important;
+}
+.commentBanner
+{
+	float: right;
+	margin: 0 0 15px 15px;
+}
+.commentBanner IMG
+{
+	margin: 0;
+}
+.commentInner .commentText .italicText B
+{
+	font-size: 12px;
+	color: #000000;
+}
+.commentInner .newArticle .italicText
+{
+	padding: 10px 0;
+}
+.commentInner .commentBlockInner, .commentBlockInner
+{
+	overflow: hidden;
+	background: #F4F4F4;
+	padding: 8px 15px 12px;
+	margin: -5px -15px 0;
+}
+.commentBlockInner .commentText
+{
+	padding-left: 132px;
+}
+.commentBlockInner .commentText .commentTitle
+{
+	font-size: 11px;
+	line-height: 16px;
+	padding: 3px 0 0;
+}
+.commentBlockInner .commentText .italicText
+{
+	padding-bottom: 0;
+}
+.commentBlockInner .commentText .default
+{
+	font-size: 12px;
+	font-style: italic;
+}
+.linkArticle
+{
+	font-size: 13px !important;
+	line-height: 15px;
+	font-weight: bold;
+	margin: 2px 0 3px 3px;
+}
+.catalog
+{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.numberBlock
+{
+	padding-bottom: 20px;
+	margin-left: -3px;
+}
+.numberBlock SPAN
+{
+	font-size: 16px;
+	line-height: 20px;
+	color: #666666;
+	font-style: italic;
+}
+.numberBlock .blockLink
+{
+	display: inline;
+	margin-left: 10px;
+}
+.catalogItem
+{
+	padding: 15px 0 17px;
+}
+.catalogItem DIV
+{
+	font-size: 16px;
+	line-height: 20px;
+	color: #006BBE;
+	font-weight: bold;
+	padding: 0 0 5px;
+}
+.catalogItem DIV A
+{
+	text-decoration: none;
+}
+.catalogItem DIV SPAN
+{
+	display: inline;
+	color: #666666;
+	font-size: 16px;
+	font-style: italic;
+	font-weight: normal;
+}
+.catalogItem SPAN
+{
+	display: block;
+	font-size: 12px;
+	line-height: 14px;
+	padding: 5px 0;
+}
+.catalogItemInner
+{
+	padding-right: 15px;
+	padding-bottom: 10px;
+	margin-right: 0;
+}
+.catalogSelection
+{
+	overflow: hidden;
+	white-space: nowrap;
+	padding-bottom: 13px;
+	margin-left: -5px;
+}
+.selectionPart
+{
+	width: 200px;
+	float: left;
+	padding: 0 20px 0 0;
+}
+.catalogSelection SPAN
+{
+	display: block;
+	float: left;
+	height: 16px;
+	font-size: 12px;
+	line-height: 15px;
+	text-align: center;
+	color: #FFFFFF;
+	padding: 0 0 0 6px;
+	margin-bottom: 8px;
+	clear: both;
+}
+.catalogSelection SPAN SPAN
+{
+	display: block;
+	float: none;
+	margin: 0;
+	padding: 0 7px 0 0;
+}
+.catalogSelection SPAN SPAN DIV
+{
+	display: inline;
+	color: #666666;
+	font-size: 11px;
+	font-style: italic;
+}
+.catalogSelection .active
+{
+	background: #007DC5 url(/img/catalogSecLeft.gif) no-repeat scroll 0 0;
+}
+.catalogSelection .active SPAN
+{
+	background: transparent url(/img/catalogSecRight.gif) no-repeat scroll right top;
+	min-width: 14px;
+}
+.catalogSelection .active DIV, .catalogSelection .selectionPart .active SPAN A
+{
+	color: #FFFFFF;
+}
+.selectionForThio
+{
+	margin-right: -10px;
+}
+.selectionForThio .selectionPart
+{
+	width: 130px;
+}
+.catalogItemInner .lineDividerBlock
+{
+	margin-top: 0;
+	margin-bottom: 0;
+}
+.itemContentBlock
+{
+	padding: 15px 0 25px;
+}
+.itemPictureBlock
+{
+	overflow: hidden;
+	padding: 5px 0 15px;
+}
+.itemPictureBlock IMG
+{
+	margin-bottom: 10px;
+}
+.itemContentBlock .italicText
+{
+	display: block;
+	padding: 0 0 7px;
+}
+.itemTitle
+{
+	padding: 0 0 5px;
+}
+.itemTitle H3
+{
+	margin: 0 0 2px;
+}
+.itemTextBlock
+{
+	padding: 10px 0 0;
+}
+.itemTextBlock SMALL, .datosBlockInner SMALL, .contentContacts SMALL
+{
+	font-size: 12px;
+	line-height: 18px;
+	font-weight: bold;
+}
+.raiting
+{
+	font-size: 14px;
+	line-height: 18px;
+	color: #000101;
+	padding-left: 5px;
+}
+.raitingUp
+{
+	color: #24C100;
+	padding-left: 7px;
+}
+.raitingDown
+{
+	color: #FF0000;
+	padding-left: 7px;
+}
+.dataLinksBlock
+{
+	padding: 20px 0 0;
+}
+.dataLinksBlock .dashedLink
+{
+	font-size: 14px;
+	line-height: 18px;
+	font-weight: bold;
+}
+.datosBlock
+{
+	/*[empty]padding:;*/
+}
+.datosBlockInner
+{
+	display: none;
+	padding-bottom: 20px;
+}
+.dataLinksTitle
+{
+	overflow: hidden;
+	padding-bottom: 10px;
+	margin-left: -6px;
+}
+.dataLinksTitle DIV
+{
+	padding-left: 6px;
+}
+.dataLinksTitle SPAN
+{
+	display: block;
+	height: 25px;
+}
+.dataLinksTitle .active
+{
+	display: block;
+	float: left;
+	padding-left: 0;
+}
+.dataLinksTitle .active A
+{
+	color: #FFFFFF;
+	border-color: #FFFFFF;
+}
+.dataLinksTitle .active SPAN
+{
+	background: #007DC5 url(/img/datosLinkLeft.gif) no-repeat scroll 0 0;
+	padding-left: 6px;
+}
+.dataLinksTitle .active SPAN SPAN
+{
+	background: transparent url(/img/datosLinkRight.gif) no-repeat scroll right top;
+	min-width: 14px;
+	padding-top: 2px;
+	padding-left: 0;
+	padding-right: 6px;
+}
+.datosBlockInner H4
+{
+	margin: 0 0 12px;
+}
+.datosReportBlock
+{
+	display: block;
+	line-height: 19px;
+	padding-bottom: 10px;
+}
+.datosReportBlock DIV
+{
+	font-size: 12px;
+	line-height: 17px;
+	font-style: normal;
+	color: #010000;
+}
+.datosReportBlock B
+{
+	font-size: 12px;
+	color: #010000;
+}
+.contactsBlock
+{
+}
+.contactsBlockInner
+{
+	display: none;
+	padding-top: 1px;
+	padding-bottom: 25px;
+}
+.contactsBlockInner .contentOpinion
+{
+	overflow: hidden;
+	padding-bottom: 8px;
+}
+.contactsBlockInner .contentOpinion DIV
+{
+	width: 58px;
+	float: left;
+	overflow: hidden;
+}
+.contactsBlockInner .contentOpinion DIV IMG
+{
+	margin: 2px 0 0;
+}
+.contactsBlockInner .contentOpinion .italicText
+{
+	display: block;
+	padding-left: 63px;
+}
+.contactsBlockInner .contentOpinion .italicText .textDiscr
+{
+	font-style: normal;
+	color: #000000;
+	padding-bottom: 0;
+}
+.contactsBlockInner .contentOpinion .italicText BIG
+{
+	display: block;
+	font-size: 12px;
+	line-height: 18px;
+	font-style: normal;
+	color: #010000;
+	padding: 7px 0 8px;
+}
+.accessBlock
+{
+}
+.accessBlockInner
+{
+	display: none;
+	padding-bottom: 30px;
+}
+.accessBlockInner H3
+{
+	line-height: 15px;
+}
+.accessBlockInner .italicText
+{
+	display: block;
+	padding-bottom: 7px;
+}
+.opinionsBlock
+{
+	overflow: hidden;
+	padding-left: 15px;
+	margin: 0 -15px;
+}
+.opinionsBlockInner
+{
+	display: none;
+	font-size: 12px;
+	line-height: 15px;
+	padding: 5px 0 10px;
+}
+.opinionsContentBlock
+{
+	padding-bottom: 5px;
+}
+.opinionContent
+{
+	padding-bottom: 15px;
+}
+.opinionContent .italicText
+{
+	display: block;
+	padding-top: 1px;
+	padding-bottom: 10px;
+}
+.color01
+{
+	color: #468D1E;
+}
+.color02
+{
+	color: #B42626;
+}
+.formOpinionLink
+{
+	width: 100%;
+	padding: 15px 15px 17px;
+	margin-left: -15px;
+}
+.formOpinionLink .dashedLink
+{
+	font-size: 12px;
+}
+.linkActiveBG
+{
+	background: #F3FBFE;
+}
+.formOpinionText
+{
+	display: none;
+	overflow: hidden;
+	width: 100%;
+	background: #F3FBFE;
+	padding: 0 15px 23px;
+	margin-left: -15px;
+}
+.formOpinionText LABEL
+{
+	display: block;
+	width: 100%;
+	padding-bottom: 5px;
+}
+.formOpinionText LABEL SPAN
+{
+	display: block;
+	font-size: 12px;
+	padding-left: 20px;
+}
+.formOpinionText INPUT
+{
+	float: left;
+	margin-top: 2px;
+}
+.formOpinionText TEXTAREA
+{
+	width: 412px;
+	height: 163px;
+	margin-bottom: 18px;
+}
+.formOpinionText .buttonBox
+{
+	float: left;
+}
+.formOpinionText P
+{
+	margin: 14px 0 8px;
+}
+.activeRadioColor1
+{
+	font-weight: bold;
+	color: #468D1E;
+}
+.activeRadioColor2
+{
+	font-weight: bold;
+	color: #B42626;
+}
+.activeChecked SPAN
+{
+	font-weight: bold !important;
+}
+.partnersBlock
+{
+}
+.catalogItemEdit .partnersBlock .buttonBox
+{
+	padding-bottom: 10px;
+}
+.partnersBlockInner
+{
+	display: none;
+	padding: 5px 0 5px 2px;
+}
+.contentLinks
+{
+	padding-top: 20px;
+}
+.linkBlock
+{
+	padding: 10px 0 0;
+}
+.linkBlock DIV
+{
+	overflow: hidden;
+	padding: 0 0 30px;
+}
+.linkBlock DIV DIV
+{
+	width: 120px;
+	overflow: hidden;
+	float: left;
+	padding: 0;
+}
+.linkBlock SPAN
+{
+	display: block;
+	padding: 3px 0 0 135px;
+}
+.linkBlock .italicText
+{
+	padding-left: 0;
+}
+.contentLinks .lineDividerBlock
+{
+	margin-bottom: 18px;
+}
+.contentContacts
+{
+	padding: 22px 5px 10px 15px;
+	margin-right: 0;
+}
+.contentContacts DIV
+{
+	overflow: hidden;
+}
+.contentContacts SMALL
+{
+	display: block;
+	width: 85px;
+	float: left;
+}
+.contentContacts SPAN
+{
+	display: block;
+	padding-left: 90px;
+	padding-bottom: 20px;
+}
+.contactMapBlock
+{
+	padding: 0;
+	margin-left: -5px;
+}
+.contactMapBlock IMG
+{
+	margin: 0;
+}
+.contentContacts .contactsBlockInner
+{
+	display: block;
+	padding-bottom: 0;
+	margin-top: -5px;
+}
+.contentContacts .contentOpinion
+{
+	padding: 0;
+}
+.contentContacts .contentOpinion .textDiscr
+{
+	padding-left: 0;
+}
+.contentContacts .contentOpinion .italicText
+{
+	padding-bottom: 15px;
+}
+.contentContacts .lineDividerBlock
+{
+	margin: 7px 0 20px;
+}
+.contentRatingBlock
+{
+	padding: 20px 15px 10px;
+	margin-right: 0;
+}
+.ratingItem
+{
+	padding-bottom: 20px;
+}
+.contentRatingBlock .contentRating
+{
+	width: 470px;
+	overflow: hidden;
+	font-size: 12px;
+	margin-left: -15px;
+}
+.contentRatingBlock .contentRating OL
+{
+	list-style-position: inside;
+	padding-left: 0;
+	margin-bottom: 0;
+}
+.contentRatingBlock .contentRating LI
+{
+	padding: 1px 15px;
+	cursor: pointer;
+}
+.contentRatingBlock .contentRating LI:hover
+{
+	background: #D7F2FD;
+}
+.contentRatingBlock .blockLink
+{
+	margin: 7px 0 0 20px;
+}
+.contentRatingBlock .raiting
+{
+	float: right;
+}
+.contentRatingBlock .lineDividerBlock
+{
+	margin-bottom: 18px;
+}
+.contentRatingPager
+{
+	padding-bottom: 20px;
+}
+.contentRatingPager .ratingItem
+{
+	padding-bottom: 4px;
+}
+.contentRatingPager .lineDividerBlock
+{
+	margin-bottom: 0;
+}
+.contentRatingPager .pageNavigatorBlock
+{
+	padding-bottom: 0;
+}
+.ratingSearchBlock
+{
+	overflow: hidden;
+	padding: 7px 0 15px;
+}
+.ratingSearchBlock INPUT
+{
+	width: 288px;
+	float: left;
+	margin-right: 8px;
+}
+.ratingSearchBlock .buttonBox
+{
+	float: left;
+}
+.ratingSearchBlock .buttonText
+{
+	text-align: center;
+	padding: 4px 5px 3px;
+}
+.ratingSearchBlock .buttonText IMG
+{
+	margin: 4px 0 0;
+}
+.contentRating .findBlock
+{
+	background: #FBD103;
+}
+.personItem
+{
+	padding-bottom: 0;
+}
+.personItem H3
+{
+	margin-top: 10px;
+	margin-bottom: 0;
+}
+.personItem .buttonBox
+{
+	float: left;
+	margin: 15px 5px 17px 0;
+}
+.personEditBox
+{
+	padding-bottom: 0;
+}
+.personEdit
+{
+	display: block;
+	padding-bottom: 0;
+}
+.personEdit INPUT
+{
+	width: 188px;
+}
+.wideInput INPUT
+{
+	width: 415px;
+}
+.shortInput
+{
+	padding-right: 63px !important;
+}
+.shortInput INPUT
+{
+	width: 150px;
+}
+.wideInputBox
+{
+	margin-right: -15px;
+}
+.personEdit .buttonBox
+{
+	margin: 10px 10px 5px 0;
+}
+.personEdit .buttonBox DIV
+{
+	padding: 0;
+}
+.personEdit .buttonBox .buttonText
+{
+	padding: 4px 8px 3px;
+}
+.personEdit .italicText
+{
+	display: block;
+	float: left;
+	padding-top: 20px;
+}
+.personEdit .commentMainTitle
+{
+	padding: 20px 0 5px;
+}
+.shortestInput INPUT
+{
+	width: 113px;
+}
+.wideInputBox SMALL
+{
+	display: block;
+	float: left;
+	font-size: 12px;
+	padding: 5px 7px 0 15px;
+}
+.warning
+{
+	display: block !important;
+	overflow: hidden;
+	width: 100%;
+/*for ie*/
+	font-weight: normal !important;
+	font-size: 12px !important;
+	line-height: 14px;
+	color: #F10000;
+	padding: 5px 0 0 3px;
+}
+.personEditBox .wideInputBox .shortestInput .warning
+{
+	padding-left: 198px;
+}
+.dataEditBox
+{
+	padding-bottom: 0;
+}
+.dataEditBox .commentMainTitle
+{
+	padding: 20px 0 5px;
+}
+.dataEditBox .blockLink
+{
+	margin: 2px 0 8px -5px;
+}
+.dataEditBox .blockLink A
+{
+	text-decoration: none !important;
+}
+.dataEditBox .contentCatalogList
+{
+	display: block;
+	padding-top: 23px;
+}
+.dataEditBox .contentCatalogList DIV
+{
+	padding-bottom: 22px;
+}
+.dataEditBox .contentCatalogList .textTitle
+{
+	font-size: 14px;
+}
+.dataEditBox .contentCatalogList .textTitle IMG
+{
+	padding-left: 2px;
+	margin-bottom: -2px;
+}
+.dataEditBox .personEdit
+{
+	display: none;
+}
+.dataEditBox .wideInputBox
+{
+	padding-bottom: 30px;
+}
+.dataEditBox .wideInputBox INPUT
+{
+	width: 330px;
+}
+.dataEditBox .shortInput
+{
+	padding-right: 0 !important;
+	padding-bottom: 27px;
+}
+.dataEditBox .shortInput INPUT
+{
+	width: 188px;
+}
+.dataEditBox .personEdit .buttonBox
+{
+	float: left;
+	padding: 0;
+	margin: 1px 0 0 5px;
+}
+.listCompanyBlock
+{
+	padding-bottom: 5px;
+}
+.listCompanyBlock .lineDividerBlock
+{
+	margin-bottom: 22px;
+}
+.listCompanyBlock .commentMainTitle
+{
+	padding: 0 0 15px;
+}
+.listCompanyBlock .commentMainTitle H2
+{
+	display: inline;
+}
+.listCompanyBlock .commentMainTitle .blockLink
+{
+	display: inline;
+	margin: 0 0 0 10px;
+}
+.itemCompany
+{
+	overflow: hidden;
+	padding-bottom: 30px;
+}
+.itemCompany .textTitle
+{
+	display: block;
+	font-size: 14px;
+	line-height: 15px;
+	font-weight: bold;
+	padding: 0 0 5px;
+}
+.itemCompany .textTitle A
+{
+	text-decoration: none;
+}
+.itemCompany .italicText
+{
+	display: block;
+	padding-bottom: 0;
+}
+.itemCompany .buttonBox
+{
+	float: left;
+	margin: 20px 10px 0 0;
+}
+.linkCancel
+{
+	white-space: nowrap;
+	float: left;
+	line-height: 16px;
+	padding: 25px 0 0;
+}
+.linkCancel IMG
+{
+	margin-bottom: -3px;
+	padding-right: 1px;
+}
+.datosBlockInnerEdit
+{
+	padding-bottom: 10px;
+}
+.catalogItemEdit .accessBlockInner
+{
+	padding-bottom: 20px;
+}
+.itemContentBlock
+{
+	overflow: hidden;
+}
+.catalogItemEdit .datosBlock, .catalogItemEdit .contactsBlock, .catalogItemEdit .accessBlock, .catalogItemEdit .partnersBlock, .catalogItemEdit .recommenBlock
+{
+	overflow: hidden;
+}
+.catalogItemEdit
+{
+}
+.catalogItemEdit .itemContentBlock
+{
+	padding-bottom: 0;
+}
+.catalogItemEdit .itemTextBlock
+{
+	overflow: hidden;
+/*for ie*/
+}
+.catalogItemEdit .itemContentBlock .buttonBox
+{
+	padding-bottom: 15px;
+}
+.catalogItemEdit .buttonBox
+{
+	float: left;
+	padding-bottom: 20px;
+	margin-bottom: 0;
+}
+.datosBlockInnerEdit
+{
+	display: block;
+}
+.catalogItemEdit .commentMainTitle
+{
+	padding: 20px 0;
+}
+.catalogItemEdit .dataLinksBlock
+{
+	padding: 0;
+}
+.catalogItemEdit .formOpinionText
+{
+}
+.catalogItemEdit .formOpinionText .commentMainTitle
+{
+	padding: 23px 0 12px;
+}
+.catalogItemEdit .formOpinionText .italicText
+{
+	float: none;
+	padding-top: 2px;
+}
+.catalogItemEdit .formOpinionText OL
+{
+	padding-left: 20px;
+	margin-bottom: -16px;
+}
+.catalogItemEdit .formOpinionText OL LI
+{
+	font-size: 12px;
+	padding-bottom: 10px;
+}
+.catalogItemEdit .formOpinionText OL LI A
+{
+	font-size: 16px;
+	line-height: 20px;
+}
+.catalogItemEdit .formOpinionText LI A IMG
+{
+	margin-bottom: -1px;
+}
+.accessBlockEdit
+{
+	padding: 0 !important;
+	/*[empty]margin:;*/
+}
+.accessBlockEdit .wideInput
+{
+	padding-bottom: 5px;
+	padding-left: 20px;
+}
+.accessBlockEdit .wideInput INPUT
+{
+	width: 392px;
+}
+.accessBlockEdit .wideInputBox
+{
+	padding-left: 20px;
+}
+.accessBlockEdit .wideInputBox INPUT
+{
+	width: 250px;
+	margin-right: 7px;
+}
+.accessBlockEdit .wideInputBox SPAN, .companyEdit .wideInputBox SPAN
+{
+	font-size: 12px;
+	font-weight: normal;
+}
+.accessBlockEdit .wideInputBox .buttonBox
+{
+	padding: 2px 5px 0 0;
+	margin: 0;
+}
+.buttonBoxForm
+{
+	overflow: hidden;
+	padding: 20px 0;
+}
+.buttonBoxForm .buttonBox
+{
+	padding: 0;
+	margin: 0;
+}
+.buttonBoxForm .italicText
+{
+	display: block;
+	float: left !important;
+	padding: 5px 0 0 10px !important;
+}
+.recommenBlock
+{
+}
+.recommenBlock .italicText
+{
+	display: inline;
+	float: none;
+}
+.recommenBlock .imgEdit
+{
+	width: 150px;
+}
+.imgEditBlock
+{
+	overflow: hidden;
+	padding-top: 12px;
+	padding-bottom: 30px;
+}
+.imgEdit
+{
+	min-height: 100px;
+	float: left;
+	overflow: hidden;
+	background: #FFFFFF url(/img/default_logo.gif) no-repeat 0 0;
+	margin-top: -10px;
+}
+.imgEdit IMG
+{
+	margin: 0;
+}
+.imgEditBlock INPUT
+{
+	float: right;
+	width: 178px;
+	margin-right: 5px;
+	margin-bottom: 7px;
+}
+.imgEditBlock .buttonBox
+{
+	float: right;
+	padding: 0;
+	margin: 2px 15px 0 0;
+}
+.companyEdit
+{
+	display: block;
+}
+.companyEdit .wideInput
+{
+	overflow: hidden;
+	padding-bottom: 20px;
+}
+.companyEdit .pagerCommentsBlock
+{
+	line-height: 20px;
+	padding: 5px 0 15px;
+}
+.companyEdit .pagerCommentsBlock SPAN
+{
+	font-weight: normal;
+}
+.companyEdit .pagerCommentsBlock SELECT
+{
+	width: 133px;
+}
+.companyEdit .wideInputBox, .companyEdit .shortInput, .companyEdit .notLongInput
+{
+	overflow: hidden;
+	padding-right: 0 !important;
+}
+.companyEdit .wideInput .wideInputBox
+{
+	margin-top: 13px;
+}
+.companyEdit .wideInput SPAN .italicText
+{
+	display: inline;
+	font-weight: normal;
+	padding-left: 7px;
+}
+.companyEdit .wideInputBox DIV
+{
+	float: left;
+}
+.companyEdit .wideInput .wideInputBox .shortInput INPUT
+{
+	width: 50px;
+	margin-top: 0;
+	margin-right: 35px;
+}
+.companyEdit .wideInputBox SELECT
+{
+	width: 330px;
+}
+.companyEdit .wideInput .wideInputBox .notLongInput INPUT
+{
+	width: 315px;
+}
+.companyEdit .wideInput .wideInputBox .shortestInput
+{
+	margin-right: 33px;
+}
+.companyEdit .wideInput .wideInputBox DIV INPUT
+{
+	width: 116px;
+}
+.companyEdit .wideInput .wideInputBox .shortestInput INPUT
+{
+	width: 26px;
+}
+.shortInputBox
+{
+}
+.shortInputBox .wideInput
+{
+	width: 200px;
+	float: left;
+}
+.shortInputBox INPUT
+{
+	width: 150px;
+	margin-bottom: 10px;
+}
+.shortInputBox A
+{
+	display: block;
+	width: 16px;
+	float: left;
+	margin: 3px 0 0 2px;
+}
+.shortInputBox .italicText
+{
+	float: left !important;
+	margin-top: -5px;
+}
+.shortInputBox .italicText A
+{
+	display: inline;
+	float: none;
+	line-height: 16px;
+	font-weight: normal;
+}
+.companyEdit .shortInputBox .wideInput SPAN
+{
+	font-size: 14px;
+	font-weight: bold;
+}
+.companyEdit .checkboxInput
+{
+	padding-bottom: 15px;
+}
+.checkboxInput SPAN
+{
+	padding-bottom: 12px;
+}
+.companyEdit .checkboxInput LABEL SPAN
+{
+	font-weight: normal;
+	padding-bottom: 0;
+}
+.checkboxInput LABEL
+{
+	padding-bottom: 0;
+	margin-bottom: 10px;
+}
+.checkboxInput INPUT
+{
+	width: 15px;
+}
+.wideInput TEXTAREA
+{
+	margin: 0 0 0 1px;
+}
+.wideInput P
+{
+	margin: 10px 0 12px;
+}
+.companyEdit .buttonBoxForm
+{
+	padding: 0;
+}
+.companyEdit .buttonBoxForm SPAN
+{
+	font-weight: normal;
+}
+.companyEdit .shortInputBox .warning
+{
+	float: left;
+	margin-top: -9px;
+}
+.dataEdit
+{
+}
+.dataEdit .wideInputBox DIV
+{
+	padding-bottom: 20px;
+}
+.dataEdit .wideInputBox SPAN
+{
+	font-size: 14px;
+	font-weight: bold;
+}
+.dataEdit .shortBoxData
+{
+	overflow: hidden;
+}
+.dataEdit .shortBoxData DIV
+{
+	width: 125px;
+}
+.dataEdit .widthInput01 INPUT
+{
+	width: 113px;
+	margin-bottom: 0;
+}
+.dataEdit .widthInput02 INPUT
+{
+	width: 140px;
+}
+.dataEdit .widthInput03 INPUT
+{
+	width: 190px;
+}
+.dataEdit .widthInput04 INPUT
+{
+	width: 23px;
+	margin-bottom: 0;
+}
+.dataEdit .widthInput05 INPUT
+{
+	width: 41px;
+}
+.dataEdit .widthInput06 INPUT
+{
+	width: 400px;
+}
+.dataEdit .shortBoxData .italicText
+{
+	display: block;
+	overflow: hidden;
+	padding-top: 5px;
+}
+.dataEdit .shortBoxData .italicText .dashedLink
+{
+	font-size: 11px;
+	font-weight: normal;
+}
+.dataEdit .widthInput04 DIV
+{
+	width: 40px;
+	float: left;
+	padding-bottom: 10px;
+	margin-top: 10px;
+	margin-right: 8px;
+}
+.addReportBlock .widthInput04, .addReportBlock .widthInput01
+{
+	padding-bottom: 5px !important;
+}
+.dataEdit .widthInput04 DIV SPAN
+{
+	font-size: 12px;
+	font-weight: normal;
+}
+.dataEdit DIV.widthBlock05
+{
+	width: 55px;
+}
+.addReportBlock, .addFileList
+{
+	overflow: hidden;
+}
+.addReportBlock
+{
+	padding-bottom: 0 !important;
+}
+.dataEdit .wideInputBox .lineDividerBlock
+{
+	padding-bottom: 5px;
+}
+.addReportBlock .wideInput
+{
+	width: 220px;
+}
+.addReportBlock .wideInput SPAN
+{
+	display: block;
+	float: left;
+	font-size: 16px !important;
+	font-weight: normal !important;
+	padding-top: 33px;
+	padding-right: 7px;
+}
+.addReportBlock .wideInput DIV SPAN
+{
+	font-size: 12px !important;
+	font-weight: normal !important;
+	padding-top: 0;
+}
+.addReportBlock .italicText
+{
+	width: 100%;
+	text-align: right;
+	padding-top: 15px !important;
+	padding-bottom: 1px;
+}
+.addReportBlock .italicText .dashedLink
+{
+	font-size: 11px;
+	margin-right: 20px;
+}
+.addReportBlock .italicText IMG
+{
+	margin: 0 0 -3px;
+}
+.addReportBlock .calendarPopap A
+{
+	margin: 0;
+}
+.addReportBlock .widthInput01 DIV
+{
+	width: 130px;
+	padding-right: 3px;
+	padding-bottom: 10px;
+}
+.addReportBlock .widthInput01 SPAN
+{
+	padding-top: 23px;
+}
+.addFileList
+{
+	width: 100%;
+	padding-bottom: 17px !important;
+}
+.addFileList OL
+{
+	padding-left: 25px !important;
+}
+.addFileList LI
+{
+	/*[empty]padding-bottom:;*/
+}
+.addFileList LI .textTitle
+{
+	display: inline;
+	font-size: 12px;
+}
+.addFileList LI .italicText
+{
+	display: inline;
+	float: none !important;
+	font-weight: normal;
+}
+.addFileList OL LI A
+{
+	display: inline;
+	float: none;
+	font-size: 16px;
+	font-weight: normal;
+	line-height: 20px;
+}
+.addFileList SMALL
+{
+	display: block;
+	float: none;
+	font-weight: normal;
+	padding: 0 0 5px;
+}
+.addFileList .addFileForm
+{
+	overflow: hidden;
+	display: block;
+	padding: 0 0 0 28px;
+	margin-top: -18px;
+}
+.addFileForm INPUT
+{
+	width: 184px;
+	margin: 1px 5px 0 0;
+}
+.addFileList .addFileForm .wideInput
+{
+	padding-bottom: 0;
+}
+.addFileList DIV
+{
+	padding-bottom: 0 !important;
+}
+.addFileList .buttonText
+{
+	padding-bottom: 3px !important;
+}
+.addItemReportBlock
+{
+	display: block;
+	padding: 0 0 10px 20px !important;
+	margin: 10px 0 0 !important;
+}
+.addItemReportBlock .dashedLink
+{
+	font-size: 11px;
+	text-decoration: none !important;
+	margin-top: 0;
+}
+.catalogItemEdit .partnersBlockInner
+{
+	display: block;
+}
+.companyItemInner
+{
+	margin-right: 0;
+	padding: 25px 15px 0;
+}
+.companyItemInner .lineDividerBlock, .contactsItemInner .lineDividerBlock
+{
+	margin-bottom: 0;
+	margin-top: 0;
+}
+.companyPartnersEdit, .companyPartnersEdit .wideInputBox, .companyPartnersEdit .shortInput, .contactsItemInner
+{
+	display: block;
+	overflow: hidden;
+}
+.companyPartnersEdit
+{
+	padding-bottom: 7px;
+}
+.companyPartnersEdit .contentCatalogList
+{
+	padding-top: 0;
+	padding-bottom: 10px;
+}
+.companyPartnersEdit .contentCatalogList .textTitle
+{
+	font-size: 14px;
+	padding-top: 2px;
+}
+.companyPartnersEdit .contentCatalogList .textTitle IMG
+{
+	padding-left: 2px;
+	margin-bottom: -2px;
+}
+.companyPartnersEdit .contentCatalogList .italicText
+{
+	padding: 0 0 3px;
+}
+.companyPartnersEdit .wideInputBox
+{
+	padding: 10px 0;
+}
+.companyPartnersEdit .wideInputBox SPAN, .companyPartnersEdit .shortInput SPAN
+{
+	display: block;
+	float: left;
+	width: 100%;
+	padding-bottom: 3px;
+}
+.companyPartnersEdit .wideInputBox INPUT
+{
+	width: 330px;
+	margin: 0 5px 0 0;
+}
+.companyPartnersEdit .shortInput
+{
+	padding: 6px 0 0 !important;
+}
+.companyPartnersEdit .shortInput SPAN
+{
+	padding-bottom: 7px;
+}
+.companyPartnersEdit .shortInput INPUT
+{
+	width: 187px;
+	margin: 0 5px 0 0;
+}
+.contactsItemInner
+{
+	margin-right: 0;
+	padding-right: 15px;
+}
+.contactsEdit
+{
+	display: block;
+	padding-bottom: 18px;
+}
+.addContactBlock
+{
+}
+.contactsEdit .addContactBlock .widthInput03 INPUT
+{
+	width: 180px;
+}
+.addContactBlock .checkboxInput
+{
+	padding: 25px 12px 0 5px;
+}
+.addContactBlock .checkboxInput SPAN
+{
+	font-size: 12px;
+	line-height: 16px;
+}
+.addContactBlock .wideInputBox .italicText
+{
+	float: left;
+	padding: 25px 0 0;
+}
+.addContactBlock .wideInputBox .italicText IMG
+{
+	margin: 0 1px -2px 0;
+}
+.addContactBlock .wideInputBox .italicText .dashedLink
+{
+	font-size: 11px;
+	line-height: 16px;
+	font-weight: normal;
+}
+.italicTextLink
+{
+	width: 155px;
+	padding-right: 25px;
+}
+.contactsEdit .italicTextLink .italicText
+{
+	padding: 4px 0 0;
+}
+.addContactBlock .widthInput04 DIV
+{
+	padding-bottom: 0;
+}
+.addContactBlock .calendarPopap
+{
+	padding: 37px 0 0 !important;
+	margin: 0 !important;
+}
+.addContactBlock .imgEditBlock
+{
+	padding-top: 0;
+	padding-right: 20px;
+	padding-bottom: 25px;
+}
+.addContactBlock .imgEditBlock SPAN
+{
+	padding-bottom: 7px;
+}
+.addContactBlock .imgEdit
+{
+	width: 56px;
+	min-height: 72px;
+	background: url(/img/default_face.gif) no-repeat 0 0;
+	margin-top: 0;
+}
+.addContactBlock .imgEditBlock INPUT
+{
+	width: 195px;
+	margin-right: 0;
+}
+.addContactBlock .imgEditBlock .buttonBox
+{
+	margin: 1px 0 0 5px;
+}
+.contactsEdit .blockLink .dashedLink
+{
+	font-weight: normal;
+	font-size: 11px;
+	line-height: 15px;
+}
+.contactsEdit .blockLink A
+{
+	text-decoration: none !important;
+}
+.contactsEdit .blockLink
+{
+	padding: 0 0 40px 21px !important;
+	margin: 10px 0 0;
+}
+.accessEdit
+{
+}
+.addAccessBlock .wideInputBox .italicText
+{
+	padding-left: 7px;
+}
+.selectBox
+{
+	padding: 5px 0 25px;
+}
+.selectBox SELECT
+{
+	width: 420px;
+	margin-top: 2px;
+}
+.accessListBox
+{
+}
+.accessList
+{
+	overflow: hidden;
+	font-size: 14px;
+	line-height: 16px;
+	padding: 15px 0 10px;
+}
+.accessList A
+{
+	text-decoration: none;
+}
+.accessList DIV
+{
+	color: #006BBE;
+	padding-bottom: 15px;
+}
+.accessList .active
+{
+	font-weight: bold;
+}
+.accessList .italicText
+{
+	display: inline;
+	float: none;
+	font-weight: normal;
+}
+.subAccessList
+{
+	display: none;
+	overflow: hidden;
+	font-size: 12px;
+	line-height: 14px;
+	padding: 0 0 0 25px !important;
+}
+.subAccessList DIV
+{
+	padding-bottom: 15px;
+}
+.goUpBlock
+{
+	font-size: 14px;
+	color: #000000 !important;
+	padding: 5px 0 10px;
+}
+.goUpBlock A
+{
+	color: #006BBE;
+}
+.subSubAccessList
+{
+	display: none;
+	padding: 0 0 5px 5px !important;
+}
+.subSubAccessList .checkboxInput
+{
+	padding: 0 !important;
+/*for ie*/
+}
+.subSubAccessList DIV
+{
+	color: #000000;
+}
+.subSubAccessList .checkboxInput
+{
+	padding: 0;
+}
+.subSubAccessList .checkboxInput LABEL
+{
+	padding-bottom: 0;
+	margin-bottom: 11px;
+}
+.subSubAccessList .checkboxInput LABEL SPAN
+{
+	padding-top: 1px;
+}
+.accessList .subCheckboxBlock
+{
+	color: #000000;
+	padding-top: 0 !important;
+	padding-left: 0;
+	padding-bottom: 5px;
+}
+.catalogItemTender
+{
+	margin-right: 0;
+	padding-right: 15px;
+}
+.catalogItemTender .lineDividerBlock
+{
+	margin-top: 0;
+	margin-bottom: 20px;
+}
+.catalogItemTender .commentMainTitle
+{
+	padding: 0 0 19px;
+}
+.catalogItemTender .buttonBox
+{
+	padding-bottom: 0;
+}
+.containText
+{
+	display: block;
+	padding: 4px 0 0;
+}
+.catalogItemTender .commentMainTitle H2, .catalogItemTender .blockLink
+{
+	display: inline;
+}
+.catalogItemTender .itemCompany
+{
+	padding-bottom: 23px;
+}
+.catalogItemTender .wideInput INPUT
+{
+	width: 413px;
+}
+.catalogItemTender TEXTAREA
+{
+	margin-top: 2px;
+}
+.catalogItemTender .wideInput TEXTAREA
+{
+	height: 88px;
+}
+.catalogItemTender .wideInputBox TEXTAREA
+{
+	height: 230px;
+	margin-bottom: 0;
+}
+.catalogItemTender .wideInputBox DIV
+{
+	float: left;
+	overflow: hidden;
+	padding-right: 0;
+}
+.catalogItemTender .widthInput01 INPUT
+{
+	width: 65px;
+	margin-bottom: 0;
+}
+.catalogItemTender .widthInput04 INPUT
+{
+	width: 23px;
+}
+.catalogItemTender .widthInput05 INPUT
+{
+	width: 41px;
+}
+.catalogItemTender .wideInput DIV SPAN
+{
+	float: left;
+	font-weight: normal;
+	padding-left: 8px;
+	padding-top: 4px;
+}
+.catalogItemTender .widthInput01 DIV SPAN
+{
+	font-size: 16px;
+}
+.catalogItemTender .widthInput04 DIV
+{
+	width: 40px;
+	font-size: 12px;
+	padding-right: 0;
+	margin-right: 8px;
+	margin-top: 10px;
+}
+.catalogItemTender .widthInput04 DIV SPAN
+{
+	padding: 0;
+}
+.catalogItemTender .widthBlock04
+{
+	width: 220px;
+	float: left;
+}
+.catalogItemTender DIV.widthBlock05
+{
+	width: 55px;
+}
+.catalogItemTender .calendarPopap
+{
+	padding-top: 28px;
+}
+.catalogItemTender .personEdit
+{
+	margin-bottom: 22px;
+}
+.catalogItemTender .personEdit .lineDividerBlock
+{
+	margin-bottom: 0;
+}
+.catalogItemTender .addFileList
+{
+	padding-top: 7px;
+}
+.catalogItemTender .addFileList OL
+{
+	padding-top: 12px;
+	margin-bottom: -13px;
+}
+.addFileList .accessBlockEdit .wideInputBox, .addFileList .accessBlockEdit .wideInput
+{
+	padding-left: 25px;
+}
+.addFileList .accessBlockEdit .wideInput INPUT
+{
+	width: 380px;
+	margin-bottom: 10px;
+}
+.addFileList .accessBlockEdit .wideInputBox INPUT
+{
+	width: 238px;
+}
+.catalogItemTender .buttonBoxForm
+{
+	padding-top: 30px;
+}
+.catalogItemTender .buttonBoxForm .italicText
+{
+	font-weight: normal;
+}
+.mentionText
+{
+	display: inline;
+	padding-left: 10px;
+}
+.mentionText B
+{
+	font-size: 12px;
+	color: #000000;
+}
+.listMessage
+{
+}
+.listMessage .commentMainTitle
+{
+	padding-bottom: 23px;
+}
+.listMessage .commentMainTitle .italicText
+{
+	font-size: 16px !important;
+	font-weight: normal;
+}
+.listMessage .lineDividerBlock
+{
+	margin-top: 0;
+	margin-bottom: 20px;
+}
+.listMessage .itemCompany
+{
+	line-height: 17px;
+	padding-bottom: 30px;
+}
+.listMessage .itemCompany SPAN A
+{
+	font-weight: bold;
+	text-decoration: none;
+}
+.correctBlockLink
+{
+	padding: 5px 0 0;
+}
+.correctBlockLink SPAN
+{
+	font-style: italic;
+	padding-right: 10px;
+}
+.listMessage .correctBlockLink SPAN A
+{
+	text-decoration: underline;
+}
+.listMessage .itemCompanyEdit, .itemCompanyEdit
+{
+	overflow: hidden;
+	padding: 0 0 15px;
+}
+.listMessage .formOpinionText
+{
+	display: block;
+	float: left;
+	background: #FFFFFF;
+	padding-top: 25px;
+	padding-bottom: 0;
+}
+.listMessage .checkboxInput
+{
+	padding-bottom: 0;
+}
+.listMessage .formOpinionText LABEL
+{
+	padding-bottom: 0;
+	margin-bottom: 27px;
+}
+.listMessage .formOpinionText INPUT
+{
+	margin-top: 3px;
+}
+.listMessage .formOpinionText SPAN
+{
+	padding-bottom: 0;
+}
+.listMessage .itemCompanyEdit .buttonBox
+{
+	margin: 0;
+}
+.letterBlock
+{
+	padding-bottom: 0;
+}
+.letterText
+{
+	padding: 20px 0 15px;
+}
+.letterBlock .companyEdit
+{
+	padding-bottom: 28px;
+}
+.letterBlock .companyEdit .checkboxInput
+{
+	padding-bottom: 12px;
+}
+.letterBlock TEXTAREA
+{
+	height: 270px;
+	margin: 2px 0 0 1px;
+}
+.letterBlock .wideInput
+{
+	padding-bottom: 15px;
+}
+.catalogItemProject
+{
+}
+.projectEdit
+{
+	padding-top: 15px;
+	margin-top: -20px;
+}
+.catalogItemProject .wideInput DIV SPAN
+{
+	float: none;
+	font-size: 12px;
+	padding-left: 0;
+}
+.projectEdit .checkboxInput
+{
+	padding-bottom: 13px;
+	margin-bottom: 0;
+}
+.projectEdit INPUT
+{
+	margin-top: 3px;
+}
+.projectEdit .wideInput TEXTAREA
+{
+	height: 90px;
+	margin-bottom: 5px;
+	margin-left: 0;
+}
+.projectEdit .wideInputBox DIV
+{
+	padding-bottom: 0;
+}
+.projectEdit .wideInputBox SELECT
+{
+	width: 427px;
+}
+.projectEdit .wideInput .wideInputBox
+{
+	margin-top: 7px;
+}
+.projectEdit .wideInput .wideInputBox TEXTAREA
+{
+	height: 70px;
+	margin-bottom: 0;
+}
+.smallBlock, .leftBlock, .middleBlock
+{
+	overflow: hidden;
+}
+.projectEdit .leftBlock
+{
+	padding-right: 8px !important;
+	padding-bottom: 5px !important;
+}
+.projectEdit .leftBlock SPAN, .projectEdit .smallBlock .leftBlock SPAN
+{
+	display: block;
+	float: left !important;
+	font-size: 16px !important;
+	font-weight: normal;
+	padding-right: 5px;
+}
+.projectEdit .wideInput .widthInput07 DIV INPUT, .widthInput07 INPUT
+{
+	width: 80px;
+}
+.projectEdit .widthInput08 DIV INPUT, .widthInput08 INPUT
+{
+	width: 96px;
+}
+.projectEdit .wideInput
+{
+	padding-right: 8px !important;
+}
+.projectEdit .wideInputBox .smallBlock, .projectEdit .wideInput .smallBlock
+{
+	padding-right: 10px;
+	padding-bottom: 23px;
+}
+.projectEdit .smallBlock SPAN
+{
+	font-size: 12px;
+	font-weight: normal;
+}
+.projectEdit .smallBlock .leftBlock SPAN
+{
+	padding-top: 4px;
+	padding-left: 5px;
+}
+.middleBlock
+{
+	width: 210px;
+}
+.projectEdit .wideInputBox .middleBlock
+{
+	padding-bottom: 30px;
+}
+.middleBlock .titleBlock
+{
+	font-size: 12px !important;
+	padding: 5px 0;
+}
+.catalogItemTender .middleBlock DIV
+{
+	margin-top: 0;
+}
+.projectEdit .imgEditBlock
+{
+	padding-top: 0;
+	padding-bottom: 15px !important;
+}
+.projectEdit .imgEditBlock SPAN
+{
+	margin: 0;
+}
+.projectEdit .imgEditBlock .imgEdit
+{
+	position: relative;
+	height: 95px;
+	min-height: 50px;
+	background: none;
+	margin: 7px 10px 0 0;
+}
+.projectEdit .imgEditBlock .imgEdit SPAN
+{
+	font-size: 12px;
+	font-weight: normal;
+}
+.projectEdit .imgEditBlock .popapCancel
+{
+	right: 10px;
+}
+.projectEdit .imgEditBlock .popapCancel IMG
+{
+	border: none !important;
+}
+.projectEdit .imgEditBlock .imgEdit IMG
+{
+	border: 3px solid #999DA0;
+}
+.projectEdit .mb25
+{
+	margin-bottom: 25px !important;
+}
+.projectEdit .addFileForm INPUT
+{
+	width: 270px;
+	margin-top: 1px;
+	margin-bottom: 17px;
+}
+.projectEdit .addFileList
+{
+	padding-top: 0;
+}
+.projectEdit .addFileList OL
+{
+	font-size: 12px;
+	padding-top: 0;
+	margin-top: -30px;
+}
+.projectEdit .addFileList OL LI
+{
+	padding-top: 30px;
+}
+.projectEdit .addFileList .wideInput
+{
+	margin-top: -33px;
+}
+.projectEdit .addFileList .wideInput INPUT, .projectEdit .addFileList .wideInput TEXTAREA
+{
+	width: 380px;
+}
+.projectEdit .addFileList .wideInput TEXTAREA
+{
+	height: 130px;
+	margin-bottom: 5px;
+}
+.projectEdit .addFileList .addFileForm
+{
+	padding-left: 0;
+	margin-top: 3px;
+}
+.projectEdit .addFileList .imgEditBlock .imgEdit
+{
+	margin-top: 5px;
+}
+.projectEdit .addFileList .addFileForm INPUT
+{
+	width: 240px;
+	margin-top: 1px;
+	margin-bottom: 0;
+}
+.projectEdit .addItemReportBlock
+{
+	display: block;
+	margin: 13px 0 15px !important;
+}
+.projectEdit .contentCatalogList
+{
+	padding: 0 0 13px;
+}
+.projectEdit .contentCatalogList .commentMainTitle
+{
+	padding: 0 0 10px;
+}
+.projectEdit .contentCatalogList IMG
+{
+	margin: 0 0 -2px;
+}
+.projectEdit .contentCatalogList .textTitle
+{
+	padding: 0 0 3px;
+}
+.projectEdit .contentCatalogList .italicText
+{
+	font-weight: normal;
+}
+.projectEdit .listMessage
+{
+	padding: 0 0 10px;
+}
+.projectEdit .listMessage .commentMainTitle
+{
+	padding: 0 0 5px;
+}
+.projectEdit .listMessage .itemCompany
+{
+	padding-bottom: 20px;
+}
+.projectEdit .listMessage .itemCompany SPAN
+{
+	font-size: 12px;
+	line-height: 14px;
+	font-weight: normal;
+}
+.projectEdit .listMessage .itemCompany .correctBlockLink
+{
+	padding: 3px 0 0;
+}
+.projectEdit .listMessage .itemCompany .correctBlockLink SPAN
+{
+	display: inline;
+}
+.projectEdit .widthInput10 INPUT, .widthInput10 INPUT, .projectEdit .addWorker .wideInputBox DIV INPUT
+{
+	width: 330px;
+}
+.projectEdit .addWorker
+{
+	padding-bottom: 25px;
+}
+.projectEdit .addWorker INPUT
+{
+	margin-top: 0;
+	margin-right: 5px;
+}
+.projectEdit .addWorker SPAN
+{
+	padding: 0 0 2px;
+}
+.catalogNewProject .commentMainTitle
+{
+/*padding:0;*/
+}
+.catalogNewProject .commentMainTitle H3
+{
+	margin: 0;
+}
+.noActiveElements *
+{
+	color: #999999 !important;
+}
+.noActiveElements INPUT, .noActiveElements TEXTAREA, .noActiveElements SELECT
+{
+	background: #EBEBE4 !important;
+}
+.noActiveElements .buttonBox .buttonText
+{
+	color: #FFFFFF !important;
+}
+.noActiveElements A
+{
+	border-color: #999999;
+}
+.noActiveElements A:hover
+{
+	color: #999999 !important;
+	border-color: #999999 !important;
+	cursor: default;
+}
+.icoLink07.noActiveElements
+{
+	background-image: url(/img/icoLink07_noActive.png);
+}
+.registrationBlock
+{
+	padding: 0 15px;
+	margin-right: 0;
+}
+.registrationBlock .formOpinionText
+{
+	padding-top: 10px;
+	width: 100%;
+}
+.registrationBlock .lineDividerBlock
+{
+	padding: 15px 0 0;
+	margin: 0 0 10px;
+}
+.registrationBlock .companyEdit .wideInputBox SPAN
+{
+	font-size: 14px;
+	font-weight: bold;
+}
+.registrationBlock .commentMainTitle
+{
+	padding-bottom: 10px;
+}
+.registrationBlock .companyEdit .checkboxInput
+{
+	padding: 0 0 5px;
+}
+.registrationBlock .subCheckboxInput
+{
+	padding-left: 20px;
+}
+.registrationBlock .captchaBlock
+{
+	padding-bottom: 5px;
+}
+.captchaBlock INPUT
+{
+	width: 95px;
+	margin-right: 25px;
+}
+.captchaBlock .captcha, .captcha
+{
+	width: 140px;
+	height: 40px;
+	overflow: hidden;
+	padding-right: 10px;
+	margin-top: -5px;
+}
+.captcha IMG
+{
+	margin: 0;
+}
+.captchaBlock .italicText
+{
+	padding-top: 5px;
+	margin: 0;
+}
+.registrationSuccess
+{
+	padding-top: 23px;
+	padding-bottom: 15px;
+}
+.sectorsBlock
+{
+	padding-top: 5px;
+	padding-bottom: 0;
+}
+.sectorsBlock .contentCatalogList .textTitle
+{
+	font-size: 16px;
+}
+.sectorsBlock .contentCatalogList DIV
+{
+	padding-bottom: 12px;
+}
+.sectorsBlock .numberBlock .blockLink
+{
+	margin: 0 0 0 10px;
+}
+.sectorsBlock .blockLink A
+{
+	text-decoration: underline !important;
+}
+.blockLinkSearch
+{
+	font-size: 14px;
+	padding: 5px 0;
+}
+.sectorsBlock .blockLinkSearch, .blockLinkSearch
+{
+	margin-top: -15px;
+	padding-bottom: 25px;
+}
+.sectorListBlock .wideInput, .sectorsBlock .wideInput
+{
+	padding-top: 0;
+	padding-bottom: 20px;
+}
+.sectorListBlock .wideInput SPAN, .sectorsBlock .wideInput SPAN
+{
+	font-size: 14px;
+	font-weight: bold;
+}
+.sectorListBlock .pageNavigatorBlock, .sectorsBlock .pageNavigatorBlock
+{
+	padding-bottom: 25px;
+}
+.companySectorBlock
+{
+	padding-bottom: 0;
+}
+.companySectorBlock .opinionsBlockInner
+{
+	padding-bottom: 0;
+	margin-bottom: 0;
+}
+.sectorListBlock
+{
+	padding-top: 20px;
+}
+.sectorsBlock .numberBlock, .sectorListBlock .numberBlock
+{
+	padding-bottom: 5px;
+}
+.sectorListBlock .numberBlock H2
+{
+	display: inline;
+	padding-right: 4px;
+}
+.sectorListBlock .blockLinkSearch
+{
+	padding-bottom: 15px;
+}
+.sectorListBlock .numberBlock .blockLink, .sectorListBlock .blockLink
+{
+	display: block;
+	margin: 0 0 5px -4px;
+}
+.sectorListBlock .blockLink A
+{
+	text-decoration: none !important;
+}
+.inBlockStyle, .inBlockStyle SPAN
+{
+	font-size: 14px;
+	font-style: normal;
+	color: #010101;
+}
+.commentMainTitle .formOpinionText
+{
+	margin-left: -12px;
+}
+.sectorListBlock .numberBlock
+{
+	padding-bottom: 0;
+}
+.sectorsBlock .widenSearch
+{
+	display: block;
+}
+.sectorsBlock .widenSearch .wideInput SPAN
+{
+	font-weight: bold;
+	padding-bottom: 0;
+}
+.sectorsBlock .widenSearch .pagerCommentsBlock SPAN
+{
+	font-weight: normal;
+}
+.widenSearch .wideInput INPUT
+{
+	margin-top: 2px;
+	margin-right: 10px;
+}
+.personEdit .widenSearchBlock
+{
+	display: none;
+	padding-top: 15px;
+}
+.widenSearchBlock .wideInput
+{
+	width: 100%;
+/*for ie*/
+	padding-bottom: 30px;
+}
+.sectorsBlock .widenSearch .shortBlocks DIV SPAN, .widenSearch .shortBlocks DIV SPAN
+{
+	display: block;
+	float: left;
+	font-size: 16px;
+	font-weight: normal;
+	padding: 5px 8px 0 0;
+}
+.widenSearch .widthInput04 INPUT
+{
+	width: 20px;
+}
+.widenSearch .widthInput05 INPUT
+{
+	width: 65px;
+}
+.widenSearchBlock .wideInput .pagerCommentsBlock
+{
+	padding-top: 3px;
+	padding-bottom: 5px;
+}
+.widenSearchBlock .checkboxInput
+{
+	width: 100%;
+	padding: 0 0 17px;
+}
+.sectorsBlock .widenSearchBlock .checkboxInput SPAN, .widenSearchBlock .checkboxInput SPAN
+{
+	font-weight: normal;
+	font-size: 12px;
+}
+.widenSearchBlock .checkboxInput INPUT
+{
+	margin-right: 3px;
+}
+.widenSearchBlock .buttonBoxForm
+{
+	margin-left: -5px;
+}
+.formColorBG
+{
+	background: #FFFFFF;
+}
+.markText, .itemCompany .containText .markText, .itemCompany .serviceText .markText
+{
+	font-size: 14px;
+	font-style: italic;
+	font-weight: bold;
+	color: #F10000;
+	/*[empty]padding:;*/
+}
+.itemCompany .serviceText .markText
+{
+	display: inline;
+}
+.servicesListBlock
+{
+}
+.servicesListBlock .itemCompany
+{
+	padding-bottom: 30px;
+}
+.servicesListBlock .itemCompany .textTitle
+{
+	padding-bottom: 15px;
+}
+.servicesListBlock .itemCompany .containText
+{
+	padding-top: 0;
+	padding-bottom: 20px;
+}
+.servicesListBlock .serviceBox, .serviceBox
+{
+	position: relative;
+	width: 158px;
+	float: left;
+	overflow: hidden;
+	margin: 0 3px 20px 0;
+}
+.servicesListBlock .serviceBox
+{
+	height: 63px;
+}
+.serviceBox .serviceBoxTop
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 158px;
+	height: 5px;
+	background: url(/img/serviceBoxTop.png) no-repeat 0 0;
+}
+.serviceBox .serviceBoxBottom
+{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 158px;
+	height: 5px;
+	background: url(/img/serviceBoxBottom.png) no-repeat 0 0;
+}
+.serviceBox .serviceText
+{
+	background: #D7F2FD;
+	text-align: center;
+	padding: 4px 10px 5px;
+	margin: 5px 0;
+}
+.serviceBox .serviceText .lineDividerBlock
+{
+	width: 148px;
+	padding: 2px 0;
+	margin: 0 0 8px -5px;
+	border-color: #B4CAD3;
+}
+.servicesListBlock .buttonBox
+{
+	margin: 0 220px 0 0;
+}
+.serviceitalicText
+{
+	float: left;
+	padding: 10px 0 20px 10px;
+}
+.subscribeBlock
+{
+	left: 258px;
+	top: 440px;
+}
+.subscribeBox
+{
+	padding: 0 10px 7px;
+}
+.subscribeBox .itemCompany
+{
+	padding-bottom: 0;
+}
+.itemCompany .wideInputBox
+{
+	padding-bottom: 5px;
+}
+.itemCompany .wideInputBox INPUT
+{
+	margin-top: 0;
+	margin-bottom: 0;
+}
+.widthBlockInput DIV
+{
+	width: 155px;
+}
+.widthBlockInput02 DIV
+{
+	width: 200px;
+}
+.widthBlockInput03 DIV
+{
+	width: 100px;
+}
+.itemCompany .widthBlockInput02 INPUT, .widthBlockInput02 INPUT
+{
+	width: 175px;
+}
+.itemCompany .fullWidthBlock DIV
+{
+	width: 100%;
+}
+.itemCompany .fullWidthBlock INPUT
+{
+	width: 396px;
+}
+.popapBox .itemCompany .buttonBox
+{
+	padding: 0;
+	margin-top: 20px;
+/*for ie*/
+}
+.listLettersBlock
+{
+	padding-bottom: 25px;
+}
+.listLettersBlock .lineDividerBlock
+{
+	margin-bottom: 15px;
+}
+/*=================== butttons ===================*/
+.buttonBox
+{
+	position: relative;
+}
+INPUT.buttonFile
+{
+	width: 50px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	opacity: 0;
+	cursor: pointer;
+}
+/*================== end ===========================*/
+.objectEdit
+{
+	padding-bottom: 20px;
+}
+.objectImg
+{
+	overflow: hidden;
+	padding: 0 0 10px;
+}
+.objectImg SPAN H4
+{
+	margin: 0;
+}
+.objectImg IMG
+{
+	margin: 0;
+	z-index: 200;
+}
+.objectImgBig
+{
+	width: 450px;
+	overflow: hidden;
+	padding: 25px 0 0;
+}
+.objectImgSmall
+{
+	width: 450px;
+	overflow: hidden;
+	padding: 0;
+	margin-left: -12px;
+}
+.objectImgSmall DIV
+{
+	overflow: hidden;
+	float: left;
+	height: 88px;
+	margin-top: 13px;
+	margin-left: 12px;
+	border: 3px solid #999DA0;
+	z-index: 200;
+}
+.objectImgSmall DIV:hover
+{
+	border-color: #006BBE;
+}
+.objectImgSmall DIV.active
+{
+	background: #D3D5D3;
+	border-color: #D3D5D3;
+	opacity: 0.4;
+	z-index: 500;
+}
+.objectEditItem
+{
+	padding-bottom: 0;
+}
+.objectEditItem .itemTextBlock
+{
+	padding: 0;
+}
+.objectEditItem .commentMainTitle
+{
+	padding-bottom: 5px;
+}
+.objectEditItem .contactMapBlock
+{
+	padding-bottom: 20px;
+}
+.objectEditItem .objectImg
+{
+	padding: 0 0 30px;
+}
+.objectEditItem .objectImgBig
+{
+	padding-top: 0;
+}
+.objectEditItem .catalogItemTender
+{
+	padding-bottom: 13px;
+}
+.objectEditItem .catalogItemTender .lineDividerBlock
+{
+	margin-bottom: 22px;
+}
+.objectEditItem .catalogItemTender .itemCompany
+{
+	padding-bottom: 15px;
+}
+.objectEditItem .itemCompany .textTitle
+{
+	font-size: 12px;
+}
+.otherCompanyList
+{
+	padding-bottom: 18px;
+}
+.objectEditItem .catalogItemTender H3
+{
+	padding-bottom: 10px;
+}
+.otherCompanyList H5
+{
+	padding-bottom: 15px;
+}
+.objectEditItem .blockLink
+{
+	display: block;
+	font-size: 12px !important;
+	font-weight: bold;
+	padding: 0 0 40px 20px;
+	margin: -8px 0 0 -5px;
+}
+.objectEditItem .blockLink A
+{
+	text-decoration: none !important;
+}
+.filterProjectsBlock
+{
+	overflow: hidden;
+	padding: 0;
+}
+.listCompanyBlock .filterProjectsBlock
+{
+	margin-bottom: 15px;
+	margin-top: -15px;
+}
+.filterProjectsBlock .labelPlace
+{
+	width: 332px;
+	float: left;
+	overflow: hidden;
+}
+.filterProjectsBlock LABEL
+{
+	display: block;
+	overflow: hidden;
+	float: left;
+	padding: 0;
+	margin: 10px 14px 20px 0;
+}
+.filterProjectsBlock INPUT
+{
+	width: 15px;
+/*for ie and Opera*/
+	height: 15px;
+/*for ie and Opera*/
+	display: block;
+	float: left;
+	padding: 0;
+	margin: 0;
+}
+.filterProjectsBlock SPAN
+{
+	display: block;
+	float: left;
+	padding: 0 0 0 4px;
+}
+.filterProjectsBlock .buttonBox
+{
+	float: left;
+	margin-top: 5px;
+}
+.listCompanyBlock .itemCompany
+{
+	padding-bottom: 18px;
+}
+.listCompanyBlock .itemCompany .textTitle
+{
+	font-size: 12px;
+}
+.itemCompany .markText
+{
+	font-size: 18px;
+	font-style: normal;
+	font-weight: normal;
+}
+.itemCompany .docsList
+{
+	padding: 5px 0 0;
+}
+.itemCompany .docsList .italicText
+{
+	display: inline;
+}
+.searchResults
+{
+	padding: 20px 15px 0;
+	margin-right: 0;
+}
+.searchResults .filterProjectsBlock
+{
+	margin-right: -60px;
+}
+.searchResults .filterProjectsBlock .commentMainTitle
+{
+	padding: 0 0 4px;
+}
+.forDatePlace
+{
+	width: 140px;
+	overflow: hidden;
+	float: left;
+	padding: 0 0 5px;
+}
+.searchResults .forDatePlace .wideInput
+{
+	display: block;
+	overflow: hidden;
+	padding: 0 0 14px;
+}
+.searchResults .forDatePlace .calendarPopap
+{
+	float: left;
+	padding-top: 2px;
+}
+.searchResults .labelPlace
+{
+	width: 340px;
+	padding: 0 0 5px;
+}
+.searchResults .filterProjectsBlock .colunmInput
+{
+	width: 110px;
+	overflow: hidden;
+	float: left;
+}
+.searchResults .filterProjectsBlock .colunmInput DIV
+{
+	float: left;
+	width: 110px;
+/*for ie skripts effect*/
+	margin: 0 0 13px;
+}
+.searchResults .filterProjectsBlock LABEL
+{
+	margin: 0;
+}
+.filterProjectsBlock02
+{
+	overflow: hidden;
+	padding: 0 0 20px;
+	margin-right: -20px;
+}
+.filterProjectsBlock02 INPUT
+{
+	width: 360px;
+	float: left;
+	margin-right: 5px;
+}
+.filterProjectsBlock02 .buttonBox
+{
+	float: left;
+}
+.filterProjectsBlock02 .italicText
+{
+	display: block;
+	float: left;
+	padding: 5px 0 10px;
+}
+.filterProjectsBlock02 .italicText B
+{
+	font-size: 12px;
+	font-style: italic;
+	color: #000000;
+}
+.searchResults .catalogSelection
+{
+	width: 225px;
+	padding-bottom: 0;
+	margin-left: 0;
+}
+.searchResults .catalogSelection .selectionPart
+{
+	width: 130px;
+	float: right;
+	padding: 0 0 5px;
+}
+.searchResults .catalogSelection .selectionPart SPAN
+{
+	clear: none;
+	margin-bottom: 0;
+}
+.foundItemsList
+{
+}
+.foundItemsList OL
+{
+	padding-top: 18px;
+	margin-left: -10px;
+}
+.foundItemsList LI
+{
+	font-size: 12px;
+	padding-bottom: 5px;
+}
+.foundItemsList .contentCatalogList
+{
+	padding: 0;
+}
+.foundItemsList .contentCatalogList DIV
+{
+	padding-bottom: 0;
+}
+.foundLetter
+{
+	background: #D7F2FD;
+}
+.searchResults .contentNewsList
+{
+	font-size: 14px;
+	padding: 0 0 3px;
+}
+.searchResults .contentNewsList A
+{
+	text-decoration: none;
+}
+.searchResults .contentNewsList SPAN
+{
+	display: inline;
+	float: none;
+	padding-right: 0;
+}
+.searchResults .textopinion
+{
+	display: block;
+	padding: 0;
+	margin: -2px 0 0;
+}
+.searchResults .pageNavigatorBlock
+{
+	padding-bottom: 25px;
+}
+/*======================= popaps ========================*/
+.popapLayer
+{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: -100000px;
+	left: 0;
+	background: #000000;
+	opacity: 0.25;
+	z-index: 2000;
+}
+.popapBodyBG
+{
+	background: #00508E;
+}
+.popapBox
+{
+	display: none;
+	width: 196px;
+	background: #FFFFFF;
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 9px 10px 20px 17px;
+	border: 1px solid #D5D5D5;
+	z-index: 2000;
+}
+.popapCancel
+{
+	position: absolute;
+	top: 10px;
+	right: 15px;
+}
+.popapEnterLink
+{
+	font-size: 13px;
+	line-height: 18px;
+	font-weight: bold;
+}
+.popapCenter INPUT
+{
+	width: 160px;
+	margin-top: 6px;
+	margin-bottom: 18px;
+}
+.popapCenter .italicText
+{
+	color: #0074C5;
+	padding-left: 4px;
+}
+.popapCenter LABEL
+{
+	display: block;
+	font-size: 12px;
+	line-height: 14px;
+	padding-bottom: 0;
+	margin: -7px 0 25px;
+}
+.popapCenter LABEL INPUT
+{
+	display: block;
+	width: 12px;
+	height: 12px;
+	float: left;
+	margin: 1px 3px 0 0;
+	padding: 0;
+}
+.popapCenter LABEL SPAN
+{
+	display: block;
+	padding-left: 20px;
+}
+.popapCenter .buttonBox
+{
+	float: left;
+}
+.popapAddCompany .checkedItem DIV
+{
+	overflow: hidden;
+	padding-bottom: 0;
+	margin-bottom: 15px;
+}
+.popapAddCompany .popapCenter LABEL
+{
+	float: left;
+	padding-bottom: 0;
+}
+.popapAddCompany .popapCenter .buttonBox, .popapAddCompany .popapCenter .buttonBox DIV
+{
+	margin-bottom: 0;
+}
+.popapCenter FORM
+{
+	overflow: hidden;
+	padding: 17px 0 4px 15px;
+}
+.popapOutFromPul FORM
+{
+	padding: 0;
+}
+/*========== calendarPopap ================*/
+.calendarPopap
+{
+	width: 15px !important;
+	text-align: center;
+	line-height: 11px;
+	padding-top: 28px;
+	padding-bottom: 0 !important;
+}
+.calendarPopap IMG, .calendarPopap A, .calendarPopapBlock IMG
+{
+	margin: 0 !important;
+}
+.calendarPopapBlock
+{
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 245px;
+	min-height: 200px;
+	font-size: 16px;
+	background: url(/img/popapCalendarLine.png) repeat-y 0 0;
+	cursor: pointer;
+	z-index: 100;
+}
+.popapCalendarTop
+{
+	position: relative;
+	top: 0;
+	left: 1px;
+	width: 243px;
+	height: 1px;
+	border-top: 1px solid #D5D5D5;
+	overflow: hidden;
+}
+.popapCalendarBottom
+{
+	position: relative;
+	bottom: -4px;
+	left: 0;
+	width: 245px;
+	height: 4px;
+	background: url(/img/popapCalendarBottom.png) no-repeat 0 0;
+}
+.calendarTitle
+{
+	height: 24px;
+	position: relative;
+	text-align: center;
+	font-weight: bold;
+	background: #D7F2FD;
+	padding-top: 8px;
+	margin: 0 3px;
+	border-bottom: 1px solid #D5D5D5;
+}
+.popapArrow
+{
+	display: block;
+	width: 11px;
+	height: 11px;
+	position: absolute;
+	top: 11px;
+}
+.popapArrowLeft
+{
+	left: 13px;
+}
+.popapArrowRight
+{
+	right: 13px;
+}
+.calendarDates
+{
+	overflow: hidden;
+	padding: 10px 0 6px 8px;
+}
+.calendarDays
+{
+	overflow: hidden;
+	padding: 5px 0 10px;
+}
+.calendarDays SPAN
+{
+	color: #959595;
+	text-align: center;
+	padding: 0 8px 0 7px;
+}
+.calendarDates .mainDays
+{
+	font-weight: bold;
+	color: #EA0000;
+}
+.calendarNumbers
+{
+	overflow: hidden;
+}
+.calendarNumbers SPAN
+{
+	display: block;
+	height: 25px;
+	width: 20px;
+	float: left;
+	font-size: 14px;
+	line-height: 16px;
+	text-align: center;
+	color: #FFFFFF;
+	padding: 0 0 0 6px;
+	margin-right: 6px;
+	margin-bottom: 5px;
+}
+.calendarNumbers SPAN SPAN
+{
+	display: block;
+	width: 14px;
+	float: none;
+	padding: 4px 7px 0 0;
+	margin: 0;
+}
+.calendarNumbers .active, .calendarNumbers .active:hover
+{
+	background: #007DC5 url(/img/pagerLeft.gif) no-repeat 0 0;
+	cursor: default;
+}
+.calendarNumbers .active SPAN, .calendarNumbers .active:hover SPAN
+{
+	background: url(/img/pagerRight.gif) no-repeat right top;
+	cursor: default;
+}
+.calendarNumbers SPAN:hover
+{
+	background: #F42E00 url(/img/pagerLeftHover.gif) no-repeat 0 0;
+	cursor: pointer;
+}
+.calendarNumbers SPAN:hover A
+{
+	color: #FFFFFF;
+}
+.calendarNumbers SPAN:hover SPAN
+{
+	background: url(/img/pagerRightHover.gif) no-repeat right top;
+}
+.calendarNumbers A
+{
+	text-decoration: none;
+	font-size: 12px;
+	color: #2B2B2B;
+}
+.calendarNumbers A:hover
+{
+	color: #FFFFFF !important;
+}
+.calendarNumbers .grey:hover, .calendarNumbers .grey:hover A
+{
+	color: #FFFFFF !important;
+}
+/*=================== other popaps =================*/
+.popapOutFromPul
+{
+	position: absolute;
+	top: 25%;
+	left: 259px;
+	width: 434px;
+	padding: 25px 20px 30px;
+	z-index: 2000;
+}
+.popapOutFromPul .popapCancel
+{
+	right: 12px;
+}
+.popapOutFromPul P
+{
+	line-height: 17px;
+}
+.popapOutFromPul LABEL
+{
+	padding-bottom: 15px;
+	margin: 0;
+}
+.popapOutFromPul LABEL INPUT
+{
+	margin: 0 3px 0 0;
+}
+.popapOutFromPul .buttonBox
+{
+	margin: 10px 0 0;
+}
+.popapBox .serviceBox
+{
+	float: right;
+	width: 128px;
+	position: absolute;
+	top: 55px;
+	right: 20px;
+	font-size: 16px;
+	text-align: left;
+}
+.popapBox .serviceBox .serviceText
+{
+	text-align: left;
+	line-height: 26px;
+	padding-left: 18px;
+	padding-top: 0;
+	padding-bottom: 2px;
+}
+.popapBox .serviceBox .serviceText .markText
+{
+	font-size: 18px;
+}
+.popapBox .serviceBoxTop
+{
+	background-image: url(/img/serviceBoxSmallTop.png);
+}
+.popapBox .serviceBoxBottom
+{
+	background-image: url(/img/serviceBoxSmallBottom.png);
+}
+.popapBox .formOpinionText
+{
+	position: relative;
+	background: #FFFFFF;
+	padding: 8px 0 0;
+	margin-left: 0;
+}
+.popapBox .itemCompany SELECT
+{
+	width: 50px;
+	float: left;
+}
+.popapBox .itemCompany .wideInputBox SPAN
+{
+	width: 100%;
+	float: left;
+	padding-bottom: 3px;
+}
+.popapBox .widthInput11 INPUT
+{
+	width: 160px;
+}
+.popapBox .inputBlockChek
+{
+	padding-bottom: 17px;
+}
+.popapBox .inputBlockChek SPAN
+{
+	display: block;
+	font-weight: bold;
+	padding-bottom: 13px;
+}
+.popapBox .inputBlockChek LABEL
+{
+	padding-bottom: 0;
+	margin-bottom: 10px;
+	margin-left: 10px;
+}
+.popapBox .inputBlockChek INPUT
+{
+	margin-top: 1px;
+}
+.popapBox .inputBlockChek LABEL SPAN
+{
+	font-weight: normal;
+	padding-bottom: 0;
+}
+/*=================== footer ======================*/
+.footer A
+{
+	color: #FFFFFF;
+}
+.footer_links .ad
+{
+	font-weight: normal;
+	font-size: 14px;
+	display: block;
+	margin-top: 7px;
+}
+.copyRight
+{
+	width: 220px;
+	float: left;
+	padding: 33px 0 0 25px;
+	visibility: hidden;
+}
+.footerLinks
+{
+	float: left;
+	padding: 11px 0 0 12px;
+}
+.footerLinks A
+{
+	padding-right: 20px;
+}
+.counters
+{
+	position: absolute;
+	left: 15px;
+	margin-top: 23px;
+}
+.counters A
+{
+	padding-left: 8px;
+}
+.footerDeveloper
+{
+	float: right;
+	text-align: center;
+	margin: 33px 25px 0;
+}
+.footerDeveloper IMG
+{
+	padding: 0 0 11px 2px;
+}
+/*=========================  2010.10.04  =========================*/
+.companyEdit DIV SPAN
+{
+	display: block;
+	font-weight: bold;
+}
+.personEdit .accessBlockEdit DIV
+{
+	overflow: hidden;
+	padding-bottom: 20px;
+	padding-top: 5px;
+}
+.accessBlockEdit
+{
+	overflow: hidden;
+	padding-top: 15px;
+}
+.personEdit .accessBlockEdit DIV SPAN
+{
+	display: block;
+}
+.personEdit .accessBlockEdit .wideInput
+{
+	padding-bottom: 5px;
+}
+.companyPartnersEdit, .partnersBlock
+{
+	padding-bottom: 25px;
+}
+.catalogItemEdit
+{
+	padding-bottom: 0;
+}
+.addFileIntoForm, .companyEdit .addFileIntoForm
+{
+	padding: 0;
+	margin-top: -35px;
+}
+.catalogItemEdit .formOpinionText .addOlblock
+{
+	padding-top: 8px;
+	margin-top: -8px;
+	margin-bottom: -8px;
+}
+.addFileList .addItemReportBlock
+{
+	text-align: left;
+	padding-top: 0 !important;
+	margin-top: 15px !important;
+}
+.formOpinionText .buttonBox
+{
+	overflow: hidden;
+}
+.cancelFileIntoForm IMG
+{
+	margin: 3px 0 0 3px;
+}
+.searchResults .forDatePlace .calendarPopap
+{
+	padding-top: 2px !important;
+}
+.companyEdit .catalogEditPartBlock .pagerCommentsBlock SPAN, .companyEdit .pagerCommentsBlock SPAN
+{
+	font-weight: normal;
+}
+.catalogEditPartBlock .widenSearchBlock .wideInput
+{
+	padding-bottom: 30px;
+}
+.specialInsteadForm
+{
+	overflow: hidden;
+}
+/*=====================  style from programmists 2010.10.13  ======================*/
+.ajax_loader
+{
+	display: none;
+	margin: 10px;
+	float: left;
+}
+.lk_period .addReportBlock .addItemReportBlock
+{
+	padding-left: 25px !important;
+}
+.lk_contact .imgEditBlock .buttonFileText
+{
+	float: left;
+	margin-left: 15px;
+}
+.lk_contact .imgEditBlock .buttonBox
+{
+	float: left;
+}
+.catalogItemEdit .formOpinionText .commentMainTitle
+{
+	padding: 0;
+	margin: 23px 0 12px;
+}
+/*<h2> befor .lk_contact*/
+.lk_contact
+{
+	margin-top: 12px;
+}
+/*=====================  2010.10.14  ======================*/
+.accessBlockEdit03
+{
+	margin-top: -13px;
+}
+.accessBlockEdit03 .wideInputBox, .accessBlockEdit03 .wideInput, .addFileList .accessBlockEdit03 .wideInputBox, .addFileList .accessBlockEdit03 .wideInput
+{
+	padding-left: 0 !important;
+}
+.noLinkTextSmall
+{
+	font-size: 12px;
+}
+.noLinkTextColor
+{
+	color: #CDCDCD !important;
+}
+.accessBlockEdit01
+{
+	margin-top: -17px;
+	padding: 0;
+}
+.accessBlockEdit01 .wideInputBox, .accessBlockEdit01 .wideInput
+{
+	padding-left: 0;
+}
+.banners
+{
+}
+.banners .sidebarBoxContent
+{
+	padding: 4px 3px 3px;
+}
+.bannerContent DIV
+{
+	float: left;
+}
+.bannerContent IMG
+{
+	margin: 0;
+}
+.linkGoFurther
+{
+	display: block;
+	text-align: right;
+	padding: 5px 0;
+}
+/*=====================  browsers  ======================*/
+.browserBlock
+{
+	display: none;
+	background: #FFFFFF;
+	text-align: center;
+	padding: 50px 0 70px;
+}
+.browserBlockText P
+{
+	font-size: 15px;
+	padding-bottom: 20px;
+}
+.browserBlockList
+{
+	overflow: hidden;
+	margin-left: 31%;
+	zoom: 1;
+}
+.browserBlockList DIV
+{
+	float: left;
+	width: 90px;
+	text-align: center;
+	padding-right: 10px;
+}
+.browserBlockList IMG
+{
+	border: none;
+	margin: 0 0 7px;
+}
+.browserBlockList A
+{
+	display: block;
+}
+/*=========================  2010.10.15  =========================*/
+.opinionContent
+{
+	overflow: hidden;
+}
+.opinionContentChange
+{
+	float: right;
+	width: 210px;
+	overflow: hidden;
+	line-height: 20px;
+	margin-right: 30px;
+}
+.opinionContentChange DIV
+{
+	float: right;
+	padding: 0 0 0 10px;
+}
+.opinionContentChange A
+{
+	margin: 0 0 0 3px;
+}
+.opinionContentChange IMG
+{
+	margin-bottom: -2px;
+}
+.dataLinksBlock .opinionContentChange .dashedLink, .opinionContentChange .dashedLink
+{
+	font-size: 11px;
+	line-height: 13px;
+	font-style: italic;
+	font-weight: normal;
+}
+/*=========================  2010.10.18  =========================*/
+.opinionsBlock02 .opinionsBlockInner
+{
+	display: block;
+}
+.opinionsBlock02 .formOpinionLink .dashedLink
+{
+	font-weight: bold;
+}
+.opinionsBlock02 .formOpinionText
+{
+	margin-bottom: -10px;
+}
+/*=========================  FORM STYLE   2010.10.04  =========================
+
+.formOpinionText form {
+overflow:hidden;
+padding-top:15px;
+}
+.personEdit form div {
+overflow:hidden;
+padding-top:5px;
+padding-bottom:20px;
+}
+.personEdit form div div {
+float:left;
+padding:0 25px 0 0;
+}
+.personEdit form div span {
+display:block;
+font-weight:bold;
+}
+.catalogItemTender form {
+padding-top:0;
+}
+.companyEdit form {
+overflow:hidden;
+padding-top:0;
+}
+.companyEdit form div span {
+display:block;
+font-weight:bold;
+}
+.dataEditBox .personEdit form div span {
+font-weight:normal;
+line-height:18px;
+padding-bottom:5px;
+}
+
+=========================  2010.10.20  =========================*/
+.bigLink
+{
+	color: #24211D;
+	text-decoration: none;
+}
+.bigLink:hover
+{
+	text-decoration: underline;
+}
+.sidebarBoxContent .messagehere
+{
+	margin-top: 12px;
+}
+.sidebarBoxContent.contentOpinion
+{
+}
+/*=========================  2010.10.29  =========================*/
+.contactsBlockInner .contentOpinion DIV
+{
+	width: 108px;
+}
+.contactsBlockInner .contentOpinion .italicText
+{
+	padding-left: 120px;
+}
+/*=========================  2010.11.03  =========================*/
+.clear
+{
+	clear: both;
+}
+/*=========================  2010.11.09 forum =========================*/
+.forum-info-box INPUT, .forum-info-box SELECT, .forum-info-box TEXTAREA, .forum-reply-form INPUT, .forum-reply-form SELECT, .forum-reply-form TEXTAREA, .forum-block-container INPUT, .forum-block-container SELECT, .forum-block-container TEXTAREA
+{
+	font-size: 13px !important;
+	padding: 1px 0px 1px 3px;
+}
+.forum-info-box DIV
+{
+	margin: 4px 0px;
+}
+.forum-info-box #find_date2
+{
+	margin-left: 10px;
+}
+DIV.forum-reply-field-author, DIV.forum-reply-field-email
+{
+	margin-left: 10px;
+}
+/*=========================  2010.11.12 autocomplete =========================*/
+.preloader
+{
+	background: #FFFFFF url('/img/autocomplete-indicator.gif') no-repeat right center;
+}
+/*=========================  2010.11.15 catalog sublevel =========================*/
+.menu SPAN.sub_level
+{
+	padding-left: 35px;
+}
+/*=========================  2010.12.06 =========================*/
+HTML
+{
+	background: #006BBE url(/mainBGrep.gif) repeat 0 0;
+}
+.main, .footer
+{
+	background: transparent;
+}
+.footer_links
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 600px;
+	margin-top: 46px;
+	margin-left: 126px;
+	color: #FFFFFF;
+}
+.pageTitle H1
+{
+	font-size: 18px;
+	font-weight: bold;
+	font-style: normal;
+	display: inline;
+}
+.headerMainBlock
+{
+	position: relative;
+}
+.z-index50
+{
+	z-index: 50;
+}
+.specialLayer
+{
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: url(/img/blank.gif) repeat 0 0;
+	z-index: 2000;
+}
+.popapBodyBG
+{
+	background-image: url(/img/mainBGrep_active.gif);
+}
+.show
+{
+	display: block;
+}
+.predel
+{
+	font-size: 12px !important;
+	font-weight: normal !important;
+	display: block !important;
+	clear: both !important;
+	font-style: normal !important;
+	color: #000 !important;
+}
+.projectEdit .addFileForm .predel
+{
+	position: relative;
+	top: -14px;
+}
+#projectObjectListContainer .predel
+{
+	position: relative;
+	top: 0px !important;
+}

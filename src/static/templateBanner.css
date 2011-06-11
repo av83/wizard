@@ -1,0 +1,109 @@
+.bannerTop {
+	background:url("images/header_line.gif") repeat-x scroll 0 0 #F1F1F1;
+	border-left:1px solid #FFFFFF;
+	border-right:1px solid #FFFFFF;
+	margin:0 auto;
+	max-height:90px;
+	max-width:970px;
+	overflow:hidden;
+}
+.bannerCenter1 {
+	margin:0 auto 15px;
+	max-height: 90px;
+	overflow:hidden;
+	max-width: 470px;
+	
+}
+.bannerCenter2 {
+	margin:0 auto 15px;
+	max-height: 90px;
+	overflow:hidden;
+	max-width: 470px;
+	
+}
+.bannerCenter3 {
+	margin:0 auto 15px;
+	max-height: 90px;
+	overflow:hidden;
+	max-width: 470px;
+	
+}
+.bannerCenter4 {
+	margin:0 auto 15px;
+	max-height: 90px;
+	overflow:hidden;
+	max-width: 470px;
+	
+}
+
+.bannerCenter5 {
+	margin:0 auto 15px;
+	max-height: 90px;
+	overflow:hidden;
+	max-width: 470px;
+	
+}
+.bannerLeft1  {
+	margin:0 auto 15px;
+	max-height: 90px;
+	overflow:hidden;
+	max-width: 220px;
+	
+}
+.bannerLeft2  {
+	margin:0 auto 15px;
+	max-height: 90px;
+	overflow:hidden;
+	max-width: 220px;
+	
+}
+.bannerRight1  {
+	margin:0 auto 15px;
+	max-height: 285px;
+	overflow:hidden;
+	max-width: 220px;
+	
+}
+.bannerRight2 {
+	margin:0 auto 15px;
+	max-height: 285px;
+	overflow:hidden;
+	max-width: 220px;
+	
+}
+.bannerRight3 {
+	margin:0 auto 15px;
+	max-height: 285px;
+	overflow:hidden;
+	max-width: 220px;
+	
+}
+.bannerRight4 {
+	margin:0 auto 15px;
+	max-height: 285px;
+	overflow:hidden;
+	max-width: 220px;
+	
+}
+.banner_catalogCenter1 {
+	margin-left:2px;
+	margin-right:2px;
+	max-height: 95px;
+	overflow:hidden;
+	max-width: 140px;
+	float:left;
+}
+.bannerCentercatlog .clear {
+	clear:both;
+}
+.bannerCentercatlog	{margin:0 auto 15px;
+	max-height: 95px;
+	overflow:hidden;
+	max-width: 470px;
+}
+.bannerCenter_catalogInternal {
+	margin: 10px 0 auto;
+	max-height: 85px;
+	overflow:hidden;
+	max-width: 445px;
+}

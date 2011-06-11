@@ -1,25 +1,17 @@
 
-(defparameter *required* '(restas closure-template))
+(defparameter *required* '(restas closure-template restas-directory-publisher))
 (defparameter *my-package* 'wizard)
 (defparameter *used-package* '(cl iter))
+
 (load "ent.lisp") ;; *entityes* *places*
-
-
 
 (with-open-file (out "src/defmodule.lisp" :direction :output :if-exists :supersede)
   ;; Required
   (format out "~{~%(require '~A)~}" *required*)
   (format out "~%~%(restas:define-module #:~A~%  (:use ~{#:~A ~}))~%~%(in-package #:~A)"
           *my-package* *used-package* *my-package*)
-  ;; Path
-  (format out "~%~%(let ((path '(:RELATIVE \"~A\")))
-    (setf asdf:*central-registry*
-          (remove-duplicates (append asdf:*central-registry*
-                                     (list (merge-pathnames
-                                            (make-pathname :directory path)
-                                            (user-homedir-pathname))))
-                             :test #'equal)))"
-          (string-downcase *my-package*))
+  ;; Lib
+  (format out "~%~%(load \"src/lib.lisp\")")
   ;; Containers
   (let ((containers)
         (classes (make-hash-table :test #'equal)))
@@ -73,7 +65,8 @@
                (mapcar #'(lambda (action)
                            (format nil "~%    (push \"<table border=\\\"1\\\"><tr><td>~A</td></tr></table>\" rs)" (getf action :caption)))
                        actions)
-               "(format nil \"~{~A~}\" (reverse rs))"))
+               "(tpl:root (list :content (format nil \"~{~A~}\" (reverse rs))))"))
+               ;; "(format nil \"~{~A~}\" (reverse rs))"))
      (format out ")")))
 
 
