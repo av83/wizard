@@ -30,7 +30,26 @@
         <div class="body">{\n}
           <div class="popapLayer"></div>{\n}
 
-          {call left /}
+          <div class="sidebarL">
+            <div class="sidebarBox menu">
+              <div class="sidebarBoxBG">
+                <div class="sidebarBoxTop"></div>
+                <div class="menuLeftLine">
+                  {foreach $elt in $navpoints}
+                    {call navelt data="$elt" /}
+                  {/foreach}
+                </div>
+                <div class="sidebarBoxBottom"></div>
+              </div>
+            </div>
+            <div class="sidebarBox banners">banners</div>
+            <div class="bannerLeft1"></div>
+            <div class="bannerLeft2"></div>
+            <script type="text/javascript"></script>
+            <div id="comp_4ba7d484fbd06a70408569a8a34033b6"></div>
+            <script type="text/javascript"></script>
+            <script type="text/javascript"></script>
+          </div>
 
           <div class="sidebarR">{\n}
 
@@ -132,33 +151,6 @@
         </div>
       </form>
     </div>
-  </div>
-{/template}
-
-
-{template left}
-  <div class="sidebarL">
-    <div class="sidebarBox menu">
-      <div class="sidebarBoxBG">
-        <div class="sidebarBoxTop"></div>
-        <div class="menuLeftLine">
-          <div class="menuItem fitstItem">
-            <span class=""><a href="/news/">Новости</a></span>
-          </div>
-          <div class="menuItem">
-            <span class=""><a href="/analytics/">Аналитика</a></span>
-          </div>
-        </div>
-        <div class="sidebarBoxBottom"></div>
-      </div>
-    </div>
-    <div class="sidebarBox banners">banners</div>
-    <div class="bannerLeft1"></div>
-    <div class="bannerLeft2"></div>
-    <script type="text/javascript"></script>
-    <div id="comp_4ba7d484fbd06a70408569a8a34033b6"></div>
-    <script type="text/javascript"></script>
-    <script type="text/javascript"></script>
   </div>
 {/template}
 

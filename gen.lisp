@@ -56,18 +56,24 @@
                   (format out "~%  (format t \"~A~A : ~A\" (~A object))" "~%" caption "~A" name))))
              (format out ")")))))
   ;; Places
-  (loop :for place :in *places* :do
-     (format out "~%~%(restas:define-route ~A-page (\"~A\")"
-             (string-downcase (getf place :place))
-             (getf place :url))
-     (let ((actions (eval (getf place :actions))))
-       (format out "~%  (let ((rs))~{~A~}~%    ~A)"
-               (mapcar #'(lambda (action)
-                           (format nil "~%    (push \"<table border=\\\"1\\\"><tr><td>~A</td></tr></table>\" rs)" (getf action :caption)))
-                       actions)
-               "(tpl:root (list :content (format nil \"~{~A~}\" (reverse rs))
+  (let ((menu))
+    (loop :for place :in *places* :do
+       (unless (null (getf place :navpoint))
+         (push (list :link (getf place :url) :title (getf place :navpoint)) menu))
+       (format out "~%~%(restas:define-route ~A-page (\"~A\")"
+               (string-downcase (getf place :place))
+               (getf place :url))
+       (let ((actions (eval (getf place :actions))))
+         (format out "~%  (let ((rs))~{~A~}~%    ~A)"
+                 (mapcar #'(lambda (action)
+                             (format nil "~%    (push \"<table border=\\\"1\\\"><tr><td>~A</td></tr></table>\" rs)" (getf action :caption)))
+                         actions)
+                 "(tpl:root (list :content (format nil \"~{~A~}\" (reverse rs))
                                 :navpoints (menu)))"))
-               ;; "(format nil \"~{~A~}\" (reverse rs))"))
-     (format out ")")))
+       ;; "(format nil \"~{~A~}\" (reverse rs))"))
+       (format out ")"))
+    (format out "~%~%~%(defun menu ()  '")
+    (pprint (reverse menu) out)
+    (format out ")")))
 
 

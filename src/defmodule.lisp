@@ -394,3 +394,11 @@
     (push "<table border=\"1\"><tr><td>Организации-поставщики</td></tr></table>" rs)
     (tpl:root (list :content (format nil "~{~A~}" (reverse rs))
                                 :navpoints (menu)))))
+
+
+(defun menu ()  '
+((:LINK "/" :TITLE "Главная страница") (:LINK "/admin" :TITLE "Администратор")
+ (:LINK "/supplier" :TITLE "Поставщик такой-то")
+ (:LINK "/tender" :TITLE "Тендер такой-то")
+ (:LINK "/builder" :TITLE "Застройщик такой-то")
+ (:LINK "/builders" :TITLE "Поставщики")))

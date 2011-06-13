@@ -347,12 +347,14 @@
     ;; Главная страница
     (:place                main
      :url                  "/"
+     :navpoint             "Главная страница"
      :actions
      '((:caption           "Главная страница"
         :perm              "<?>")))
     ;; Личный кабинет Администратора
     (:place                admin
      :url                  "/admin"
+     :navpoint             "Администратор"
      :actions
      '((:caption           "Изменить пароль"
         :perm              :admin
@@ -399,6 +401,7 @@
     ;; Личный кабинет Поставщика
     (:place                supplier
      :url                  "/supplier"
+     :navpoint             "Поставщик такой-то"
      :actions
      '((:caption           "Отправить заявку на добросовестность" ;; заявка на статус добросовестного поставщика (изменяет статус поставщика)
         :perm              (and :self :unfair)
@@ -422,6 +425,7 @@
     ;; Страница тендера
     (:place                tender
      :url                  "/tender"
+     :navpoint             "Тендер такой-то"
      :actions
      '((:caption           "Ответить заявкой на тендер" ;; Добросовестный поставщик отвечает заявкой на тендер
         :perm              (and :active :fair)
@@ -448,6 +452,7 @@
     ;; Личный кабинет застройщика с возможностью объявить тендер
     (:place                builder
      :url                  "/builder"
+     :navpoint             "Застройщик такой-то"
      :actions
      '((:caption           "Застройщик такой-то (name object)"
         :perm              :self
@@ -479,6 +484,7 @@
     ;; Страница поставщиков - коллекция по юзерам с фильтром по типу юзера
     (:place                builders
      :url                  "/builders"
+     :navpoint             "Поставщики"
      :actions
      '((:caption           "Организации-поставщики"
         :perm              "<?>"
