@@ -353,47 +353,97 @@
   (format t "~%Тендер : ~A" (TENDER object)))
 
 (restas:define-route main-page ("/")
-  (let ((rs))
-    (push "<table border=\"1\"><tr><td>Главная страница</td></tr></table>" rs)
-    (tpl:root (list :content (format nil "~{~A~}" (reverse rs))
-                                :navpoints (menu)))))
+  (tpl:root (list :navpoints (menu) :content (render 
+'((:CAPTION "Главная страница" :PERM "<?>")))))
 
 (restas:define-route admin-page ("/admin")
-  (let ((rs))
-    (push "<table border=\"1\"><tr><td>Изменить пароль</td></tr></table>" rs)
-    (push "<table border=\"1\"><tr><td>Создать аккаунт эксперта</td></tr></table>" rs)
-    (push "<table border=\"1\"><tr><td>Эксперты</td></tr></table>" rs)
-    (push "<table border=\"1\"><tr><td>Заявки поставщиков на добросовестность</td></tr></table>" rs)
-    (tpl:root (list :content (format nil "~{~A~}" (reverse rs))
-                                :navpoints (menu)))))
+  (tpl:root (list :navpoints (menu) :content (render 
+'((:CAPTION "Изменить пароль" :PERM :ADMIN :ENTITY ADMIN :VALUES :USER :FIELDS
+   '(LOGIN PASSWORD
+     (:BTN "Изменить пароль" :ACT (CHANGE-ADMIN-PASSWORD :USER :FORM))))
+  (:CAPTION "Создать аккаунт эксперта" :PERM :ADMIN :ENTITY EXPERT :VALUES NIL
+   :FIELDS
+   '(LOGIN PASSWORD
+     (:BTN "Создать новый аккаунт эксперта" :ACT (CREATE-EXPERT :USER :FORM))))
+  (:CAPTION "Эксперты" :PERM :ADMIN :ENTITY EXPERT :VALUES :COLLECTION :FIELDS
+   '(NAME LOGIN
+     (:BTN "Удалить аккаунт эксперта" :ACTIONS
+      '((:CAPTION "Действительно удалить?" :PERM :ADMIN :ENTITY EXPERT :FIELDS
+         '(:BTN "Подтверждаю удаление" :ACT (DELETE-EXPERT :USER :ROW)))))
+     (:BTN "Сменить пароль эксперта" :ACTIONS
+      '((:CAPTION "Смена пароля эксперта" :PERN :ADMIN :ENTITY EXPERT :FIELDS
+         '((:STR "Новый пароль" NEW-PASSWORD)
+           (:BTN "Изменить пароль эксперта" :ACT
+            (CHANGE-EXPERT-PASSWORD :USER :ROW :FORM))))))))
+  (:CAPTION "Заявки поставщиков на добросовестность" :PERM :ADMIN :ENTITY
+   EXPERT :VALUES :COLLECTION :FIELDS
+   '(NAME LOGIN
+     (:BTN "Подтвердить заявку" :ACTIONS
+      '((:CAPTION "Подтвердить заявку поставщика" :PERM :ADMIN :ENTITY SUPPLIER
+         :FIELDS
+         '((:BTN "Сделать добросовестным" :ACT
+            (APPROVE-SUPPLIER-FAIR :USER :ROW))))))))))))
 
 (restas:define-route supplier-page ("/supplier")
-  (let ((rs))
-    (push "<table border=\"1\"><tr><td>Отправить заявку на добросовестность</td></tr></table>" rs)
-    (push "<table border=\"1\"><tr><td>Изменить список ресурсов</td></tr></table>" rs)
-    (push "<table border=\"1\"><tr><td>Заявки на тендеры</td></tr></table>" rs)
-    (tpl:root (list :content (format nil "~{~A~}" (reverse rs))
-                                :navpoints (menu)))))
+  (tpl:root (list :navpoints (menu) :content (render 
+'((:CAPTION "Отправить заявку на добросовестность" :PERM (AND :SELF :UNFAIR)
+   :ENTITY SUPPLIER :FIELDS
+   '((:BTN "Отправить заявку на добросовестность" :ACT
+      (SUPPLIER-REQUEST-FAIR :USER))))
+  (:CAPTION "Изменить список ресурсов" :PERM :SELF :ENTITY
+   SUPPLIER-RESOURCE-PRICE :VALUES :COLLECTION :FIELDS
+   '(OWNER RESOURCE PRICE (:BTN "Добавить ресурс" ACT ...?)
+     (:BTN "Удалить ресурс" ?) (:BTN "Изменить ресурс" ?)))
+  (:CAPTION "Заявки на тендеры" :PERM :SELF :ENTITY OFFER :VALUES :COLLECTION
+   :FIELDS '(TENDER))))))
 
 (restas:define-route tender-page ("/tender")
-  (let ((rs))
-    (push "<table border=\"1\"><tr><td>Ответить заявкой на тендер</td></tr></table>" rs)
-    (push "<table border=\"1\"><tr><td>Отменить тендер</td></tr></table>" rs)
-    (tpl:root (list :content (format nil "~{~A~}" (reverse rs))
-                                :navpoints (menu)))))
+  (tpl:root (list :navpoints (menu) :content (render 
+'((:CAPTION "Ответить заявкой на тендер" :PERM (AND :ACTIVE :FAIR) :ENTITY
+   TENDER :FIELDS
+   '(NAME STATUS OWNER ACTIVE-DATE ALL CLAIM ANALIZE INTERVIEW RESULT WINNER
+     PRICE RESOURCES DOCUMENTS SUPPLIERS OFFERTS
+     (:BNT "Ответить заявкой на тендер" :ACTIONS
+      '((:CAPTION "Выберите ресурсы" :PERM (AND :ACTIVE :FAIR) :ENTITY RESOURCE
+         :FIELDS
+         '((:BTN "Участвовать в тендере" :ACT
+            (CREATE-OFFER :USER :FORM TENDER))))))))
+  (:CAPTION "Отменить тендер" :PERM :OWNER :ENTITY TENDER :FIELDS
+   '(:BTN "Отменить тендер" :ACTIONS
+     '((:CAPTION "Действительно отменить?" :PERM :OWNER :ENTITY TENDER :FIELDS
+        '(:BTN "Подтверждаю отмену" :ACT (CANCEL-TENDER :USER :ROW))))))))))
 
 (restas:define-route builder-page ("/builder")
-  (let ((rs))
-    (push "<table border=\"1\"><tr><td>Застройщик такой-то (name object)</td></tr></table>" rs)
-    (push "<table border=\"1\"><tr><td>Объявить новый тендер</td></tr></table>" rs)
-    (tpl:root (list :content (format nil "~{~A~}" (reverse rs))
-                                :navpoints (menu)))))
+  (tpl:root (list :navpoints (menu) :content (render 
+'((:CAPTION "Застройщик такой-то (name object)" :PERM :SELF :ENTITY BUILDER
+   :FIELDS
+   '(NAME JURIDICAL-ADDRESS INN KPP OGRN BANK-NAME BIK CORRESP-ACCOUNT
+     CLIENT-ACCOUNT TENDERS RATING))
+  (:CAPTION "Объявить новый тендер" :PERM :SELF :ENTITY TENDER :FIELDS
+   '(NAME ALL CLAIM ANALIZE INTERVIEW RESULT RESOURCES DOCUMENTS PRICE
+     SUPPLIERS
+     (:BTN "Объявить тендер" :ACTIONS
+      '((:CAPTION "Создание нового тендера" :PERM :SELF :ENTITY TENDER :VALUES
+         NIL :FIELDS
+         '(NAME OWNER ACTIVE-DATE ALL CLAIM ANALIZE INTERVIEW RESOURCES
+           DOCUMENTS (:BTN "Создать тендер" :ACT (CREATE-TENDER :USER :FORM)))
+         :HOOKS
+         '((:CHANGE RESOURCES
+            (SET-FIELD PRICE (CALC-TENDER-PRICE (REQUEST RESOURCES))))
+           (:CHANGE RESOURCES
+            (SET-FIELD SUPPLIERS (CALC-SUPPLIERS (REQUEST RESOURCES)))))
+         (:OTHER
+          '(:OWNER (GET-CURRENT-USER-ID) :PRICE
+            (CALC-TENDER-PRICE (REQUEST RESOURCES)) :SUPPLIERS
+            (CALC-SUPPLIERS (REQUEST RESOURCES)) :OFFERTS NIL :WINNER NIL))
+         (:STATUS :UNACTIVE))))))))))
 
 (restas:define-route builders-page ("/builders")
-  (let ((rs))
-    (push "<table border=\"1\"><tr><td>Организации-поставщики</td></tr></table>" rs)
-    (tpl:root (list :content (format nil "~{~A~}" (reverse rs))
-                                :navpoints (menu)))))
+  (tpl:root (list :navpoints (menu) :content (render 
+'((:CAPTION "Организации-поставщики" :PERM "<?>" :ENTITY SUPPLIER :VALUES
+   :COLLECTION :SORT
+   "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
+   :FIELDS '((NAME JURIDICAL-ADDRESS REQUISITES TENDERS RATING)))))))
 
 
 (defun menu ()  '

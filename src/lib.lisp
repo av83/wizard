@@ -30,3 +30,8 @@
         (list :link "/faq/" :title "FAQ")
         (list :link "/resources/" :title "Ресурсы")
         (list :link "/contacts" :title "Контакты")))
+
+(defun render (param)
+  (list
+   (list :title 7 :content 2)
+   (list :title 3 :content 4)))

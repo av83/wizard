@@ -63,17 +63,9 @@
        (format out "~%~%(restas:define-route ~A-page (\"~A\")"
                (string-downcase (getf place :place))
                (getf place :url))
-       (let ((actions (eval (getf place :actions))))
-         (format out "~%  (let ((rs))~{~A~}~%    ~A)"
-                 (mapcar #'(lambda (action)
-                             (format nil "~%    (push \"<table border=\\\"1\\\"><tr><td>~A</td></tr></table>\" rs)" (getf action :caption)))
-                         actions)
-                 "(tpl:root (list :content (format nil \"~{~A~}\" (reverse rs))
-                                :navpoints (menu)))"))
-       ;; "(format nil \"~{~A~}\" (reverse rs))"))
-       (format out ")"))
+       (format out "~%  (tpl:root (list :navpoints (menu) :content (render ~A)))"
+               (with-output-to-string (*standard-output*)
+                 (pprint (getf place :actions)))))
     (format out "~%~%~%(defun menu ()  '")
     (pprint (reverse menu) out)
     (format out ")")))
-
-

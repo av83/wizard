@@ -51,11 +51,9 @@
 
           </div>{\n}
 
-          <div class="contentBox">{\n}
-
-            {$content |noAutoescape}
-
-          </div>{\n}
+          {foreach $contentBlock in $content}
+            {call contentBlock data="$contentBlock" /}
+          {/foreach}
 
         </div>{\n}
       </div>{\n}
@@ -70,6 +68,21 @@
   </html>{\n}
 {/template}
 
+
+{template contentBlock}
+  <div class="contentBox">{\n}
+    <div class="contentBoxBG">{\n}
+      <div class="contentBoxTop"></div>{\n}
+      <div class="contentBoxTitle">{\n}
+        <div class="pageTitle">{$title}</div>{\n}
+      </div>{\n}
+      <div class="contentBoxContent listCompanyBlock catalogItemTender sectorsBlock">{\n}
+        {$content |noAutoescape}{\n}
+      </div>{\n}
+      <div class="contentBoxBottom"></div>{\n}
+    </div>{\n}
+  </div>{\n}
+{/template}
 
 {template header}
   <div class="header">
@@ -173,36 +186,8 @@
 {/template}
 
 
-
-
 {template navelt}
   <div class="menuItem">{\n}
     <span class=""><a href="{$link}">{$title}</a></span>{\n}
   </div>{\n}
-{/template}
-
-
-{template base}
-  <div id="center">
-    <div class="col1 left">
-      <a id="logo" href="/">
-        <img src="http://www.gravatar.com/avatar/d8a986606b9d5e4769ba062779e95d9f?s=45"
-             style="border: 1px solid #7F7F7F"/>
-      </a>
-      <ul id="nav">
-        {foreach $elt in $navpoints}
-          {call navelt data="$elt" /}
-        {/foreach}
-      </ul>
-    </div>
-    {$content |noAutoescape}
-    <div class="clear">.</div>
-  </div>
-  <div id="footer">
-    <p>
-      <a href="/about">About</a> |
-      <a href="/contacts">Contacts</a>
-      {$stat |noAutoescape}
-    </p>
-  </div>
 {/template}
