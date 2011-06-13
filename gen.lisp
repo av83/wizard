@@ -65,7 +65,8 @@
                (mapcar #'(lambda (action)
                            (format nil "~%    (push \"<table border=\\\"1\\\"><tr><td>~A</td></tr></table>\" rs)" (getf action :caption)))
                        actions)
-               "(tpl:root (list :content (format nil \"~{~A~}\" (reverse rs))))"))
+               "(tpl:root (list :content (format nil \"~{~A~}\" (reverse rs))
+                                :navpoints (menu)))"))
                ;; "(format nil \"~{~A~}\" (reverse rs))"))
      (format out ")")))
 

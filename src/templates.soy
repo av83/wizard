@@ -2,6 +2,7 @@
 
 {namespace tpl}
 
+
 {template root}
   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">{\n}
   <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">{\n}
@@ -9,313 +10,266 @@
 	  <title>{$headtitle}</title>{\n}
 	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />{\n}
 	  <!-- link rel="stylesheet" type="text/css" media="screen" href="/style.css" / -->{\n}
-      <link rel="stylesheet" media="screen" type="text/css" href="/default.css" /> <!-- сетка и типовая -->
-      <link rel="stylesheet" media="screen" type="text/css" href="/unique.css" /> <!-- уникальные стили -->
-      <link rel="stylesheet" media="screen" type="text/css" href="/templateBanner.css" /> <!-- стили банеров -->
+      <link rel="stylesheet" media="screen" type="text/css" href="/default.css" /> <!-- сетка и типовая -->{\n}
+      <link rel="stylesheet" media="screen" type="text/css" href="/unique.css" /> <!-- уникальные стили -->{\n}
+      <link rel="stylesheet" media="screen" type="text/css" href="/templateBanner.css" /> <!-- стили банеров -->{\n}
 	  <link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico" />{\n}
     </head>{\n}
     <body id="top">{\n}
       <div id="main" class="main">{\n}
-        <div class="browserBlock"></div>
-        <div class="bannerTop">
-          <noindex>
-            <div style="width: 970px; height: 90px; padding: 0pt; margin: 0pt;">
-            </div>
-          </noindex>
-        </div>
-        <div class="header">
-          <div class="headerMainBlock">
-            <div class="popapLayer"></div>
-            <div class="headerLogoBox">
-              <img alt="" src="/header_logo.png" />
-              <span style="font-size: 12px;"> Единый строительный портал Cеверо-Запада </span>
-            </div>
-            <div id="search" class="headerSearchBox">
-              <div class="headerBGleft"></div>
-              <div class="headerBGright"></div>
-              <form id="topSearchForm" method="get" action="/search/">
-                <input type="text" maxlength="150" size="15" value="" name="q">
-                  <select name="f[]">
-                    <option value="n">в новостях</option>
-                    <option value="p">в проектах</option>
-                    <option value="c">в компаниях</option>
-                    <option value="t">в тендерах</option>
-                    <option value="a">в отчётах</option>
-                    <option value="j">в решениях суда</option>
-                    <option value="0" selected="selected">везде</option>
-                  </select>
-                  <div id="topSearchButton" class="buttonBox">
-                    <div class="buttonLeft"></div>
-                    <div class="buttonText">Искать</div>
-                    <div class="buttonRight"></div>
-                  </div>
-                </form>
-                <div class="pt10">
-                  <a href="/search/admission/">Поиск по допускам</a>
-                </div>
-                <script type="text/javascript">
-                  {literal}
-                  <!--
-                     $('#topSearchForm').submit(function(){
-                     if($.trim(this.elements.q.value)==0)
-                     {
-                     alert('Введите поисковый запрос!');
-                     return false;
-                     }
-                     return true;
-                     });
+        <div class="browserBlock"></div>{\n}
+        <div class="bannerTop">{\n}
+          <noindex>{\n}
+            <div style="width: 970px; height: 90px; padding: 0pt; margin: 0pt;">{\n}
+            </div>{\n}
+          </noindex>{\n}
+        </div>{\n}
 
-                     $('#topSearchButton').click(function(){
-                     $('#topSearchForm').submit();
-                     return false;
-                     });
-                         //-->
-                   {/literal}
-                </script>
-              </div>
-              <form action="/?login=yes" target="_top" method="post">
-                <div class="headerPersonalBox italic personEnter">
-                  <div style="margin-top: -30px; margin-left: -230px; position:
-                              absolute; z-index: 1000; text-align: right; width:
-                              400px;"> </div>
-                  <a class="icoLink showAuth" href="/registration/">
-                    <img alt="" src="/img/ico_key.png" />
-                  </a>
-                  <a class="dashedLink showAuth" href="/registration/">Вход</a>
-                  <span>|</span>
-                  <a href="/registration/?register=yes&backurl=%2F">Регистрация</a>
-                </div>
-              </form>
-            </div>
-          </div>
+        {call header /}
 
+        <div class="body">{\n}
+          <div class="popapLayer"></div>{\n}
 
-          <div class="body">
-            <div class="popapLayer"></div>
-            <div class="sidebarL">
-              <div class="sidebarBox menu">
-                <div class="sidebarBoxBG">
-                  <div class="sidebarBoxTop"></div>
-                  <div class="menuLeftLine">
-                    <div class="menuItem fitstItem">
-                      <span class=""><a href="/news/">Новости</a></span>
-                    </div>
-                    <div class="menuItem">
-                      <span class=""><a href="/analytics/">Аналитика</a></span>
-                    </div>
-                  </div>
-                  <div class="sidebarBoxBottom"></div>
-                </div>
-              </div>
-              <div class="sidebarBox banners">banners</div>
-              <div class="bannerLeft1"></div>
-              <div class="bannerLeft2"></div>
-              <script type="text/javascript"></script>
-              <div id="comp_4ba7d484fbd06a70408569a8a34033b6"></div>
-              <script type="text/javascript"></script>
-              <script type="text/javascript"></script>
-            </div>
-            <div class="sidebarR">
-              <div class="sidebarBox">
-                <div class="sidebarBoxBG">
-                  <div class="sidebarBoxTop"></div>
-                  <div class="sidebarBoxTitle">
-                    <a href="/analytics/experts/146803/">Мнение эксперта</a>
-                  </div>
-                  <div class="sidebarBoxContent contentOpinion">
-                    <img align="left" width="49" height="70" alt="Станислав Логунов"
-                         src="/upload/resize_cache/iblock/21d/70_70_1/21d38145873dda9cb796650dad2d3bd5.jpg">
-                      <span class="textDiscr">Станислав Логунов</span>
-                      <span class="italicText">директор СПб ГАУ «Центр государственной --
-                        --экспертизы»</span>
-                      <div class="messagehere">
-                        <a class="bigLink" href="/analytics/experts/146803/">
-                          <div align="justify">
-                            Показательных результатов работы Центра государственной экспертизы
-                            удалось добиться благодаря тому, что мы перешли на электронный формат
-                            оказания услуг. Кроме того, мы значительно ужесточили требования к
-                            исходно-разрешительной документации при приеме проектов.
-                            <br>
-                              <br>
-                              </div>
-                            </a>
-                            <span class="italicText linkGoFurther">
-                              <a href="/analytics/experts/146803/">подробнее</a>
-                            </span>
-                          </div>
-                        </div>
-                        <div class="sidebarBoxBottom"></div>
-                      </div>
-                    </div>
-                    <div class="bannerRight1">
-                      <noindex>
-                        <a target="_blank"
-                           href="/bitrix/rk.php?id=37&event1=banner&event2=click&event3=7+%2F+%5B37%5D+%5BbannerRight1%5D+%D0%9E%D0%9E%D0%9E+%22%D0%93%D1%80%D0%B0%D0%BD%D0%B4-%D0%A1%D0%9F%D0%B1%22+2011&goto=http%3A%2F%2Fspb.grandsmeta.ru+">
-                          <img border="0" width="220" height="285"
-                               src="/upload/rk/413/413fecf7aa18cb82fe930d4c78a458b7.gif"
-                               title="" alt="">
-                          </a>
-                        </noindex>
-                      </div>
-                      <div class="sidebarBox">
-                        <div class="sidebarBoxBG">
-                          <div class="sidebarBoxTop"></div>
-                          <div class="sidebarBoxTitle">Решения суда</div>
-                          <div class="sidebarBoxContent contentJudge">
-                            <span class="textTitle">Дело № А56-55540/2009</span>
-                            <span class="italicText">
-                              Истец: ОСАО "Ингосстрах"
-                              <br>
-                                Ответчик:
-                                <a href="/catalog/17080/company/52478/">ЗАО "ВАД"</a>
-                              </span>
-                              <p style="margin-top: 4px;">
-                                <span style="font-size: 11px;">Решение:</span>
-                                <br>
-                                  Удовлетворить встречный иск полностью или частично
-                                </p>
-                              </div>
-                              <div class="sidebarBoxBottom"></div>
-                            </div>
-                          </div>
-                          <div class="sidebarBox">
-                            <div class="sidebarBoxBG">
-                              <div class="sidebarBoxTop"></div>
-                              <div class="sidebarBoxTitle">
-                                <a href="/tenders/146038/">Тендер дня</a>
-                              </div>
-                              <div class="sidebarBoxContent contentJudge">
-                                <span class="textTitle">на выполнение работ по реставрационному
-                                  ремонту интерьеров придела Святого Климента и Святого Петра собора,
-                                  входящего в состав объекта культурного наследия федерального
-                                  значения «Собор Спасо-Преображенский» (Санкт-Петербург,
-                                  Преображенская пл. 1)</span>
-                                <span class="italicText">Открытый конкурс</span>
-                                <br>
-                                  <span class="italicText">Начало: 27 мая 2011</span>
-                                  <br>
-                                    <span class="italicText">Окончание: 05 июля 2011</span>
-                                    <div class="blockLink italicText icoLink02">
-                                      <a href="/tenders/">Все тендеры</a>
-                                    </div>
-                                  </div>
-                                  <div class="sidebarBoxBottom"></div>
-                                </div>
-                              </div>
-                            </div>
-            <div class="content">
-              <div class="bannerCenter1">
-              </div>
-              <div class="contentBox">
-                <div class="contentBoxBG">
-                  <div class="contentBoxTop"></div>
-                  <div class="contentBoxTitle">
-                    <div class="pageTitle">
-                      <a href="/upload/iblock_rss_1.xml" type="application/rss+xml">
-                        <img src="/rssicon.jpeg" style="margin: 0pt; padding: 4px 0pt 0pt;" />
-                      </a>
-                      <a href="/news/market/">Новости строительства</a>
-                    </div>
-                  </div>
-                  <div class="contentBoxContent contentNewsList">
-                    <div class="contentNewsTitle">Вчера, 10 июня 2011</div>
-                    <div>
-                      <span class="italicText">17:29</span>
-                      <a href="/news/market/146883/">В Фонде РЖС обсудят комплексное освоение земельных участков в Пушкине</a>
-                    </div>
-                  </div>
-                  <div class="contentBoxBottom"></div>
-                </div>
-              </div>
-            </div>
-            <div class="bannerCenter2">1</div>
-            <div class="bannerCenter3">2</div>
-            <div class="contentBox">3</div>
-            <div class="contentBox">4</div>
-          </div>
-        </div>
-        <div id="popapLogin" class="popapBox"></div>{\n}
-        <div id="popapOutFromPul" class="popapBox popapOutFromPul"></div>{\n}
-        <div id="popapCalendarBlock" class="calendarPopapBlock"></div>{\n}
-        <div id="popapTenderBox" class="popapBox popapOutFromPul"></div>{\n}
-        <div id="subscribeBox" class="popapBox popapOutFromPul subscribeBlock"></div>{\n}
-        <div id="popapCompany" class="popapBox popapOutFromPul popapAddCompany"></div>{\n}
-      </div>
-      <div class="footer">
-      </div>
-      <script type="text/javascript">
-      </script>
-      <div style="display: none;">
-      </div>
-    </body>
-  </html>
+          {call left /}
+
+          <div class="sidebarR">{\n}
+
+            {call right1 /}
+            {call right2 /}
+            {call right3 /}
+
+          </div>{\n}
+
+          <div class="content">{\n}
+            <div class="bannerCenter1">{\n}
+            </div>{\n}
+            <div class="contentBox">{\n}
+              <div class="contentBoxBG">{\n}
+                <div class="contentBoxTop"></div>{\n}
+                <div class="contentBoxTitle">{\n}
+                  <div class="pageTitle">{\n}
+                    <a href="/upload/iblock_rss_1.xml" type="application/rss+xml">{\n}
+                      <img src="/rssicon.jpeg" style="margin: 0pt; padding: 4px 0pt 0pt;" />{\n}
+                    </a>{\n}
+                    <a href="/news/market/">Новости строительства</a>{\n}
+                  </div>{\n}
+                </div>{\n}
+                <div class="contentBoxContent contentNewsList">{\n}
+                  <div class="contentNewsTitle">Вчера, 10 июня 2011</div>{\n}
+                  <div>{\n}
+                    <span class="italicText">17:29</span>{\n}
+                    <a href="/news/market/146883/">В Фонде РЖС обсудят комплексное освоение земельных участков в Пушкине</a>{\n}
+                  </div>{\n}
+                </div>{\n}
+                <div class="contentBoxBottom"></div>{\n}
+              </div>{\n}
+            </div>{\n}
+          </div>{\n}
+          <div class="bannerCenter2">bannerCenter2</div>{\n}
+          <div class="bannerCenter3">bannerCenter3</div>{\n}
+          <div class="contentBox">contentBox1</div>{\n}
+          <div class="contentBox">contentBox2</div>{\n}
+        </div>{\n}
+      </div>{\n}
+      <div id="popapLogin" class="popapBox"></div>{\n}
+      <div id="popapOutFromPul" class="popapBox popapOutFromPul"></div>{\n}
+      <div id="popapCalendarBlock" class="calendarPopapBlock"></div>{\n}
+      <div id="popapTenderBox" class="popapBox popapOutFromPul"></div>{\n}
+      <div id="subscribeBox" class="popapBox popapOutFromPul subscribeBlock"></div>{\n}
+      <div id="popapCompany" class="popapBox popapOutFromPul popapAddCompany"></div>{\n}
+    </div>{\n}
+    <div class="footer">{\n}
+    </div>{\n}
+    <script type="text/javascript">{\n}
+    </script>{\n}
+    <div style="display: none;">{\n}
+    </div>{\n}
+  </body>{\n}
+  </html>{\n}
 {/template}
+
+
+{template header}
+  <div class="header">
+    <div class="headerMainBlock">
+      <div class="popapLayer"></div>
+      <div class="headerLogoBox">
+        <img alt="" src="/header_logo.png" />
+        <span style="font-size: 12px;"> Единый строительный портал Cеверо-Запада </span>
+      </div>
+      <div id="search" class="headerSearchBox">
+        <div class="headerBGleft"></div>
+        <div class="headerBGright"></div>
+        <form id="topSearchForm" method="get" action="/search/">
+          <input type="text" maxlength="150" size="15" value="" name="q" />
+          <select name="f[]">
+            <option value="n">в новостях</option>
+            <option value="p">в проектах</option>
+            <option value="c">в компаниях</option>
+            <option value="t">в тендерах</option>
+            <option value="a">в отчётах</option>
+            <option value="j">в решениях суда</option>
+            <option value="0" selected="selected">везде</option>
+          </select>
+          <div id="topSearchButton" class="buttonBox">
+            <div class="buttonLeft"></div>
+            <div class="buttonText">Искать</div>
+            <div class="buttonRight"></div>
+          </div>
+        </form>
+      </div>
+      <form action="/?login=yes" target="_top" method="post">
+        <div class="headerPersonalBox italic personEnter">
+          <div style="margin-top: -30px; margin-left: -230px; position:
+                      absolute; z-index: 1000; text-align: right; width:
+                      400px;"> </div>
+          <a class="icoLink showAuth" href="/registration/">
+            <img alt="" src="/img/ico_key.png" />
+          </a>
+          <a class="dashedLink showAuth" href="/registration/">Вход</a>
+          <span>|</span>
+          <a href="/registration/?register=yes&backurl=%2F">Регистрация</a>
+        </div>
+      </form>
+    </div>
+  </div>
+{/template}
+
+
+{template left}
+  <div class="sidebarL">
+    <div class="sidebarBox menu">
+      <div class="sidebarBoxBG">
+        <div class="sidebarBoxTop"></div>
+        <div class="menuLeftLine">
+          <div class="menuItem fitstItem">
+            <span class=""><a href="/news/">Новости</a></span>
+          </div>
+          <div class="menuItem">
+            <span class=""><a href="/analytics/">Аналитика</a></span>
+          </div>
+        </div>
+        <div class="sidebarBoxBottom"></div>
+      </div>
+    </div>
+    <div class="sidebarBox banners">banners</div>
+    <div class="bannerLeft1"></div>
+    <div class="bannerLeft2"></div>
+    <script type="text/javascript"></script>
+    <div id="comp_4ba7d484fbd06a70408569a8a34033b6"></div>
+    <script type="text/javascript"></script>
+    <script type="text/javascript"></script>
+  </div>
+{/template}
+
+
+{template right1}
+  <div class="sidebarBox">
+    <div class="sidebarBoxBG">
+      <div class="sidebarBoxTop"></div>
+      <div class="sidebarBoxTitle">
+        <a href="/analytics/experts/146803/">Мнение эксперта</a>
+      </div>
+      <div class="sidebarBoxContent contentOpinion">
+        <img align="left" width="49" height="70" alt="Станислав Логунов"
+             src="/upload/resize_cache/iblock/21d/70_70_1/21d38145873dda9cb796650dad2d3bd5.jpg"
+             />
+        <span class="textDiscr">Станислав Логунов</span>
+        <span class="italicText">директор СПб ГАУ «Центр государственной --
+          --экспертизы»</span>
+        <div class="messagehere">
+          <a class="bigLink" href="/analytics/experts/146803/">
+            <div align="justify">
+              Показательных результатов работы Центра государственной экспертизы
+              удалось добиться благодаря тому, что мы перешли на электронный формат
+              оказания услуг. Кроме того, мы значительно ужесточили требования к
+              исходно-разрешительной документации при приеме проектов.
+              <br />
+              <br />
+            </div>
+          </a>
+          <span class="italicText linkGoFurther">
+            <a href="/analytics/experts/146803/">подробнее</a>
+          </span>
+        </div>
+      </div>
+      <div class="sidebarBoxBottom"></div>
+    </div>
+  </div>
+  <div class="bannerRight1">
+    <noindex>
+      <a target="_blank"
+         href="/bitrix/rk.php?id=37&event1=banner&event2=click&event3=7+%2F+%5B37%5D+%5BbannerRight1%5D+%D0%9E%D0%9E%D0%9E+%22%D0%93%D1%80%D0%B0%D0%BD%D0%B4-%D0%A1%D0%9F%D0%B1%22+2011&goto=http%3A%2F%2Fspb.grandsmeta.ru+">
+        <img border="0" width="220" height="285"
+             src="/upload/rk/413/413fecf7aa18cb82fe930d4c78a458b7.gif"
+             title="" alt="" />
+      </a>
+    </noindex>
+  </div>
+{/template}
+
+
+{template right2}
+  <div class="sidebarBox">
+    <div class="sidebarBoxBG">
+      <div class="sidebarBoxTop"></div>
+      <div class="sidebarBoxTitle">Решения суда</div>
+      <div class="sidebarBoxContent contentJudge">
+        <span class="textTitle">Дело № А56-55540/2009</span>
+        <span class="italicText">
+          Истец: ОСАО "Ингосстрах"
+          <br>
+            Ответчик:
+            <a href="/catalog/17080/company/52478/">ЗАО "ВАД"</a>
+          </span>
+          <p style="margin-top: 4px;">
+            <span style="font-size: 11px;">Решение:</span>
+            <br>
+              Удовлетворить встречный иск полностью или частично
+            </p>
+          </div>
+          <div class="sidebarBoxBottom"></div>
+        </div>
+      </div>
+{/template}
+
+
+{template right3}
+  <div class="sidebarBox">
+    <div class="sidebarBoxBG">
+      <div class="sidebarBoxTop"></div>
+      <div class="sidebarBoxTitle">
+        <a href="/tenders/146038/">Тендер дня</a>
+      </div>
+      <div class="sidebarBoxContent contentJudge">
+        <span class="textTitle">на выполнение работ по реставрационному
+          ремонту интерьеров придела Святого Климента и Святого Петра собора,
+          входящего в состав объекта культурного наследия федерального
+          значения «Собор Спасо-Преображенский» (Санкт-Петербург,
+          Преображенская пл. 1)</span>
+        <span class="italicText">Открытый конкурс</span>
+        <br />
+        <span class="italicText">Начало: 27 мая 2011</span>
+        <br />
+        <span class="italicText">Окончание: 05 июля 2011</span>
+        <div class="blockLink italicText icoLink02">
+          <a href="/tenders/">Все тендеры</a>
+        </div>
+      </div>
+      <div class="sidebarBoxBottom"></div>
+    </div>
+  </div>
+{/template}
+
+
+
 
 {template navelt}
-  <li><a href="{$link}">{$title}</a></li>
+  <div class="menuItem">{\n}
+    <span class=""><a href="{$link}">{$title}</a></span>{\n}
+  </div>{\n}
 {/template}
 
-{template sectelt}
-  <li class="{$level}">★<a href="#{$anchor}">{$title}</a>
-{/template}
-
-{template stat}
-  {literal}
-    <div style="margin-top: -29px; margin-left: 150px;">
-      <!--Google Analitics -->
-      <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-20801780-1']);
-        _gaq.push(['_trackPageview']);
-        (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-      </script>
-      <!--Google Analitics -->
-
-      <!--LiveInternet counter-->
-      <script type="text/javascript">
-        <!--
-           document.write("<a href='http://www.liveinternet.ru/click' "+
-           "target=_blank><img src='//counter.yadro.ru/hit?t24.5;r"+
-           escape(document.referrer)+((typeof(screen)=="undefined")?"":
-           ";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
-           screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
-           ";h"+escape(document.title.substring(0,80))+";"+Math.random()+
-           "' alt='' title='LiveInternet: показано число посетителей за"+
-           " сегодня' "+
-           "border='0' width='88' height='15'><\/a>")
-       //-->
-      </script>
-      <!--/LiveInternet-->
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <!-- Yandex.Metrika informer -->
-      <a href="http://metrika.yandex.ru/stat/?id=3701317&amp;from=informer"
-         target="_blank"><img src="//bs.yandex.ru/informer/3701317/1_0_9F9F9FFF_7F7F7FFF_0_pageviews"
-                              width="80" height="15" alt="Яндекс.Метрика" border="0" /></a>
-      <!-- /Yandex.Metrika informer -->
-
-      <!-- Yandex.Metrika counter -->
-      <div style="display:none;"><script type="text/javascript">
-          (function(w, c) {
-          (w[c] = w[c] || []).push(function() {
-          try {
-          w.yaCounter3701317 = new Ya.Metrika(3701317);
-          yaCounter3701317.clickmap(true);
-          yaCounter3701317.trackLinks(true);
-          } catch(e) {}
-          });
-          })(window, 'yandex_metrika_callbacks');
-      </script></div>
-      <script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript" defer="defer"></script>
-      <noscript><div style="position:absolute"><img src="//mc.yandex.ru/watch/3701317" alt="" /></div></noscript>
-      <!-- /Yandex.Metrika counter -->
-
-    </div>
-  {/literal}
-{/template}
 
 {template base}
   <div id="center">
@@ -340,100 +294,4 @@
       {$stat |noAutoescape}
     </p>
   </div>
-{/template}
-
-{template main}
-  <div class="col3 right">
-    <h1 style="margin: 0">{$title}</h1>
-    <div class="col4 left">
-      <p class="alert" style="width: 250px; color: red; font-size: 18px;"><strong>Что здесь происходит?</strong> </p>
-      <ul style="color: #feffb8">
-        <li><span style="color: red">★</span> Common Lisp -
-          один из самых удобных языков (в том числе и) для
-          веб-программирования. Этот сайт тому подтверждение.</li>
-        <li><span style="color: red">★</span> <a href="http://habrahabr.ru/blogs/webdev/111365/">Первый пост</a> на хабре</li>
-        <li><span style="color: red">★</span> Org-mode. Вся
-          жизнь внутри Емакса: список дел, работа, покупки,
-          и средство для подготовки документов в
-          удобном для автомтической обработки формате. </li>
-        <li><span style="color: red">★</span> С новым 2011 годом!..</li>
-        <li><span style="color: green">★</span> Выложил <a href="https://github.com/rigidus/cl-eshop">исходный код
-            рабочего проекта</a> на github. OpenSource грядет!</li>
-        <li><span style="color: green">★</span>
-          <a href="http://dropbox.com">Dropbox</a> in production!
-          Теперь контент-менеджеры удобно работают с данными одновременно, а версионирование
-          страхует их от ошибок.</li>
-      </ul>
-    </div>
-    <div class="col4 left">
-      <p class="alert" style="width: 250px; color: red; font-size: 18px;">
-        <strong>Кто все эти люди?</strong>
-      </p>
-      Пока это всего лишь я, Rigidus, собираю здесь все свои
-      проекты, статьи и руководства.
-
-      <p class="alert" style="width: 250px; color: red; font-size: 18px;">
-        <strong>Что дальше будет?</strong>
-      </p>
-      В ближайшее время я добавлю несколько актуальных своих
-      работ. Будут дописываться всяческие модули, сервисы и документация.
-    </div>
-    <div class="divider">.</div>
-    {$links |noAutoescape}
-  </div>
-{/template}
-
-{template default}
-  <div class="col3 right">
-    <h1>{$title}</h1>
-    <div class="col2 right" id="guideNav">
-      <ul>
-        {foreach $elt in $sections}
-          {call sectelt data="$elt" /}
-        {/foreach}
-      </ul>
-    </div>
-    {$content |noAutoescape}
-
-    <div class="divider">.</div>
-    {$links |noAutoescape}
-    <ul id="share">
-      {foreach $elt in $navpoints}
-        {call navelt data="$elt" /}
-      {/foreach}
-    </ul>
-  </div>
-{/template}
-
-{template send-ok}
-  Письмо ушло, я отвечу вам, если вы не забыли оставить свой e-mail
-  <br/><br/>
-  <a href="/">Обратно</a>
-{/template}
-
-{template send-err}
-  Какие-то проблемы с почтой, не могу отправить e-mail.
-  Буду благодарен, если вы продублируете на
-  <span style="color: red;"> <strong>avenger-f</strong></span>
-  <span style="color: white;"> <b>טּ</b> </span>
-  <span style="color: yellow;">yandex.ru</span>.<br /></br />
-  Или на
-  <span style="color: red;"> <strong>i.am.rigidus</strong></span>
-  <span style="color: white;"> <b>טּ</b> </span>
-  <span style="color: yellow;">gmail.com</span>.<br /><br />
-  Вот текст сообщения:
-  <div style="margin: 15px 0 30px 0; padding: 5px; background-color: #303030">
-    <pre>
-      {$message}
-    </pre>
-  </div>
-  <a href="/">Вернуться обратно</a>
-  <br /><br />
-{/template}
-
-{template li}
-  <li>
-    <span style="color: {$color}">{$star}</span>
-    <a href="{$link}">{$title}</a>
-  </li>
 {/template}
