@@ -38,6 +38,43 @@
                   {foreach $elt in $navpoints}
                     {call navelt data="$elt" /}
                   {/foreach}
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
                 </div>
                 <div class="sidebarBoxBottom"></div>
               </div>
@@ -217,4 +254,13 @@
 
 {template simplebtn}
   <input type="button" name="{$name}" value="{$value}" />
+{/template}
+
+
+{template frm}
+  <form method="post">
+    {foreach $fld in $flds}
+      {$fld |noAutoescape}
+    {/foreach}
+  </form>
 {/template}

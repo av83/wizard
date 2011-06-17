@@ -23,12 +23,5 @@
 (restas:mount-submodule -static- (#:restas.directory-publisher)
   (restas.directory-publisher:*directory* (path "src/static/")))
 
-(defun menu ()
-  (list (list :link "/" :title "Главная")
-        (list :link "/about" :title "About")
-        (list :link "/articles/" :title "Статьи")
-        (list :link "/faq/" :title "FAQ")
-        (list :link "/resources/" :title "Ресурсы")
-        (list :link "/contacts" :title "Контакты")))
-
-
+(defun get-current-user ()
+  (make-instance 'admin :login "admin" :password "admin"))

@@ -356,7 +356,7 @@
      :navpoint             "Главная страница"
      :actions
      '((:caption           "Главная страница"
-        :perm              "<?>")))
+        :perm              :all)))
     ;; Личный кабинет Администратора
     (:place                admin
      :url                  "/admin"
@@ -365,19 +365,19 @@
      '((:caption           "Изменить пароль"
         :perm              :admin
         :entity            admin
-        :values            :user
+        :val               :user
         :fields            '(login password
                              (:btn "Изменить пароль" :act (change-admin-password :user :form))))
        (:caption           "Создать аккаунт эксперта"
         :perm              :admin
         :entity            expert
-        :values            nil
+        :val               nil
         :fields            '(login password
                              (:btn "Создать новый аккаунт эксперта" :act (create-expert :user :form))))
        (:caption           "Эксперты"
         :perm              :admin
         :entity            expert
-        :values            :collection
+        :val               :collection
         :fields            '(name login
                              (:btn "Удалить аккаунт эксперта"
                               :actions
@@ -395,7 +395,7 @@
        (:caption           "Заявки поставщиков на добросовестность"
         :perm              :admin
         :entity            expert
-        :values            :collection
+        :val               :collection
         :fields            '(name login
                              (:btn "Подтвердить заявку"
                               :actions
@@ -416,7 +416,7 @@
        (:caption           "Изменить список ресурсов"
         :perm              :self
         :entity            supplier-resource-price
-        :values            :collection
+        :val               :collection
         :fields            '(owner resource price
                              (:btn "Добавить ресурс" act ...?)
                              (:btn "Удалить ресурс" ?)
@@ -424,7 +424,7 @@
        (:caption           "Заявки на тендеры"
         :perm              :self
         :entity            offer
-        :values            :collection
+        :val               :collection
         :fields            '(tender))))
 
 
@@ -474,7 +474,7 @@
                               '((:caption           "Создание нового тендера"
                                  :perm              :self
                                  :entity            tender
-                                 :values            nil
+                                 :val               nil
                                  :fields
                                  '(name owner active-date all claim analize interview resources documents
                                    (:btn "Создать тендер"  :act (create-tender :user :form)))
@@ -496,7 +496,7 @@
      '((:caption           "Организации-поставщики"
         :perm              "<?>"
         :entity            supplier
-        :values            :collection
+        :val               :collection
         :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
         ;; <?> Как будем показывать тендеры застройщика?
         :fields           '((name juridical-address requisites tenders rating)))))))
