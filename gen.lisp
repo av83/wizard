@@ -1,3 +1,4 @@
+(in-package #:WIZARD)
 
 (defparameter *required* '(restas closure-template restas-directory-publisher))
 (defparameter *my-package* 'wizard)

@@ -1,3 +1,9 @@
+(require 'RESTAS)
+
+(restas:define-module #:WIZARD
+    (:use #:CL #:ITER ))
+
+(in-package #:WIZARD)
 
 ;; Базовый класс, от которого наследуются все сущности
 (defclass entity ()
@@ -431,7 +437,7 @@
         :perm              (and :active :fair)
         :entity            tender
         :fields            '(name status owner active-date all claim analize interview result winner price resources documents suppliers offerts
-                             (:bnt "Ответить заявкой на тендер"
+                             (:btn "Ответить заявкой на тендер"
                               :actions
                               '((:caption           "Выберите ресурсы"
                                  :perm              (and :active :fair)
@@ -441,12 +447,13 @@
        (:caption           "Отменить тендер"
         :perm              :owner
         :entity            tender
-        :fields            '(:btn "Отменить тендер"
-                             :actions
-                             '((:caption           "Действительно отменить?"
-                                :perm               :owner
-                                :entity             tender
-                                :fields             '(:btn "Подтверждаю отмену" :act (cancel-tender :user :row))))))))
+        :fields            '((:btn "Отменить тендер"
+                              :act
+                              '((:caption           "Действительно отменить?"
+                                 :perm               :owner
+                                 :entity             tender
+                                 :fields             '(:btn "Подтверждаю отмену" :act (cancel-tender :user :row))))))
+       )))
 
 
     ;; Личный кабинет застройщика с возможностью объявить тендер

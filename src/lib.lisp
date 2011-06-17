@@ -41,16 +41,31 @@
 
 
 (defun render-fields (action)
-  (format nil "~{~A~}"
-          (mapcar #'(lambda (field)
-                      (etypecase field
-                          (symbol (render-field-symbol field))
+  (let ((entity (find-if #'(lambda (entity)
+                             (equal (getf entity :entity) (getf action :entity)))
+                         *entityes*)))
+    (format nil "~{~A ~}"
+            (mapcar #'(lambda (field)
+                        ;; (format nil "~A : ~A <br />" (type-of field) field))
+                        (etypecase field
+                          (symbol (render-field-symbol (getf entity :fields) field))
                           (cons   (render-field-cons field))))
-                      ;; (format nil "~A : ~A <br />" (type-of field) field))
-                  (eval (getf action :fields)))))
+                    (eval (getf action :fields))))))
 
-(defun render-field-symbol (field)
-  (tpl:rndfld (list :fldname field :fldcontent "<input type=\"text\" name=\"~a\" value=\"\" /> <br />")))
+
+(defun render-field-symbol (all-fields field)
+  (let ((fld-name (cadr (find-if #'(lambda (x)
+                                     (equal (car x) field))
+                                 all-fields))))
+    (tpl:rndfld (list :fldname fld-name :fldcontent "<input type=\"text\" name=\"~a\" value=\"\" /> <br />"))))
+
 
 (defun render-field-cons (field)
-  (format nil "cons <br />" field))
+  (format nil "~{~A ~}"
+          (loop :for instr :in field :by #'cddr :collect
+             (case instr
+               (:btn
+                (format nil "<input type=\"button\" name=\"~A\" value=\"~A\" />"
+                        (getf field instr)
+                        (getf field instr)))
+               (:act instr)))))
