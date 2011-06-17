@@ -191,3 +191,21 @@
     <span class=""><a href="{$link}">{$title}</a></span>{\n}
   </div>{\n}
 {/template}
+
+
+{template rndfld}
+  <table>
+    <tr>
+      <td width="180">
+        <div style="width: 180px;">
+          {$fldname}
+        </div>
+      </td>
+      <td width="180">
+        <div style="width: 180px;">
+          {$fldcontent |noAutoescape}
+        </div>
+      </td>
+    </tr>
+  </table>
+{/template}

@@ -63,7 +63,7 @@
        (format out "~%~%(restas:define-route ~A-page (\"~A\")"
                (string-downcase (getf place :place))
                (getf place :url))
-       (format out "~%  (tpl:root (list :navpoints (menu) :content (render ~A)))"
+       (format out "~%  (tpl:root (list :navpoints (menu) :content (render ~A))))"
                (with-output-to-string (*standard-output*)
                  (pprint (getf place :actions)))))
     (format out "~%~%~%(defun menu ()  '")
