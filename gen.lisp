@@ -87,4 +87,7 @@
                                                        (:btn
                                                         (format nil "~%~30T (tpl:simplebtn (list :name \"~A\" :value \"~A\"))"
                                                                 (getf field instr)
-                                                                (getf field instr))))))))))))))))
+                                                                (getf field instr))))))))))))))
+    (format out "~%~%~%(defun menu ()  '")
+    (pprint (reverse menu) out)
+    (format out ")")))

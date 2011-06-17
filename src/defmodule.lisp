@@ -521,3 +521,11 @@
     :content (list 
               (list :title "Организации-поставщики"
                     :content (format nil "~{~A ~}" (list NIL )))))))
+
+
+(defun menu ()  '
+((:LINK "/" :TITLE "Главная страница") (:LINK "/admin" :TITLE "Администратор")
+ (:LINK "/supplier" :TITLE "Поставщик такой-то")
+ (:LINK "/tender" :TITLE "Тендер такой-то")
+ (:LINK "/builder" :TITLE "Застройщик такой-то")
+ (:LINK "/builders" :TITLE "Поставщики")))
