@@ -194,18 +194,27 @@
 
 
 {template rndfld}
-  <table>
-    <tr>
-      <td width="180">
-        <div style="width: 180px;">
-          {$fldname}
-        </div>
-      </td>
-      <td width="180">
-        <div style="width: 180px;">
-          {$fldcontent |noAutoescape}
-        </div>
-      </td>
-    </tr>
-  </table>
+  <table>{\n}
+    <tr>{\n}
+      <td width="180>"{\n}
+        <div style="width: 180px;">{\n}
+          {$fldname}{\n}
+        </div>{\n}
+      </td>{\n}
+      <td width="180">{\n}
+        <div style="width: 180px;">{\n}
+          {$fldcontent |noAutoescape}{\n}
+        </div>{\n}
+      </td>{\n}
+    </tr>{\n}
+  </table>{\n}
+{/template}
+
+
+{template simplefld}
+  <input type="text" name="{$name}" value="{$value}" /> <br />{\n}
+{/template}
+
+{template simplebtn}
+  <input type="button" name="{$name}" value="{$value}" />
 {/template}

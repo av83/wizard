@@ -64,9 +64,27 @@
        (format out "~%~%(restas:define-route ~A-page (\"~A\")"
                (string-downcase (getf place :place))
                (getf place :url))
-       (format out "~%  (tpl:root (list :navpoints (menu) :content (render ~A))))"
-               (with-output-to-string (*standard-output*)
-                 (pprint (getf place :actions)))))
-    (format out "~%~%~%(defun menu ()  '")
-    (pprint (reverse menu) out)
-    (format out ")")))
+       (format out "~%  (tpl:root~%   (list ~%~3T :navpoints (menu) ~% ~3T :content (list ~{~A~}))))"
+               (loop :for action :in (eval (getf place :actions)) :collect
+                  (format nil "~%~13T (list :title \"~A\"~% ~19T :content ~A)"
+                          (getf action :caption)
+                          (let ((entity (find-if #'(lambda (entity)
+                                                     (equal (getf entity :entity) (getf action :entity)))
+                                                 *entityes*)))
+                            (format nil "(format nil ~A (list ~{~A ~}))"
+                                    "\"~{~A ~}\""
+                                    (loop :for field :in (eval (getf action :fields)) :collect
+                                       (etypecase field
+                                         (symbol   (format nil "~%~30T (tpl:rndfld (list :fldname \"~A\" ~%~48T :fldcontent ~A))"
+                                                           (cadr (find-if #'(lambda (x)
+                                                                              (equal (car x) field))
+                                                                          (getf entity :fields)))
+                                                           (format nil "(tpl:simplefld (list :name \"~A\" :value \"~A\"))"
+                                                                   field
+                                                                   field)))
+                                         (cons     (let ((instr (car field)))
+                                                     (case instr
+                                                       (:btn
+                                                        (format nil "~%~30T (tpl:simplebtn (list :name \"~A\" :value \"~A\"))"
+                                                                (getf field instr)
+                                                                (getf field instr))))))))))))))))

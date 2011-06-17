@@ -353,102 +353,171 @@
   (format t "~%Тендер : ~A" (TENDER object)))
 
 (restas:define-route main-page ("/")
-  (tpl:root (list :navpoints (menu) :content (render 
-'((:CAPTION "Главная страница" :PERM "<?>"))))))
+  (tpl:root
+   (list 
+    :navpoints (menu) 
+    :content (list 
+              (list :title "Главная страница"
+                    :content (format nil "~{~A ~}" (list )))))))
 
 (restas:define-route admin-page ("/admin")
-  (tpl:root (list :navpoints (menu) :content (render 
-'((:CAPTION "Изменить пароль" :PERM :ADMIN :ENTITY ADMIN :VALUES :USER :FIELDS
-   '(LOGIN PASSWORD
-     (:BTN "Изменить пароль" :ACT (CHANGE-ADMIN-PASSWORD :USER :FORM))))
-  (:CAPTION "Создать аккаунт эксперта" :PERM :ADMIN :ENTITY EXPERT :VALUES NIL
-   :FIELDS
-   '(LOGIN PASSWORD
-     (:BTN "Создать новый аккаунт эксперта" :ACT (CREATE-EXPERT :USER :FORM))))
-  (:CAPTION "Эксперты" :PERM :ADMIN :ENTITY EXPERT :VALUES :COLLECTION :FIELDS
-   '(NAME LOGIN
-     (:BTN "Удалить аккаунт эксперта" :ACTIONS
-      '((:CAPTION "Действительно удалить?" :PERM :ADMIN :ENTITY EXPERT :FIELDS
-         '(:BTN "Подтверждаю удаление" :ACT (DELETE-EXPERT :USER :ROW)))))
-     (:BTN "Сменить пароль эксперта" :ACTIONS
-      '((:CAPTION "Смена пароля эксперта" :PERN :ADMIN :ENTITY EXPERT :FIELDS
-         '((:STR "Новый пароль" NEW-PASSWORD)
-           (:BTN "Изменить пароль эксперта" :ACT
-            (CHANGE-EXPERT-PASSWORD :USER :ROW :FORM))))))))
-  (:CAPTION "Заявки поставщиков на добросовестность" :PERM :ADMIN :ENTITY
-   EXPERT :VALUES :COLLECTION :FIELDS
-   '(NAME LOGIN
-     (:BTN "Подтвердить заявку" :ACTIONS
-      '((:CAPTION "Подтвердить заявку поставщика" :PERM :ADMIN :ENTITY SUPPLIER
-         :FIELDS
-         '((:BTN "Сделать добросовестным" :ACT
-            (APPROVE-SUPPLIER-FAIR :USER :ROW)))))))))))))
+  (tpl:root
+   (list 
+    :navpoints (menu) 
+    :content (list 
+              (list :title "Изменить пароль"
+                    :content (format nil "~{~A ~}" (list 
+                               (tpl:rndfld (list :fldname "Логин" 
+                                                 :fldcontent (tpl:simplefld (list :name "LOGIN" :value "LOGIN")))) 
+                               (tpl:rndfld (list :fldname "Пароль" 
+                                                 :fldcontent (tpl:simplefld (list :name "PASSWORD" :value "PASSWORD")))) 
+                               (tpl:simplebtn (list :name "Изменить пароль" :value "Изменить пароль")) )))
+              (list :title "Создать аккаунт эксперта"
+                    :content (format nil "~{~A ~}" (list 
+                               (tpl:rndfld (list :fldname "Логин" 
+                                                 :fldcontent (tpl:simplefld (list :name "LOGIN" :value "LOGIN")))) 
+                               (tpl:rndfld (list :fldname "Пароль" 
+                                                 :fldcontent (tpl:simplefld (list :name "PASSWORD" :value "PASSWORD")))) 
+                               (tpl:simplebtn (list :name "Создать новый аккаунт эксперта" :value "Создать новый аккаунт эксперта")) )))
+              (list :title "Эксперты"
+                    :content (format nil "~{~A ~}" (list 
+                               (tpl:rndfld (list :fldname "ФИО" 
+                                                 :fldcontent (tpl:simplefld (list :name "NAME" :value "NAME")))) 
+                               (tpl:rndfld (list :fldname "Логин" 
+                                                 :fldcontent (tpl:simplefld (list :name "LOGIN" :value "LOGIN")))) 
+                               (tpl:simplebtn (list :name "Удалить аккаунт эксперта" :value "Удалить аккаунт эксперта")) 
+                               (tpl:simplebtn (list :name "Сменить пароль эксперта" :value "Сменить пароль эксперта")) )))
+              (list :title "Заявки поставщиков на добросовестность"
+                    :content (format nil "~{~A ~}" (list 
+                               (tpl:rndfld (list :fldname "ФИО" 
+                                                 :fldcontent (tpl:simplefld (list :name "NAME" :value "NAME")))) 
+                               (tpl:rndfld (list :fldname "Логин" 
+                                                 :fldcontent (tpl:simplefld (list :name "LOGIN" :value "LOGIN")))) 
+                               (tpl:simplebtn (list :name "Подтвердить заявку" :value "Подтвердить заявку")) )))))))
 
 (restas:define-route supplier-page ("/supplier")
-  (tpl:root (list :navpoints (menu) :content (render 
-'((:CAPTION "Отправить заявку на добросовестность" :PERM (AND :SELF :UNFAIR)
-   :ENTITY SUPPLIER :FIELDS
-   '((:BTN "Отправить заявку на добросовестность" :ACT
-      (SUPPLIER-REQUEST-FAIR :USER))))
-  (:CAPTION "Изменить список ресурсов" :PERM :SELF :ENTITY
-   SUPPLIER-RESOURCE-PRICE :VALUES :COLLECTION :FIELDS
-   '(OWNER RESOURCE PRICE (:BTN "Добавить ресурс" ACT ...?)
-     (:BTN "Удалить ресурс" ?) (:BTN "Изменить ресурс" ?)))
-  (:CAPTION "Заявки на тендеры" :PERM :SELF :ENTITY OFFER :VALUES :COLLECTION
-   :FIELDS '(TENDER)))))))
+  (tpl:root
+   (list 
+    :navpoints (menu) 
+    :content (list 
+              (list :title "Отправить заявку на добросовестность"
+                    :content (format nil "~{~A ~}" (list 
+                               (tpl:simplebtn (list :name "Отправить заявку на добросовестность" :value "Отправить заявку на добросовестность")) )))
+              (list :title "Изменить список ресурсов"
+                    :content (format nil "~{~A ~}" (list 
+                               (tpl:rndfld (list :fldname "Поставщик" 
+                                                 :fldcontent (tpl:simplefld (list :name "OWNER" :value "OWNER")))) 
+                               (tpl:rndfld (list :fldname "Ресурс" 
+                                                 :fldcontent (tpl:simplefld (list :name "RESOURCE" :value "RESOURCE")))) 
+                               (tpl:rndfld (list :fldname "Цена поставщика" 
+                                                 :fldcontent (tpl:simplefld (list :name "PRICE" :value "PRICE")))) 
+                               (tpl:simplebtn (list :name "Добавить ресурс" :value "Добавить ресурс")) 
+                               (tpl:simplebtn (list :name "Удалить ресурс" :value "Удалить ресурс")) 
+                               (tpl:simplebtn (list :name "Изменить ресурс" :value "Изменить ресурс")) )))
+              (list :title "Заявки на тендеры"
+                    :content (format nil "~{~A ~}" (list 
+                               (tpl:rndfld (list :fldname "Тендер" 
+                                                 :fldcontent (tpl:simplefld (list :name "TENDER" :value "TENDER")))) )))))))
 
 (restas:define-route tender-page ("/tender")
-  (tpl:root (list :navpoints (menu) :content (render 
-'((:CAPTION "Ответить заявкой на тендер" :PERM (AND :ACTIVE :FAIR) :ENTITY
-   TENDER :FIELDS
-   '(NAME STATUS OWNER ACTIVE-DATE ALL CLAIM ANALIZE INTERVIEW RESULT WINNER
-     PRICE RESOURCES DOCUMENTS SUPPLIERS OFFERTS
-     (:BTN "Ответить заявкой на тендер" :ACTIONS
-      '((:CAPTION "Выберите ресурсы" :PERM (AND :ACTIVE :FAIR) :ENTITY RESOURCE
-         :FIELDS
-         '((:BTN "Участвовать в тендере" :ACT
-            (CREATE-OFFER :USER :FORM TENDER))))))))
-  (:CAPTION "Отменить тендер" :PERM :OWNER :ENTITY TENDER :FIELDS
-   '((:BTN "Отменить тендер" :ACT
-      '((:CAPTION "Действительно отменить?" :PERM :OWNER :ENTITY TENDER :FIELDS
-         '(:BTN "Подтверждаю отмену" :ACT (CANCEL-TENDER :USER :ROW))))))))))))
+  (tpl:root
+   (list 
+    :navpoints (menu) 
+    :content (list 
+              (list :title "Ответить заявкой на тендер"
+                    :content (format nil "~{~A ~}" (list 
+                               (tpl:rndfld (list :fldname "Название" 
+                                                 :fldcontent (tpl:simplefld (list :name "NAME" :value "NAME")))) 
+                               (tpl:rndfld (list :fldname "Статус" 
+                                                 :fldcontent (tpl:simplefld (list :name "STATUS" :value "STATUS")))) 
+                               (tpl:rndfld (list :fldname "Заказчик" 
+                                                 :fldcontent (tpl:simplefld (list :name "OWNER" :value "OWNER")))) 
+                               (tpl:rndfld (list :fldname "Дата активации" 
+                                                 :fldcontent (tpl:simplefld (list :name "ACTIVE-DATE" :value "ACTIVE-DATE")))) 
+                               (tpl:rndfld (list :fldname "Срок проведения" 
+                                                 :fldcontent (tpl:simplefld (list :name "ALL" :value "ALL")))) 
+                               (tpl:rndfld (list :fldname "Срок подачи заявок" 
+                                                 :fldcontent (tpl:simplefld (list :name "CLAIM" :value "CLAIM")))) 
+                               (tpl:rndfld (list :fldname "Срок рассмотрения заявок" 
+                                                 :fldcontent (tpl:simplefld (list :name "ANALIZE" :value "ANALIZE")))) 
+                               (tpl:rndfld (list :fldname "Срок проведения интервью" 
+                                                 :fldcontent (tpl:simplefld (list :name "INTERVIEW" :value "INTERVIEW")))) 
+                               (tpl:rndfld (list :fldname "Срок подведения итогов" 
+                                                 :fldcontent (tpl:simplefld (list :name "RESULT" :value "RESULT")))) 
+                               (tpl:rndfld (list :fldname "Победитель тендера" 
+                                                 :fldcontent (tpl:simplefld (list :name "WINNER" :value "WINNER")))) 
+                               (tpl:rndfld (list :fldname "Рекомендуемая стоимость" 
+                                                 :fldcontent (tpl:simplefld (list :name "PRICE" :value "PRICE")))) 
+                               (tpl:rndfld (list :fldname "Ресурсы" 
+                                                 :fldcontent (tpl:simplefld (list :name "RESOURCES" :value "RESOURCES")))) 
+                               (tpl:rndfld (list :fldname "Документы" 
+                                                 :fldcontent (tpl:simplefld (list :name "DOCUMENTS" :value "DOCUMENTS")))) 
+                               (tpl:rndfld (list :fldname "Поставщики" 
+                                                 :fldcontent (tpl:simplefld (list :name "SUPPLIERS" :value "SUPPLIERS")))) 
+                               (tpl:rndfld (list :fldname "Откликнувшиеся поставщики" 
+                                                 :fldcontent (tpl:simplefld (list :name "OFFERTS" :value "OFFERTS")))) 
+                               (tpl:simplebtn (list :name "Ответить заявкой на тендер" :value "Ответить заявкой на тендер")) )))
+              (list :title "Отменить тендер"
+                    :content (format nil "~{~A ~}" (list 
+                               (tpl:simplebtn (list :name "Отменить тендер" :value "Отменить тендер")) )))))))
 
 (restas:define-route builder-page ("/builder")
-  (tpl:root (list :navpoints (menu) :content (render 
-'((:CAPTION "Застройщик такой-то (name object)" :PERM :SELF :ENTITY BUILDER
-   :FIELDS
-   '(NAME JURIDICAL-ADDRESS INN KPP OGRN BANK-NAME BIK CORRESP-ACCOUNT
-     CLIENT-ACCOUNT TENDERS RATING))
-  (:CAPTION "Объявить новый тендер" :PERM :SELF :ENTITY TENDER :FIELDS
-   '(NAME ALL CLAIM ANALIZE INTERVIEW RESULT RESOURCES DOCUMENTS PRICE
-     SUPPLIERS
-     (:BTN "Объявить тендер" :ACTIONS
-      '((:CAPTION "Создание нового тендера" :PERM :SELF :ENTITY TENDER :VALUES
-         NIL :FIELDS
-         '(NAME OWNER ACTIVE-DATE ALL CLAIM ANALIZE INTERVIEW RESOURCES
-           DOCUMENTS (:BTN "Создать тендер" :ACT (CREATE-TENDER :USER :FORM)))
-         :HOOKS
-         '((:CHANGE RESOURCES
-            (SET-FIELD PRICE (CALC-TENDER-PRICE (REQUEST RESOURCES))))
-           (:CHANGE RESOURCES
-            (SET-FIELD SUPPLIERS (CALC-SUPPLIERS (REQUEST RESOURCES)))))
-         (:OTHER
-          '(:OWNER (GET-CURRENT-USER-ID) :PRICE
-            (CALC-TENDER-PRICE (REQUEST RESOURCES)) :SUPPLIERS
-            (CALC-SUPPLIERS (REQUEST RESOURCES)) :OFFERTS NIL :WINNER NIL))
-         (:STATUS :UNACTIVE)))))))))))
+  (tpl:root
+   (list 
+    :navpoints (menu) 
+    :content (list 
+              (list :title "Застройщик такой-то (name object)"
+                    :content (format nil "~{~A ~}" (list 
+                               (tpl:rndfld (list :fldname "Организация-застройщик" 
+                                                 :fldcontent (tpl:simplefld (list :name "NAME" :value "NAME")))) 
+                               (tpl:rndfld (list :fldname "Юридический адрес" 
+                                                 :fldcontent (tpl:simplefld (list :name "JURIDICAL-ADDRESS" :value "JURIDICAL-ADDRESS")))) 
+                               (tpl:rndfld (list :fldname "Инн" 
+                                                 :fldcontent (tpl:simplefld (list :name "INN" :value "INN")))) 
+                               (tpl:rndfld (list :fldname "КПП" 
+                                                 :fldcontent (tpl:simplefld (list :name "KPP" :value "KPP")))) 
+                               (tpl:rndfld (list :fldname "ОГРН" 
+                                                 :fldcontent (tpl:simplefld (list :name "OGRN" :value "OGRN")))) 
+                               (tpl:rndfld (list :fldname "Название банка" 
+                                                 :fldcontent (tpl:simplefld (list :name "BANK-NAME" :value "BANK-NAME")))) 
+                               (tpl:rndfld (list :fldname "Банковский идентификационный код" 
+                                                 :fldcontent (tpl:simplefld (list :name "BIK" :value "BIK")))) 
+                               (tpl:rndfld (list :fldname "Корреспондентский счет)" 
+                                                 :fldcontent (tpl:simplefld (list :name "CORRESP-ACCOUNT" :value "CORRESP-ACCOUNT")))) 
+                               (tpl:rndfld (list :fldname "Рассчетный счет" 
+                                                 :fldcontent (tpl:simplefld (list :name "CLIENT-ACCOUNT" :value "CLIENT-ACCOUNT")))) 
+                               (tpl:rndfld (list :fldname "Тендеры" 
+                                                 :fldcontent (tpl:simplefld (list :name "TENDERS" :value "TENDERS")))) 
+                               (tpl:rndfld (list :fldname "Рейтинг" 
+                                                 :fldcontent (tpl:simplefld (list :name "RATING" :value "RATING")))) )))
+              (list :title "Объявить новый тендер"
+                    :content (format nil "~{~A ~}" (list 
+                               (tpl:rndfld (list :fldname "Название" 
+                                                 :fldcontent (tpl:simplefld (list :name "NAME" :value "NAME")))) 
+                               (tpl:rndfld (list :fldname "Срок проведения" 
+                                                 :fldcontent (tpl:simplefld (list :name "ALL" :value "ALL")))) 
+                               (tpl:rndfld (list :fldname "Срок подачи заявок" 
+                                                 :fldcontent (tpl:simplefld (list :name "CLAIM" :value "CLAIM")))) 
+                               (tpl:rndfld (list :fldname "Срок рассмотрения заявок" 
+                                                 :fldcontent (tpl:simplefld (list :name "ANALIZE" :value "ANALIZE")))) 
+                               (tpl:rndfld (list :fldname "Срок проведения интервью" 
+                                                 :fldcontent (tpl:simplefld (list :name "INTERVIEW" :value "INTERVIEW")))) 
+                               (tpl:rndfld (list :fldname "Срок подведения итогов" 
+                                                 :fldcontent (tpl:simplefld (list :name "RESULT" :value "RESULT")))) 
+                               (tpl:rndfld (list :fldname "Ресурсы" 
+                                                 :fldcontent (tpl:simplefld (list :name "RESOURCES" :value "RESOURCES")))) 
+                               (tpl:rndfld (list :fldname "Документы" 
+                                                 :fldcontent (tpl:simplefld (list :name "DOCUMENTS" :value "DOCUMENTS")))) 
+                               (tpl:rndfld (list :fldname "Рекомендуемая стоимость" 
+                                                 :fldcontent (tpl:simplefld (list :name "PRICE" :value "PRICE")))) 
+                               (tpl:rndfld (list :fldname "Поставщики" 
+                                                 :fldcontent (tpl:simplefld (list :name "SUPPLIERS" :value "SUPPLIERS")))) 
+                               (tpl:simplebtn (list :name "Объявить тендер" :value "Объявить тендер")) )))))))
 
 (restas:define-route builders-page ("/builders")
-  (tpl:root (list :navpoints (menu) :content (render 
-'((:CAPTION "Организации-поставщики" :PERM "<?>" :ENTITY SUPPLIER :VALUES
-   :COLLECTION :SORT
-   "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
-   :FIELDS '((NAME JURIDICAL-ADDRESS REQUISITES TENDERS RATING))))))))
-
-
-(defun menu ()  '
-((:LINK "/" :TITLE "Главная страница") (:LINK "/admin" :TITLE "Администратор")
- (:LINK "/supplier" :TITLE "Поставщик такой-то")
- (:LINK "/tender" :TITLE "Тендер такой-то")
- (:LINK "/builder" :TITLE "Застройщик такой-то")
- (:LINK "/builders" :TITLE "Поставщики")))
+  (tpl:root
+   (list 
+    :navpoints (menu) 
+    :content (list 
+              (list :title "Организации-поставщики"
+                    :content (format nil "~{~A ~}" (list NIL )))))))
