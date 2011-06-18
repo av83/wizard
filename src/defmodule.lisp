@@ -356,163 +356,107 @@
   (let ((acts (list 
                (list :perm ':ALL 
                      :title "Главная страница"
-                     :content (tpl:frm (list :flds (list )))) ))) 
-  (tpl:root
-   (list 
-    :navpoints (menu) 
-    :content acts #| Здесь проверить права |#))))
+                     :in (list ))))) 
+    (show-acts acts)))
 
 (restas:define-route admin-page ("/admin")
   (let ((acts (list 
                (list :perm ':ADMIN 
                      :title "Изменить пароль"
-                     :content NIL) 
+                     :in NIL)
                (list :perm ':ADMIN 
                      :title "Создать аккаунт эксперта"
-                     :content (tpl:frm (list :flds (list 
-                                (tpl:rndfld (list :fldname "Логин" 
-                                                  :fldcontent (tpl:simplefld (list :name "LOGIN" :value ""))))
-                                (tpl:rndfld (list :fldname "Пароль" 
-                                                  :fldcontent (tpl:simplefld (list :name "PASSWORD" :value ""))))
-                                (tpl:simplebtn (list :name "Создать новый аккаунт эксперта" :value "Создать новый аккаунт эксперта")))))) 
+                     :in (list 
+                          (list :fld "LOGIN" :perm <?> :name "Логин" :value "")
+                          (list :fld "PASSWORD" :perm <?> :name "Пароль" :value "")
+                          (list :btn "Создать новый аккаунт эксперта"  :perm <?> :value "Создать новый аккаунт эксперта")))
                (list :perm ':ADMIN 
                      :title "Эксперты"
-                     :content NIL) 
+                     :in NIL)
                (list :perm ':ADMIN 
                      :title "Заявки поставщиков на добросовестность"
-                     :content NIL) ))) 
-  (tpl:root
-   (list 
-    :navpoints (menu) 
-    :content acts #| Здесь проверить права |#))))
+                     :in NIL)))) 
+    (show-acts acts)))
 
 (restas:define-route supplier-page ("/supplier")
   (let ((acts (list 
                (list :perm '(AND :SELF :UNFAIR) 
                      :title "Отправить заявку на добросовестность"
-                     :content (tpl:frm (list :flds (list 
-                                (tpl:simplebtn (list :name "Отправить заявку на добросовестность" :value "Отправить заявку на добросовестность")))))) 
+                     :in (list 
+                          (list :btn "Отправить заявку на добросовестность"  :perm <?> :value "Отправить заявку на добросовестность")))
                (list :perm ':SELF 
                      :title "Изменить список ресурсов"
-                     :content NIL) 
+                     :in NIL)
                (list :perm ':SELF 
                      :title "Заявки на тендеры"
-                     :content NIL) ))) 
-  (tpl:root
-   (list 
-    :navpoints (menu) 
-    :content acts #| Здесь проверить права |#))))
+                     :in NIL)))) 
+    (show-acts acts)))
 
 (restas:define-route tender-page ("/tender")
   (let ((acts (list 
                (list :perm '(AND :ACTIVE :FAIR) 
                      :title "Ответить заявкой на тендер"
-                     :content (tpl:frm (list :flds (list 
-                                (tpl:rndfld (list :fldname "Название" 
-                                                  :fldcontent (tpl:simplefld (list :name "NAME" :value ""))))
-                                (tpl:rndfld (list :fldname "Статус" 
-                                                  :fldcontent (tpl:simplefld (list :name "STATUS" :value ""))))
-                                (tpl:rndfld (list :fldname "Заказчик" 
-                                                  :fldcontent (tpl:simplefld (list :name "OWNER" :value ""))))
-                                (tpl:rndfld (list :fldname "Дата активации" 
-                                                  :fldcontent (tpl:simplefld (list :name "ACTIVE-DATE" :value ""))))
-                                (tpl:rndfld (list :fldname "Срок проведения" 
-                                                  :fldcontent (tpl:simplefld (list :name "ALL" :value ""))))
-                                (tpl:rndfld (list :fldname "Срок подачи заявок" 
-                                                  :fldcontent (tpl:simplefld (list :name "CLAIM" :value ""))))
-                                (tpl:rndfld (list :fldname "Срок рассмотрения заявок" 
-                                                  :fldcontent (tpl:simplefld (list :name "ANALIZE" :value ""))))
-                                (tpl:rndfld (list :fldname "Срок проведения интервью" 
-                                                  :fldcontent (tpl:simplefld (list :name "INTERVIEW" :value ""))))
-                                (tpl:rndfld (list :fldname "Срок подведения итогов" 
-                                                  :fldcontent (tpl:simplefld (list :name "RESULT" :value ""))))
-                                (tpl:rndfld (list :fldname "Победитель тендера" 
-                                                  :fldcontent (tpl:simplefld (list :name "WINNER" :value ""))))
-                                (tpl:rndfld (list :fldname "Рекомендуемая стоимость" 
-                                                  :fldcontent (tpl:simplefld (list :name "PRICE" :value ""))))
-                                (tpl:rndfld (list :fldname "Ресурсы" 
-                                                  :fldcontent (tpl:simplefld (list :name "RESOURCES" :value ""))))
-                                (tpl:rndfld (list :fldname "Документы" 
-                                                  :fldcontent (tpl:simplefld (list :name "DOCUMENTS" :value ""))))
-                                (tpl:rndfld (list :fldname "Поставщики" 
-                                                  :fldcontent (tpl:simplefld (list :name "SUPPLIERS" :value ""))))
-                                (tpl:rndfld (list :fldname "Откликнувшиеся поставщики" 
-                                                  :fldcontent (tpl:simplefld (list :name "OFFERTS" :value ""))))
-                                (tpl:simplebtn (list :name "Ответить заявкой на тендер" :value "Ответить заявкой на тендер")))))) 
+                     :in (list 
+                          (list :fld "NAME" :perm <?> :name "Название" :value "")
+                          (list :fld "STATUS" :perm <?> :name "Статус" :value "")
+                          (list :fld "OWNER" :perm <?> :name "Заказчик" :value "")
+                          (list :fld "ACTIVE-DATE" :perm <?> :name "Дата активации" :value "")
+                          (list :fld "ALL" :perm <?> :name "Срок проведения" :value "")
+                          (list :fld "CLAIM" :perm <?> :name "Срок подачи заявок" :value "")
+                          (list :fld "ANALIZE" :perm <?> :name "Срок рассмотрения заявок" :value "")
+                          (list :fld "INTERVIEW" :perm <?> :name "Срок проведения интервью" :value "")
+                          (list :fld "RESULT" :perm <?> :name "Срок подведения итогов" :value "")
+                          (list :fld "WINNER" :perm <?> :name "Победитель тендера" :value "")
+                          (list :fld "PRICE" :perm <?> :name "Рекомендуемая стоимость" :value "")
+                          (list :fld "RESOURCES" :perm <?> :name "Ресурсы" :value "")
+                          (list :fld "DOCUMENTS" :perm <?> :name "Документы" :value "")
+                          (list :fld "SUPPLIERS" :perm <?> :name "Поставщики" :value "")
+                          (list :fld "OFFERTS" :perm <?> :name "Откликнувшиеся поставщики" :value "")
+                          (list :btn "Ответить заявкой на тендер"  :perm <?> :value "Ответить заявкой на тендер")))
                (list :perm ':OWNER 
                      :title "Отменить тендер"
-                     :content (tpl:frm (list :flds (list 
-                                (tpl:simplebtn (list :name "Отменить тендер" :value "Отменить тендер")))))) ))) 
-  (tpl:root
-   (list 
-    :navpoints (menu) 
-    :content acts #| Здесь проверить права |#))))
+                     :in (list 
+                          (list :btn "Отменить тендер"  :perm <?> :value "Отменить тендер")))))) 
+    (show-acts acts)))
 
 (restas:define-route builder-page ("/builder")
   (let ((acts (list 
                (list :perm ':SELF 
                      :title "Застройщик такой-то (name object)"
-                     :content (tpl:frm (list :flds (list 
-                                (tpl:rndfld (list :fldname "Организация-застройщик" 
-                                                  :fldcontent (tpl:simplefld (list :name "NAME" :value ""))))
-                                (tpl:rndfld (list :fldname "Юридический адрес" 
-                                                  :fldcontent (tpl:simplefld (list :name "JURIDICAL-ADDRESS" :value ""))))
-                                (tpl:rndfld (list :fldname "Инн" 
-                                                  :fldcontent (tpl:simplefld (list :name "INN" :value ""))))
-                                (tpl:rndfld (list :fldname "КПП" 
-                                                  :fldcontent (tpl:simplefld (list :name "KPP" :value ""))))
-                                (tpl:rndfld (list :fldname "ОГРН" 
-                                                  :fldcontent (tpl:simplefld (list :name "OGRN" :value ""))))
-                                (tpl:rndfld (list :fldname "Название банка" 
-                                                  :fldcontent (tpl:simplefld (list :name "BANK-NAME" :value ""))))
-                                (tpl:rndfld (list :fldname "Банковский идентификационный код" 
-                                                  :fldcontent (tpl:simplefld (list :name "BIK" :value ""))))
-                                (tpl:rndfld (list :fldname "Корреспондентский счет)" 
-                                                  :fldcontent (tpl:simplefld (list :name "CORRESP-ACCOUNT" :value ""))))
-                                (tpl:rndfld (list :fldname "Рассчетный счет" 
-                                                  :fldcontent (tpl:simplefld (list :name "CLIENT-ACCOUNT" :value ""))))
-                                (tpl:rndfld (list :fldname "Тендеры" 
-                                                  :fldcontent (tpl:simplefld (list :name "TENDERS" :value ""))))
-                                (tpl:rndfld (list :fldname "Рейтинг" 
-                                                  :fldcontent (tpl:simplefld (list :name "RATING" :value "")))))))) 
+                     :in (list 
+                          (list :fld "NAME" :perm <?> :name "Организация-застройщик" :value "")
+                          (list :fld "JURIDICAL-ADDRESS" :perm <?> :name "Юридический адрес" :value "")
+                          (list :fld "INN" :perm <?> :name "Инн" :value "")
+                          (list :fld "KPP" :perm <?> :name "КПП" :value "")
+                          (list :fld "OGRN" :perm <?> :name "ОГРН" :value "")
+                          (list :fld "BANK-NAME" :perm <?> :name "Название банка" :value "")
+                          (list :fld "BIK" :perm <?> :name "Банковский идентификационный код" :value "")
+                          (list :fld "CORRESP-ACCOUNT" :perm <?> :name "Корреспондентский счет)" :value "")
+                          (list :fld "CLIENT-ACCOUNT" :perm <?> :name "Рассчетный счет" :value "")
+                          (list :fld "TENDERS" :perm <?> :name "Тендеры" :value "")
+                          (list :fld "RATING" :perm <?> :name "Рейтинг" :value "")))
                (list :perm ':SELF 
                      :title "Объявить новый тендер"
-                     :content (tpl:frm (list :flds (list 
-                                (tpl:rndfld (list :fldname "Название" 
-                                                  :fldcontent (tpl:simplefld (list :name "NAME" :value ""))))
-                                (tpl:rndfld (list :fldname "Срок проведения" 
-                                                  :fldcontent (tpl:simplefld (list :name "ALL" :value ""))))
-                                (tpl:rndfld (list :fldname "Срок подачи заявок" 
-                                                  :fldcontent (tpl:simplefld (list :name "CLAIM" :value ""))))
-                                (tpl:rndfld (list :fldname "Срок рассмотрения заявок" 
-                                                  :fldcontent (tpl:simplefld (list :name "ANALIZE" :value ""))))
-                                (tpl:rndfld (list :fldname "Срок проведения интервью" 
-                                                  :fldcontent (tpl:simplefld (list :name "INTERVIEW" :value ""))))
-                                (tpl:rndfld (list :fldname "Срок подведения итогов" 
-                                                  :fldcontent (tpl:simplefld (list :name "RESULT" :value ""))))
-                                (tpl:rndfld (list :fldname "Ресурсы" 
-                                                  :fldcontent (tpl:simplefld (list :name "RESOURCES" :value ""))))
-                                (tpl:rndfld (list :fldname "Документы" 
-                                                  :fldcontent (tpl:simplefld (list :name "DOCUMENTS" :value ""))))
-                                (tpl:rndfld (list :fldname "Рекомендуемая стоимость" 
-                                                  :fldcontent (tpl:simplefld (list :name "PRICE" :value ""))))
-                                (tpl:rndfld (list :fldname "Поставщики" 
-                                                  :fldcontent (tpl:simplefld (list :name "SUPPLIERS" :value ""))))
-                                (tpl:simplebtn (list :name "Объявить тендер" :value "Объявить тендер")))))) ))) 
-  (tpl:root
-   (list 
-    :navpoints (menu) 
-    :content acts #| Здесь проверить права |#))))
+                     :in (list 
+                          (list :fld "NAME" :perm <?> :name "Название" :value "")
+                          (list :fld "ALL" :perm <?> :name "Срок проведения" :value "")
+                          (list :fld "CLAIM" :perm <?> :name "Срок подачи заявок" :value "")
+                          (list :fld "ANALIZE" :perm <?> :name "Срок рассмотрения заявок" :value "")
+                          (list :fld "INTERVIEW" :perm <?> :name "Срок проведения интервью" :value "")
+                          (list :fld "RESULT" :perm <?> :name "Срок подведения итогов" :value "")
+                          (list :fld "RESOURCES" :perm <?> :name "Ресурсы" :value "")
+                          (list :fld "DOCUMENTS" :perm <?> :name "Документы" :value "")
+                          (list :fld "PRICE" :perm <?> :name "Рекомендуемая стоимость" :value "")
+                          (list :fld "SUPPLIERS" :perm <?> :name "Поставщики" :value "")
+                          (list :btn "Объявить тендер"  :perm <?> :value "Объявить тендер")))))) 
+    (show-acts acts)))
 
 (restas:define-route builders-page ("/builders")
   (let ((acts (list 
                (list :perm '"<?>" 
                      :title "Организации-поставщики"
-                     :content NIL) ))) 
-  (tpl:root
-   (list 
-    :navpoints (menu) 
-    :content acts #| Здесь проверить права |#))))
+                     :in NIL)))) 
+    (show-acts acts)))
 
 
 (defun menu ()  '

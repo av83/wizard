@@ -18,3 +18,9 @@ sbcl --lose-on-corruption --disable-ldb --dynamic-space-size 1024
 
 (restas:start '#:wizard :port 8081)
 (restas:debug-mode-on)
+
+[01:37] rigidus> я бы хотел, чтобы во время доступа (на чтение или
+запись) к слоту некоего объекта вызывался метод этого объекта. куда
+смотреть?
+[06:03] dmitry_vk> rigidus: это можно сделать через MOP. См. методы
+slot-value-using-class и (setf slot-value-using-class)

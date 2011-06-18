@@ -64,37 +64,34 @@
        (format out "~%~%(restas:define-route ~A-page (\"~A\")"
                (string-downcase (getf place :place))
                (getf place :url))
-       (format out "~%  (let ((acts (list ~{~A ~}))) ~A)"
+       (format out "~%  (let ((acts (list ~{~A~}))) ~A)"
                (loop :for action :in (eval (getf place :actions)) :collect
-                  (format nil "~%~14T (list :perm '~A ~%~20T :title \"~A\"~% ~20T :content ~A)"
-                          (subseq (with-output-to-string (*standard-output*)
-                                    (pprint (getf action :perm)))
-                                  1)
+                  (format nil "~%~14T (list :perm '~A ~%~20T :title \"~A\"~% ~20T :in ~A)"
+                          (subseq (with-output-to-string (*standard-output*) (pprint (getf action :perm))) 1)
                           (getf action :caption)
                           (case (getf action :val)
                             ('nil
                              (let ((entity (find-if #'(lambda (entity)
                                                         (equal (getf entity :entity) (getf action :entity)))
                                                     *entityes*)))
-                               (format nil "(tpl:frm (list :flds (list ~{~A~})))"
-                                       (loop :for field :in (eval (getf action :fields)) :collect
-                                          (etypecase field
-                                            (symbol   (format nil "~%~31T (tpl:rndfld (list :fldname \"~A\" ~%~49T :fldcontent ~A))"
+                               (format nil "(list ~{~A~})"
+                                       (loop :for fld :in (eval (getf action :fields)) :collect
+                                          (etypecase fld
+                                            (symbol   (format nil "~%~25T (list :fld \"~A\" :perm <?> :name \"~A\" :value \"\")"
+                                                              fld
                                                               (cadr (find-if #'(lambda (x)
-                                                                                 (equal (car x) field))
-                                                                             (getf entity :fields)))
-                                                              (format nil "(tpl:simplefld (list :name \"~A\" :value \"\"))" field)))
-                                            (cons     (let ((instr (car field)))
+                                                                                 (equal (car x) fld))
+                                                                             (getf entity :fields)))))
+                                            (cons     (let ((instr (car fld)))
                                                         (case instr
                                                           (:btn
-                                                           (format nil "~%~31T (tpl:simplebtn (list :name \"~A\" :value \"~A\"))"
-                                                                   (getf field instr)
-                                                                   (getf field instr)))))))))))
+                                                           (format nil "~%~25T (list :btn \"~A\"  :perm <?> :value \"~A\")"
+                                                                   (getf fld instr)
+                                                                   (getf fld instr)))))))))))
+                            ;; todo: collection
+                            ;; todo: user
                             (otherwise "NIL"))))
-               (format nil "~%  (tpl:root~%   (list ~%~3T :navpoints (menu) ~% ~3T :content ~A)))"
-                       "acts #| Здесь проверить права |#"
-                       ;; "(remove-if-not #'(lambda (act) (get-perm (getf act :perm) (get-current-user) (get-current-object act))) acts)"
-                       )))
+               (format nil  "~%    (show-acts acts))")))
     (format out "~%~%~%(defun menu ()  '")
     (pprint (reverse menu) out)
     (format out ")")))
