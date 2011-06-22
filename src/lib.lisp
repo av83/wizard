@@ -23,8 +23,27 @@
 (restas:mount-submodule -static- (#:restas.directory-publisher)
   (restas.directory-publisher:*directory* (path "src/static/")))
 
-(defun get-current-user ()
+(defun cur-user ()
   (gethash 0 *USER*))
+
+(defun form-data ()
+  (hunchentoot:post-parameters*))
+
+(defun change-admin-password ()
+  "!!!change-admin-password")
+
+(defun activate (acts)
+  ;; (let ((rs))
+    ;; (push (form-data) rs)
+    (loop :for key :in acts :do
+       ;; (push (car key) rs)
+       (when (assoc (car key) (form-data) :test #'equal)
+         ;; (push (funcall (cdr key)) rs)
+         (return-from activate (funcall (cdr key)))))
+    "err: unk:post:controller"
+    ;; (format nil "~{~A<br />~}" (reverse rs))
+    )
+
 
 (defun show-acts (acts)
   (tpl:root
@@ -45,17 +64,17 @@
                                 (let ((typefld (car infld)))
                                   (ecase typefld
                                     (:fld
-                                     (let ((namefld   (getf infld :name))
+                                     (let ((captfld   (getf infld :name))
                                            (permfld   (getf infld :perm))
                                            (typedata  (getf infld :typedata)))
                                        (cond ((equal typedata '(str))
                                               (tpl:fld
-                                               (list :fldname namefld
-                                                     :fldcontent (tpl:strupd (list :name namefld)))))
+                                               (list :fldname captfld
+                                                     :fldcontent (tpl:strupd (list :name captfld)))))
                                              ((equal typedata '(pswd))
                                               (tpl:fld
-                                               (list :fldname namefld
-                                                     :fldcontent (tpl:pswdupd (list :name namefld)))))
+                                               (list :fldname captfld
+                                                     :fldcontent (tpl:pswdupd (list :name captfld)))))
                                              (t "err:unk typedata"))))
                                     (:btn (tpl:btn (list :name (getf infld :btn) :value (getf infld :value))))))))))
                      ((equal 'ADMIN (type-of val)) ;; ADMIN
@@ -65,29 +84,30 @@
                                 (let ((typefld (car infld)))
                                   (ecase typefld
                                     (:fld
-                                     (let ((namefld   (getf infld :name))
+                                     (let ((namefld   (getf infld :fld))
+                                           (captfld   (getf infld :name))
                                            (permfld   (getf infld :perm))
                                            (typedata  (getf infld :typedata)))
                                        (cond ((equal typedata '(str))
                                               (tpl:fld
-                                               (list :fldname namefld
+                                               (list :fldname captfld
                                                      :fldcontent
                                                      (tpl:strupd
                                                       (list :name namefld
                                                             :value (funcall
                                                                     (intern
-                                                                     (format nil "A-~A" (getf infld :fld))
+                                                                     (format nil "A-~A" namefld)
                                                                      (find-package "WIZARD"))
                                                                     val))))))
                                              ((equal typedata '(pswd))
                                               (tpl:fld
-                                               (list :fldname namefld
+                                               (list :fldname captfld
                                                      :fldcontent
                                                      (tpl:pswdupd
                                                       (list :name namefld
                                                             :value (funcall
                                                                     (intern
-                                                                     (format nil "A-~A" (getf infld :fld))
+                                                                     (format nil "A-~A" namefld)
                                                                      (find-package "WIZARD"))
                                                                     val))))))
                                              (t "err:unk typedata"))))
@@ -100,7 +120,7 @@
                                    (let ((typefld (car infld)))
                                      (ecase typefld
                                        (:fld
-                                        (let ((namefld   (getf infld :name))
+                                        (let ((captfld   (getf infld :name))
                                               (permfld   (getf infld :perm))
                                               (typedata  (getf infld :typedata)))
                                           (cond ((equal typedata '(str))

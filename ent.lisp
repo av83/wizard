@@ -365,15 +365,15 @@
      '((:caption           "Изменить пароль"
         :perm              :admin
         :entity            admin
-        :val               (get-current-user)
+        :val               (cur-user)
         :fields            '(login password
-                             (:btn "Изменить пароль" :act (change-admin-password :user :form))))
+                             (:btn "Изменить пароль" :act (change-admin-password))))
        (:caption           "Создать аккаунт эксперта"
         :perm              :admin
         :entity            expert
         :val               nil
         :fields            '(login password
-                             (:btn "Создать новый аккаунт эксперта" :act (create-expert :user :form))))
+                             (:btn "Создать новый аккаунт эксперта" :act (create-expert))))
        (:caption           "Эксперты"
         :perm              :admin
         :entity            expert
@@ -423,9 +423,9 @@
         :entity            supplier-resource-price
         :val               :collection
         :fields            '(owner resource price
-                             (:btn "Добавить ресурс" act ...?)
-                             (:btn "Удалить ресурс" ?)
-                             (:btn "Изменить ресурс" ?)))
+                             (:btn "Добавить ресурс" :act nil)
+                             (:btn "Удалить ресурс" :act nil)
+                             (:btn "Изменить ресурс" :act nil)))
        (:caption           "Заявки на тендеры"
         :perm              :self
         :entity            offer
