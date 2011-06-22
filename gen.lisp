@@ -56,6 +56,8 @@
                       (name    (car fld)))
                   (format out "~%  (format t \"~A~A : ~A\" (~A object))" "~%" caption "~A" name))))
              (format out ")")))))
+  ;; Init objects
+  (format out "~%~%~%;; Init objects~%(load \"src/init.lisp\")~%")
   ;; Places
   (let ((menu))
     (loop :for place :in *places* :do
@@ -66,9 +68,10 @@
                (getf place :url))
        (format out "~%  (let ((acts (list ~{~A~}))) ~A)"
                (loop :for action :in (eval (getf place :actions)) :collect
-                  (format nil "~%~14T (list :perm '~A ~%~20T :title \"~A\"~% ~20T :in ~A)"
+                  (format nil "~%~14T (list :perm '~A ~%~20T :title \"~A\"~% ~20T :val (lambda () ~A)~% ~20T :fields ~A)"
                           (subseq (with-output-to-string (*standard-output*) (pprint (getf action :perm))) 1)
                           (getf action :caption)
+                          (subseq (with-output-to-string (*standard-output*) (pprint (getf action :val))) 1)
                           (case (getf action :val)
                             ('nil
                              (let ((entity (find-if #'(lambda (entity)
@@ -77,20 +80,43 @@
                                (format nil "(list ~{~A~})"
                                        (loop :for fld :in (eval (getf action :fields)) :collect
                                           (etypecase fld
-                                            (symbol   (format nil "~%~25T (list :fld \"~A\" :perm <?> :name \"~A\" :value \"\")"
+                                            (symbol   (format nil "~%~25T (list :fld \"~A\" :perm 111 :typedata '~A :name \"~A\")"
                                                               fld
+                                                              (caddr (find-if #'(lambda (x)
+                                                                                  (equal (car x) fld))
+                                                                              (getf entity :fields)))
                                                               (cadr (find-if #'(lambda (x)
                                                                                  (equal (car x) fld))
                                                                              (getf entity :fields)))))
                                             (cons     (let ((instr (car fld)))
                                                         (case instr
                                                           (:btn
-                                                           (format nil "~%~25T (list :btn \"~A\"  :perm <?> :value \"~A\")"
+                                                           (format nil "~%~25T (list :btn \"~A\" :perm 111 :value \"~A\")"
                                                                    (getf fld instr)
                                                                    (getf fld instr)))))))))))
-                            ;; todo: collection
+                            (otherwise
+                             (let ((entity (find-if #'(lambda (entity)
+                                                        (equal (getf entity :entity) (getf action :entity)))
+                                                    *entityes*)))
+                               (format nil "(list ~{~A~})"
+                                       (loop :for fld :in (eval (getf action :fields)) :collect
+                                          (etypecase fld
+                                            (symbol   (format nil "~%~25T (list :fld \"~A\" :perm 111 :typedata '~A :name \"~A\")"
+                                                              fld
+                                                              (caddr (find-if #'(lambda (x)
+                                                                                  (equal (car x) fld))
+                                                                              (getf entity :fields)))
+                                                              (cadr (find-if #'(lambda (x)
+                                                                                 (equal (car x) fld))
+                                                                             (getf entity :fields)))))
+                                            (cons     (let ((instr (car fld)))
+                                                        (case instr
+                                                          (:btn
+                                                           (format nil "~%~25T (list :btn \"~A\" :perm 111 :value \"~A\")"
+                                                                   (getf fld instr)
+                                                                   (getf fld instr)))))))))))
                             ;; todo: user
-                            (otherwise "NIL"))))
+                            )))
                (format nil  "~%    (show-acts acts))")))
     (format out "~%~%~%(defun menu ()  '")
     (pprint (reverse menu) out)

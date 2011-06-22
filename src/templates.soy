@@ -1,4 +1,4 @@
-// -*- mode: closure-template-html -*-
+>// -*- mode: closure-template-html -*-
 
 {namespace tpl}
 
@@ -179,19 +179,19 @@
         <span class="textTitle">Дело № А56-55540/2009</span>
         <span class="italicText">
           Истец: ОСАО "Ингосстрах"
-          <br>
-            Ответчик:
-            <a href="/catalog/17080/company/52478/">ЗАО "ВАД"</a>
-          </span>
-          <p style="margin-top: 4px;">
-            <span style="font-size: 11px;">Решение:</span>
-            <br>
-              Удовлетворить встречный иск полностью или частично
-            </p>
-          </div>
-          <div class="sidebarBoxBottom"></div>
-        </div>
+          <br />
+          Ответчик:
+          <a href="/catalog/17080/company/52478/">ЗАО "ВАД"</a>
+        </span>
+        <p style="margin-top: 4px;">
+          <span style="font-size: 11px;">Решение:</span>
+          <br />
+          Удовлетворить встречный иск полностью или частично
+        </p>
       </div>
+      <div class="sidebarBoxBottom"></div>
+    </div>
+  </div>
 {/template}
 
 
@@ -230,37 +230,64 @@
 {/template}
 
 
-{template rndfld}
+{template fld}
   <table>{\n}
     <tr>{\n}
-      <td width="180>"{\n}
-        <div style="width: 180px;">{\n}
-          {$fldname}{\n}
-        </div>{\n}
-      </td>{\n}
       <td width="180">{\n}
-        <div style="width: 180px;">{\n}
-          {$fldcontent |noAutoescape}{\n}
-        </div>{\n}
-      </td>{\n}
-    </tr>{\n}
+          <div style="width: 180px;">{\n}
+            {$fldname}{\n}
+          </div>{\n}
+    </td>{\n}
+    <td width="180">{\n}
+      <div style="width: 180px;">{\n}
+        {$fldcontent |noAutoescape}{\n}
+      </div>{\n}
+    </td>{\n}
+  </tr>{\n}
   </table>{\n}
 {/template}
 
 
-{template simplefld}
+{template strview}
+  {$value} <br />{\n}
+{/template}
+
+
+{template strupd}
   <input type="text" name="{$name}" value="{$value}" /> <br />{\n}
 {/template}
 
-{template simplebtn}
+{template pswdupd}
+  <input type="password" name="{$name}" value="{$value}" /> <br />{\n}
+{/template}
+
+
+{template btn}
   <input type="button" name="{$name}" value="{$value}" />
 {/template}
 
 
-{template frm}
+{template frmobj}
   <form method="post">
     {foreach $fld in $flds}
       {$fld |noAutoescape}
     {/foreach}
+  </form>
+{/template}
+
+
+{template frmtbl}
+  <form method="post">
+    <table border="1" width="100%">
+      {foreach $obj in $objs}
+        <tr>
+          {foreach $fld in $obj}
+            <td>
+            {$fld |noAutoescape}
+            </td>
+          {/foreach}
+        </tr>
+      {/foreach}
+    </table>
   </form>
 {/template}

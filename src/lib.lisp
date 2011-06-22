@@ -24,7 +24,7 @@
   (restas.directory-publisher:*directory* (path "src/static/")))
 
 (defun get-current-user ()
-  (make-instance 'admin :login "admin" :password "admin"))
+  (gethash 0 *USER*))
 
 (defun show-acts (acts)
   (tpl:root
@@ -35,18 +35,83 @@
        :for act
        :in acts
        :collect
-       (list :perm (getf act :perm)
-             :title (getf act :title)
+       (list :title (getf act :title)
              :content
-             (tpl:frm
-              (list :flds
-                    (loop
-                       :for act
-                       :in (getf act :in)
-                       :collect
-                       (ecase (car act)
-                         (:fld (tpl:rndfld
-                                (list :fldname (getf act :name)
-                                      :fldcontent (tpl:simplefld
-                                                   (list :name (getf act :fld) :value (getf act :value))))))
-                         (:btn (tpl:simplebtn (list :name (getf act :btn) :value (getf act :value)))))))))))))
+             (let ((val (funcall (getf act :val))))
+               (cond ((null val) ;; NIL
+                      (tpl:frmobj
+                       (list :flds
+                             (loop :for infld :in (getf act :fields) :collect
+                                (let ((typefld (car infld)))
+                                  (ecase typefld
+                                    (:fld
+                                     (let ((namefld   (getf infld :name))
+                                           (permfld   (getf infld :perm))
+                                           (typedata  (getf infld :typedata)))
+                                       (cond ((equal typedata '(str))
+                                              (tpl:fld
+                                               (list :fldname namefld
+                                                     :fldcontent (tpl:strupd (list :name namefld)))))
+                                             ((equal typedata '(pswd))
+                                              (tpl:fld
+                                               (list :fldname namefld
+                                                     :fldcontent (tpl:pswdupd (list :name namefld)))))
+                                             (t "err:unk typedata"))))
+                                    (:btn (tpl:btn (list :name (getf infld :btn) :value (getf infld :value))))))))))
+                     ((equal 'ADMIN (type-of val)) ;; ADMIN
+                      (tpl:frmobj
+                       (list :flds
+                             (loop :for infld :in (getf act :fields) :collect
+                                (let ((typefld (car infld)))
+                                  (ecase typefld
+                                    (:fld
+                                     (let ((namefld   (getf infld :name))
+                                           (permfld   (getf infld :perm))
+                                           (typedata  (getf infld :typedata)))
+                                       (cond ((equal typedata '(str))
+                                              (tpl:fld
+                                               (list :fldname namefld
+                                                     :fldcontent
+                                                     (tpl:strupd
+                                                      (list :name namefld
+                                                            :value (funcall
+                                                                    (intern
+                                                                     (format nil "A-~A" (getf infld :fld))
+                                                                     (find-package "WIZARD"))
+                                                                    val))))))
+                                             ((equal typedata '(pswd))
+                                              (tpl:fld
+                                               (list :fldname namefld
+                                                     :fldcontent
+                                                     (tpl:pswdupd
+                                                      (list :name namefld
+                                                            :value (funcall
+                                                                    (intern
+                                                                     (format nil "A-~A" (getf infld :fld))
+                                                                     (find-package "WIZARD"))
+                                                                    val))))))
+                                             (t "err:unk typedata"))))
+                                    (:btn (tpl:btn (list :name (getf infld :btn) :value (getf infld :value))))))))))
+                     ((equal 'cons (type-of val)) ;; COLLECTION
+                      (tpl:frmtbl
+                       (list :objs
+                             (loop :for obj :in val :collect
+                                (loop :for infld :in (getf act :fields) :collect
+                                   (let ((typefld (car infld)))
+                                     (ecase typefld
+                                       (:fld
+                                        (let ((namefld   (getf infld :name))
+                                              (permfld   (getf infld :perm))
+                                              (typedata  (getf infld :typedata)))
+                                          (cond ((equal typedata '(str))
+                                                 (tpl:strview
+                                                  (list :value
+                                                        (funcall
+                                                         (intern
+                                                          (format nil "A-~A" (getf infld :fld))
+                                                          (find-package "WIZARD"))
+                                                         obj))))
+                                                (t "err:unk typedata"))))
+                                       (:btn
+                                        (tpl:btn (list :name (getf infld :btn) :value (getf infld :value)))))))))))
+                     (t "444"))))))))

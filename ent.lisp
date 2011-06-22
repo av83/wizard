@@ -365,7 +365,7 @@
      '((:caption           "Изменить пароль"
         :perm              :admin
         :entity            admin
-        :val               :user
+        :val               (get-current-user)
         :fields            '(login password
                              (:btn "Изменить пароль" :act (change-admin-password :user :form))))
        (:caption           "Создать аккаунт эксперта"
@@ -377,9 +377,11 @@
        (:caption           "Эксперты"
         :perm              :admin
         :entity            expert
-        :val               :collection
+        :val               (remove-if-not #'(lambda (x)
+                                              (equal 'expert (type-of x)))
+                            (loop :for obj :being the :hash-values :in *USER* :collect obj))
         :fields            '(name login
-                             (:btn "Удалить аккаунт эксперта"
+                             (:btn "Удалить эксперта"
                               :actions
                               '((:caption           "Действительно удалить?"
                                  :perm               :admin
@@ -395,7 +397,10 @@
        (:caption           "Заявки поставщиков на добросовестность"
         :perm              :admin
         :entity            expert
-        :val               :collection
+        :val               (remove-if-not #'(lambda (x)
+                                              (and (equal 'supplier (type-of x))
+                                                   (equal (a-status x) :request)))
+                            (loop :for obj :being the :hash-values :in *USER* :collect obj))
         :fields            '(name login
                              (:btn "Подтвердить заявку"
                               :actions
@@ -489,14 +494,17 @@
                                  (:status    :unactive))))))))
 
     ;; Страница поставщиков - коллекция по юзерам с фильтром по типу юзера
-    (:place                builders
-     :url                  "/builders"
+    (:place                suppliers
+     :url                  "/suppliers"
      :navpoint             "Поставщики"
      :actions
      '((:caption           "Организации-поставщики"
         :perm              "<?>"
         :entity            supplier
-        :val               :collection
+        :val               (remove-if-not #'(lambda (x)
+                                              (equal 'supplier (type-of x)))
+                            (loop :for obj :being the :hash-values :in *USER* :collect obj))
+        :fields            '(name login)
         :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
         ;; <?> Как будем показывать тендеры застройщика?
         :fields           '((name juridical-address requisites tenders rating)))))))

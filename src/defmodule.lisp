@@ -4,7 +4,7 @@
 (require 'RESTAS-DIRECTORY-PUBLISHER)
 
 (restas:define-module #:WIZARD
-  (:use #:CL #:ITER ))
+    (:use #:CL #:ITER ))
 
 (in-package #:WIZARD)
 
@@ -26,8 +26,8 @@
 
 
 (defclass ADMIN (entity)
-((LOGIN                  :initarg :LOGIN               :initform nil :accessor A-LOGIN)
-(PASSWORD               :initarg :PASSWORD            :initform nil :accessor A-PASSWORD)))
+  ((LOGIN                  :initarg :LOGIN               :initform nil :accessor A-LOGIN)
+   (PASSWORD               :initarg :PASSWORD            :initform nil :accessor A-PASSWORD)))
 
 (defmethod view ((object ADMIN) &key)
   ;; Здесь будет проверка прав
@@ -38,9 +38,9 @@
 
 
 (defclass EXPERT (entity)
-((LOGIN                  :initarg :LOGIN               :initform nil :accessor A-LOGIN)
-(PASSWORD               :initarg :PASSWORD            :initform nil :accessor A-PASSWORD)
-(NAME                   :initarg :NAME                :initform nil :accessor A-NAME)))
+  ((LOGIN                  :initarg :LOGIN               :initform nil :accessor A-LOGIN)
+   (PASSWORD               :initarg :PASSWORD            :initform nil :accessor A-PASSWORD)
+   (NAME                   :initarg :NAME                :initform nil :accessor A-NAME)))
 
 (defmethod initialize-instance :after ((object EXPERT) &key)
   ;; Здесь будет проверка прав
@@ -58,29 +58,29 @@
 
 
 (defclass SUPPLIER (entity)
-((LOGIN                  :initarg :LOGIN               :initform nil :accessor A-LOGIN)
-(PASSWORD               :initarg :PASSWORD            :initform nil :accessor A-PASSWORD)
-(NAME                   :initarg :NAME                :initform nil :accessor A-NAME)
-(REFERAL                :initarg :REFERAL             :initform nil :accessor A-REFERAL)
-(STATUS                 :initarg :STATUS              :initform nil :accessor A-STATUS)
-(JURIDICAL-ADDRESS      :initarg :JURIDICAL-ADDRESS   :initform nil :accessor A-JURIDICAL-ADDRESS)
-(ACTUAL-ADDRESS         :initarg :ACTUAL-ADDRESS      :initform nil :accessor A-ACTUAL-ADDRESS)
-(CONTACTS               :initarg :CONTACTS            :initform nil :accessor A-CONTACTS)
-(EMAIL                  :initarg :EMAIL               :initform nil :accessor A-EMAIL)
-(SITE                   :initarg :SITE                :initform nil :accessor A-SITE)
-(HEADS                  :initarg :HEADS               :initform nil :accessor A-HEADS)
-(INN                    :initarg :INN                 :initform nil :accessor A-INN)
-(KPP                    :initarg :KPP                 :initform nil :accessor A-KPP)
-(OGRN                   :initarg :OGRN                :initform nil :accessor A-OGRN)
-(BANK-NAME              :initarg :BANK-NAME           :initform nil :accessor A-BANK-NAME)
-(BIK                    :initarg :BIK                 :initform nil :accessor A-BIK)
-(CORRESP-ACCOUNT        :initarg :CORRESP-ACCOUNT     :initform nil :accessor A-CORRESP-ACCOUNT)
-(CLIENT-ACCOUNT         :initarg :CLIENT-ACCOUNT      :initform nil :accessor A-CLIENT-ACCOUNT)
-(ADDRESSES              :initarg :ADDRESSES           :initform nil :accessor A-ADDRESSES)
-(CONTACT-PERSON         :initarg :CONTACT-PERSON      :initform nil :accessor A-CONTACT-PERSON)
-(RESOURCES              :initarg :RESOURCES           :initform nil :accessor A-RESOURCES)
-(SALE                   :initarg :SALE                :initform nil :accessor A-SALE)
-(OFFERS                 :initarg :OFFERS              :initform nil :accessor A-OFFERS)))
+  ((LOGIN                  :initarg :LOGIN               :initform nil :accessor A-LOGIN)
+   (PASSWORD               :initarg :PASSWORD            :initform nil :accessor A-PASSWORD)
+   (NAME                   :initarg :NAME                :initform nil :accessor A-NAME)
+   (REFERAL                :initarg :REFERAL             :initform nil :accessor A-REFERAL)
+   (STATUS                 :initarg :STATUS              :initform nil :accessor A-STATUS)
+   (JURIDICAL-ADDRESS      :initarg :JURIDICAL-ADDRESS   :initform nil :accessor A-JURIDICAL-ADDRESS)
+   (ACTUAL-ADDRESS         :initarg :ACTUAL-ADDRESS      :initform nil :accessor A-ACTUAL-ADDRESS)
+   (CONTACTS               :initarg :CONTACTS            :initform nil :accessor A-CONTACTS)
+   (EMAIL                  :initarg :EMAIL               :initform nil :accessor A-EMAIL)
+   (SITE                   :initarg :SITE                :initform nil :accessor A-SITE)
+   (HEADS                  :initarg :HEADS               :initform nil :accessor A-HEADS)
+   (INN                    :initarg :INN                 :initform nil :accessor A-INN)
+   (KPP                    :initarg :KPP                 :initform nil :accessor A-KPP)
+   (OGRN                   :initarg :OGRN                :initform nil :accessor A-OGRN)
+   (BANK-NAME              :initarg :BANK-NAME           :initform nil :accessor A-BANK-NAME)
+   (BIK                    :initarg :BIK                 :initform nil :accessor A-BIK)
+   (CORRESP-ACCOUNT        :initarg :CORRESP-ACCOUNT     :initform nil :accessor A-CORRESP-ACCOUNT)
+   (CLIENT-ACCOUNT         :initarg :CLIENT-ACCOUNT      :initform nil :accessor A-CLIENT-ACCOUNT)
+   (ADDRESSES              :initarg :ADDRESSES           :initform nil :accessor A-ADDRESSES)
+   (CONTACT-PERSON         :initarg :CONTACT-PERSON      :initform nil :accessor A-CONTACT-PERSON)
+   (RESOURCES              :initarg :RESOURCES           :initform nil :accessor A-RESOURCES)
+   (SALE                   :initarg :SALE                :initform nil :accessor A-SALE)
+   (OFFERS                 :initarg :OFFERS              :initform nil :accessor A-OFFERS)))
 
 (defmethod initialize-instance :after ((object SUPPLIER) &key)
   ;; Здесь будет проверка прав
@@ -118,9 +118,9 @@
 
 
 (defclass OFFER (entity)
-((OWNER                  :initarg :OWNER               :initform nil :accessor A-OWNER)
-(TENDER                 :initarg :TENDER              :initform nil :accessor A-TENDER)
-(RESOURCES              :initarg :RESOURCES           :initform nil :accessor A-RESOURCES)))
+  ((OWNER                  :initarg :OWNER               :initform nil :accessor A-OWNER)
+   (TENDER                 :initarg :TENDER              :initform nil :accessor A-TENDER)
+   (RESOURCES              :initarg :RESOURCES           :initform nil :accessor A-RESOURCES)))
 
 (defmethod initialize-instance :after ((object OFFER) &key)
   ;; Здесь будет проверка прав
@@ -138,10 +138,10 @@
 
 
 (defclass OFFER-RESOURCE (entity)
-((OWNER                  :initarg :OWNER               :initform nil :accessor A-OWNER)
-(OFFER                  :initarg :OFFER               :initform nil :accessor A-OFFER)
-(RESOURCE               :initarg :RESOURCE            :initform nil :accessor A-RESOURCE)
-(PRICE                  :initarg :PRICE               :initform nil :accessor A-PRICE)))
+  ((OWNER                  :initarg :OWNER               :initform nil :accessor A-OWNER)
+   (OFFER                  :initarg :OFFER               :initform nil :accessor A-OFFER)
+   (RESOURCE               :initarg :RESOURCE            :initform nil :accessor A-RESOURCE)
+   (PRICE                  :initarg :PRICE               :initform nil :accessor A-PRICE)))
 
 (defmethod initialize-instance :after ((object OFFER-RESOURCE) &key)
   ;; Здесь будет проверка прав
@@ -160,11 +160,11 @@
 
 
 (defclass SALE (entity)
-((OWNER                  :initarg :OWNER               :initform nil :accessor A-OWNER)
-(RESOURCE               :initarg :RESOURCE            :initform nil :accessor A-RESOURCE)
-(PROCENT                :initarg :PROCENT             :initform nil :accessor A-PROCENT)
-(PRICE                  :initarg :PRICE               :initform nil :accessor A-PRICE)
-(NOTES                  :initarg :NOTES               :initform nil :accessor A-NOTES)))
+  ((OWNER                  :initarg :OWNER               :initform nil :accessor A-OWNER)
+   (RESOURCE               :initarg :RESOURCE            :initform nil :accessor A-RESOURCE)
+   (PROCENT                :initarg :PROCENT             :initform nil :accessor A-PROCENT)
+   (PRICE                  :initarg :PRICE               :initform nil :accessor A-PRICE)
+   (NOTES                  :initarg :NOTES               :initform nil :accessor A-NOTES)))
 
 (defmethod initialize-instance :after ((object SALE) &key)
   ;; Здесь будет проверка прав
@@ -184,9 +184,9 @@
 
 
 (defclass SUPPLIER-RESOURCE-PRICE (entity)
-((OWNER                  :initarg :OWNER               :initform nil :accessor A-OWNER)
-(RESOURCE               :initarg :RESOURCE            :initform nil :accessor A-RESOURCE)
-(PRICE                  :initarg :PRICE               :initform nil :accessor A-PRICE)))
+  ((OWNER                  :initarg :OWNER               :initform nil :accessor A-OWNER)
+   (RESOURCE               :initarg :RESOURCE            :initform nil :accessor A-RESOURCE)
+   (PRICE                  :initarg :PRICE               :initform nil :accessor A-PRICE)))
 
 (defmethod initialize-instance :after ((object SUPPLIER-RESOURCE-PRICE) &key)
   ;; Здесь будет проверка прав
@@ -204,19 +204,19 @@
 
 
 (defclass BUILDER (entity)
-((LOGIN                  :initarg :LOGIN               :initform nil :accessor A-LOGIN)
-(PASSWORD               :initarg :PASSWORD            :initform nil :accessor A-PASSWORD)
-(NAME                   :initarg :NAME                :initform nil :accessor A-NAME)
-(JURIDICAL-ADDRESS      :initarg :JURIDICAL-ADDRESS   :initform nil :accessor A-JURIDICAL-ADDRESS)
-(INN                    :initarg :INN                 :initform nil :accessor A-INN)
-(KPP                    :initarg :KPP                 :initform nil :accessor A-KPP)
-(OGRN                   :initarg :OGRN                :initform nil :accessor A-OGRN)
-(BANK-NAME              :initarg :BANK-NAME           :initform nil :accessor A-BANK-NAME)
-(BIK                    :initarg :BIK                 :initform nil :accessor A-BIK)
-(CORRESP-ACCOUNT        :initarg :CORRESP-ACCOUNT     :initform nil :accessor A-CORRESP-ACCOUNT)
-(CLIENT-ACCOUNT         :initarg :CLIENT-ACCOUNT      :initform nil :accessor A-CLIENT-ACCOUNT)
-(TENDERS                :initarg :TENDERS             :initform nil :accessor A-TENDERS)
-(RATING                 :initarg :RATING              :initform nil :accessor A-RATING)))
+  ((LOGIN                  :initarg :LOGIN               :initform nil :accessor A-LOGIN)
+   (PASSWORD               :initarg :PASSWORD            :initform nil :accessor A-PASSWORD)
+   (NAME                   :initarg :NAME                :initform nil :accessor A-NAME)
+   (JURIDICAL-ADDRESS      :initarg :JURIDICAL-ADDRESS   :initform nil :accessor A-JURIDICAL-ADDRESS)
+   (INN                    :initarg :INN                 :initform nil :accessor A-INN)
+   (KPP                    :initarg :KPP                 :initform nil :accessor A-KPP)
+   (OGRN                   :initarg :OGRN                :initform nil :accessor A-OGRN)
+   (BANK-NAME              :initarg :BANK-NAME           :initform nil :accessor A-BANK-NAME)
+   (BIK                    :initarg :BIK                 :initform nil :accessor A-BIK)
+   (CORRESP-ACCOUNT        :initarg :CORRESP-ACCOUNT     :initform nil :accessor A-CORRESP-ACCOUNT)
+   (CLIENT-ACCOUNT         :initarg :CLIENT-ACCOUNT      :initform nil :accessor A-CLIENT-ACCOUNT)
+   (TENDERS                :initarg :TENDERS             :initform nil :accessor A-TENDERS)
+   (RATING                 :initarg :RATING              :initform nil :accessor A-RATING)))
 
 (defmethod initialize-instance :after ((object BUILDER) &key)
   ;; Здесь будет проверка прав
@@ -244,10 +244,10 @@
 
 
 (defclass CATEGORY (entity)
-((NAME                   :initarg :NAME                :initform nil :accessor A-NAME)
-(PARENT                 :initarg :PARENT              :initform nil :accessor A-PARENT)
-(CHILD-CATEGORYES       :initarg :CHILD-CATEGORYES    :initform nil :accessor A-CHILD-CATEGORYES)
-(RESOURCES              :initarg :RESOURCES           :initform nil :accessor A-RESOURCES)))
+  ((NAME                   :initarg :NAME                :initform nil :accessor A-NAME)
+   (PARENT                 :initarg :PARENT              :initform nil :accessor A-PARENT)
+   (CHILD-CATEGORYES       :initarg :CHILD-CATEGORYES    :initform nil :accessor A-CHILD-CATEGORYES)
+   (RESOURCES              :initarg :RESOURCES           :initform nil :accessor A-RESOURCES)))
 
 (defmethod initialize-instance :after ((object CATEGORY) &key)
   ;; Здесь будет проверка прав
@@ -266,11 +266,11 @@
 
 
 (defclass RESOURCE (entity)
-((NAME                   :initarg :NAME                :initform nil :accessor A-NAME)
-(CATEGORY               :initarg :CATEGORY            :initform nil :accessor A-CATEGORY)
-(RESOURCE-TYPE          :initarg :RESOURCE-TYPE       :initform nil :accessor A-RESOURCE-TYPE)
-(UNIT                   :initarg :UNIT                :initform nil :accessor A-UNIT)
-(SUPPLIERS              :initarg :SUPPLIERS           :initform nil :accessor A-SUPPLIERS)))
+  ((NAME                   :initarg :NAME                :initform nil :accessor A-NAME)
+   (CATEGORY               :initarg :CATEGORY            :initform nil :accessor A-CATEGORY)
+   (RESOURCE-TYPE          :initarg :RESOURCE-TYPE       :initform nil :accessor A-RESOURCE-TYPE)
+   (UNIT                   :initarg :UNIT                :initform nil :accessor A-UNIT)
+   (SUPPLIERS              :initarg :SUPPLIERS           :initform nil :accessor A-SUPPLIERS)))
 
 (defmethod initialize-instance :after ((object RESOURCE) &key)
   ;; Здесь будет проверка прав
@@ -290,21 +290,21 @@
 
 
 (defclass TENDER (entity)
-((NAME                   :initarg :NAME                :initform nil :accessor A-NAME)
-(STATUS                 :initarg :STATUS              :initform nil :accessor A-STATUS)
-(OWNER                  :initarg :OWNER               :initform nil :accessor A-OWNER)
-(ACTIVE-DATE            :initarg :ACTIVE-DATE         :initform nil :accessor A-ACTIVE-DATE)
-(ALL                    :initarg :ALL                 :initform nil :accessor A-ALL)
-(CLAIM                  :initarg :CLAIM               :initform nil :accessor A-CLAIM)
-(ANALIZE                :initarg :ANALIZE             :initform nil :accessor A-ANALIZE)
-(INTERVIEW              :initarg :INTERVIEW           :initform nil :accessor A-INTERVIEW)
-(RESULT                 :initarg :RESULT              :initform nil :accessor A-RESULT)
-(WINNER                 :initarg :WINNER              :initform nil :accessor A-WINNER)
-(PRICE                  :initarg :PRICE               :initform nil :accessor A-PRICE)
-(RESOURCES              :initarg :RESOURCES           :initform nil :accessor A-RESOURCES)
-(DOCUMENTS              :initarg :DOCUMENTS           :initform nil :accessor A-DOCUMENTS)
-(SUPPLIERS              :initarg :SUPPLIERS           :initform nil :accessor A-SUPPLIERS)
-(OFFERTS                :initarg :OFFERTS             :initform nil :accessor A-OFFERTS)))
+  ((NAME                   :initarg :NAME                :initform nil :accessor A-NAME)
+   (STATUS                 :initarg :STATUS              :initform nil :accessor A-STATUS)
+   (OWNER                  :initarg :OWNER               :initform nil :accessor A-OWNER)
+   (ACTIVE-DATE            :initarg :ACTIVE-DATE         :initform nil :accessor A-ACTIVE-DATE)
+   (ALL                    :initarg :ALL                 :initform nil :accessor A-ALL)
+   (CLAIM                  :initarg :CLAIM               :initform nil :accessor A-CLAIM)
+   (ANALIZE                :initarg :ANALIZE             :initform nil :accessor A-ANALIZE)
+   (INTERVIEW              :initarg :INTERVIEW           :initform nil :accessor A-INTERVIEW)
+   (RESULT                 :initarg :RESULT              :initform nil :accessor A-RESULT)
+   (WINNER                 :initarg :WINNER              :initform nil :accessor A-WINNER)
+   (PRICE                  :initarg :PRICE               :initform nil :accessor A-PRICE)
+   (RESOURCES              :initarg :RESOURCES           :initform nil :accessor A-RESOURCES)
+   (DOCUMENTS              :initarg :DOCUMENTS           :initform nil :accessor A-DOCUMENTS)
+   (SUPPLIERS              :initarg :SUPPLIERS           :initform nil :accessor A-SUPPLIERS)
+   (OFFERTS                :initarg :OFFERTS             :initform nil :accessor A-OFFERTS)))
 
 (defmethod initialize-instance :after ((object TENDER) &key)
   ;; Здесь будет проверка прав
@@ -334,9 +334,9 @@
 
 
 (defclass DOCUMENT (entity)
-((NAME                   :initarg :NAME                :initform nil :accessor A-NAME)
-(FILENAME               :initarg :FILENAME            :initform nil :accessor A-FILENAME)
-(TENDER                 :initarg :TENDER              :initform nil :accessor A-TENDER)))
+  ((NAME                   :initarg :NAME                :initform nil :accessor A-NAME)
+   (FILENAME               :initarg :FILENAME            :initform nil :accessor A-FILENAME)
+   (TENDER                 :initarg :TENDER              :initform nil :accessor A-TENDER)))
 
 (defmethod initialize-instance :after ((object DOCUMENT) &key)
   ;; Здесь будет проверка прав
@@ -352,116 +352,173 @@
   (format t "~%Имя файла : ~A" (FILENAME object))
   (format t "~%Тендер : ~A" (TENDER object)))
 
+
+;; Init objects
+(load "src/init.lisp")
+
+
 (restas:define-route main-page ("/")
-  (let ((acts (list 
-               (list :perm ':ALL 
+  (let ((acts (list
+               (list :perm ':ALL
                      :title "Главная страница"
-                     :in (list ))))) 
+                     :val (lambda () NIL)
+                     :fields (list )))))
     (show-acts acts)))
 
 (restas:define-route admin-page ("/admin")
-  (let ((acts (list 
-               (list :perm ':ADMIN 
+  (let ((acts (list
+               (list :perm ':ADMIN
                      :title "Изменить пароль"
-                     :in NIL)
-               (list :perm ':ADMIN 
+                     :val (lambda () (GET-CURRENT-USER))
+                     :fields (list
+                              (list :fld "LOGIN" :perm 111 :typedata '(STR) :name "Логин")
+                              (list :fld "PASSWORD" :perm 111 :typedata '(PSWD) :name "Пароль")
+                              (list :btn "Изменить пароль" :perm 111 :value "Изменить пароль")))
+               (list :perm ':ADMIN
                      :title "Создать аккаунт эксперта"
-                     :in (list 
-                          (list :fld "LOGIN" :perm <?> :name "Логин" :value "")
-                          (list :fld "PASSWORD" :perm <?> :name "Пароль" :value "")
-                          (list :btn "Создать новый аккаунт эксперта"  :perm <?> :value "Создать новый аккаунт эксперта")))
-               (list :perm ':ADMIN 
+                     :val (lambda () NIL)
+                     :fields (list
+                              (list :fld "LOGIN" :perm 111 :typedata '(STR) :name "Логин")
+                              (list :fld "PASSWORD" :perm 111 :typedata '(PSWD) :name "Пароль")
+                              (list :btn "Создать новый аккаунт эксперта" :perm 111 :value "Создать новый аккаунт эксперта")))
+               (list :perm ':ADMIN
                      :title "Эксперты"
-                     :in NIL)
-               (list :perm ':ADMIN 
+                     :val (lambda () (REMOVE-IF-NOT #'(LAMBDA (X) (EQUAL 'EXPERT (TYPE-OF X)))
+                                                    (LOOP :FOR OBJ :BEING THE :HASH-VALUES :IN *USER*
+                                                       :COLLECT OBJ)))
+                     :fields (list
+                              (list :fld "NAME" :perm 111 :typedata '(STR) :name "ФИО")
+                              (list :fld "LOGIN" :perm 111 :typedata '(STR) :name "Логин")
+                              (list :btn "Удалить эксперта" :perm 111 :value "Удалить эксперта")
+                              (list :btn "Сменить пароль эксперта" :perm 111 :value "Сменить пароль эксперта")))
+               (list :perm ':ADMIN
                      :title "Заявки поставщиков на добросовестность"
-                     :in NIL)))) 
+                     :val (lambda () (REMOVE-IF-NOT
+                                      #'(LAMBDA (X)
+                                          (AND (EQUAL 'SUPPLIER (TYPE-OF X)) (EQUAL (A-STATUS X) :REQUEST)))
+                                      (LOOP :FOR OBJ :BEING THE :HASH-VALUES :IN *USER*
+                                         :COLLECT OBJ)))
+                     :fields (list
+                              (list :fld "NAME" :perm 111 :typedata '(STR) :name "ФИО")
+                              (list :fld "LOGIN" :perm 111 :typedata '(STR) :name "Логин")
+                              (list :btn "Подтвердить заявку" :perm 111 :value "Подтвердить заявку"))))))
     (show-acts acts)))
 
 (restas:define-route supplier-page ("/supplier")
-  (let ((acts (list 
-               (list :perm '(AND :SELF :UNFAIR) 
+  (let ((acts (list
+               (list :perm '(AND :SELF :UNFAIR)
                      :title "Отправить заявку на добросовестность"
-                     :in (list 
-                          (list :btn "Отправить заявку на добросовестность"  :perm <?> :value "Отправить заявку на добросовестность")))
-               (list :perm ':SELF 
+                     :val (lambda () NIL)
+                     :fields (list
+                              (list :btn "Отправить заявку на добросовестность" :perm 111 :value "Отправить заявку на добросовестность")))
+               (list :perm ':SELF
                      :title "Изменить список ресурсов"
-                     :in NIL)
-               (list :perm ':SELF 
+                     :val (lambda () :COLLECTION)
+                     :fields (list
+                              (list :fld "OWNER" :perm 111 :typedata '(LINK
+                                                                       SUPPLIER) :name "Поставщик")
+                              (list :fld "RESOURCE" :perm 111 :typedata '(LINK
+                                                                          RESOURCE) :name "Ресурс")
+                              (list :fld "PRICE" :perm 111 :typedata '(NUM) :name "Цена поставщика")
+                              (list :btn "Добавить ресурс" :perm 111 :value "Добавить ресурс")
+                              (list :btn "Удалить ресурс" :perm 111 :value "Удалить ресурс")
+                              (list :btn "Изменить ресурс" :perm 111 :value "Изменить ресурс")))
+               (list :perm ':SELF
                      :title "Заявки на тендеры"
-                     :in NIL)))) 
+                     :val (lambda () :COLLECTION)
+                     :fields (list
+                              (list :fld "TENDER" :perm 111 :typedata '(LINK TENDER) :name "Тендер"))))))
     (show-acts acts)))
 
 (restas:define-route tender-page ("/tender")
-  (let ((acts (list 
-               (list :perm '(AND :ACTIVE :FAIR) 
+  (let ((acts (list
+               (list :perm '(AND :ACTIVE :FAIR)
                      :title "Ответить заявкой на тендер"
-                     :in (list 
-                          (list :fld "NAME" :perm <?> :name "Название" :value "")
-                          (list :fld "STATUS" :perm <?> :name "Статус" :value "")
-                          (list :fld "OWNER" :perm <?> :name "Заказчик" :value "")
-                          (list :fld "ACTIVE-DATE" :perm <?> :name "Дата активации" :value "")
-                          (list :fld "ALL" :perm <?> :name "Срок проведения" :value "")
-                          (list :fld "CLAIM" :perm <?> :name "Срок подачи заявок" :value "")
-                          (list :fld "ANALIZE" :perm <?> :name "Срок рассмотрения заявок" :value "")
-                          (list :fld "INTERVIEW" :perm <?> :name "Срок проведения интервью" :value "")
-                          (list :fld "RESULT" :perm <?> :name "Срок подведения итогов" :value "")
-                          (list :fld "WINNER" :perm <?> :name "Победитель тендера" :value "")
-                          (list :fld "PRICE" :perm <?> :name "Рекомендуемая стоимость" :value "")
-                          (list :fld "RESOURCES" :perm <?> :name "Ресурсы" :value "")
-                          (list :fld "DOCUMENTS" :perm <?> :name "Документы" :value "")
-                          (list :fld "SUPPLIERS" :perm <?> :name "Поставщики" :value "")
-                          (list :fld "OFFERTS" :perm <?> :name "Откликнувшиеся поставщики" :value "")
-                          (list :btn "Ответить заявкой на тендер"  :perm <?> :value "Ответить заявкой на тендер")))
-               (list :perm ':OWNER 
+                     :val (lambda () NIL)
+                     :fields (list
+                              (list :fld "NAME" :perm 111 :typedata '(STR) :name "Название")
+                              (list :fld "STATUS" :perm 111 :typedata '(LIST-OF-KEYS
+                                                                        TENDER-STATUS) :name "Статус")
+                              (list :fld "OWNER" :perm 111 :typedata '(LINK BUILDER) :name "Заказчик")
+                              (list :fld "ACTIVE-DATE" :perm 111 :typedata '(DATE) :name "Дата активации")
+                              (list :fld "ALL" :perm 111 :typedata '(INTERVAL) :name "Срок проведения")
+                              (list :fld "CLAIM" :perm 111 :typedata '(INTERVAL) :name "Срок подачи заявок")
+                              (list :fld "ANALIZE" :perm 111 :typedata '(INTERVAL) :name "Срок рассмотрения заявок")
+                              (list :fld "INTERVIEW" :perm 111 :typedata '(INTERVAL) :name "Срок проведения интервью")
+                              (list :fld "RESULT" :perm 111 :typedata '(INTERVAL) :name "Срок подведения итогов")
+                              (list :fld "WINNER" :perm 111 :typedata '(LINK
+                                                                        SUPPLIER) :name "Победитель тендера")
+                              (list :fld "PRICE" :perm 111 :typedata '(NUM) :name "Рекомендуемая стоимость")
+                              (list :fld "RESOURCES" :perm 111 :typedata '(LIST-OF-LINKS
+                                                                           RESOURCE) :name "Ресурсы")
+                              (list :fld "DOCUMENTS" :perm 111 :typedata '(LIST-OF-LINKS
+                                                                           DOCUMENT) :name "Документы")
+                              (list :fld "SUPPLIERS" :perm 111 :typedata '(LIST-OF-LINKS
+                                                                           SUPPLIER) :name "Поставщики")
+                              (list :fld "OFFERTS" :perm 111 :typedata '(LIST-OF-LINKS
+                                                                         SUPPLIER) :name "Откликнувшиеся поставщики")
+                              (list :btn "Ответить заявкой на тендер" :perm 111 :value "Ответить заявкой на тендер")))
+               (list :perm ':OWNER
                      :title "Отменить тендер"
-                     :in (list 
-                          (list :btn "Отменить тендер"  :perm <?> :value "Отменить тендер")))))) 
+                     :val (lambda () NIL)
+                     :fields (list
+                              (list :btn "Отменить тендер" :perm 111 :value "Отменить тендер"))))))
     (show-acts acts)))
 
 (restas:define-route builder-page ("/builder")
-  (let ((acts (list 
-               (list :perm ':SELF 
+  (let ((acts (list
+               (list :perm ':SELF
                      :title "Застройщик такой-то (name object)"
-                     :in (list 
-                          (list :fld "NAME" :perm <?> :name "Организация-застройщик" :value "")
-                          (list :fld "JURIDICAL-ADDRESS" :perm <?> :name "Юридический адрес" :value "")
-                          (list :fld "INN" :perm <?> :name "Инн" :value "")
-                          (list :fld "KPP" :perm <?> :name "КПП" :value "")
-                          (list :fld "OGRN" :perm <?> :name "ОГРН" :value "")
-                          (list :fld "BANK-NAME" :perm <?> :name "Название банка" :value "")
-                          (list :fld "BIK" :perm <?> :name "Банковский идентификационный код" :value "")
-                          (list :fld "CORRESP-ACCOUNT" :perm <?> :name "Корреспондентский счет)" :value "")
-                          (list :fld "CLIENT-ACCOUNT" :perm <?> :name "Рассчетный счет" :value "")
-                          (list :fld "TENDERS" :perm <?> :name "Тендеры" :value "")
-                          (list :fld "RATING" :perm <?> :name "Рейтинг" :value "")))
-               (list :perm ':SELF 
+                     :val (lambda () NIL)
+                     :fields (list
+                              (list :fld "NAME" :perm 111 :typedata '(STR) :name "Организация-застройщик")
+                              (list :fld "JURIDICAL-ADDRESS" :perm 111 :typedata '(STR) :name "Юридический адрес")
+                              (list :fld "INN" :perm 111 :typedata '(STR) :name "Инн")
+                              (list :fld "KPP" :perm 111 :typedata '(STR) :name "КПП")
+                              (list :fld "OGRN" :perm 111 :typedata '(STR) :name "ОГРН")
+                              (list :fld "BANK-NAME" :perm 111 :typedata '(STR) :name "Название банка")
+                              (list :fld "BIK" :perm 111 :typedata '(STR) :name "Банковский идентификационный код")
+                              (list :fld "CORRESP-ACCOUNT" :perm 111 :typedata '(STR) :name "Корреспондентский счет)")
+                              (list :fld "CLIENT-ACCOUNT" :perm 111 :typedata '(STR) :name "Рассчетный счет")
+                              (list :fld "TENDERS" :perm 111 :typedata '(LIST-OF-LINK
+                                                                         TENDER) :name "Тендеры")
+                              (list :fld "RATING" :perm 111 :typedata '(NUM) :name "Рейтинг")))
+               (list :perm ':SELF
                      :title "Объявить новый тендер"
-                     :in (list 
-                          (list :fld "NAME" :perm <?> :name "Название" :value "")
-                          (list :fld "ALL" :perm <?> :name "Срок проведения" :value "")
-                          (list :fld "CLAIM" :perm <?> :name "Срок подачи заявок" :value "")
-                          (list :fld "ANALIZE" :perm <?> :name "Срок рассмотрения заявок" :value "")
-                          (list :fld "INTERVIEW" :perm <?> :name "Срок проведения интервью" :value "")
-                          (list :fld "RESULT" :perm <?> :name "Срок подведения итогов" :value "")
-                          (list :fld "RESOURCES" :perm <?> :name "Ресурсы" :value "")
-                          (list :fld "DOCUMENTS" :perm <?> :name "Документы" :value "")
-                          (list :fld "PRICE" :perm <?> :name "Рекомендуемая стоимость" :value "")
-                          (list :fld "SUPPLIERS" :perm <?> :name "Поставщики" :value "")
-                          (list :btn "Объявить тендер"  :perm <?> :value "Объявить тендер")))))) 
+                     :val (lambda () NIL)
+                     :fields (list
+                              (list :fld "NAME" :perm 111 :typedata '(STR) :name "Название")
+                              (list :fld "ALL" :perm 111 :typedata '(INTERVAL) :name "Срок проведения")
+                              (list :fld "CLAIM" :perm 111 :typedata '(INTERVAL) :name "Срок подачи заявок")
+                              (list :fld "ANALIZE" :perm 111 :typedata '(INTERVAL) :name "Срок рассмотрения заявок")
+                              (list :fld "INTERVIEW" :perm 111 :typedata '(INTERVAL) :name "Срок проведения интервью")
+                              (list :fld "RESULT" :perm 111 :typedata '(INTERVAL) :name "Срок подведения итогов")
+                              (list :fld "RESOURCES" :perm 111 :typedata '(LIST-OF-LINKS
+                                                                           RESOURCE) :name "Ресурсы")
+                              (list :fld "DOCUMENTS" :perm 111 :typedata '(LIST-OF-LINKS
+                                                                           DOCUMENT) :name "Документы")
+                              (list :fld "PRICE" :perm 111 :typedata '(NUM) :name "Рекомендуемая стоимость")
+                              (list :fld "SUPPLIERS" :perm 111 :typedata '(LIST-OF-LINKS
+                                                                           SUPPLIER) :name "Поставщики")
+                              (list :btn "Объявить тендер" :perm 111 :value "Объявить тендер"))))))
     (show-acts acts)))
 
-(restas:define-route builders-page ("/builders")
-  (let ((acts (list 
-               (list :perm '"<?>" 
+(restas:define-route suppliers-page ("/suppliers")
+  (let ((acts (list
+               (list :perm '"<?>"
                      :title "Организации-поставщики"
-                     :in NIL)))) 
+                     :val (lambda () (REMOVE-IF-NOT #'(LAMBDA (X) (EQUAL 'SUPPLIER (TYPE-OF X)))
+                                                    (LOOP :FOR OBJ :BEING THE :HASH-VALUES :IN *USER*
+                                                       :COLLECT OBJ)))
+                     :fields (list
+                              (list :fld "NAME" :perm 111 :typedata '(STR) :name "Название организации")
+                              (list :fld "LOGIN" :perm 111 :typedata '(STR) :name "Логин"))))))
     (show-acts acts)))
 
 
 (defun menu ()  '
-((:LINK "/" :TITLE "Главная страница") (:LINK "/admin" :TITLE "Администратор")
- (:LINK "/supplier" :TITLE "Поставщик такой-то")
- (:LINK "/tender" :TITLE "Тендер такой-то")
- (:LINK "/builder" :TITLE "Застройщик такой-то")
- (:LINK "/builders" :TITLE "Поставщики")))
+  ((:LINK "/" :TITLE "Главная страница") (:LINK "/admin" :TITLE "Администратор")
+   (:LINK "/supplier" :TITLE "Поставщик такой-то")
+   (:LINK "/tender" :TITLE "Тендер такой-то")
+   (:LINK "/builder" :TITLE "Застройщик такой-то")
+   (:LINK "/suppliers" :TITLE "Поставщики")))
