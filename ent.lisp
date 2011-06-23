@@ -367,27 +367,28 @@
         :entity            admin
         :val               (cur-user)
         :fields            '(login password
-                             (:btn "Изменить пароль" :act (change-admin-password))))
+                             (:btn "Изменить пароль" :act (change-self-password))))
        (:caption           "Создать аккаунт эксперта"
         :perm              :admin
         :entity            expert
-        :val               nil
-        :fields            '(login password
+        :val               :clear
+        :fields            '(login password name
                              (:btn "Создать новый аккаунт эксперта" :act (create-expert))))
        (:caption           "Эксперты"
         :perm              :admin
         :entity            expert
         :val               (remove-if-not #'(lambda (x)
-                                              (equal 'expert (type-of x)))
-                            (loop :for obj :being the :hash-values :in *USER* :collect obj))
+                                              (equal 'expert (type-of (cdr x))))
+                            (loop :for obj :being the :hash-values :in *USER* :using (hash-key key) :collect
+                               (cons key obj)))
         :fields            '(name login
-                             (:btn "Удалить эксперта"
+                             (:btn "Удалить" :act (delete-expert)
                               :actions
                               '((:caption           "Действительно удалить?"
                                  :perm               :admin
                                  :entity             expert
                                  :fields             '(:btn "Подтверждаю удаление" :act (delete-expert :user :row)))))
-                             (:btn "Сменить пароль эксперта"
+                             (:btn "Сменить пароль" :act (change-expert-password)
                               :actions
                               '((:caption           "Смена пароля эксперта"
                                  :pern              :admin
@@ -396,13 +397,14 @@
                                                       (:btn "Изменить пароль эксперта" :act (change-expert-password :user :row :form))))))))
        (:caption           "Заявки поставщиков на добросовестность"
         :perm              :admin
-        :entity            expert
+        :entity            supplier
         :val               (remove-if-not #'(lambda (x)
-                                              (and (equal 'supplier (type-of x))
-                                                   (equal (a-status x) :request)))
-                            (loop :for obj :being the :hash-values :in *USER* :collect obj))
+                                              (and (equal 'supplier (type-of (cdr x)))
+                                                   (equal (a-status (cdr x)) :request)))
+                            (loop :for obj :being the :hash-values :in *USER* :using (hash-key key) :collect
+                               (cons key obj)))
         :fields            '(name login
-                             (:btn "Подтвердить заявку"
+                             (:btn "Подтвердить заявку" :act (approve-supplier-fair)
                               :actions
                               '((:caption           "Подтвердить заявку поставщика"
                                  :perm               :admin

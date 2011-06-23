@@ -29,20 +29,49 @@
 (defun form-data ()
   (hunchentoot:post-parameters*))
 
-(defun change-admin-password ()
-  "!!!change-admin-password")
+(defun change-self-password ()
+  (setf (a-login (cur-user))     (cdr (assoc "LOGIN" (form-data) :test #'equal)))
+  (setf (a-password (cur-user))  (cdr (assoc "PASSWORD" (form-data) :test #'equal)))
+  (hunchentoot:redirect (hunchentoot:request-uri*)))
+
+(defun create-expert ()
+  (make-instance 'expert
+                 :login (cdr (assoc "LOGIN" (form-data) :test #'equal))
+                 :password (cdr (assoc "PASSWORD" (form-data) :test #'equal))
+                 :name (cdr (assoc "NAME" (form-data) :test #'equal)))
+  (hunchentoot:redirect (hunchentoot:request-uri*)))
+
+(defun delete-expert ()
+  (let* ((x (caar (form-data)))
+         (tilde (position #\~ x))
+         (id    (if tilde
+                    (subseq x (+ 1 tilde))
+                    x))
+         (num (parse-integer id)))
+    (remhash num *USER*))
+  (hunchentoot:redirect (hunchentoot:request-uri*)))
+
 
 (defun activate (acts)
-  ;; (let ((rs))
-    ;; (push (form-data) rs)
+  (with-output-to-string (*standard-output*)
+    (format t "form-data: ")
+    (print (form-data))
+    (format t "<br />~%acts:")
     (loop :for key :in acts :do
-       ;; (push (car key) rs)
-       (when (assoc (car key) (form-data) :test #'equal)
-         ;; (push (funcall (cdr key)) rs)
+       (print (car key))
+       (when (assoc (car key)
+                    (form-data)
+                    :test #'(lambda (a b)
+                              (flet ((tld (x)
+                                       (let ((tilde (position #\~ x)))
+                                         (if tilde
+                                           (subseq x 0 tilde)
+                                           x))))
+                                (funcall #'equal (tld a) (tld b)))))
          (return-from activate (funcall (cdr key)))))
-    "err: unk:post:controller"
-    ;; (format nil "~{~A<br />~}" (reverse rs))
-    )
+    "err: unk:post:controller"))
+
+
 
 
 (defun show-acts (acts)
@@ -57,20 +86,21 @@
        (list :title (getf act :title)
              :content
              (let ((val (funcall (getf act :val))))
-               (cond ((null val) ;; NIL
+               (cond ((equal val :clear)
                       (tpl:frmobj
                        (list :flds
                              (loop :for infld :in (getf act :fields) :collect
                                 (let ((typefld (car infld)))
                                   (ecase typefld
                                     (:fld
-                                     (let ((captfld   (getf infld :name))
+                                     (let ((namefld   (getf infld :fld))
+                                           (captfld   (getf infld :name))
                                            (permfld   (getf infld :perm))
                                            (typedata  (getf infld :typedata)))
                                        (cond ((equal typedata '(str))
                                               (tpl:fld
                                                (list :fldname captfld
-                                                     :fldcontent (tpl:strupd (list :name captfld)))))
+                                                     :fldcontent (tpl:strupd (list :name namefld)))))
                                              ((equal typedata '(pswd))
                                               (tpl:fld
                                                (list :fldname captfld
@@ -126,12 +156,18 @@
                                           (cond ((equal typedata '(str))
                                                  (tpl:strview
                                                   (list :value
+                                                        ;; (format nil "~A" (cdr obj))
                                                         (funcall
                                                          (intern
                                                           (format nil "A-~A" (getf infld :fld))
                                                           (find-package "WIZARD"))
-                                                         obj))))
+                                                         (cdr obj))
+                                                        )))
                                                 (t "err:unk typedata"))))
                                        (:btn
-                                        (tpl:btn (list :name (getf infld :btn) :value (getf infld :value)))))))))))
-                     (t "444"))))))))
+                                        (tpl:btn
+                                         (list :name (format nil "~A~~~A"
+                                                             (getf infld :btn)
+                                                             (car obj))
+                                               :value (format nil "~A" (getf infld :value))))))))))))
+                     (t "Нет объектов"))))))))

@@ -1,5 +1,19 @@
 (in-package #:wizard)
 
+;; Containers
+
+(defparameter *USER*                        (make-hash-table :test #'equal))
+(defparameter *OFFER*                       (make-hash-table :test #'equal))
+(defparameter *OFFER-RESOURCE*              (make-hash-table :test #'equal))
+(defparameter *SALE*                        (make-hash-table :test #'equal))
+(defparameter *SUPPLIER-RESOURCE-PRICE*     (make-hash-table :test #'equal))
+(defparameter *CATEGORY*                    (make-hash-table :test #'equal))
+(defparameter *RESOURCE*                    (make-hash-table :test #'equal))
+(defparameter *TENDER*                      (make-hash-table :test #'equal))
+(defparameter *DOCUMENT*                    (make-hash-table :test #'equal))
+
+
+
 (setf (gethash (hash-table-count *USER*) *USER*)
       (make-instance 'ADMIN
                      :login "admin"

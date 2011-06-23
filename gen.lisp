@@ -74,7 +74,7 @@
                             (getf action :caption)
                             (subseq (with-output-to-string (*standard-output*) (pprint (getf action :val))) 1)
                             (case (getf action :val)
-                              ('nil
+                              (':clear
                                (let ((entity (find-if #'(lambda (entity)
                                                           (equal (getf entity :entity) (getf action :entity)))
                                                       *entityes*)))
@@ -115,11 +115,13 @@
                                               (cons     (let ((instr (car fld)))
                                                           (case instr
                                                             (:btn
-                                                             (format nil "~%~25T (list :btn \"~A\" :perm 111 :value \"~A\")"
+                                                             (format nil "~%~25T (list :btn \"~A\" :perm 111 :value \"~A\" :actions ~A)"
                                                                      (let ((gen (gensym "B")))
                                                                        (push `(,gen . ,(getf fld :act)) controllers)
                                                                        gen)
-                                                                     (getf fld instr)))))))))))
+                                                                     (getf fld instr)
+                                                                     (subseq (with-output-to-string (*standard-output*) (pprint (getf fld :actions))) 1)
+                                                                     ))))))))))
                               ;; todo: user
                               )))
                  (format nil  "~%    (show-acts acts))"))
