@@ -41,27 +41,23 @@
                  :name (cdr (assoc "NAME" (form-data) :test #'equal)))
   (hunchentoot:redirect (hunchentoot:request-uri*)))
 
+(defun get-btn-key (btn)
+  (let* ((tilde (position #\~ btn))
+         (id    (if tilde
+                    (subseq btn (+ 1 tilde))
+                    btn)))
+    (parse-integer id)))
 
 (defun change-expert-password ()
-  (let* ((x (caar (last (form-data))))
-         (tilde (position #\~ x))
-         (id    (if tilde
-                    (subseq x (+ 1 tilde))
-                    x))
-         (num (parse-integer id)))
-    (setf (a-password (gethash num *USER*))  (cdr (assoc "PASSWORD" (form-data) :test #'equal)))
-    (hunchentoot:redirect (hunchentoot:request-uri*))))
-
-(defun delete-expert ()
-  (let* ((x (caar (form-data)))
-         (tilde (position #\~ x))
-         (id    (if tilde
-                    (subseq x (+ 1 tilde))
-                    x))
-         (num (parse-integer id)))
-    (remhash num *USER*))
+  (let ((key (get-btn-key (caar (last (form-data))))))
+    (setf (a-password (gethash key *USER*))
+          (cdr (assoc "PASSWORD" (form-data) :test #'equal))))
   (hunchentoot:redirect (hunchentoot:request-uri*)))
 
+(defun delete-expert ()
+  (let ((key (get-btn-key (caar (form-data)))))
+    (remhash key *USER*))
+  (hunchentoot:redirect (hunchentoot:request-uri*)))
 
 (defun activate (acts)
   (with-output-to-string (*standard-output*)
@@ -202,10 +198,7 @@
                                                                (list :name (format nil "~A~~~A"
                                                                                    (getf infld :btn)
                                                                                    (car obj))
-                                                                     :value (format nil "~A|~A~~~A" (getf infld :value)
-                                                                                    (getf infld :btn)
-                                                                                    (car obj)
-                                                                                    ))))))
+                                                                     :value (format nil "~A" (getf infld :value)))))))
                                                          )))
                                                )))
                                        )))))))
