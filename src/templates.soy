@@ -14,6 +14,17 @@
       <link rel="stylesheet" media="screen" type="text/css" href="/unique.css" /> <!-- уникальные стили -->{\n}
       <link rel="stylesheet" media="screen" type="text/css" href="/templateBanner.css" /> <!-- стили банеров -->{\n}
 	  <link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico" />{\n}
+      <script>
+        function ShowHide(id)
+        {
+        if (document.getElementById(id).style.display == 'none') {
+        document.getElementById(id).style.display = 'block';
+        } else {
+        document.getElementById(id).style.display = 'none';
+        }
+        return false;
+        }
+      </script>
     </head>{\n}
     <body id="top">{\n}
       <div id="main" class="main">{\n}
@@ -265,6 +276,15 @@
 {template btn}
   <input type="submit" name="{$name}" value="{$value}" />
 {/template}
+
+{template popbtn}
+  <div id="{$popid}" style="border: 5px solid green; display:none;">
+    <b>{$title}</b><br /><br />
+    {$content |noAutoescape}
+  </div>
+  <input type="button" name="{$name}" value="{$value}" onclick="ShowHide('{$popid}');" />
+{/template}
+
 
 
 {template frmobj}

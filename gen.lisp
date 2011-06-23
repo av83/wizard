@@ -124,14 +124,12 @@
                      gen)
                    (getf fld instr))
            ;; ELSE
-           (format nil "~%~25T (list :popup \"~A\" ~%~31T :perm 111 ~%~31T :layer ~A)"
-                   (getf fld instr)
-                   (gen-popup (eval (getf fld :popup)))))))))
-
-(defun gen-popup (popup)
-  (format nil "(list :title \"~A\" ~%~44T :fields (list ~{~A~}))"
-          (getf popup :caption)
-          (loop :for fld :in (eval (getf popup :fields)) :collect
-             (etypecase fld
-               (symbol   (gen-fld-symb fld popup))
-               (cons     (gen-fld-cons fld))))))
+           (let ((popup (eval (getf fld :popup))))
+             (format nil "~%~25T (list :popbtn \"~A\" ~%~31T :value \"~A\" ~%~31T :perm 111 ~%~31T :title \"~A\" ~%~31T :fields (list ~{~A~}))"
+                     (gensym "P")
+                     (getf fld instr)
+                     (getf popup :caption)
+                     (loop :for fld :in (eval (getf popup :fields)) :collect
+                        (etypecase fld
+                          (symbol   (gen-fld-symb fld popup))
+                          (cons     (gen-fld-cons fld)))))))))))

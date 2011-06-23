@@ -384,8 +384,6 @@
         :fields            '(name login
                              (:btn "Удалить"
                               :popup '(:caption           "Действительно удалить?"
-                                       :perm               :admin
-                                       :entity             expert
                                        :fields             '((:btn "Подтверждаю удаление" :act (delete-expert)))))
                              (:btn "Сменить пароль" :act (change-expert-password)
                               :popup '(:caption           "Смена пароля эксперта"

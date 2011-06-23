@@ -41,6 +41,17 @@
                  :name (cdr (assoc "NAME" (form-data) :test #'equal)))
   (hunchentoot:redirect (hunchentoot:request-uri*)))
 
+
+(defun change-expert-password ()
+  (let* ((x (caar (last (form-data))))
+         (tilde (position #\~ x))
+         (id    (if tilde
+                    (subseq x (+ 1 tilde))
+                    x))
+         (num (parse-integer id)))
+    (setf (a-password (gethash num *USER*))  (cdr (assoc "PASSWORD" (form-data) :test #'equal)))
+    (hunchentoot:redirect (hunchentoot:request-uri*))))
+
 (defun delete-expert ()
   (let* ((x (caar (form-data)))
          (tilde (position #\~ x))
@@ -159,7 +170,43 @@
                                                              (getf infld :btn)
                                                              (car obj))
                                                :value (format nil "~A" (getf infld :value)))))
-                                       (:popup
-                                        "sdfsdf")
+                                       (:popbtn
+                                        (tpl:popbtn
+                                         (list :title (getf infld :title)
+                                               :value (getf infld :value)
+                                               :popid (format nil "~A~~~A" (getf infld :popbtn) (car obj))
+                                               :content
+                                               (tpl:frmobj
+                                                (list :flds
+                                                      (loop :for infld :in (getf infld :fields) :collect
+                                                         (let ((typefld (car infld)))
+                                                           (ecase typefld
+                                                             (:fld
+                                                              (let ((namefld   (getf infld :fld))
+                                                                    (captfld   (getf infld :name))
+                                                                    (permfld   (getf infld :perm))
+                                                                    (typedata  (getf infld :typedata)))
+                                                                (cond ((equal typedata '(str))
+                                                                       (tpl:fld
+                                                                        (list :fldname captfld
+                                                                              :fldcontent (tpl:strupd (list :name namefld
+                                                                                                            :value (a-fld namefld (cdr obj)))))))
+                                                                      ((equal typedata '(pswd))
+                                                                       (tpl:fld
+                                                                        (list :fldname captfld
+                                                                              :fldcontent (tpl:strupd (list :name namefld
+                                                                                                            :value (a-fld namefld (cdr obj)))))))
+                                                                      (t "err:unk typedata"))))
+                                                             (:btn
+                                                              (tpl:btn
+                                                               (list :name (format nil "~A~~~A"
+                                                                                   (getf infld :btn)
+                                                                                   (car obj))
+                                                                     :value (format nil "~A|~A~~~A" (getf infld :value)
+                                                                                    (getf infld :btn)
+                                                                                    (car obj)
+                                                                                    ))))))
+                                                         )))
+                                               )))
                                        )))))))
                      (t "Нет объектов"))))))))
