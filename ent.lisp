@@ -382,19 +382,17 @@
                             (loop :for obj :being the :hash-values :in *USER* :using (hash-key key) :collect
                                (cons key obj)))
         :fields            '(name login
-                             (:btn "Удалить" :act (delete-expert)
-                              :actions
-                              '((:caption           "Действительно удалить?"
-                                 :perm               :admin
-                                 :entity             expert
-                                 :fields             '(:btn "Подтверждаю удаление" :act (delete-expert :user :row)))))
+                             (:btn "Удалить"
+                              :popup '(:caption           "Действительно удалить?"
+                                       :perm               :admin
+                                       :entity             expert
+                                       :fields             '((:btn "Подтверждаю удаление" :act (delete-expert)))))
                              (:btn "Сменить пароль" :act (change-expert-password)
-                              :actions
-                              '((:caption           "Смена пароля эксперта"
-                                 :pern              :admin
-                                 :entity            expert
-                                 :fields            '((:str "Новый пароль" new-password)
-                                                      (:btn "Изменить пароль эксперта" :act (change-expert-password :user :row :form))))))))
+                              :popup '(:caption           "Смена пароля эксперта"
+                                       :pern              :admin
+                                       :entity            expert
+                                       :fields            '(password
+                                                            (:btn "Изменить пароль эксперта" :act (change-expert-password)))))))
        (:caption           "Заявки поставщиков на добросовестность"
         :perm              :admin
         :entity            supplier
@@ -405,11 +403,10 @@
                                (cons key obj)))
         :fields            '(name login
                              (:btn "Подтвердить заявку" :act (approve-supplier-fair)
-                              :actions
-                              '((:caption           "Подтвердить заявку поставщика"
-                                 :perm               :admin
-                                 :entity             supplier
-                                 :fields             '((:btn "Сделать добросовестным" :act (approve-supplier-fair :user :row))))))))))
+                              :popup '(:caption           "Подтвердить заявку поставщика"
+                                       :perm               :admin
+                                       :entity             supplier
+                                       :fields             '((:btn "Сделать добросовестным" :act (approve-supplier-fair :user :row)))))))))
 
     ;; Личный кабинет Поставщика
     (:place                supplier
@@ -434,7 +431,6 @@
         :val               :collection
         :fields            '(tender))))
 
-
     ;; Страница тендера
     (:place                tender
      :url                  "/tender"
@@ -445,23 +441,20 @@
         :entity            tender
         :fields            '(name status owner active-date all claim analize interview result winner price resources documents suppliers offerts
                              (:btn "Ответить заявкой на тендер"
-                              :actions
-                              '((:caption           "Выберите ресурсы"
-                                 :perm              (and :active :fair)
-                                 :entity            resource
-                                 :fields
-                                 '((:btn "Участвовать в тендере" :act (create-offer :user :form tender))))))))
+                              :popup '(:caption           "Выберите ресурсы"
+                                       :perm              (and :active :fair)
+                                       :entity            resource
+                                       :fields
+                                       '((:btn "Участвовать в тендере" :act (create-offer :user :form tender)))))))
        (:caption           "Отменить тендер"
         :perm              :owner
         :entity            tender
         :fields            '((:btn "Отменить тендер"
-                              :act
-                              '((:caption           "Действительно отменить?"
-                                 :perm               :owner
-                                 :entity             tender
-                                 :fields             '(:btn "Подтверждаю отмену" :act (cancel-tender :user :row))))))
-       )))
-
+                              :popup
+                              '(:caption           "Действительно отменить?"
+                                :perm               :owner
+                                :entity             tender
+                                :fields             '((:btn "Подтверждаю отмену" :act (cancel-tender :user :row)))))))))
 
     ;; Личный кабинет застройщика с возможностью объявить тендер
     (:place                builder
@@ -477,23 +470,23 @@
         :entity            tender
         :fields            '(name all claim analize interview result resources documents price suppliers
                              (:btn "Объявить тендер"
-                              :actions
-                              '((:caption           "Создание нового тендера"
-                                 :perm              :self
-                                 :entity            tender
-                                 :val               nil
-                                 :fields
-                                 '(name owner active-date all claim analize interview resources documents
-                                   (:btn "Создать тендер"  :act (create-tender :user :form)))
-                                 :hooks
-                                 '((:change resources   (set-field price (calc-tender-price (request resources))))
-                                   (:change resources   (set-field suppliers (calc-suppliers (request resources)))))
-                                 (:other   '(:owner      (get-current-user-id)
-                                             :price      (calc-tender-price (request resources))
-                                             :suppliers  (calc-suppliers (request resources))
-                                             :offerts    nil
-                                             :winner     nil))
-                                 (:status    :unactive))))))))
+                              :popup
+                              '(:caption           "Создание нового тендера"
+                                :perm              :self
+                                :entity            tender
+                                :val               nil
+                                :fields
+                                '(name owner active-date all claim analize interview resources documents
+                                  (:btn "Создать тендер"  :act (create-tender :user :form)))
+                                :hooks
+                                '((:change resources   (set-field price (calc-tender-price (request resources))))
+                                  (:change resources   (set-field suppliers (calc-suppliers (request resources)))))
+                                (:other   '(:owner      (get-current-user-id)
+                                            :price      (calc-tender-price (request resources))
+                                            :suppliers  (calc-suppliers (request resources))
+                                            :offerts    nil
+                                            :winner     nil))
+                                (:status    :unactive)))))))
 
     ;; Страница поставщиков - коллекция по юзерам с фильтром по типу юзера
     (:place                suppliers

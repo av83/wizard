@@ -72,6 +72,12 @@
     "err: unk:post:controller"))
 
 
+(defmacro a-fld (name obj)
+  `(funcall
+    (intern
+     (format nil "A-~A" ,name)
+     (find-package "WIZARD"))
+    ,obj))
 
 
 (defun show-acts (acts)
@@ -121,27 +127,15 @@
                                        (cond ((equal typedata '(str))
                                               (tpl:fld
                                                (list :fldname captfld
-                                                     :fldcontent
-                                                     (tpl:strupd
-                                                      (list :name namefld
-                                                            :value (funcall
-                                                                    (intern
-                                                                     (format nil "A-~A" namefld)
-                                                                     (find-package "WIZARD"))
-                                                                    val))))))
+                                                     :fldcontent (tpl:strupd (list :name namefld :value (a-fld namefld val))))))
                                              ((equal typedata '(pswd))
                                               (tpl:fld
                                                (list :fldname captfld
                                                      :fldcontent
-                                                     (tpl:pswdupd
-                                                      (list :name namefld
-                                                            :value (funcall
-                                                                    (intern
-                                                                     (format nil "A-~A" namefld)
-                                                                     (find-package "WIZARD"))
-                                                                    val))))))
+                                                     (tpl:pswdupd(list :name namefld :value (a-fld namefld val))))))
                                              (t "err:unk typedata"))))
-                                    (:btn (tpl:btn (list :name (getf infld :btn) :value (getf infld :value))))))))))
+                                    (:btn
+                                     (tpl:btn (list :name (getf infld :btn) :value (getf infld :value))))))))))
                      ((equal 'cons (type-of val)) ;; COLLECTION
                       (tpl:frmtbl
                        (list :objs
@@ -157,17 +151,15 @@
                                                  (tpl:strview
                                                   (list :value
                                                         ;; (format nil "~A" (cdr obj))
-                                                        (funcall
-                                                         (intern
-                                                          (format nil "A-~A" (getf infld :fld))
-                                                          (find-package "WIZARD"))
-                                                         (cdr obj))
-                                                        )))
+                                                        (a-fld (getf infld :fld) (cdr obj)))))
                                                 (t "err:unk typedata"))))
                                        (:btn
                                         (tpl:btn
                                          (list :name (format nil "~A~~~A"
                                                              (getf infld :btn)
                                                              (car obj))
-                                               :value (format nil "~A" (getf infld :value))))))))))))
+                                               :value (format nil "~A" (getf infld :value)))))
+                                       (:popup
+                                        "sdfsdf")
+                                       )))))))
                      (t "Нет объектов"))))))))

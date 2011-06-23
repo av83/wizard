@@ -69,7 +69,7 @@
                (getf place :url))
        (format out "~%  (let ((acts (list ~{~A~}))) ~A)"
                (loop :for action :in (eval (getf place :actions)) :collect
-                  (gen-action action))
+                  (gen-action action)) ;; Вот оно ключевое :)
                (format nil  "~%    (show-acts acts))"))
        (format out "~%~%(restas:define-route ~A-page/post (\"~A\" :method :post)"
                (string-downcase (getf place :place))
@@ -79,7 +79,6 @@
                   (format nil "(\"~A\" . ,(lambda () ~A))"
                           (car controller)
                           (cdr controller)))))))
-
 
 (defun gen-action (action)
   (format nil "~%~14T (list :perm '~A ~%~20T :title \"~A\"~% ~20T :val (lambda () ~A)~% ~20T :fields ~A)"
@@ -93,14 +92,13 @@
                         (etypecase fld
                           (symbol   (gen-fld-symb fld action))
                           (cons     (gen-fld-cons fld))))))
+            ;; todo: user
             (otherwise
              (format nil "(list ~{~A~})"
                      (loop :for fld :in (eval (getf action :fields)) :collect
                         (etypecase fld
                           (symbol   (gen-fld-symb fld action))
-                          (cons     (gen-fld-cons fld))))))
-            ;; todo: user
-            )))
+                          (cons     (gen-fld-cons fld)))))))))
 
 (defun gen-fld-symb (fld action)
   (let ((entity (find-if #'(lambda (entity)
@@ -115,15 +113,25 @@
                                (equal (car x) fld))
                            (getf entity :fields))))))
 
-
 (defun gen-fld-cons (fld)
   (let ((instr (car fld)))
     (case instr
       (:btn
-       (format nil "~%~25T (list :btn \"~A\" :perm 111 :value \"~A\")"
-               (let ((gen (gensym "B")))
-                 (push `(,gen . ,(getf fld :act)) *controllers*)
-                 gen)
-               (getf fld instr)
-               ;; (getf fld :actions)
-               )))))
+       (if (null (getf fld :popup))
+           (format nil "~%~25T (list :btn \"~A\" :perm 111 :value \"~A\")"
+                   (let ((gen (gensym "B")))
+                     (push `(,gen . ,(getf fld :act)) *controllers*)
+                     gen)
+                   (getf fld instr))
+           ;; ELSE
+           (format nil "~%~25T (list :popup \"~A\" ~%~31T :perm 111 ~%~31T :layer ~A)"
+                   (getf fld instr)
+                   (gen-popup (eval (getf fld :popup)))))))))
+
+(defun gen-popup (popup)
+  (format nil "(list :title \"~A\" ~%~44T :fields (list ~{~A~}))"
+          (getf popup :caption)
+          (loop :for fld :in (eval (getf popup :fields)) :collect
+             (etypecase fld
+               (symbol   (gen-fld-symb fld popup))
+               (cons     (gen-fld-cons fld))))))
