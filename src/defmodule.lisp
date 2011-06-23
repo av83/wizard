@@ -377,7 +377,7 @@
                      :fields (list
                               (list :fld "LOGIN" :perm 111 :typedata '(STR) :name "Логин")
                               (list :fld "PASSWORD" :perm 111 :typedata '(PSWD) :name "Пароль")
-                              (list :btn "B3769" :perm 111 :value "Изменить пароль" :actions NIL)))
+                              (list :btn "B4027" :perm 111 :value "Изменить пароль")))
                (list :perm ':ADMIN
                      :title "Создать аккаунт эксперта"
                      :val (lambda () :CLEAR)
@@ -385,7 +385,7 @@
                               (list :fld "LOGIN" :perm 111 :typedata '(STR) :name "Логин")
                               (list :fld "PASSWORD" :perm 111 :typedata '(PSWD) :name "Пароль")
                               (list :fld "NAME" :perm 111 :typedata '(STR) :name "ФИО")
-                              (list :btn "B3770" :perm 111 :value "Создать новый аккаунт эксперта")))
+                              (list :btn "B4028" :perm 111 :value "Создать новый аккаунт эксперта")))
                (list :perm ':ADMIN
                      :title "Эксперты"
                      :val (lambda () (REMOVE-IF-NOT #'(LAMBDA (X) (EQUAL 'EXPERT (TYPE-OF (CDR X))))
@@ -395,20 +395,8 @@
                      :fields (list
                               (list :fld "NAME" :perm 111 :typedata '(STR) :name "ФИО")
                               (list :fld "LOGIN" :perm 111 :typedata '(STR) :name "Логин")
-                              (list :btn "B3771" :perm 111 :value "Удалить"
-                                    :actions '((:CAPTION "Действительно удалить?"
-                                                :PERM :ADMIN
-                                                :ENTITY EXPERT
-                                                :FIELDS
-                                                '(:BTN "Подтверждаю удаление" :ACT (DELETE-EXPERT :USER :ROW)))))
-                              (list :btn "B3772" :perm 111 :value "Сменить пароль"
-                                    :actions '((:CAPTION "Смена пароля эксперта"
-                                                :PERN :ADMIN
-                                                :ENTITY EXPERT
-                                                :FIELDS
-                                                '((:STR "Новый пароль" NEW-PASSWORD)
-                                                  (:BTN "Изменить пароль эксперта" :ACT
-                                                   (CHANGE-EXPERT-PASSWORD :USER :ROW :FORM))))))))
+                              (list :btn "B4029" :perm 111 :value "Удалить")
+                              (list :btn "B4030" :perm 111 :value "Сменить пароль")))
                (list :perm ':ADMIN
                      :title "Заявки поставщиков на добросовестность"
                      :val (lambda () (REMOVE-IF-NOT
@@ -420,18 +408,16 @@
                      :fields (list
                               (list :fld "NAME" :perm 111 :typedata '(STR) :name "Название организации")
                               (list :fld "LOGIN" :perm 111 :typedata '(STR) :name "Логин")
-                              (list :btn "B3773" :perm 111 :value "Подтвердить заявку" :actions '((:CAPTION "Подтвердить заявку поставщика" :PERM :ADMIN :ENTITY SUPPLIER
-                                                                                                   :FIELDS
-                                                                                                   '((:BTN "Сделать добросовестным" :ACT (APPROVE-SUPPLIER-FAIR :USER :ROW)))))))))))
+                              (list :btn "B4031" :perm 111 :value "Подтвердить заявку"))))))
     (show-acts acts)))
 
 (restas:define-route admin-page/post ("/admin" :method :post)
   (let ((acts `(
-                ("B3773" . ,(lambda () (APPROVE-SUPPLIER-FAIR)))
-                ("B3772" . ,(lambda () (CHANGE-EXPERT-PASSWORD)))
-                ("B3771" . ,(lambda () (DELETE-EXPERT)))
-                ("B3770" . ,(lambda () (CREATE-EXPERT)))
-                ("B3769" . ,(lambda () (CHANGE-SELF-PASSWORD))))))
+                ("B4031" . ,(lambda () (APPROVE-SUPPLIER-FAIR)))
+                ("B4030" . ,(lambda () (CHANGE-EXPERT-PASSWORD)))
+                ("B4029" . ,(lambda () (DELETE-EXPERT)))
+                ("B4028" . ,(lambda () (CREATE-EXPERT)))
+                ("B4027" . ,(lambda () (CHANGE-SELF-PASSWORD))))))
     (activate acts)))
 
 (restas:define-route supplier-page ("/supplier")
@@ -440,7 +426,7 @@
                      :title "Отправить заявку на добросовестность"
                      :val (lambda () NIL)
                      :fields (list
-                              (list :btn "B3774" :perm 111 :value "Отправить заявку на добросовестность" :actions NIL)))
+                              (list :btn "B4032" :perm 111 :value "Отправить заявку на добросовестность")))
                (list :perm ':SELF
                      :title "Изменить список ресурсов"
                      :val (lambda () :COLLECTION)
@@ -450,9 +436,9 @@
                               (list :fld "RESOURCE" :perm 111 :typedata '(LINK
                                                                           RESOURCE) :name "Ресурс")
                               (list :fld "PRICE" :perm 111 :typedata '(NUM) :name "Цена поставщика")
-                              (list :btn "B3775" :perm 111 :value "Добавить ресурс" :actions NIL)
-                              (list :btn "B3776" :perm 111 :value "Удалить ресурс" :actions NIL)
-                              (list :btn "B3777" :perm 111 :value "Изменить ресурс" :actions NIL)))
+                              (list :btn "B4033" :perm 111 :value "Добавить ресурс")
+                              (list :btn "B4034" :perm 111 :value "Удалить ресурс")
+                              (list :btn "B4035" :perm 111 :value "Изменить ресурс")))
                (list :perm ':SELF
                      :title "Заявки на тендеры"
                      :val (lambda () :COLLECTION)
@@ -462,10 +448,10 @@
 
 (restas:define-route supplier-page/post ("/supplier" :method :post)
   (let ((acts `(
-                ("B3777" . ,(lambda () NIL))
-                ("B3776" . ,(lambda () NIL))
-                ("B3775" . ,(lambda () NIL))
-                ("B3774" . ,(lambda () (SUPPLIER-REQUEST-FAIR USER))))))
+                ("B4035" . ,(lambda () NIL))
+                ("B4034" . ,(lambda () NIL))
+                ("B4033" . ,(lambda () NIL))
+                ("B4032" . ,(lambda () (SUPPLIER-REQUEST-FAIR USER))))))
     (activate acts)))
 
 (restas:define-route tender-page ("/tender")
@@ -495,23 +481,21 @@
                                                                            SUPPLIER) :name "Поставщики")
                               (list :fld "OFFERTS" :perm 111 :typedata '(LIST-OF-LINKS
                                                                          SUPPLIER) :name "Откликнувшиеся поставщики")
-                              (list :btn "B3778" :perm 111 :value "Ответить заявкой на тендер" :actions '((:CAPTION "Выберите ресурсы" :PERM (AND :ACTIVE :FAIR) :ENTITY RESOURCE
-                                                                                                           :FIELDS
-                                                                                                           '((:BTN "Участвовать в тендере" :ACT (CREATE-OFFER :USER :FORM TENDER))))))))
+                              (list :btn "B4036" :perm 111 :value "Ответить заявкой на тендер")))
                (list :perm ':OWNER
                      :title "Отменить тендер"
                      :val (lambda () NIL)
                      :fields (list
-                              (list :btn "B3779" :perm 111 :value "Отменить тендер" :actions NIL))))))
+                              (list :btn "B4037" :perm 111 :value "Отменить тендер"))))))
     (show-acts acts)))
 
 (restas:define-route tender-page/post ("/tender" :method :post)
   (let ((acts `(
-                ("B3779" . ,(lambda () '((CAPTION Действительно отменить? PERM OWNER ENTITY
+                ("B4037" . ,(lambda () '((CAPTION Действительно отменить? PERM OWNER ENTITY
                                           TENDER FIELDS
                                           '(BTN Подтверждаю отмену ACT
                                             (CANCEL-TENDER USER ROW))))))
-                ("B3778" . ,(lambda () NIL)))))
+                ("B4036" . ,(lambda () NIL)))))
     (activate acts)))
 
 (restas:define-route builder-page ("/builder")
@@ -549,25 +533,12 @@
                               (list :fld "PRICE" :perm 111 :typedata '(NUM) :name "Рекомендуемая стоимость")
                               (list :fld "SUPPLIERS" :perm 111 :typedata '(LIST-OF-LINKS
                                                                            SUPPLIER) :name "Поставщики")
-                              (list :btn "B3780" :perm 111 :value "Объявить тендер" :actions '((:CAPTION "Создание нового тендера" :PERM :SELF :ENTITY TENDER :VAL NIL
-                                                                                                :FIELDS
-                                                                                                '(NAME OWNER ACTIVE-DATE ALL CLAIM ANALIZE INTERVIEW RESOURCES DOCUMENTS
-                                                                                                  (:BTN "Создать тендер" :ACT (CREATE-TENDER :USER :FORM)))
-                                                                                                :HOOKS
-                                                                                                '((:CHANGE RESOURCES
-                                                                                                   (SET-FIELD PRICE (CALC-TENDER-PRICE (REQUEST RESOURCES))))
-                                                                                                  (:CHANGE RESOURCES
-                                                                                                   (SET-FIELD SUPPLIERS (CALC-SUPPLIERS (REQUEST RESOURCES)))))
-                                                                                                (:OTHER
-                                                                                                 '(:OWNER (GET-CURRENT-USER-ID) :PRICE
-                                                                                                   (CALC-TENDER-PRICE (REQUEST RESOURCES)) :SUPPLIERS
-                                                                                                   (CALC-SUPPLIERS (REQUEST RESOURCES)) :OFFERTS NIL :WINNER NIL))
-                                                                                                (:STATUS :UNACTIVE)))))))))
+                              (list :btn "B4038" :perm 111 :value "Объявить тендер"))))))
     (show-acts acts)))
 
 (restas:define-route builder-page/post ("/builder" :method :post)
   (let ((acts `(
-                ("B3780" . ,(lambda () NIL)))))
+                ("B4038" . ,(lambda () NIL)))))
     (activate acts)))
 
 (restas:define-route suppliers-page ("/suppliers")
