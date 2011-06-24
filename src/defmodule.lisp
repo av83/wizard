@@ -377,7 +377,7 @@
                      :fields (list
                               (list :fld "LOGIN" :perm 111 :typedata '(STR) :name "Логин")
                               (list :fld "PASSWORD" :perm 111 :typedata '(PSWD) :name "Пароль")
-                              (list :btn "B5363" :perm 111 :value "Изменить пароль")))
+                              (list :btn "B8165" :perm 111 :value "Изменить пароль")))
                (list :perm ':ADMIN
                      :title "Создать аккаунт эксперта"
                      :val (lambda () :CLEAR)
@@ -385,7 +385,7 @@
                               (list :fld "LOGIN" :perm 111 :typedata '(STR) :name "Логин")
                               (list :fld "PASSWORD" :perm 111 :typedata '(PSWD) :name "Пароль")
                               (list :fld "NAME" :perm 111 :typedata '(STR) :name "ФИО")
-                              (list :btn "B5364" :perm 111 :value "Создать новый аккаунт эксперта")))
+                              (list :btn "B8166" :perm 111 :value "Создать новый аккаунт эксперта")))
                (list :perm ':ADMIN
                      :title "Эксперты"
                      :val (lambda () (REMOVE-IF-NOT #'(LAMBDA (X) (EQUAL 'EXPERT (TYPE-OF (CDR X))))
@@ -395,19 +395,19 @@
                      :fields (list
                               (list :fld "NAME" :perm 111 :typedata '(STR) :name "ФИО")
                               (list :fld "LOGIN" :perm 111 :typedata '(STR) :name "Логин")
-                              (list :popbtn "P5365"
+                              (list :popbtn "P8167"
                                     :value "Удалить"
                                     :perm 111
                                     :title "Действительно удалить?"
                                     :fields (list
-                                             (list :btn "B5366" :perm 111 :value "Подтверждаю удаление")))
-                              (list :popbtn "P5367"
+                                             (list :btn "B8168" :perm 111 :value "Подтверждаю удаление")))
+                              (list :popbtn "P8169"
                                     :value "Сменить пароль"
                                     :perm 111
                                     :title "Смена пароля эксперта"
                                     :fields (list
                                              (list :fld "PASSWORD" :perm 111 :typedata '(PSWD) :name "Пароль")
-                                             (list :btn "B5368" :perm 111 :value "Изменить пароль эксперта")))))
+                                             (list :btn "B8170" :perm 111 :value "Изменить пароль эксперта")))))
                (list :perm ':ADMIN
                      :title "Заявки поставщиков на добросовестность"
                      :val (lambda () (REMOVE-IF-NOT
@@ -419,44 +419,48 @@
                      :fields (list
                               (list :fld "NAME" :perm 111 :typedata '(STR) :name "Название организации")
                               (list :fld "LOGIN" :perm 111 :typedata '(STR) :name "Логин")
-                              (list :popbtn "P5369"
+                              (list :popbtn "P8171"
                                     :value "Подтвердить заявку"
                                     :perm 111
                                     :title "Подтвердить заявку поставщика"
                                     :fields (list
-                                             (list :btn "B5370" :perm 111 :value "Сделать добросовестным"))))))))
+                                             (list :btn "B8172" :perm 111 :value "Сделать добросовестным"))))))))
     (show-acts acts)))
 
 (restas:define-route admin-page/post ("/admin" :method :post)
   (let ((acts `(
-                ("B5370" . ,(lambda () (APPROVE-SUPPLIER-FAIR USER ROW)))
-                ("B5368" . ,(lambda () (CHANGE-EXPERT-PASSWORD)))
-                ("B5366" . ,(lambda () (DELETE-EXPERT)))
-                ("B5364" . ,(lambda () (CREATE-EXPERT)))
-                ("B5363" . ,(lambda () (CHANGE-SELF-PASSWORD))))))
+                ("B8172" . ,(lambda () (APPROVE-SUPPLIER-FAIR)))
+                ("B8170" . ,(lambda () (CHANGE-EXPERT-PASSWORD)))
+                ("B8168" . ,(lambda () (DELETE-EXPERT)))
+                ("B8166" . ,(lambda () (CREATE-EXPERT)))
+                ("B8165" . ,(lambda () (CHANGE-SELF-PASSWORD))))))
     (activate acts)))
 
 (restas:define-route supplier-page ("/supplier")
   (let ((acts (list
                (list :perm '(AND :SELF :UNFAIR)
                      :title "Отправить заявку на добросовестность"
-                     :val (lambda () NIL)
+                     :val (lambda () (GETHASH 3 *USER*))
                      :fields (list
-                              (list :btn "B5371" :perm 111 :value "Отправить заявку на добросовестность")))
+                              (list :btn "B8173" :perm 111 :value "Отправить заявку на добросовестность")))
                (list :perm ':SELF
-                     :title "Изменить список ресурсов"
-                     :val (lambda () :COLLECTION)
+                     :title "Список ресурсов, которые я поставляю"
+                     :val (lambda () (REMOVE-IF-NOT #'(LAMBDA (X) (EQUAL (A-OWNER (CDR X)) (GETHASH 3 *USER*)))
+                                                    (LOOP :FOR OBJ :BEING THE :HASH-VALUES :IN *SUPPLIER-RESOURCE-PRICE* :USING (HASH-KEY
+                                                                                                                                 KEY)
+                                                       :COLLECT (CONS KEY OBJ))))
                      :fields (list
-                              (list :fld "OWNER" :perm 111 :typedata '(LINK
-                                                                       SUPPLIER) :name "Поставщик")
                               (list :fld "RESOURCE" :perm 111 :typedata '(LINK
                                                                           RESOURCE) :name "Ресурс")
                               (list :fld "PRICE" :perm 111 :typedata '(NUM) :name "Цена поставщика")
-                              (list :btn "B5372" :perm 111 :value "Добавить ресурс")
-                              (list :btn "B5373" :perm 111 :value "Удалить ресурс")
-                              (list :btn "B5374" :perm 111 :value "Изменить ресурс")))
+                              (list :popbtn "P8174"
+                                    :value "Удалить"
+                                    :perm 111
+                                    :title "Удаление ресурса"
+                                    :fields (list
+                                             (list :btn "B8175" :perm 111 :value "Удалить ресурс")))))
                (list :perm ':SELF
-                     :title "Заявки на тендеры"
+                     :title "Мои заявки на тендеры"
                      :val (lambda () :COLLECTION)
                      :fields (list
                               (list :fld "TENDER" :perm 111 :typedata '(LINK TENDER) :name "Тендер"))))))
@@ -464,17 +468,15 @@
 
 (restas:define-route supplier-page/post ("/supplier" :method :post)
   (let ((acts `(
-                ("B5374" . ,(lambda () NIL))
-                ("B5373" . ,(lambda () NIL))
-                ("B5372" . ,(lambda () NIL))
-                ("B5371" . ,(lambda () (SUPPLIER-REQUEST-FAIR USER))))))
+                ("B8175" . ,(lambda () (DEL-SUPPLIER-RESOURCE-PRICE)))
+                ("B8173" . ,(lambda () (SUPPLIER-REQUEST-FAIR))))))
     (activate acts)))
 
 (restas:define-route tender-page ("/tender")
   (let ((acts (list
                (list :perm '(AND :ACTIVE :FAIR)
                      :title "Ответить заявкой на тендер"
-                     :val (lambda () NIL)
+                     :val (lambda () (GETHASH 0 *TENDER*))
                      :fields (list
                               (list :fld "NAME" :perm 111 :typedata '(STR) :name "Название")
                               (list :fld "STATUS" :perm 111 :typedata '(LIST-OF-KEYS
@@ -497,35 +499,35 @@
                                                                            SUPPLIER) :name "Поставщики")
                               (list :fld "OFFERTS" :perm 111 :typedata '(LIST-OF-LINKS
                                                                          SUPPLIER) :name "Откликнувшиеся поставщики")
-                              (list :popbtn "P5375"
+                              (list :popbtn "P8176"
                                     :value "Ответить заявкой на тендер"
                                     :perm 111
                                     :title "Выберите ресурсы"
                                     :fields (list
-                                             (list :btn "B5376" :perm 111 :value "Участвовать в тендере")))))
+                                             (list :btn "B8177" :perm 111 :value "Участвовать в тендере")))))
                (list :perm ':OWNER
                      :title "Отменить тендер"
-                     :val (lambda () NIL)
+                     :val (lambda () (GETHASH 0 *TENDER*))
                      :fields (list
-                              (list :popbtn "P5377"
+                              (list :popbtn "P8178"
                                     :value "Отменить тендер"
                                     :perm 111
                                     :title "Действительно отменить?"
                                     :fields (list
-                                             (list :btn "B5378" :perm 111 :value "Подтверждаю отмену"))))))))
+                                             (list :btn "B8179" :perm 111 :value "Подтверждаю отмену"))))))))
     (show-acts acts)))
 
 (restas:define-route tender-page/post ("/tender" :method :post)
   (let ((acts `(
-                ("B5378" . ,(lambda () (CANCEL-TENDER USER ROW)))
-                ("B5376" . ,(lambda () (CREATE-OFFER USER FORM TENDER))))))
+                ("B8179" . ,(lambda () (CANCEL-TENDER)))
+                ("B8177" . ,(lambda () (CREATE-OFFER))))))
     (activate acts)))
 
 (restas:define-route builder-page ("/builder")
   (let ((acts (list
                (list :perm ':SELF
                      :title "Застройщик такой-то (name object)"
-                     :val (lambda () NIL)
+                     :val (lambda () (GETHASH 6 *USER*))
                      :fields (list
                               (list :fld "NAME" :perm 111 :typedata '(STR) :name "Организация-застройщик")
                               (list :fld "JURIDICAL-ADDRESS" :perm 111 :typedata '(STR) :name "Юридический адрес")
@@ -541,7 +543,7 @@
                               (list :fld "RATING" :perm 111 :typedata '(NUM) :name "Рейтинг")))
                (list :perm ':SELF
                      :title "Объявить новый тендер"
-                     :val (lambda () NIL)
+                     :val (lambda () :CLEAR)
                      :fields (list
                               (list :fld "NAME" :perm 111 :typedata '(STR) :name "Название")
                               (list :fld "ALL" :perm 111 :typedata '(INTERVAL) :name "Срок проведения")
@@ -556,37 +558,22 @@
                               (list :fld "PRICE" :perm 111 :typedata '(NUM) :name "Рекомендуемая стоимость")
                               (list :fld "SUPPLIERS" :perm 111 :typedata '(LIST-OF-LINKS
                                                                            SUPPLIER) :name "Поставщики")
-                              (list :popbtn "P5379"
-                                    :value "Объявить тендер"
-                                    :perm 111
-                                    :title "Создание нового тендера"
-                                    :fields (list
-                                             (list :fld "NAME" :perm 111 :typedata '(STR) :name "Название")
-                                             (list :fld "OWNER" :perm 111 :typedata '(LINK BUILDER) :name "Заказчик")
-                                             (list :fld "ACTIVE-DATE" :perm 111 :typedata '(DATE) :name "Дата активации")
-                                             (list :fld "ALL" :perm 111 :typedata '(INTERVAL) :name "Срок проведения")
-                                             (list :fld "CLAIM" :perm 111 :typedata '(INTERVAL) :name "Срок подачи заявок")
-                                             (list :fld "ANALIZE" :perm 111 :typedata '(INTERVAL) :name "Срок рассмотрения заявок")
-                                             (list :fld "INTERVIEW" :perm 111 :typedata '(INTERVAL) :name "Срок проведения интервью")
-                                             (list :fld "RESOURCES" :perm 111 :typedata '(LIST-OF-LINKS
-                                                                                          RESOURCE) :name "Ресурсы")
-                                             (list :fld "DOCUMENTS" :perm 111 :typedata '(LIST-OF-LINKS
-                                                                                          DOCUMENT) :name "Документы")
-                                             (list :btn "B5380" :perm 111 :value "Создать тендер"))))))))
+                              (list :btn "B8180" :perm 111 :value "Объявить тендер"))))))
     (show-acts acts)))
 
 (restas:define-route builder-page/post ("/builder" :method :post)
   (let ((acts `(
-                ("B5380" . ,(lambda () (CREATE-TENDER USER FORM))))))
+                ("B8180" . ,(lambda () (CREATE-TENDER))))))
     (activate acts)))
 
 (restas:define-route suppliers-page ("/suppliers")
   (let ((acts (list
-               (list :perm '"<?>"
+               (list :perm ':ALL
                      :title "Организации-поставщики"
-                     :val (lambda () (REMOVE-IF-NOT #'(LAMBDA (X) (EQUAL 'SUPPLIER (TYPE-OF X)))
-                                                    (LOOP :FOR OBJ :BEING THE :HASH-VALUES :IN *USER*
-                                                       :COLLECT OBJ)))
+                     :val (lambda () (REMOVE-IF-NOT #'(LAMBDA (X) (EQUAL (TYPE-OF (CDR X)) 'SUPPLIER))
+                                                    (LOOP :FOR OBJ :BEING THE :HASH-VALUES :IN *USER* :USING (HASH-KEY
+                                                                                                              KEY)
+                                                       :COLLECT (CONS KEY OBJ))))
                      :fields (list
                               (list :fld "NAME" :perm 111 :typedata '(STR) :name "Название организации")
                               (list :fld "LOGIN" :perm 111 :typedata '(STR) :name "Логин"))))))

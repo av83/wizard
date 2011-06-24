@@ -385,7 +385,7 @@
                              (:btn "Удалить"
                               :popup '(:caption           "Действительно удалить?"
                                        :fields             '((:btn "Подтверждаю удаление" :act (delete-expert)))))
-                             (:btn "Сменить пароль" :act (change-expert-password)
+                             (:btn "Сменить пароль"
                               :popup '(:caption           "Смена пароля эксперта"
                                        :pern              :admin
                                        :entity            expert
@@ -400,11 +400,11 @@
                             (loop :for obj :being the :hash-values :in *USER* :using (hash-key key) :collect
                                (cons key obj)))
         :fields            '(name login
-                             (:btn "Подтвердить заявку" :act (approve-supplier-fair)
+                             (:btn "Подтвердить заявку"
                               :popup '(:caption           "Подтвердить заявку поставщика"
                                        :perm               :admin
                                        :entity             supplier
-                                       :fields             '((:btn "Сделать добросовестным" :act (approve-supplier-fair :user :row)))))))))
+                                       :fields             '((:btn "Сделать добросовестным" :act (approve-supplier-fair)))))))))
 
     ;; Личный кабинет Поставщика
     (:place                supplier
@@ -414,16 +414,23 @@
      '((:caption           "Отправить заявку на добросовестность" ;; заявка на статус добросовестного поставщика (изменяет статус поставщика)
         :perm              (and :self :unfair)
         :entity            supplier
-        :fields            '((:btn "Отправить заявку на добросовестность" :act (supplier-request-fair :user))))
-       (:caption           "Изменить список ресурсов"
+        :val               (gethash 3 *USER*)
+        :fields            '((:btn "Отправить заявку на добросовестность" :act (supplier-request-fair))))
+       (:caption           "Список ресурсов, которые я поставляю"
         :perm              :self
         :entity            supplier-resource-price
-        :val               :collection
-        :fields            '(owner resource price
-                             (:btn "Добавить ресурс" :act nil)
-                             (:btn "Удалить ресурс" :act nil)
-                             (:btn "Изменить ресурс" :act nil)))
-       (:caption           "Заявки на тендеры"
+        :val               (remove-if-not #'(lambda (x)
+                                              (equal (a-owner (cdr x))
+                                                     (gethash 3 *USER*)))
+                            (loop :for obj :being the :hash-values :in *SUPPLIER-RESOURCE-PRICE* :using (hash-key key) :collect
+                               (cons key obj)))
+        :fields            '(resource price
+                             (:btn "Удалить"
+                              :popup '(:caption           "Удаление ресурса"
+                                       :pern              :admin
+                                       :entity            expert
+                                       :fields            '((:btn "Удалить ресурс" :act (del-supplier-resource-price)))))))
+       (:caption           "Мои заявки на тендеры"
         :perm              :self
         :entity            offer
         :val               :collection
@@ -437,22 +444,24 @@
      '((:caption           "Ответить заявкой на тендер" ;; Добросовестный поставщик отвечает заявкой на тендер
         :perm              (and :active :fair)
         :entity            tender
+        :val               (gethash 0 *tender*)
         :fields            '(name status owner active-date all claim analize interview result winner price resources documents suppliers offerts
                              (:btn "Ответить заявкой на тендер"
                               :popup '(:caption           "Выберите ресурсы"
                                        :perm              (and :active :fair)
                                        :entity            resource
                                        :fields
-                                       '((:btn "Участвовать в тендере" :act (create-offer :user :form tender)))))))
+                                       '((:btn "Участвовать в тендере" :act (create-offer)))))))
        (:caption           "Отменить тендер"
         :perm              :owner
         :entity            tender
+        :val               (gethash 0 *tender*)
         :fields            '((:btn "Отменить тендер"
                               :popup
                               '(:caption           "Действительно отменить?"
                                 :perm               :owner
                                 :entity             tender
-                                :fields             '((:btn "Подтверждаю отмену" :act (cancel-tender :user :row)))))))))
+                                :fields             '((:btn "Подтверждаю отмену" :act (cancel-tender)))))))))
 
     ;; Личный кабинет застройщика с возможностью объявить тендер
     (:place                builder
@@ -462,29 +471,23 @@
      '((:caption           "Застройщик такой-то (name object)"
         :perm              :self
         :entity            builder
+        :val               (gethash 6 *USER*)
         :fields            '(name juridical-address inn kpp ogrn bank-name bik corresp-account client-account tenders rating))
        (:caption           "Объявить новый тендер"
         :perm              :self
         :entity            tender
+        :val               :clear
         :fields            '(name all claim analize interview result resources documents price suppliers
-                             (:btn "Объявить тендер"
-                              :popup
-                              '(:caption           "Создание нового тендера"
-                                :perm              :self
-                                :entity            tender
-                                :val               nil
-                                :fields
-                                '(name owner active-date all claim analize interview resources documents
-                                  (:btn "Создать тендер"  :act (create-tender :user :form)))
-                                :hooks
-                                '((:change resources   (set-field price (calc-tender-price (request resources))))
-                                  (:change resources   (set-field suppliers (calc-suppliers (request resources)))))
-                                (:other   '(:owner      (get-current-user-id)
-                                            :price      (calc-tender-price (request resources))
-                                            :suppliers  (calc-suppliers (request resources))
-                                            :offerts    nil
-                                            :winner     nil))
-                                (:status    :unactive)))))))
+                             (:btn "Объявить тендер" :act (create-tender)
+                              :hooks
+                              '((:change resources   (set-field price (calc-tender-price (request resources))))
+                                (:change resources   (set-field suppliers (calc-suppliers (request resources))))))))))
+                              ;; (:other   '(:owner      (get-current-user-id)
+                              ;;               :price      (calc-tender-price (request resources))
+                              ;;               :suppliers  (calc-suppliers (request resources))
+                              ;;               :offerts    nil
+                              ;;               :winner     nil))
+                              ;;   (:status    :unactive)))))))
 
     ;; Страница поставщиков - коллекция по юзерам с фильтром по типу юзера
     (:place                suppliers
@@ -492,11 +495,12 @@
      :navpoint             "Поставщики"
      :actions
      '((:caption           "Организации-поставщики"
-        :perm              "<?>"
+        :perm              :all
         :entity            supplier
         :val               (remove-if-not #'(lambda (x)
-                                              (equal 'supplier (type-of x)))
-                            (loop :for obj :being the :hash-values :in *USER* :collect obj))
+                                              (equal (type-of (cdr x)) 'SUPPLIER))
+                            (loop :for obj :being the :hash-values :in *USER* :using (hash-key key) :collect
+                               (cons key obj)))
         :fields            '(name login)
         :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
         ;; <?> Как будем показывать тендеры застройщика?
