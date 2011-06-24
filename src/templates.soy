@@ -39,7 +39,7 @@
 
         <div class="header">
           <div class="headerMainBlock">
-            <div class="popapLayer"></div>
+            <div class="popupLayer"></div>
             <div class="headerLogoBox">
               <img alt="" src="/header_logo.png" />
               <span style="font-size: 12px;"> Единый строительный портал Cеверо-Запада </span>
@@ -72,36 +72,11 @@
 
         <div class="body">{\n}
 
-          <div id="popapLogin" class="popapBox" style="position: absolute; top: 0px; left: 720px;  display: none;">
-            <div class="popapCancel">
-              <a href="#popapCancel">
-                <img alt="" src="/img/popapCancel.gif" />
-              </a>
-            </div>
+          {foreach $popup in $popups}
+            {call popup data="$popup" /}
+          {/foreach}
 
-            <div class="popapEnterLink">
-              <a class="dashedLink italic" href="/registration/">Вход</a>
-            </div>
-
-            <div class="popapCenter default">
-              <form method="post">
-                <span>
-                  <b>Логин</b>
-                </span>
-                <input type="text" value="" maxlength="50"
-                       name="LOGIN" />
-                  <span>
-                    <b>Пароль</b>
-                  </span>
-                  <input type="password" maxlength="50"
-                         name="PASSWORD" />
-                  <input type="submit" name="AUTH" value="Войти" />
-                  <input type="button" value="Отмена" onclick="ShowHide('popapLogin')" />
-              </form>
-            </div>
-          </div>
-
-          <div class="popapLayer"></div>{\n}
+          <div class="popupLayer"></div>{\n}
 
           <div class="sidebarL">
             <div class="sidebarBox menu">
@@ -184,10 +159,11 @@
     <div style="margin-top: -30px; margin-left: -230px; position:
                 absolute; z-index: 1000; text-align: right; width:
                 400px;"> </div>
-    <a class="dashedLink showAuth" href="/registration/"
-       onclick="ShowHide('popapLogin'); return false;">Вход</a>
+    <a class="dashedLink showAuth" href="#"
+       onclick="ShowHide('popupLogin'); return false;">Вход</a>
     <span>|</span>
-    <a href="/registration/?register=yes&backurl=%2F">Регистрация</a>
+    <a class="dashedLink showAuth" href="#"
+    onclick="ShowHide('trest'); return false;">Регистрация</a>
   </div>
 {/template}
 
@@ -320,14 +296,8 @@
 {/template}
 
 {template popbtn}
-  <div id="{$popid}" style="border: 5px solid green; display:none;">
-    <b>{$title}</b><br /><br />
-    {$content |noAutoescape}
-  </div>
   <input type="button" name="{$name}" value="{$value}" onclick="ShowHide('{$popid}');" />
 {/template}
-
-
 
 {template frmobj}
   <form method="post">
@@ -337,19 +307,45 @@
   </form>
 {/template}
 
-
 {template frmtbl}
   <form method="post">
     <table border="1" width="100%">
       {foreach $obj in $objs}
         <tr>
           {foreach $fld in $obj}
-            <td>
-            {$fld |noAutoescape}
-            </td>
+            <td>{$fld |noAutoescape}</td>
           {/foreach}
         </tr>
       {/foreach}
     </table>
+  </form>
+{/template}
+
+{template popup}
+  <div id="{$id}" class="popupBox" style="position: absolute; top:
+  0px; left: {$left}px; width: {$width}px;  display: none;">
+    <div class="popupCancel">
+      <a href="#popupCancel" onclick="ShowHide('{$id}')">
+        <img alt="" src="/popupCancel.gif" />
+      </a>
+    </div>
+
+    <div class="popupEnterLink">
+      <a class="dashedLink italic" href="/registration/">{$title}</a>
+    </div>
+
+    <div class="popupCenter">
+      {$content |noAutoescape}
+    </div>
+  </div>
+{/template}
+
+{template popuplogin}
+  <form method="post">
+    <span> <b>Логин</b> </span>
+    <input type="text" value="" maxlength="50" name="LOGIN" style="width: 160px;" />
+    <span> <b>Пароль</b> </span>
+    <input type="password" maxlength="50" name="PASSWORD" style="width: 160px;" />
+    <input type="submit" name="AUTH" value="Войти" style="width: 160px;" />
   </form>
 {/template}

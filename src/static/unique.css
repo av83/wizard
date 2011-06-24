@@ -31,7 +31,7 @@
 {
 	padding-right: 0;
 }
-.calendarPopap
+.calendarPopup
 {
 	padding-top: 28px !important;
 }
@@ -2332,7 +2332,7 @@
 {
 	margin: 0 0 -3px;
 }
-.addReportBlock .calendarPopap A
+.addReportBlock .calendarPopup A
 {
 	margin: 0;
 }
@@ -2546,7 +2546,7 @@
 {
 	padding-bottom: 0;
 }
-.addContactBlock .calendarPopap
+.addContactBlock .calendarPopup
 {
 	padding: 37px 0 0 !important;
 	margin: 0 !important;
@@ -2792,7 +2792,7 @@
 {
 	width: 55px;
 }
-.catalogItemTender .calendarPopap
+.catalogItemTender .calendarPopup
 {
 	padding-top: 28px;
 }
@@ -3072,11 +3072,11 @@
 	font-size: 12px;
 	font-weight: normal;
 }
-.projectEdit .imgEditBlock .popapCancel
+.projectEdit .imgEditBlock .popupCancel
 {
 	right: 10px;
 }
-.projectEdit .imgEditBlock .popapCancel IMG
+.projectEdit .imgEditBlock .popupCancel IMG
 {
 	border: none !important;
 }
@@ -3594,7 +3594,7 @@
 {
 	width: 396px;
 }
-.popapBox .itemCompany .buttonBox
+.popupBox .itemCompany .buttonBox
 {
 	padding: 0;
 	margin-top: 20px;
@@ -3833,7 +3833,7 @@ INPUT.buttonFile
 	overflow: hidden;
 	padding: 0 0 14px;
 }
-.searchResults .forDatePlace .calendarPopap
+.searchResults .forDatePlace .calendarPopup
 {
 	float: left;
 	padding-top: 2px;
@@ -3955,8 +3955,8 @@ INPUT.buttonFile
 {
 	padding-bottom: 25px;
 }
-/*======================= popaps ========================*/
-.popapLayer
+/*======================= popups ========================*/
+.popupLayer
 {
 	width: 100%;
 	height: 100%;
@@ -3967,11 +3967,11 @@ INPUT.buttonFile
 	opacity: 0.25;
 	z-index: 2000;
 }
-.popapBodyBG
+.popupBodyBG
 {
 	background: #00508E;
 }
-.popapBox
+.popupBox
 {
 	display: none;
 	width: 196px;
@@ -3983,30 +3983,29 @@ INPUT.buttonFile
 	border: 1px solid #D5D5D5;
 	z-index: 2000;
 }
-.popapCancel
+.popupCancel
 {
 	position: absolute;
 	top: 10px;
 	right: 15px;
 }
-.popapEnterLink
+.popupEnterLink
 {
 	font-size: 13px;
 	line-height: 18px;
 	font-weight: bold;
 }
-.popapCenter INPUT
+.popupCenter INPUT
 {
-	width: 160px;
 	margin-top: 6px;
 	margin-bottom: 18px;
 }
-.popapCenter .italicText
+.popupCenter .italicText
 {
 	color: #0074C5;
 	padding-left: 4px;
 }
-.popapCenter LABEL
+.popupCenter LABEL
 {
 	display: block;
 	font-size: 12px;
@@ -4014,7 +4013,7 @@ INPUT.buttonFile
 	padding-bottom: 0;
 	margin: -7px 0 25px;
 }
-.popapCenter LABEL INPUT
+.popupCenter LABEL INPUT
 {
 	display: block;
 	width: 12px;
@@ -4023,41 +4022,41 @@ INPUT.buttonFile
 	margin: 1px 3px 0 0;
 	padding: 0;
 }
-.popapCenter LABEL SPAN
+.popupCenter LABEL SPAN
 {
 	display: block;
 	padding-left: 20px;
 }
-.popapCenter .buttonBox
+.popupCenter .buttonBox
 {
 	float: left;
 }
-.popapAddCompany .checkedItem DIV
+.popupAddCompany .checkedItem DIV
 {
 	overflow: hidden;
 	padding-bottom: 0;
 	margin-bottom: 15px;
 }
-.popapAddCompany .popapCenter LABEL
+.popupAddCompany .popupCenter LABEL
 {
 	float: left;
 	padding-bottom: 0;
 }
-.popapAddCompany .popapCenter .buttonBox, .popapAddCompany .popapCenter .buttonBox DIV
+.popupAddCompany .popupCenter .buttonBox, .popupAddCompany .popupCenter .buttonBox DIV
 {
 	margin-bottom: 0;
 }
-.popapCenter FORM
+.popupCenter FORM
 {
 	overflow: hidden;
 	padding: 17px 0 4px 15px;
 }
-.popapOutFromPul FORM
+.popupOutFromPul FORM
 {
 	padding: 0;
 }
-/*========== calendarPopap ================*/
-.calendarPopap
+/*========== calendarPopup ================*/
+.calendarPopup
 {
 	width: 15px !important;
 	text-align: center;
@@ -4065,11 +4064,11 @@ INPUT.buttonFile
 	padding-top: 28px;
 	padding-bottom: 0 !important;
 }
-.calendarPopap IMG, .calendarPopap A, .calendarPopapBlock IMG
+.calendarPopup IMG, .calendarPopup A, .calendarPopupBlock IMG
 {
 	margin: 0 !important;
 }
-.calendarPopapBlock
+.calendarPopupBlock
 {
 	display: none;
 	position: absolute;
@@ -4078,11 +4077,11 @@ INPUT.buttonFile
 	width: 245px;
 	min-height: 200px;
 	font-size: 16px;
-	background: url(/img/popapCalendarLine.png) repeat-y 0 0;
+	background: url(/img/popupCalendarLine.png) repeat-y 0 0;
 	cursor: pointer;
 	z-index: 100;
 }
-.popapCalendarTop
+.popupCalendarTop
 {
 	position: relative;
 	top: 0;
@@ -4092,14 +4091,14 @@ INPUT.buttonFile
 	border-top: 1px solid #D5D5D5;
 	overflow: hidden;
 }
-.popapCalendarBottom
+.popupCalendarBottom
 {
 	position: relative;
 	bottom: -4px;
 	left: 0;
 	width: 245px;
 	height: 4px;
-	background: url(/img/popapCalendarBottom.png) no-repeat 0 0;
+	background: url(/img/popupCalendarBottom.png) no-repeat 0 0;
 }
 .calendarTitle
 {
@@ -4112,7 +4111,7 @@ INPUT.buttonFile
 	margin: 0 3px;
 	border-bottom: 1px solid #D5D5D5;
 }
-.popapArrow
+.popupArrow
 {
 	display: block;
 	width: 11px;
@@ -4120,11 +4119,11 @@ INPUT.buttonFile
 	position: absolute;
 	top: 11px;
 }
-.popapArrowLeft
+.popupArrowLeft
 {
 	left: 13px;
 }
-.popapArrowRight
+.popupArrowRight
 {
 	right: 13px;
 }
@@ -4212,8 +4211,8 @@ INPUT.buttonFile
 {
 	color: #FFFFFF !important;
 }
-/*=================== other popaps =================*/
-.popapOutFromPul
+/*=================== other popups =================*/
+.popupOutFromPul
 {
 	position: absolute;
 	top: 25%;
@@ -4222,28 +4221,28 @@ INPUT.buttonFile
 	padding: 25px 20px 30px;
 	z-index: 2000;
 }
-.popapOutFromPul .popapCancel
+.popupOutFromPul .popupCancel
 {
 	right: 12px;
 }
-.popapOutFromPul P
+.popupOutFromPul P
 {
 	line-height: 17px;
 }
-.popapOutFromPul LABEL
+.popupOutFromPul LABEL
 {
 	padding-bottom: 15px;
 	margin: 0;
 }
-.popapOutFromPul LABEL INPUT
+.popupOutFromPul LABEL INPUT
 {
 	margin: 0 3px 0 0;
 }
-.popapOutFromPul .buttonBox
+.popupOutFromPul .buttonBox
 {
 	margin: 10px 0 0;
 }
-.popapBox .serviceBox
+.popupBox .serviceBox
 {
 	float: right;
 	width: 128px;
@@ -4253,7 +4252,7 @@ INPUT.buttonFile
 	font-size: 16px;
 	text-align: left;
 }
-.popapBox .serviceBox .serviceText
+.popupBox .serviceBox .serviceText
 {
 	text-align: left;
 	line-height: 26px;
@@ -4261,61 +4260,61 @@ INPUT.buttonFile
 	padding-top: 0;
 	padding-bottom: 2px;
 }
-.popapBox .serviceBox .serviceText .markText
+.popupBox .serviceBox .serviceText .markText
 {
 	font-size: 18px;
 }
-.popapBox .serviceBoxTop
+.popupBox .serviceBoxTop
 {
 	background-image: url(/img/serviceBoxSmallTop.png);
 }
-.popapBox .serviceBoxBottom
+.popupBox .serviceBoxBottom
 {
 	background-image: url(/img/serviceBoxSmallBottom.png);
 }
-.popapBox .formOpinionText
+.popupBox .formOpinionText
 {
 	position: relative;
 	background: #FFFFFF;
 	padding: 8px 0 0;
 	margin-left: 0;
 }
-.popapBox .itemCompany SELECT
+.popupBox .itemCompany SELECT
 {
 	width: 50px;
 	float: left;
 }
-.popapBox .itemCompany .wideInputBox SPAN
+.popupBox .itemCompany .wideInputBox SPAN
 {
 	width: 100%;
 	float: left;
 	padding-bottom: 3px;
 }
-.popapBox .widthInput11 INPUT
+.popupBox .widthInput11 INPUT
 {
 	width: 160px;
 }
-.popapBox .inputBlockChek
+.popupBox .inputBlockChek
 {
 	padding-bottom: 17px;
 }
-.popapBox .inputBlockChek SPAN
+.popupBox .inputBlockChek SPAN
 {
 	display: block;
 	font-weight: bold;
 	padding-bottom: 13px;
 }
-.popapBox .inputBlockChek LABEL
+.popupBox .inputBlockChek LABEL
 {
 	padding-bottom: 0;
 	margin-bottom: 10px;
 	margin-left: 10px;
 }
-.popapBox .inputBlockChek INPUT
+.popupBox .inputBlockChek INPUT
 {
 	margin-top: 1px;
 }
-.popapBox .inputBlockChek LABEL SPAN
+.popupBox .inputBlockChek LABEL SPAN
 {
 	font-weight: normal;
 	padding-bottom: 0;
@@ -4426,7 +4425,7 @@ INPUT.buttonFile
 {
 	margin: 3px 0 0 3px;
 }
-.searchResults .forDatePlace .calendarPopap
+.searchResults .forDatePlace .calendarPopup
 {
 	padding-top: 2px !important;
 }
@@ -4740,7 +4739,7 @@ HTML
 	background: url(/img/blank.gif) repeat 0 0;
 	z-index: 2000;
 }
-.popapBodyBG
+.popupBodyBG
 {
 	background-image: url(/img/mainBGrep_active.gif);
 }
