@@ -36,9 +36,71 @@
           </noindex>{\n}
         </div>{\n}
 
-        {call header /}
+
+        <div class="header">
+          <div class="headerMainBlock">
+            <div class="popapLayer"></div>
+            <div class="headerLogoBox">
+              <img alt="" src="/header_logo.png" />
+              <span style="font-size: 12px;"> Единый строительный портал Cеверо-Запада </span>
+            </div>
+            <div id="search" class="headerSearchBox">
+              <div class="headerBGleft"></div>
+              <div class="headerBGright"></div>
+              <form id="topSearchForm" method="get" action="/search/">
+                <input type="text" maxlength="150" size="15" value="" name="q" />
+                <select name="f[]">
+                  <option value="n">в новостях</option>
+                  <option value="p">в проектах</option>
+                  <option value="c">в компаниях</option>
+                  <option value="t">в тендерах</option>
+                  <option value="a">в отчётах</option>
+                  <option value="j">в решениях суда</option>
+                  <option value="0" selected="selected">везде</option>
+                </select>
+                <div id="topSearchButton" class="buttonBox">
+                  <div class="buttonLeft"></div>
+                  <div class="buttonText">Искать</div>
+                  <div class="buttonRight"></div>
+                </div>
+              </form>
+            </div>
+            {$personal |noAutoescape}
+          </div>
+        </div>
+
 
         <div class="body">{\n}
+
+          <div id="popapLogin" class="popapBox" style="position: absolute; top: 0px; left: 720px;  display: none;">
+            <div class="popapCancel">
+              <a href="#popapCancel">
+                <img alt="" src="/img/popapCancel.gif" />
+              </a>
+            </div>
+
+            <div class="popapEnterLink">
+              <a class="dashedLink italic" href="/registration/">Вход</a>
+            </div>
+
+            <div class="popapCenter default">
+              <form method="post">
+                <span>
+                  <b>Логин</b>
+                </span>
+                <input type="text" value="" maxlength="50"
+                       name="LOGIN" />
+                  <span>
+                    <b>Пароль</b>
+                  </span>
+                  <input type="password" maxlength="50"
+                         name="PASSWORD" />
+                  <input type="submit" name="AUTH" value="Войти" />
+                  <input type="button" value="Отмена" onclick="ShowHide('popapLogin')" />
+              </form>
+            </div>
+          </div>
+
           <div class="popapLayer"></div>{\n}
 
           <div class="sidebarL">
@@ -117,6 +179,34 @@
 {/template}
 
 
+{template loginform}
+  <div class="headerPersonalBox italic personEnter">
+    <div style="margin-top: -30px; margin-left: -230px; position:
+                absolute; z-index: 1000; text-align: right; width:
+                400px;"> </div>
+    <a class="dashedLink showAuth" href="/registration/"
+       onclick="ShowHide('popapLogin'); return false;">Вход</a>
+    <span>|</span>
+    <a href="/registration/?register=yes&backurl=%2F">Регистрация</a>
+  </div>
+{/template}
+
+
+{template logoutform}
+  <div class="headerPersonalBox italic personEnter">
+    <div style="margin-top: -30px; margin-left: -230px; position:
+                absolute; z-index: 1000; text-align: right; width:
+                400px;"> </div>
+    Добро пожаловать, {$user}
+    <span>|</span>
+    <form method="post">
+      <input type="submit" name="LOGOUT" value="Выход" />
+    </form>
+  </div>
+{/template}
+
+
+
 {template contentBlock}
   <div class="contentBox">{\n}
     <div class="contentBoxBG">{\n}
@@ -131,54 +221,6 @@
     </div>{\n}
   </div>{\n}
 {/template}
-
-{template header}
-  <div class="header">
-    <div class="headerMainBlock">
-      <div class="popapLayer"></div>
-      <div class="headerLogoBox">
-        <img alt="" src="/header_logo.png" />
-        <span style="font-size: 12px;"> Единый строительный портал Cеверо-Запада </span>
-      </div>
-      <div id="search" class="headerSearchBox">
-        <div class="headerBGleft"></div>
-        <div class="headerBGright"></div>
-        <form id="topSearchForm" method="get" action="/search/">
-          <input type="text" maxlength="150" size="15" value="" name="q" />
-          <select name="f[]">
-            <option value="n">в новостях</option>
-            <option value="p">в проектах</option>
-            <option value="c">в компаниях</option>
-            <option value="t">в тендерах</option>
-            <option value="a">в отчётах</option>
-            <option value="j">в решениях суда</option>
-            <option value="0" selected="selected">везде</option>
-          </select>
-          <div id="topSearchButton" class="buttonBox">
-            <div class="buttonLeft"></div>
-            <div class="buttonText">Искать</div>
-            <div class="buttonRight"></div>
-          </div>
-        </form>
-      </div>
-      <form action="/?login=yes" target="_top" method="post">
-        <div class="headerPersonalBox italic personEnter">
-          <div style="margin-top: -30px; margin-left: -230px; position:
-                      absolute; z-index: 1000; text-align: right; width:
-                      400px;"> </div>
-          <a class="icoLink showAuth" href="/registration/">
-            <img alt="" src="/img/ico_key.png" />
-          </a>
-          <a class="dashedLink showAuth" href="/registration/">Вход</a>
-          <span>|</span>
-          <a href="/registration/?register=yes&backurl=%2F">Регистрация</a>
-        </div>
-      </form>
-    </div>
-  </div>
-{/template}
-
-
 
 
 {template right1}

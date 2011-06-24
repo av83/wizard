@@ -24,7 +24,7 @@
   (restas.directory-publisher:*directory* (path "src/static/")))
 
 (defun cur-user ()
-  (gethash 0 *USER*))
+  (gethash (hunchentoot:session-value 'userid) *USER*))
 
 (defun form-data ()
   (hunchentoot:post-parameters*))
@@ -77,8 +77,27 @@
   (hunchentoot:redirect (hunchentoot:request-uri*)))
 
 
+(defun auth (login password)
+  (loop :for obj :being the :hash-values :in *USER* :using (hash-key key) :do
+     (when (and (equal (a-login obj) login)
+                (equal (a-password obj) password))
+       (return-from auth
+         (progn
+           (setf (hunchentoot:session-value 'userid) key)
+           (hunchentoot:redirect (hunchentoot:request-uri*))))))
+  (hunchentoot:redirect (hunchentoot:request-uri*)))
+
 
 (defun activate (acts)
+  (when (assoc "AUTH" (form-data) :test #'equal)
+    (return-from activate
+      (auth (cdr (assoc "LOGIN" (form-data) :test #'equal))
+            (cdr (assoc "PASSWORD" (form-data) :test #'equal)))))
+  (when (assoc "LOGOUT" (form-data) :test #'equal)
+    (return-from activate
+      (progn
+        (hunchentoot:delete-session-value 'userid)
+        (hunchentoot:redirect (hunchentoot:request-uri*)))))
   (with-output-to-string (*standard-output*)
     (format t "form-data: ")
     (print (form-data))
@@ -107,6 +126,10 @@
 (defun show-acts (acts)
   (tpl:root
    (list
+    :personal (let ((userid (hunchentoot:session-value 'userid)))
+                (if (null userid)
+                    (tpl:loginform)
+                    (tpl:logoutform (list :user (a-login (gethash userid *USER*))))))
     :navpoints (menu)
     :content
     (loop

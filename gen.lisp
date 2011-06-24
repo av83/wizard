@@ -67,14 +67,14 @@
        (format out "~%~%(restas:define-route ~A-page (\"~A\")"
                (string-downcase (getf place :place))
                (getf place :url))
-       (format out "~%  (let ((acts (list ~{~A~}))) ~A)"
+       (format out "~%  (let ((session (hunchentoot:start-session))~%~7T (acts (list ~{~A~}))) ~A)"
                (loop :for action :in (eval (getf place :actions)) :collect
                   (gen-action action)) ;; Вот оно ключевое :)
                (format nil  "~%    (show-acts acts))"))
        (format out "~%~%(restas:define-route ~A-page/post (\"~A\" :method :post)"
                (string-downcase (getf place :place))
                (getf place :url))
-       (format out  "~%  (let ((acts `(~{~%~A~}))) ~%       (activate acts)))"
+       (format out  "~%  (let ((session (hunchentoot:start-session))~%~7T (acts `(~{~%~A~}))) ~%       (activate acts)))"
                (loop :for controller :in *controllers* :collect
                   (format nil "(\"~A\" . ,(lambda () ~A))"
                           (car controller)
