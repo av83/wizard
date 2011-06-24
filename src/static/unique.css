@@ -343,7 +343,6 @@
 }
 .menuLeftLine
 {
-	border-left: 6px solid #006BBE;
 }
 .sidebarBoxTop
 {
@@ -365,14 +364,12 @@
 }
 .menuItem
 {
-	border-left: 1px solid #FFFFFF;
-	border-right: 15px solid #FFFFFF;
 }
 .menu SPAN
 {
 	display: block;
-	padding: 6px 0 10px 19px;
-	border-bottom: 1px solid #D5D5D5;
+	padding: 10px 0 10px 19px;
+	border-top: 1px solid #D5D5D5;
 }
 .fitstItem SPAN
 {
@@ -614,9 +611,9 @@
 }
 .contentBoxBG
 {
-	width: 470px;
+	width: 720px;
 	position: relative;
-	background: url(/img/contentBoxLine.png) repeat-y 0 0;
+    background-color: #DCDCDC;
 	padding: 0 4px;
 }
 .contentBoxTop

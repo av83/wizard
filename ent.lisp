@@ -343,6 +343,10 @@
       :update :owner))))
 
 
+(defmacro cons-hash-list (hash)
+  `(loop :for obj :being the :hash-values :in ,hash :using (hash-key key) :collect
+      (cons key obj)))
+
 ;; Мы считаем, что если у пользователя есть права на редактирование
 ;; всего объекта или части его полей - то эти поля показываются как
 ;; доступные для редактирования.
@@ -379,8 +383,7 @@
         :entity            expert
         :val               (remove-if-not #'(lambda (x)
                                               (equal 'expert (type-of (cdr x))))
-                            (loop :for obj :being the :hash-values :in *USER* :using (hash-key key) :collect
-                               (cons key obj)))
+                            (cons-hash-list *USER*))
         :fields            '(name login
                              (:btn "Удалить"
                               :popup '(:caption           "Действительно удалить?"
@@ -397,8 +400,7 @@
         :val               (remove-if-not #'(lambda (x)
                                               (and (equal 'supplier (type-of (cdr x)))
                                                    (equal (a-status (cdr x)) :request)))
-                            (loop :for obj :being the :hash-values :in *USER* :using (hash-key key) :collect
-                               (cons key obj)))
+                            (cons-hash-list *USER*))
         :fields            '(name login
                              (:btn "Подтвердить заявку"
                               :popup '(:caption           "Подтвердить заявку поставщика"
@@ -489,9 +491,24 @@
                               ;;               :winner     nil))
                               ;;   (:status    :unactive)))))))
 
+    (:place                experts
+     :url                  "/expert"
+     :navpoint             "Поставщики"
+     :actions
+     '((:caption           "Эксперты"
+        :perm              :all
+        :entity            supplier
+        :val               (remove-if-not #'(lambda (x)
+                                              (equal (type-of (cdr x)) 'EXPERT))
+                            (cons-hash-list *USER*))
+        :fields            '(name login)
+        :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
+        ;; <?> Как будем показывать тендеры застройщика?
+        :fields           '((name juridical-address requisites tenders rating)))))
+
     ;; Страница поставщиков - коллекция по юзерам с фильтром по типу юзера
     (:place                suppliers
-     :url                  "/suppliers"
+     :url                  "/supplier"
      :navpoint             "Поставщики"
      :actions
      '((:caption           "Организации-поставщики"
@@ -499,14 +516,13 @@
         :entity            supplier
         :val               (remove-if-not #'(lambda (x)
                                               (equal (type-of (cdr x)) 'SUPPLIER))
-                            (loop :for obj :being the :hash-values :in *USER* :using (hash-key key) :collect
-                               (cons key obj)))
+                            (cons-hash-list *USER*))
         :fields            '(name login)
         :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
         ;; <?> Как будем показывать тендеры застройщика?
         :fields           '((name juridical-address requisites tenders rating)))))
     (:place                builders
-     :url                  "/builders"
+     :url                  "/builder"
      :navpoint             "Застройщики"
      :actions
      '((:caption           "Организации-застройщики"
@@ -514,9 +530,32 @@
         :entity            supplier
         :val               (remove-if-not #'(lambda (x)
                                               (equal (type-of (cdr x)) 'BUILDER))
-                            (loop :for obj :being the :hash-values :in *USER* :using (hash-key key) :collect
-                               (cons key obj)))
+                            (cons-hash-list *USER*))
         :fields            '(name login)
+        :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
+        ;; <?> Как будем показывать тендеры застройщика?
+        :fields           '((name juridical-address requisites tenders rating)))))
+    (:place                tenders
+     :url                  "/tender"
+     :navpoint             "Тендеры"
+     :actions
+     '((:caption           "Тендеры"
+        :perm              :all
+        :entity            supplier
+        :val               (cons-hash-list *TENDER*)
+        :fields            '(name)
+        :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
+        ;; <?> Как будем показывать тендеры застройщика?
+        :fields           '((name juridical-address requisites tenders rating)))))
+    (:place                resources
+     :url                  "/resource"
+     :navpoint             "Ресурсы"
+     :actions
+     '((:caption           "Тендеры"
+        :perm              :all
+        :entity            supplier
+        :val               (cons-hash-list *RESOURCE*)
+        :fields            '(name)
         :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
         ;; <?> Как будем показывать тендеры застройщика?
         :fields           '((name juridical-address requisites tenders rating)))))))

@@ -28,23 +28,13 @@
     </head>{\n}
     <body id="top">{\n}
       <div id="main" class="main">{\n}
-        <div class="browserBlock"></div>{\n}
-        <div class="bannerTop">{\n}
-          <noindex>{\n}
-            <div style="width: 970px; height: 90px; padding: 0pt; margin: 0pt;">{\n}
-            </div>{\n}
-          </noindex>{\n}
-        </div>{\n}
-
-
         <div class="header">
           <div class="headerMainBlock">
-            <div class="popupLayer"></div>
             <div class="headerLogoBox">
               <img alt="" src="/header_logo.png" />
               <span style="font-size: 12px;"> Единый строительный портал Cеверо-Запада </span>
             </div>
-            <div id="search" class="headerSearchBox">
+            <div id="search" class="headerSearchBox" style="display:none">
               <div class="headerBGleft"></div>
               <div class="headerBGright"></div>
               <form id="topSearchForm" method="get" action="/search/">
@@ -143,12 +133,6 @@
         </div>{\n}
       </div>{\n}
     </div>{\n}
-    <div class="footer">{\n}
-    </div>{\n}
-    <script type="text/javascript">{\n}
-    </script>{\n}
-    <div style="display: none;">{\n}
-    </div>{\n}
   </body>{\n}
   </html>{\n}
 {/template}
@@ -176,7 +160,8 @@
     Добро пожаловать, {$user}
     <span>|</span>
     <form method="post">
-      <input type="submit" name="LOGOUT" value="Выход" />
+      <input type="submit" name="LOGOUT" value="Выход"
+             style="background-color: #E0E0E0;" />
     </form>
   </div>
 {/template}
@@ -190,7 +175,11 @@
       <div class="contentBoxTitle">{\n}
         <div class="pageTitle">{$title}</div>{\n}
       </div>{\n}
-      <div class="contentBoxContent listCompanyBlock catalogItemTender sectorsBlock">{\n}
+      <div class="contentBoxContent"
+           style="margin-right: 0;
+                  padding-right: 15px;
+                  padding-bottom: 5px;
+                  padding-top: 5px;">{\n}
         {$content |noAutoescape}{\n}
       </div>{\n}
       <div class="contentBoxBottom"></div>{\n}
@@ -292,11 +281,14 @@
 
 
 {template btn}
-  <input type="submit" name="{$name}" value="{$value}" />
+  <input type="submit" name="{$name}" value="{$value}"
+         style="background-color: #E0E0E0;"/>
 {/template}
 
 {template popbtn}
-  <input type="button" name="{$name}" value="{$value}" onclick="ShowHide('{$popid}');" />
+  <input type="button" name="{$name}" value="{$value}"
+         style="background-color: #E0E0E0;"
+         onclick="ShowHide('{$popid}');" />
 {/template}
 
 {template frmobj}
@@ -309,11 +301,15 @@
 
 {template frmtbl}
   <form method="post">
-    <table border="1" width="100%">
+    <table border="0" bgcolor="#DCDCDC" width="100%">
       {foreach $obj in $objs}
         <tr>
           {foreach $fld in $obj}
-            <td>{$fld |noAutoescape}</td>
+            <td bgcolor="#F1F1F1">
+              <div style="padding: 0px 3px 0px 3px;">
+                {$fld |noAutoescape}
+              </div>
+            </td>
           {/foreach}
         </tr>
       {/foreach}
@@ -346,6 +342,7 @@
     <input type="text" value="" maxlength="50" name="LOGIN" style="width: 160px;" />
     <span> <b>Пароль</b> </span>
     <input type="password" maxlength="50" name="PASSWORD" style="width: 160px;" />
-    <input type="submit" name="AUTH" value="Войти" style="width: 160px;" />
+    <input type="submit" name="AUTH" value="Войти"
+           style="background-color: #E0E0E0; width: 160px;" />
   </form>
 {/template}

@@ -27,7 +27,7 @@ BODY
 SELECT, INPUT, TEXTAREA
 {
 	font-family: arial;
-	font-size: 16px;
+	font-size: 12px;
 	padding: 2px 6px;
 	border: 1px solid #7F9DB9;
 }
@@ -223,14 +223,14 @@ SMALL
 /*================ main blocks =================*/
 .main
 {
-	width: 996px;
+	width: 1250px;
 	min-height: 100%;
 /*о*/
 	height: auto !important;
 	position: relative;
 	overflow: hidden;
 	background: #006BBE;
-	margin: 0 auto -102px;
+	margin: 0 auto -20px;
 	z-index: 100;
 }
 .header
@@ -251,7 +251,7 @@ SMALL
 	overflow: hidden;
 	background: #F1F1F1;
 	padding: 0;
-	margin: 0 12px 102px;
+	margin: 0 12px 40px;
 	z-index: 100;
 }
 .main404 .body
@@ -291,7 +291,7 @@ SMALL
 {
 	clear: both;
 	width: 990px;
-	height: 151px;
+	height: 30px;
 	position: relative;
 	overflow: hidden;
 	background: #006BBE;
