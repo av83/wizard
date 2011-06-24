@@ -504,4 +504,19 @@
         :fields            '(name login)
         :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
         ;; <?> Как будем показывать тендеры застройщика?
+        :fields           '((name juridical-address requisites tenders rating)))))
+    (:place                builders
+     :url                  "/builders"
+     :navpoint             "Застройщики"
+     :actions
+     '((:caption           "Организации-застройщики"
+        :perm              :all
+        :entity            supplier
+        :val               (remove-if-not #'(lambda (x)
+                                              (equal (type-of (cdr x)) 'BUILDER))
+                            (loop :for obj :being the :hash-values :in *USER* :using (hash-key key) :collect
+                               (cons key obj)))
+        :fields            '(name login)
+        :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
+        ;; <?> Как будем показывать тендеры застройщика?
         :fields           '((name juridical-address requisites tenders rating)))))))

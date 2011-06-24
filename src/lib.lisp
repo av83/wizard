@@ -144,8 +144,8 @@
                           (tpl:loginform)
                           (tpl:logoutform (list :user (a-login (gethash userid *USER*)))))))
          (popups    (list
-                     (list :id "trest" :title "my-tit" :content "my-co" :left 200 :width 500)
-                     (list :id "popupLogin" :title "Вход" :content (tpl:popuplogin) :left 720 :width 196)))
+                     (list :id "trest"      :title "Регистрация" :content "TODO"           :left 200 :width 500)
+                     (list :id "popupLogin" :title "Вход"        :content (tpl:popuplogin) :left 720 :width 196)))
          (content
           (loop :for act :in acts :collect
              (list :title (getf act :title)

@@ -78,7 +78,10 @@
                (loop :for controller :in *controllers* :collect
                   (format nil "(\"~A\" . ,(lambda () ~A))"
                           (car controller)
-                          (cdr controller)))))))
+                          (cdr controller)))))
+    (format out "~%~%~%(defun menu ()  '")
+    (pprint (reverse menu) out)
+    (format out ")")))
 
 (defun gen-action (action)
   (format nil "~%~14T (list :perm '~A ~%~20T :title \"~A\"~% ~20T :val (lambda () ~A)~% ~20T :fields ~A)"
