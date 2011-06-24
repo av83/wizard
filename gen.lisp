@@ -78,7 +78,8 @@
                (loop :for controller :in *controllers* :collect
                   (format nil "(\"~A\" . ,(lambda () ~A))"
                           (car controller)
-                          (cdr controller)))))
+                          (subseq (with-output-to-string (*standard-output*) (pprint (cdr controller))) 1)
+                          ))))
     (format out "~%~%~%(defun menu ()  '")
     (pprint (reverse menu) out)
     (format out ")")))

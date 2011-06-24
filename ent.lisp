@@ -491,20 +491,32 @@
                               ;;               :winner     nil))
                               ;;   (:status    :unactive)))))))
 
+    ;; Список экспертов
     (:place                experts
      :url                  "/expert"
-     :navpoint             "Поставщики"
+     :navpoint             "Эксперты"
      :actions
      '((:caption           "Эксперты"
         :perm              :all
-        :entity            supplier
-        :val               (remove-if-not #'(lambda (x)
-                                              (equal (type-of (cdr x)) 'EXPERT))
-                            (cons-hash-list *USER*))
-        :fields            '(name login)
+        :entity            expert
+        :val               (remove-if-not #'(lambda (x) (equal (type-of (cdr x)) 'EXPERT)) (cons-hash-list *USER*))
+        :fields            '(name login (:btn "Страница эксперта"
+                                         :act (hunchentoot:redirect
+                                               (format nil "/expert/~A" (get-btn-key (caar (form-data)))))))
         :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
         ;; <?> Как будем показывать тендеры застройщика?
         :fields           '((name juridical-address requisites tenders rating)))))
+
+    ;; Страница эксперта
+    (:place                expert
+     :url                  "/expert/:id"
+     :navpoint             "Эксперт"
+     :actions
+     '((:caption           "Эксперт"
+        :perm              :all
+        :entity            expert
+        :val               (gethash (parse-integer (caddr (request-list))) *USER*)
+        :fields            '(name))))
 
     ;; Страница поставщиков - коллекция по юзерам с фильтром по типу юзера
     (:place                suppliers

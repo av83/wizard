@@ -302,10 +302,11 @@ SMALL
 }
 .pageTitle
 {
-	font-size: 18px;
+	font-size: 14px;
 	line-height: 25px;
 	color: #000000;
 	font-weight: bold;
+    padding-left: 4px;
 	margin: 0;
 }
 .pageTitle H1

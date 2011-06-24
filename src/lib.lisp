@@ -29,6 +29,38 @@
 (defun form-data ()
   (hunchentoot:post-parameters*))
 
+
+(defun request-str ()
+  (let* ((request-full-str (hunchentoot:request-uri hunchentoot:*request*))
+         (request-parted-list (split-sequence:split-sequence #\? request-full-str))
+         (request-str (string-right-trim "\/" (car request-parted-list)))
+         (request-list (split-sequence:split-sequence #\/ request-str))
+         (request-get-plist (if (null (cadr request-parted-list))
+                                nil
+                                ;; else
+                                (let ((result))
+                                  (loop :for param :in (split-sequence:split-sequence #\& (cadr request-parted-list)) :do
+                                     (let ((split (split-sequence:split-sequence #\= param)))
+                                       (setf (getf result (intern (string-upcase (car split)) :keyword))
+                                             (if (null (cadr split))
+                                                 ""
+                                                 (cadr split)))))
+                                  result))))
+    (values request-str request-list request-get-plist)))
+
+
+(defun request-get-plist ()
+  (multiple-value-bind (request-str request-list request-get-plist)
+      (request-str)
+    request-get-plist))
+
+
+(defun request-list ()
+  (multiple-value-bind (request-str request-list request-get-plist)
+      (request-str)
+    request-list))
+
+
 (defun change-self-password ()
   (setf (a-login (cur-user))     (cdr (assoc "LOGIN" (form-data) :test #'equal)))
   (setf (a-password (cur-user))  (cdr (assoc "PASSWORD" (form-data) :test #'equal)))
@@ -167,7 +199,8 @@
                            ((or (equal 'ADMIN (type-of val))    ;; ADMIN
                                 (equal 'SUPPLIER (type-of val)) ;; SUPPLIER
                                 (equal 'TENDER (type-of val))   ;; TENDER
-                                (equal 'BUILDER (type-of val))) ;; BUILDER
+                                (equal 'BUILDER (type-of val))  ;; BUILDER
+                                (equal 'EXPERT (type-of val)))  ;; EXPERT
                             (tpl:frmobj
                              (list :flds
                                    (loop :for infld :in (getf act :fields) :collect
@@ -219,7 +252,7 @@
                                                             :content (tpl:frmobj (list :flds popup)))
                                                       popups)
                                                 (tpl:popbtn (list :value (getf infld :value) :popid popid)))))))))))
-                           (t "Нет объектов")))))))
+                           (t "<div style=\"padding-left: 2px\">Нет объектов</div>")))))))
     (tpl:root
      (list
       :personal personal
