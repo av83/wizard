@@ -362,7 +362,7 @@
      :url                  "/admin"
      :navpoint             "Администратор"
      :actions
-     '((:caption           "Изменить пароль"
+     '((:caption           "Изменить себе пароль"
         :perm              :admin
         :entity            admin
         :val               (cur-user)
