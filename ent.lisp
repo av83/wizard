@@ -408,35 +408,6 @@
                                        :entity             supplier
                                        :fields             '((:btn "Сделать добросовестным" :act (approve-supplier-fair)))))))))
 
-    ;; Личный кабинет Поставщика
-    (:place                supplier
-     :url                  "/supplier"
-     :navpoint             "Поставщик такой-то"
-     :actions
-     '((:caption           "Отправить заявку на добросовестность" ;; заявка на статус добросовестного поставщика (изменяет статус поставщика)
-        :perm              (and :self :unfair)
-        :entity            supplier
-        :val               (gethash 3 *USER*)
-        :fields            '((:btn "Отправить заявку на добросовестность" :act (supplier-request-fair))))
-       (:caption           "Список ресурсов, которые я поставляю"
-        :perm              :self
-        :entity            supplier-resource-price
-        :val               (remove-if-not #'(lambda (x)
-                                              (equal (a-owner (cdr x))
-                                                     (gethash 3 *USER*)))
-                            (loop :for obj :being the :hash-values :in *SUPPLIER-RESOURCE-PRICE* :using (hash-key key) :collect
-                               (cons key obj)))
-        :fields            '(resource price
-                             (:btn "Удалить"
-                              :popup '(:caption           "Удаление ресурса"
-                                       :pern              :admin
-                                       :entity            expert
-                                       :fields            '((:btn "Удалить ресурс" :act (del-supplier-resource-price)))))))
-       (:caption           "Мои заявки на тендеры"
-        :perm              :self
-        :entity            offer
-        :val               :collection
-        :fields            '(tender))))
 
     ;; Страница тендера
     (:place                tender
@@ -465,32 +436,6 @@
                                 :entity             tender
                                 :fields             '((:btn "Подтверждаю отмену" :act (cancel-tender)))))))))
 
-    ;; Личный кабинет застройщика с возможностью объявить тендер
-    (:place                builder
-     :url                  "/builder"
-     :navpoint             "Застройщик такой-то"
-     :actions
-     '((:caption           "Застройщик такой-то (name object)"
-        :perm              :self
-        :entity            builder
-        :val               (gethash 6 *USER*)
-        :fields            '(name juridical-address inn kpp ogrn bank-name bik corresp-account client-account tenders rating))
-       (:caption           "Объявить новый тендер"
-        :perm              :self
-        :entity            tender
-        :val               :clear
-        :fields            '(name all claim analize interview result resources documents price suppliers
-                             (:btn "Объявить тендер" :act (create-tender)
-                              :hooks
-                              '((:change resources   (set-field price (calc-tender-price (request resources))))
-                                (:change resources   (set-field suppliers (calc-suppliers (request resources))))))))))
-                              ;; (:other   '(:owner      (get-current-user-id)
-                              ;;               :price      (calc-tender-price (request resources))
-                              ;;               :suppliers  (calc-suppliers (request resources))
-                              ;;               :offerts    nil
-                              ;;               :winner     nil))
-                              ;;   (:status    :unactive)))))))
-
     ;; Список экспертов
     (:place                experts
      :url                  "/expert"
@@ -502,15 +447,11 @@
         :val               (remove-if-not #'(lambda (x) (equal (type-of (cdr x)) 'EXPERT)) (cons-hash-list *USER*))
         :fields            '(name login (:btn "Страница эксперта"
                                          :act (hunchentoot:redirect
-                                               (format nil "/expert/~A" (get-btn-key (caar (form-data)))))))
-        :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
-        ;; <?> Как будем показывать тендеры застройщика?
-        :fields           '((name juridical-address requisites tenders rating)))))
+                                               (format nil "/expert/~A" (get-btn-key (caar (form-data))))))))))
 
     ;; Страница эксперта
     (:place                expert
      :url                  "/expert/:id"
-     :navpoint             "Эксперт"
      :actions
      '((:caption           "Эксперт"
         :perm              :all
@@ -518,7 +459,7 @@
         :val               (gethash (parse-integer (caddr (request-list))) *USER*)
         :fields            '(name))))
 
-    ;; Страница поставщиков - коллекция по юзерам с фильтром по типу юзера
+    ;; Список поставщиков
     (:place                suppliers
      :url                  "/supplier"
      :navpoint             "Поставщики"
@@ -526,48 +467,126 @@
      '((:caption           "Организации-поставщики"
         :perm              :all
         :entity            supplier
-        :val               (remove-if-not #'(lambda (x)
-                                              (equal (type-of (cdr x)) 'SUPPLIER))
-                            (cons-hash-list *USER*))
-        :fields            '(name login)
-        :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
-        ;; <?> Как будем показывать тендеры застройщика?
-        :fields           '((name juridical-address requisites tenders rating)))))
+        :val               (remove-if-not #'(lambda (x) (equal (type-of (cdr x)) 'SUPPLIER))  (cons-hash-list *USER*))
+        :fields            '(name login (:btn "Страница поставщика"
+                                         :act (hunchentoot:redirect
+                                               (format nil "/supplier/~A" (get-btn-key (caar (form-data))))))))))
+
+    ;; Страница поставщика
+    (:place                supplier
+     :url                  "/supplier/:id"
+     :actions
+     '((:caption           "Поставщик"
+        :entity            supplier
+        :val               (gethash (parse-integer (caddr (request-list))) *USER*)
+        :fields            '(name status juridical-address actual-address contacts email site heads inn kpp ogrn
+                             bank-name bik corresp-account client-account addresses contact-person resources sale offers))
+       (:caption           "Отправить заявку на добросовестность" ;; заявка на статус добросовестного поставщика (изменяет статус поставщика)
+        :perm              (and :self :unfair)
+        :entity            supplier
+        :val               (gethash 3 *USER*)
+        :fields            '((:btn "Отправить заявку на добросовестность" :act (supplier-request-fair))))
+       (:caption           "Список ресурсов, которые я поставляю"
+        :perm              :self
+        :entity            supplier-resource-price
+        :val               (remove-if-not #'(lambda (x) (equal (a-owner (cdr x))
+                                                               (gethash 3 *USER*)))
+                            (cons-hash-list *SUPPLIER-RESOURCE-PRICE*))
+        :fields            '(resource price
+                             (:btn "Удалить"
+                              :popup '(:caption           "Удаление ресурса"
+                                       :pern              :admin
+                                       :entity            expert
+                                       :fields            '((:btn "Удалить ресурс" :act (del-supplier-resource-price)))))))
+       (:caption           "Мои заявки на тендеры"
+        :perm              :self
+        :entity            offer
+        :val               :collection
+        :fields            '(tender))))
+
+    ;; Список застройщиков
     (:place                builders
      :url                  "/builder"
      :navpoint             "Застройщики"
      :actions
      '((:caption           "Организации-застройщики"
         :perm              :all
-        :entity            supplier
-        :val               (remove-if-not #'(lambda (x)
-                                              (equal (type-of (cdr x)) 'BUILDER))
-                            (cons-hash-list *USER*))
-        :fields            '(name login)
-        :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
-        ;; <?> Как будем показывать тендеры застройщика?
-        :fields           '((name juridical-address requisites tenders rating)))))
+        :entity            builder
+        :val               (remove-if-not #'(lambda (x) (equal (type-of (cdr x)) 'BUILDER)) (cons-hash-list *USER*))
+        :fields            '(name login (:btn "Страница застройщика"
+                                         :act (hunchentoot:redirect
+                                               (format nil "/builder/~A" (get-btn-key (caar (form-data))))))))))
+
+    ;; Страница застройщика
+    (:place                builder
+     :url                  "/builder/:id"
+     :actions
+     '((:caption           "Поставщик"
+        :entity            builder
+        :val               (gethash (parse-integer (caddr (request-list))) *USER*)
+        :fields            '(name juridical-address inn kpp ogrn bank-name bik corresp-account client-account tenders rating))
+       (:caption           "Объявить новый тендер"
+        :perm              :self
+        :entity            tender
+        :val               :clear
+        :fields            '(name all claim analize interview result resources documents price suppliers
+                             (:btn "Объявить тендер" :act (create-tender)
+                              :hooks
+                              '((:change resources   (set-field price (calc-tender-price (request resources))))
+                                (:change resources   (set-field suppliers (calc-suppliers (request resources))))))))))
+    ;; (:other   '(:owner      (get-current-user-id)
+    ;;               :price      (calc-tender-price (request resources))
+    ;;               :suppliers  (calc-suppliers (request resources))
+    ;;               :offerts    nil
+    ;;               :winner     nil))
+    ;;   (:status    :unactive)))))))
+
+
+    ;; Список тендеров
     (:place                tenders
      :url                  "/tender"
      :navpoint             "Тендеры"
      :actions
      '((:caption           "Тендеры"
         :perm              :all
-        :entity            supplier
+        :entity            builder
         :val               (cons-hash-list *TENDER*)
-        :fields            '(name)
-        :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
-        ;; <?> Как будем показывать тендеры застройщика?
-        :fields           '((name juridical-address requisites tenders rating)))))
+        :fields            '(name status owner (:btn "Страница тендера"
+                                                :act (hunchentoot:redirect
+                                                      (format nil "/tender/~A" (get-btn-key (caar (form-data))))))))))
+
+    ;; Страница тендера (поставщик может откликнуться)
+    (:place                tender
+     :url                  "/tender/:id"
+     :actions
+     '((:caption           "Тендер"
+        :entity            tender
+        :val               (gethash (parse-integer (caddr (request-list))) *TENDER*)
+        :fields            '(name status owner active-date all claim analize interview result winner price resources documents suppliers oferts
+                             (:btn "Ответить заявкой на тендер" :act (error 'none))))))
+                              ;; :hooks
+                              ;; '((:change resources   (set-field price (calc-tender-price (request resources))))
+                              ;;   (:change resources   (set-field suppliers (calc-suppliers (request resources))))))))))
+
+
+    ;; Список ресурсов
     (:place                resources
      :url                  "/resource"
      :navpoint             "Ресурсы"
      :actions
-     '((:caption           "Тендеры"
+     '((:caption           "Ресурсы"
         :perm              :all
-        :entity            supplier
+        :entity            resource
         :val               (cons-hash-list *RESOURCE*)
-        :fields            '(name)
-        :sort              "<?> Добросовестность, кол-во открытых тендеров, поле rating элемента <?>"
-        ;; <?> Как будем показывать тендеры застройщика?
-        :fields           '((name juridical-address requisites tenders rating)))))))
+        :fields            '(name category resource-type unit (:btn "Страница ресурса"
+                                                               :act (hunchentoot:redirect
+                                                                     (format nil "/resource/~A" (get-btn-key (caar (form-data))))))))))
+
+    ;; Страница ресурса
+    (:place                resource
+     :url                  "/resource/:id"
+     :actions
+     '((:caption           "Ресурс"
+        :entity            resource
+        :val               (gethash (parse-integer (caddr (request-list))) *RESOURCE*)
+        :fields            '(name category resource-type unit suppliers))))))

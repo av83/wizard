@@ -4,8 +4,6 @@
 (defparameter *my-package* 'wizard)
 (defparameter *used-package* '(cl iter))
 
-(load "ent.lisp") ;; *entityes* *places*
-
 (with-open-file (out "src/defmodule.lisp" :direction :output :if-exists :supersede)
   ;; Required
   (format out "~{~%(require '~A)~}" *required*)

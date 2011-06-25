@@ -196,11 +196,12 @@
                                                      (t (format nil "<br />err:unk1 typedata: ~A" typedata)))))
                                           (:btn
                                            (tpl:btn (list :name (getf infld :btn) :value (getf infld :value))))))))))
-                           ((or (equal 'ADMIN (type-of val))    ;; ADMIN
-                                (equal 'SUPPLIER (type-of val)) ;; SUPPLIER
-                                (equal 'TENDER (type-of val))   ;; TENDER
-                                (equal 'BUILDER (type-of val))  ;; BUILDER
-                                (equal 'EXPERT (type-of val)))  ;; EXPERT
+                           ((or (equal 'ADMIN (type-of val))     ;; ADMIN
+                                (equal 'SUPPLIER (type-of val))  ;; SUPPLIER
+                                (equal 'TENDER (type-of val))    ;; TENDER
+                                (equal 'BUILDER (type-of val))   ;; BUILDER
+                                (equal 'EXPERT (type-of val))    ;; EXPERT
+                                (equal 'RESOURCE (type-of val))) ;; EXPERT
                             (tpl:frmobj
                              (list :flds
                                    (loop :for infld :in (getf act :fields) :collect
@@ -259,3 +260,4 @@
       :popups popups
       :navpoints (menu)
       :content content))))
+
