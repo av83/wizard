@@ -125,24 +125,27 @@
 
 
 ;; tender 0 (builder 1)
-(setf (gethash (hash-table-count *TENDER*) *TENDER*)
-      (make-instance 'TENDER
-                     :name                "Первый тендер"
-                     :status              :active
-                     :owner               (gethash 6 *USER*)
-                     :active-date         "15.12.2012"
-                     :all                 "15.12.2012-21.01.2013"
-                     :claim               "15.12.2012-21.01.2013"
-                     :analize             "15.12.2012-21.01.2013"
-                     :interview           "15.12.2012-21.01.2013"
-                     :result              "15.12.2012-21.01.2013"
-                     ;; :winner              ""
-                     ;; :price               "Рекомендуемая стоимость"    (:num) ;; вычисляется автоматически на основании заявленных ресурсов
-                     ;; :resources           "Ресурсы"                    (:list-of-links resource)
-                     ;; :documents           "Документы"                  (:list-of-links document) ;; закачка и удаление файлов
-                     ;; :suppliers           "Поставщики"                 (:list-of-links supplier) ;; строится по ресурсам автоматически
-                     ;; :offerts             "Откликнувшиеся поставщики"  (:list-of-links supplier)
-                     ))
+(let* ((id (hash-table-count *TENDER*))
+       (tender (make-instance 'TENDER
+                              :name                "Первый тендер"
+                              :status              :active
+                              :owner               (gethash 6 *USER*)
+                              :active-date         "15.12.2012"
+                              :all                 "15.12.2012-21.01.2013"
+                              :claim               "15.12.2012-21.01.2013"
+                              :analize             "15.12.2012-21.01.2013"
+                              :interview           "15.12.2012-21.01.2013"
+                              :result              "15.12.2012-21.01.2013"
+                              ;; :winner              ""
+                              ;; :price               "Рекомендуемая стоимость"    (:num) ;; вычисляется автоматически на основании заявленных ресурсов
+                              ;; :resources           "Ресурсы"                    (:list-of-links resource)
+                              ;; :documents           "Документы"                  (:list-of-links document) ;; закачка и удаление файлов
+                              ;; :suppliers           "Поставщики"                 (:list-of-links supplier) ;; строится по ресурсам автоматически
+                              ;; :offerts             "Откликнувшиеся поставщики"  (:list-of-links supplier)
+                              )))
+  (setf (gethash (hash-table-count *TENDER*) *TENDER*)
+        tender)
+  (push tender (a-tenders (gethash 6 *USER*))))
 
 
 ;; dbg out

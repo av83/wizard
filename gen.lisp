@@ -4,13 +4,11 @@
 (defparameter *my-package* 'wizard)
 (defparameter *used-package* '(cl iter))
 
-(with-open-file (out "src/defmodule.lisp" :direction :output :if-exists :supersede)
+(with-open-file (out "/home/rigidus/wizard/src/defmodule.lisp" :direction :output :if-exists :supersede)
   ;; Required
   (format out "~{~%(require '~A)~}" *required*)
   (format out "~%~%(restas:define-module #:~A~%  (:use ~{#:~A ~}))~%~%(in-package #:~A)"
           *my-package* *used-package* *my-package*)
-  ;; Lib
-  (format out "~%~%(load \"src/lib.lisp\")")
   ;; Containers
   (let ((containers)
         (classes (make-hash-table :test #'equal)))
@@ -54,84 +52,136 @@
                       (name    (car fld)))
                   (format out "~%  (format t \"~A~A : ~A\" (~A object))" "~%" caption "~A" name))))
            (format out ")")))))
-  ;; Init objects
-  (format out "~%~%~%;; Init objects~%(load \"src/init.lisp\")~%")
   ;; Places
   (let ((menu))
     (loop :for place :in *places* :do
        (unless (null (getf place :navpoint))
          (push (list :link (getf place :url) :title (getf place :navpoint)) menu))
-       (setf *controllers* nil)
-       (format out "~%~%(restas:define-route ~A-page (\"~A\")"
-               (string-downcase (getf place :place))
-               (getf place :url))
-       (format out "~%  (let ((session (hunchentoot:start-session))~%~7T (acts (list ~{~A~}))) ~A)"
-               (loop :for action :in (eval (getf place :actions)) :collect
-                  (gen-action action)) ;; Вот оно ключевое :)
-               (format nil  "~%    (show-acts acts))"))
-       (format out "~%~%(restas:define-route ~A-page/post (\"~A\" :method :post)"
-               (string-downcase (getf place :place))
-               (getf place :url))
-       (format out  "~%  (let ((session (hunchentoot:start-session))~%~7T (acts `(~{~%~A~}))) ~%       (activate acts)))"
-               (loop :for controller :in *controllers* :collect
-                  (format nil "(\"~A\" . ,(lambda () ~A))"
-                          (car controller)
-                          (subseq (with-output-to-string (*standard-output*) (pprint (cdr controller))) 1)
-                          ))))
+       ;; (setf *controllers* nil)
+       (let ((controllers))
+         (format out "~%~%(restas:define-route ~A-page (\"~A\")"
+                 (string-downcase (getf place :place))
+                 (getf place :url))
+         (format out "~%  (let ((session (hunchentoot:start-session))~%~7T (acts (list ~{~A~}))) ~A)"
+                 (loop :for action :in (eval (getf place :actions)) :collect
+                    (multiple-value-bind (str ctrs)
+                        (gen-action action) ;; Вот оно ключевое :)
+                      (unless (null ctrs)
+                        (loop :for ctr :in ctrs :do
+                           (unless (null ctr)
+                             (setf controllers (append controllers (list ctr)))
+                             ;; (format t "~%~%: ~A | ~A" (car ctr) (cdr ctr))
+                             )))
+                      str))
+                 (format nil  "~%    (show-acts acts))"))
+         (format out "~%~%(restas:define-route ~A-page/post (\"~A\" :method :post)"
+                 (string-downcase (getf place :place))
+                 (getf place :url))
+         (format out  "~%  (let ((session (hunchentoot:start-session))~%~7T (acts `(~{~%~A~}))) ~%       (activate acts)))"
+                 (loop :for controller :in controllers :collect
+                    (format nil "(\"~A\" . ,(lambda () ~A))"
+                            (car controller)
+                            (subseq (with-output-to-string (*standard-output*) (pprint (cdr controller))) 1)
+                            )))))
     (format out "~%~%~%(defun menu ()  '")
     (pprint (reverse menu) out)
     (format out ")")))
 
 (defun gen-action (action)
-  (format nil "~%~14T (list :perm '~A ~%~20T :title \"~A\"~% ~20T :val (lambda () ~A)~% ~20T :fields ~A)"
-          (subseq (with-output-to-string (*standard-output*) (pprint (getf action :perm))) 1)
-          (getf action :caption)
-          (subseq (with-output-to-string (*standard-output*) (pprint (getf action :val))) 1)
-          (case (getf action :val)
-            (':clear
-             (format nil "(list ~{~A~})"
-                     (loop :for fld :in (eval (getf action :fields)) :collect
-                        (etypecase fld
-                          (symbol   (gen-fld-symb fld action))
-                          (cons     (gen-fld-cons fld))))))
-            ;; todo: user
-            (otherwise
-             (format nil "(list ~{~A~})"
-                     (loop :for fld :in (eval (getf action :fields)) :collect
-                        (etypecase fld
-                          (symbol   (gen-fld-symb fld action))
-                          (cons     (gen-fld-cons fld)))))))))
+  (let ((controllers))
+    (values
+     (format nil "~%~14T (list :perm '~A ~%~20T :title \"~A\"~% ~20T :val (lambda () ~A)~% ~20T :fields ~A)"
+             (subseq (with-output-to-string (*standard-output*) (pprint (getf action :perm))) 1)
+             (getf action :caption)
+             (subseq (with-output-to-string (*standard-output*) (pprint (getf action :val))) 1)
+             (multiple-value-bind (str ctrs)
+                 (gen-fields (eval (getf action :fields))
+                             (getf action :entity))
+               (setf controllers ctrs)
+               str))
+     controllers)))
 
-(defun gen-fld-symb (fld action)
-  (let ((entity (find-if #'(lambda (entity)
-                             (equal (getf entity :entity) (getf action :entity)))
-                         *entityes*)))
-    (format nil "~%~25T (list :fld \"~A\" :perm 111 :typedata '~A :name \"~A\")"
+
+(defun gen-fields (fields entity)
+  (let ((controllers))
+    (values
+     (format nil "(list ~{~A~})"
+             (loop :for fld :in fields :collect
+                (etypecase fld
+                  (symbol   (gen-fld-symb fld entity))
+                  (cons     (multiple-value-bind (str ctr)
+                                (gen-fld-cons fld)
+                              (push ctr controllers)
+                              str)))))
+     controllers)))
+
+
+
+(defun gen-fld-symb (fld entity-param)
+  (let* ((entity    (find-if #'(lambda (entity)
+                                 (equal (getf entity :entity) entity-param))
+                             *entityes*))
+         (typedata  (caddr (find-if #'(lambda (x)
+                                        (equal (car x) fld))
+                                    (getf entity :fields))))
+         (name      (cadr (find-if #'(lambda (x)
+                                       (equal (car x) fld))
+                                   (getf entity :fields))))
+         (access    (if (equal (car typedata) :list-of-links)
+                        (format nil "~%~32T:access (lambda () ~A)~%~32T:iface ~A"
+                                (subseq (with-output-to-string (*standard-output*)
+                                          (pprint (nth 4 (find-if #'(lambda (x)
+                                                                      (equal (car x) fld))
+                                                                  (getf entity :fields)))))
+                                        1)
+                                (subseq (with-output-to-string (*standard-output*)
+                                          (pprint (nth 5 (find-if #'(lambda (x)
+                                                                      (equal (car x) fld))
+                                                                  (getf entity :fields)))))
+                                        1))
+                        "")))
+    (format nil "~%~25T (list :fld \"~A\" :perm 111 :typedata '~A :name \"~A\"~A)"
             fld
-            (caddr (find-if #'(lambda (x)
-                                (equal (car x) fld))
-                            (getf entity :fields)))
-            (cadr (find-if #'(lambda (x)
-                               (equal (car x) fld))
-                           (getf entity :fields))))))
+            (subseq (with-output-to-string (*standard-output*)  (pprint typedata)) 1)
+            name
+            access
+            )))
 
 (defun gen-fld-cons (fld)
   (let ((instr (car fld)))
-    (case instr
+    (ecase instr
       (:btn
-       (if (null (getf fld :popup))
-           (format nil "~%~25T (list :btn \"~A\" :perm 111 :value \"~A\")"
-                   (let ((gen (gensym "B")))
-                     (push `(,gen . ,(getf fld :act)) *controllers*)
-                     gen)
-                   (getf fld instr))
-           ;; ELSE
-           (let ((popup (eval (getf fld :popup))))
-             (format nil "~%~25T (list :popbtn \"~A\" ~%~31T :value \"~A\" ~%~31T :perm 111 ~%~31T :title \"~A\" ~%~31T :fields (list ~{~A~}))"
-                     (gensym "P")
-                     (getf fld instr)
-                     (getf popup :caption)
-                     (loop :for fld :in (eval (getf popup :fields)) :collect
-                        (etypecase fld
-                          (symbol   (gen-fld-symb fld popup))
-                          (cons     (gen-fld-cons fld)))))))))))
+       (let ((ctr))
+         (values
+          (if (null (getf fld :popup))
+              (format nil "~%~25T (list :btn \"~A\" :perm 111 :value \"~A\")"
+                      (let ((gen (gensym "B")))
+                        (setf ctr (cons gen (getf fld :act)))
+                        ;; (setf ctr `(,gen . ,(getf fld :act)))
+                        ;; (push `(,gen . ,(getf fld :act)) *controllers*)
+                        gen)
+                      (getf fld instr))
+              ;; ELSE
+              (let ((popup (eval (getf fld :popup))))
+                (format nil "~%~25T (list :popbtn \"~A\" ~%~31T :value \"~A\" ~%~31T :perm 111 ~%~31T :title \"~A\" ~%~31T :fields (list ~{~A~}))"
+                        (gensym "P")
+                        (getf fld instr)
+                        (getf popup :caption)
+                        (loop :for fld :in (eval (getf popup :fields)) :collect
+                           (etypecase fld
+                             (symbol   (gen-fld-symb fld popup))
+                             (cons     (gen-fld-cons fld)))))))
+          ctr)))
+      (:col
+       (let ((controllers))
+         (values
+          (format nil "~%~25T (list :col \"~A\" :perm 111 ~%~32T:val (lambda () ~A)~%~32T:fields ~A)"
+                  (getf fld instr)
+                  (getf fld :val)
+                  (multiple-value-bind (str ctrs)
+                      (gen-fields (eval (getf fld :fields))
+                                  (getf fld :entity))
+                    (setf controllers (car ctrs))
+                    str))
+          controllers))))))
+

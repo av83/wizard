@@ -133,20 +133,20 @@
                            '(:view   :logged))                              ;; Гость не видит банковские реквизиты
       (bik                 "Банковский идентификационный код" (:str)
                            '(:view   :logged))                              ;; Гость не видит банковские реквизиты
-      (corresp-account     "Корреспондентский счет)"    (:str)
+      (corresp-account     "Корреспондентский счет"    (:str)
                            '(:view   :logged))                              ;; Гость не видит банковские реквизиты
-      (client-account      "Рассчетный счет"            (:str)
+      (client-account      "Расчетный счет"            (:str)
                            '(:view   :logged))                              ;; Гость не видит банковские реквизиты
       (addresses           "Адреса офисов и магазинов"  (:list-of-str)
                            '(:view   (or :logged :fair)))                   ;; Гость не видит у недобросовестных
       (contact-person      "Контактное лицо"            (:str)
                            '(:view   (or :logged :fair)))                   ;; Гость не видит у недобросовестных
-      (resources           "Поставляемые ресурсы"       (:list-of-link supplier-resource-price)
+      (resources           "Поставляемые ресурсы"       (:list-of-links supplier-resource-price)
                            '(:add-resource :self   ;; создается связующий объект supplier-resource-price содержащий установленную поставщиком цену
                              :del-resource :self   ;; удаляется связующий объект
                              :change-price :self))
-      (sale                "Скидки и акции"             (:list-of-link sale))    ;; sale - связующий объект
-      (offers              "Посланные заявки на тендеры"  (:list-of-link offer)
+      (sale                "Скидки и акции"             (:list-of-links sale))    ;; sale - связующий объект
+      (offers              "Посланные заявки на тендеры"  (:list-of-links offer)
                            '(:view :self
                              :update :self)))  ;; offer - связующий объект
      :perm
@@ -163,7 +163,7 @@
      :fields
      ((owner               "Поставщик ресурсов"         (:link supplier)                 (:update :nobody))
       (tender              "Тендер"                     (:link tender)                   (:update :nobody))
-      (resources           "Ресурсы заявки"             (:list-of-link offer-resource)))
+      (resources           "Ресурсы заявки"             (:list-of-links offer-resource)))
      :perm
      (:create (and :active :supplier) ;; создается связанный объект offer-resource, содержащие ресурсы заявки
       :delete (and :owner  :active)   ;; удаляются связанный объект offer-resource
@@ -236,11 +236,19 @@
                            '(:view   :logged))                              ;; Гость не видит банковские реквизиты
       (bik                 "Банковский идентификационный код" (:str)
                            '(:view   :logged))                              ;; Гость не видит банковские реквизиты
-      (corresp-account     "Корреспондентский счет)"    (:str)
+      (corresp-account     "Корреспондентский счет"     (:str)
                            '(:view   :logged))                              ;; Гость не видит банковские реквизиты
       (client-account      "Рассчетный счет"            (:str)
                            '(:view   :logged))                              ;; Гость не видит банковские реквизиты
-      (tenders             "Тендеры"                    (:list-of-link tender))
+      (tenders             "Тендеры"                    (:list-of-links tender)
+                           '(:view   :all)
+                           (remove-if-not #'(lambda (x)
+                                              (equal (a-owner (cdr x))
+                                                     (gethash (parse-integer (nth 2 (request-list))) *USER*)))
+                                          (cons-hash-list *TENDER*))
+                           '(name (:btn "Страница тендера"
+                                   :act (hunchentoot:redirect
+                                         (format nil "/tender/~A" (get-btn-key (caar (form-data))))))))
       (rating              "Рейтинг"                    (:num)
                            ((:update :system))))
      :perm
@@ -371,13 +379,22 @@
         :entity            admin
         :val               (cur-user)
         :fields            '(login password
-                             (:btn "Изменить пароль" :act (change-self-password))))
+                             (:btn "Изменить пароль" :act
+                              (progn
+                                (setf (a-login (cur-user))     (cdr (assoc "LOGIN" (form-data) :test #'equal)))
+                                (setf (a-password (cur-user))  (cdr (assoc "PASSWORD" (form-data) :test #'equal)))
+                                (hunchentoot:redirect (hunchentoot:request-uri*))))))
        (:caption           "Создать аккаунт эксперта"
         :perm              :admin
         :entity            expert
         :val               :clear
         :fields            '(login password name
-                             (:btn "Создать новый аккаунт эксперта" :act (create-expert))))
+                             (:btn "Создать новый аккаунт эксперта" :act (progn
+                                                                           (make-instance 'expert
+                                                                                          :login (cdr (assoc "LOGIN" (form-data) :test #'equal))
+                                                                                          :password (cdr (assoc "PASSWORD" (form-data) :test #'equal))
+                                                                                          :name (cdr (assoc "NAME" (form-data) :test #'equal)))
+                                                                           (hunchentoot:redirect (hunchentoot:request-uri*))))))
        (:caption           "Эксперты"
         :perm              :admin
         :entity            expert
@@ -407,34 +424,6 @@
                                        :perm               :admin
                                        :entity             supplier
                                        :fields             '((:btn "Сделать добросовестным" :act (approve-supplier-fair)))))))))
-
-
-    ;; Страница тендера
-    (:place                tender
-     :url                  "/tender"
-     :navpoint             "Тендер такой-то"
-     :actions
-     '((:caption           "Ответить заявкой на тендер" ;; Добросовестный поставщик отвечает заявкой на тендер
-        :perm              (and :active :fair)
-        :entity            tender
-        :val               (gethash 0 *tender*)
-        :fields            '(name status owner active-date all claim analize interview result winner price resources documents suppliers offerts
-                             (:btn "Ответить заявкой на тендер"
-                              :popup '(:caption           "Выберите ресурсы"
-                                       :perm              (and :active :fair)
-                                       :entity            resource
-                                       :fields
-                                       '((:btn "Участвовать в тендере" :act (create-offer)))))))
-       (:caption           "Отменить тендер"
-        :perm              :owner
-        :entity            tender
-        :val               (gethash 0 *tender*)
-        :fields            '((:btn "Отменить тендер"
-                              :popup
-                              '(:caption           "Действительно отменить?"
-                                :perm               :owner
-                                :entity             tender
-                                :fields             '((:btn "Подтверждаю отмену" :act (cancel-tender)))))))))
 
     ;; Список экспертов
     (:place                experts
@@ -521,15 +510,26 @@
     (:place                builder
      :url                  "/builder/:id"
      :actions
-     '((:caption           "Поставщик"
+     '((:caption           "Застройщик"
         :entity            builder
         :val               (gethash (parse-integer (caddr (request-list))) *USER*)
-        :fields            '(name juridical-address inn kpp ogrn bank-name bik corresp-account client-account tenders rating))
+        :fields            '(name juridical-address inn kpp ogrn bank-name bik corresp-account client-account
+                             (:col              "Тендеры застройщика"
+                              :perm             111
+                              :entity           tender
+                              :val              (remove-if-not #'(lambda (x)
+                                                                   (equal (a-owner (cdr x))
+                                                                          (gethash (parse-integer (nth 2 (request-list))) *USER*)))
+                                                 (cons-hash-list *TENDER*))
+                              :fields '(name (:btn "Страница тендера"
+                                              :act (hunchentoot:redirect
+                                                    (format nil "/tender/~A" (get-btn-key (caar (form-data))))))))
+                             rating))
        (:caption           "Объявить новый тендер"
         :perm              :self
         :entity            tender
         :val               :clear
-        :fields            '(name all claim analize interview result resources documents price suppliers
+        :fields            '(name all claim analize interview result
                              (:btn "Объявить тендер" :act (create-tender)
                               :hooks
                               '((:change resources   (set-field price (calc-tender-price (request resources))))
@@ -563,11 +563,18 @@
         :entity            tender
         :val               (gethash (parse-integer (caddr (request-list))) *TENDER*)
         :fields            '(name status owner active-date all claim analize interview result winner price resources documents suppliers oferts
-                             (:btn "Ответить заявкой на тендер" :act (error 'none))))))
-                              ;; :hooks
-                              ;; '((:change resources   (set-field price (calc-tender-price (request resources))))
-                              ;;   (:change resources   (set-field suppliers (calc-suppliers (request resources))))))))))
-
+                             (:btn "Ответить заявкой на тендер"
+                              :popup '(:caption           "Выберите ресурсы"
+                                       :perm              (and :active :fair)
+                                       :entity            resource
+                                       :fields
+                                       '((:btn "Участвовать в тендере" :act (create-offer)))))
+                             (:btn "Отменить тендер"
+                              :popup
+                              '(:caption           "Действительно отменить?"
+                                :perm               :owner
+                                :entity             tender
+                                :fields             '((:btn "Подтверждаю отмену" :act (cancel-tender)))))))))
 
     ;; Список ресурсов
     (:place                resources

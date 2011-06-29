@@ -249,13 +249,13 @@
 {template fld}
   <table>{\n}
     <tr>{\n}
-      <td width="180">{\n}
-          <div style="width: 180px;">{\n}
+      <td width="350">{\n}
+          <div style="width: 350px;">{\n}
             {$fldname}{\n}
           </div>{\n}
     </td>{\n}
-    <td width="180">{\n}
-      <div style="width: 180px;">{\n}
+    <td width="350">{\n}
+      <div style="width: 350px;">{\n}
         {$fldcontent |noAutoescape}{\n}
       </div>{\n}
     </td>{\n}
@@ -343,4 +343,16 @@
     <input type="submit" name="AUTH" value="Войти"
            style="background-color: #E0E0E0; width: 160px;" />
   </form>
+{/template}
+
+
+{template col}
+<div style="border: 1px solid #7F9DB9; padding: 3px 5px 3px 5px;
+            background-color: #F1F1F1; margin: 3px 0px 3px 0px;">
+  <div style="padding: 3px 5px 3px 5px;"> {$title}</div>
+  <div style="border: 1px solid #7F9DB9; padding: 3px 5px 3px 5px;
+              background-color: #F1F1F1; background-color: #DCDCDC">
+    {$content |noAutoescape}
+  </div>
+</div>
 {/template}
