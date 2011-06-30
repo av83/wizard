@@ -376,34 +376,36 @@
      :actions
      '((:caption           "Новости"
         :perm              :all)))
-    ;; Ресурсы
-    (:place                resources
-     :url                  "/resources"
+    ;; Каталог ресурсов - категории
+    (:place                catalog
+     :url                  "/catalog"
      :navpoint             "Каталог ресурсов"
      :actions
      '((:caption           "Категории"
         :perm              :all
         :entity            category
         :val               (cons-hash-list *CATEGORY*)
-        :fields            '(name parent child-categoryes resources
+        :fields            '(name
+                             ;; parent child-categoryes
                              (:btn "Показать ресурсы"
                               :act
                               (hunchentoot:redirect
-                               (format nil "/resources/~A" (get-btn-key (caar (form-data)))))
+                               (format nil "/category/~A" (get-btn-key (caar (form-data)))))
                               )))))
-    (:place                resources-category
-     :url                  "/resources/:id"
-     :navpoint             "Каталог ресурсов"
+    ;; Каталог ресурсов - содержимое категории
+    (:place                category
+     :url                  "/category/:id"
      :actions
      '((:caption           "Категории"
         :perm              :all
         :entity            category
         :val               (cons-hash-list *CATEGORY*)
-        :fields            '(name parent child-categoryes resources
+        :fields            '(name
+                             ;; parent child-categoryes
                              (:btn "Показать ресурсы"
                               :act
                               (hunchentoot:redirect
-                               (format nil "/resources/~A" (get-btn-key (caar (form-data)))))
+                               (format nil "/category/~A" (get-btn-key (caar (form-data)))))
                               )))
        (:caption           "Ресурсы категории"
         :perm              :all
@@ -412,13 +414,51 @@
                                               (equal (a-category (cdr x))
                                                      (gethash (parse-integer (caddr (request-list))) *CATEGORY*)))
                             (cons-hash-list *RESOURCE*))
-        :fields            '(name parent child-categoryes resources
-                             (:btn "Показать ресурсы"
+        :fields            '(name resource-type unit
+                             (:btn "Страница ресурса"
                               :act
                               (hunchentoot:redirect
-                               (format nil "/resources/~A" (get-btn-key (caar (form-data)))))
-                              )))
-       ))
+                               (format nil "/resource/~A" (get-btn-key (caar (form-data)))))
+                              )))))
+    ;; Линейный список ресурсов
+    (:place                resources
+     :url                  "/resource"
+     :navpoint             "Список ресурсов"
+     :actions
+     '((:caption           "Ресурсы"
+        :perm              :all
+        :entity            resource
+        :val               (cons-hash-list *RESOURCE*)
+        :fields            '(name resource-type unit
+                             (:btn "Страница категории"
+                              :act
+                              (HUNCHENTOOT:REDIRECT
+                               (FORMAT NIL "/category/~A"
+                                       (let ((etalon (a-category (gethash (GET-BTN-KEY (CAAR (form-data))) *RESOURCE*))))
+                                         (car (find-if #'(lambda (category-cons)
+                                                           (equal (cdr category-cons) etalon))
+                                                       (cons-hash-list *CATEGORY*))))))
+                              )
+                             (:btn "Страница ресурса"
+                              :act
+                              (hunchentoot:redirect
+                               (format nil "/resource/~A" (get-btn-key (caar (form-data)))))
+                              )))))
+    ;; Страница ресурса
+    (:place                resource
+     :url                  "/resource/:id"
+     :actions
+     '((:caption           "Ресурсы"
+        :perm              :all
+        :entity            resource
+        :val               (gethash (parse-integer (caddr (request-list)))  *RESOURCE*)
+        :fields            '(name category resource-type unit
+                             (:btn "Страница ресурса"
+                              :act
+                              (hunchentoot:redirect
+                               (format nil "/resource/~A" (get-btn-key (caar (form-data)))))
+                              )))))
+
 
     ;; Личный кабинет Администратора
     (:place                admin
@@ -740,21 +780,6 @@
                                 :fields             '((:btn "Подтверждаю отмену" :act (cancel-tender)))))
                              ))))
 
-    ;; Список ресурсов
-    (:place                resources
-     :url                  "/resource"
-     :navpoint             "Ресурсы"
-     :actions
-     '((:caption           "Ресурсы"
-        :perm              :all
-        :entity            resource
-        :val               (cons-hash-list *RESOURCE*)
-        :fields            '(name category resource-type unit
-                             (:btn "Страница ресурса"
-                              :act "Страница ресурса"
-                              ;; (hunchentoot:redirect
-                              ;;  (format nil "/resource/~A" (get-btn-key (caar (form-data)))))
-                              )))))
 
     ;; Страница ресурса
     (:place                resource
