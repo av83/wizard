@@ -4,6 +4,92 @@
 (defparameter *my-package* 'wizard)
 (defparameter *used-package* '(cl iter))
 
+(defun gen-fld-symb (fld entity-param)
+  (let* ((entity    (find-if #'(lambda (entity)
+                                 (equal (getf entity :entity) entity-param))
+                             *entityes*))
+         (typedata  (caddr (find-if #'(lambda (x)
+                                        (equal (car x) fld))
+                                    (getf entity :fields))))
+         (name      (cadr (find-if #'(lambda (x)
+                                       (equal (car x) fld))
+                                   (getf entity :fields)))))
+    (format nil "~%~25T (list :fld \"~A\" :perm 111 :typedata '~A :name \"~A\")"
+            fld
+            (subseq (with-output-to-string (*standard-output*)  (pprint typedata)) 1)
+            name
+            )))
+
+(defun gen-fld-cons (fld)
+  (let ((instr (car fld)))
+    (ecase instr
+      (:btn
+       (let ((btntype (nth 2 fld)))
+         (ecase btntype
+           (:act
+            (let ((gen (gensym "B")))
+              (values
+               (format nil "~%~25T (list :btn \"~A\" :perm 111 :value \"~A\")"
+                       gen
+                       (getf fld instr))
+               (list (list gen (getf fld :act))))))
+           (:popup
+            (let ((popup (eval (getf fld :popup)))
+                  (gen   (gensym "P")))
+              (multiple-value-bind (str ctrs)
+                  (gen-fields (eval (getf popup :fields))
+                              (getf popup :entity))
+                ;; (format t "~%---| ~A" ctrs)
+                (values
+                 (format nil "~%~25T (list :popbtn \"~A\" ~%~31T :value \"~A\" ~%~31T :perm 111 ~%~31T :title \"~A\" ~%~31T :fields ~A)"
+                         gen
+                         (getf fld instr)
+                         (getf popup :caption)
+                         str)
+                 ctrs))))
+           )))
+      (:col
+       (multiple-value-bind (str ctrs)
+           (gen-fields (eval (getf fld :fields))
+                       (getf fld :entity))
+         (values
+          (format nil "~%~25T (list :col \"~A\" :perm 111 ~%~32T:val (lambda () ~A)~%~32T:fields ~A)"
+                  (getf fld instr)
+                  (getf fld :val)
+                  str)
+          ctrs))))))
+
+(defun gen-fields (fields entity)
+  ;; (format t "~%gen-fields : ~A : ~A" fields entity)
+  (let ((controllers))
+    (values
+     (format nil "(list ~{~A~})"
+             (loop :for fld :in fields :collect
+                (etypecase fld
+                  (symbol
+                   (gen-fld-symb fld entity))
+                  (cons
+                   (multiple-value-bind (str ctrs)
+                       (gen-fld-cons fld)
+                     (loop :for ctr :in ctrs :do
+                        (setf controllers (append controllers (list ctr))))
+                     str)))))
+     controllers)))
+
+(defun gen-action (action)
+  (let ((controllers))
+    (values
+     (format nil "~%~14T (list :perm '~A ~%~20T :title \"~A\"~% ~20T :val (lambda () ~A)~% ~20T :fields ~A)"
+             (subseq (with-output-to-string (*standard-output*) (pprint (getf action :perm))) 1)
+             (getf action :caption)
+             (subseq (with-output-to-string (*standard-output*) (pprint (getf action :val))) 1)
+             (multiple-value-bind (str ctrs)
+                 (gen-fields (eval (getf action :fields))
+                             (getf action :entity))
+               (setf controllers (append controllers (list ctrs)))
+               str))
+     controllers)))
+
 (with-open-file (out "/home/rigidus/wizard/src/defmodule.lisp" :direction :output :if-exists :supersede)
   ;; Required
   (format out "~{~%(require '~A)~}" *required*)
@@ -84,90 +170,3 @@
     (format out "~%~%~%(defun menu ()  '")
     (pprint (reverse menu) out)
     (format out ")")))
-
-(defun gen-action (action)
-  (let ((controllers))
-    (values
-     (format nil "~%~14T (list :perm '~A ~%~20T :title \"~A\"~% ~20T :val (lambda () ~A)~% ~20T :fields ~A)"
-             (subseq (with-output-to-string (*standard-output*) (pprint (getf action :perm))) 1)
-             (getf action :caption)
-             (subseq (with-output-to-string (*standard-output*) (pprint (getf action :val))) 1)
-             (multiple-value-bind (str ctrs)
-                 (gen-fields (eval (getf action :fields))
-                             (getf action :entity))
-               (setf controllers (append controllers (list ctrs)))
-               str))
-     controllers)))
-
-(defun gen-fields (fields entity)
-  ;; (format t "~%gen-fields : ~A : ~A" fields entity)
-  (let ((controllers))
-    (values
-     (format nil "(list ~{~A~})"
-             (loop :for fld :in fields :collect
-                (etypecase fld
-                  (symbol
-                   (gen-fld-symb fld entity))
-                  (cons
-                   (multiple-value-bind (str ctrs)
-                       (gen-fld-cons fld)
-                     (loop :for ctr :in ctrs :do
-                        (setf controllers (append controllers (list ctr))))
-                     str)))))
-     controllers)))
-
-(defun gen-fld-cons (fld)
-  (let ((instr (car fld)))
-    (ecase instr
-      (:btn
-       (let ((btntype (nth 2 fld)))
-         (ecase btntype
-           (:act
-            (let ((gen (gensym "B")))
-              (values
-               (format nil "~%~25T (list :btn \"~A\" :perm 111 :value \"~A\")"
-                            gen
-                            (getf fld instr))
-               (list (list gen (getf fld :act))))))
-           (:popup
-            (let ((popup (eval (getf fld :popup)))
-                  (gen   (gensym "P")))
-              (multiple-value-bind (str ctrs)
-                  (gen-fields (eval (getf popup :fields))
-                              (getf popup :entity))
-                ;; (format t "~%---| ~A" ctrs)
-                (values
-                 (format nil "~%~25T (list :popbtn \"~A\" ~%~31T :value \"~A\" ~%~31T :perm 111 ~%~31T :title \"~A\" ~%~31T :fields ~A)"
-                         gen
-                         (getf fld instr)
-                         (getf popup :caption)
-                         str)
-                 ctrs))))
-           )))
-      (:col
-       (multiple-value-bind (str ctrs)
-           (gen-fields (eval (getf fld :fields))
-                       (getf fld :entity))
-         (values
-          (format nil "~%~25T (list :col \"~A\" :perm 111 ~%~32T:val (lambda () ~A)~%~32T:fields ~A)"
-                  (getf fld instr)
-                  (getf fld :val)
-                  str)
-          ctrs))))))
-
-
-(defun gen-fld-symb (fld entity-param)
-  (let* ((entity    (find-if #'(lambda (entity)
-                                 (equal (getf entity :entity) entity-param))
-                             *entityes*))
-         (typedata  (caddr (find-if #'(lambda (x)
-                                        (equal (car x) fld))
-                                    (getf entity :fields))))
-         (name      (cadr (find-if #'(lambda (x)
-                                       (equal (car x) fld))
-                                   (getf entity :fields)))))
-    (format nil "~%~25T (list :fld \"~A\" :perm 111 :typedata '~A :name \"~A\")"
-            fld
-            (subseq (with-output-to-string (*standard-output*)  (pprint typedata)) 1)
-            name
-            )))

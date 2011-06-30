@@ -204,24 +204,21 @@
          (popups    (list
                      (list :id "trest"      :title "Регистрация" :content "TODO"           :left 200 :width 500)
                      (list :id "popupLogin" :title "Вход"        :content (tpl:popuplogin) :left 720 :width 196)))
-         (content
-          (loop :for act :in acts :collect
-             (list :title (getf act :title)
-                   :content
-                   (let ((val (funcall (getf act :val))))
-                     (cond ((or (equal :clear val)
-                                (equal 'ADMIN (type-of val))     ;; ADMIN
-                                (equal 'SUPPLIER (type-of val))  ;; SUPPLIER
-                                (equal 'TENDER (type-of val))    ;; TENDER
-                                (equal 'BUILDER (type-of val))   ;; BUILDER
-                                (equal 'EXPERT (type-of val))    ;; EXPERT
-                                (equal 'RESOURCE (type-of val))) ;; EXPERT
-                            (tpl:frmobj
-                             (list :flds (show-linear (getf act :fields)))))
-                           ((equal 'cons (type-of val)) ;; COLLECTION
-                            (tpl:frmtbl
-                             (list :objs (show-collection val (getf act :fields)))))
-                           (t "<div style=\"padding-left: 2px\">Нет объектов</div>")))))))
+         (content   (loop :for act :in acts :collect
+                       (list :title (getf act :title)
+                             :content
+                             (let ((val (funcall (getf act :val))))
+                               (cond ((or (equal :clear val)
+                                          (equal 'ADMIN (type-of val))     ;; ADMIN
+                                          (equal 'SUPPLIER (type-of val))  ;; SUPPLIER
+                                          (equal 'TENDER (type-of val))    ;; TENDER
+                                          (equal 'BUILDER (type-of val))   ;; BUILDER
+                                          (equal 'EXPERT (type-of val))    ;; EXPERT
+                                          (equal 'RESOURCE (type-of val))) ;; EXPERT
+                                      (tpl:frmobj (list :flds (show-linear (getf act :fields)))))
+                                     ((equal 'cons (type-of val))          ;; COLLECTION
+                                      (tpl:frmtbl (list :objs (show-collection val (getf act :fields)))))
+                                     (t "<div style=\"padding-left: 2px\">Нет объектов</div>")))))))
     (tpl:root
      (list
       :personal personal
