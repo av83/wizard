@@ -68,19 +68,6 @@
                     btn)))
     (parse-integer id)))
 
-
-(defun supplier-request-fair ()
-  (setf (a-status (gethash 3 *USER*))
-        :request)
-  (hunchentoot:redirect (hunchentoot:request-uri*)))
-
-(defun del-supplier-resource-price ()
-  (let ((key (get-btn-key (caar (form-data)))))
-    (remhash key *SUPPLIER-RESOURCE-PRICE*))
-  ;; (format nil "~A" (form-data)))
-  (hunchentoot:redirect (hunchentoot:request-uri*)))
-
-
 (defun auth (login password)
   (loop :for obj :being the :hash-values :in *USER* :using (hash-key key) :do
      (when (and (equal (a-login obj) login)
