@@ -780,13 +780,60 @@
                                 :fields             '((:btn "Подтверждаю отмену" :act (cancel-tender)))))
                              ))))
 
-
-    ;; Страница ресурса
-    (:place                resource
-     :url                  "/resource/:id"
+    ;; Рейтинг компаний
+    (:place                rating
+     :url                  "/rating"
+     :navpoint             "Рейтинг компаний"
      :actions
-     '((:caption           "Ресурс"
-        :entity            resource
-        :val               (gethash (parse-integer (caddr (request-list))) *RESOURCE*)
-        :fields            '(name category resource-type unit suppliers))))
+     '((:caption           "Рейтинг компаний"
+        :perm              :all)))
+
+    ;; Оферты
+    (:place                oferts
+     :url                  "/oferts"
+     :navpoint             "Оферты"
+     :actions
+     '((:caption           "Оферты"
+        :perm              :all)))
+
+    ;; Оферты
+    (:place                oferts
+     :url                  "/oferts"
+     :navpoint             "Оферты"
+     :actions
+     '((:caption           "Оферты"
+        :perm              :all)))
+
+    ;; Календарь событий
+    (:place                calendar
+     :url                  "/calender"
+     :navpoint             "Календарь событий"
+     :actions
+     '((:caption           "Календарь событий"
+        :perm              :all)))
+
+    ;; Ссылки
+    (:place                links
+     :url                  "/links"
+     :navpoint             "Ссылки"
+     :actions
+     '((:caption           "Ссылки"
+        :perm              :all)))
+
+    ;; О портале
+    (:place                about
+     :url                  "/about"
+     :navpoint             "О портале"
+     :actions
+     '((:caption           "О портале"
+        :perm              :all)))
+
+    ;; Контакты
+    (:place                contacts
+     :url                  "/contacts"
+     :navpoint             "Контакты"
+     :actions
+     '((:caption           "Контакты"
+        :perm              :all)))
+
     ))
