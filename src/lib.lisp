@@ -1,4 +1,3 @@
-
 (in-package #:WIZARD)
 
 (let ((path '(:RELATIVE "wizard")))
@@ -9,14 +8,10 @@
                                           (user-homedir-pathname))))
                            :test #'equal)))
 
-(defparameter *basedir*
-  ;; (asdf:component-pathname (asdf:find-system '#:rigidus.ru)))
-  "/home/rigidus/wizard/")
-
+(defparameter *basedir*  "/home/rigidus/wizard/")
 
 (defun path (relative)
   (merge-pathnames relative *basedir*))
-
 
 (closure-template:compile-template :common-lisp-backend (path "src/templates.soy"))
 
@@ -28,7 +23,6 @@
 
 (defun form-data ()
   (hunchentoot:post-parameters*))
-
 
 (defun request-str ()
   (let* ((request-full-str (hunchentoot:request-uri hunchentoot:*request*))
@@ -48,18 +42,15 @@
                                   result))))
     (values request-str request-list request-get-plist)))
 
-
 (defun request-get-plist ()
   (multiple-value-bind (request-str request-list request-get-plist)
       (request-str)
     request-get-plist))
 
-
 (defun request-list ()
   (multiple-value-bind (request-str request-list request-get-plist)
       (request-str)
     request-list))
-
 
 (defun get-btn-key (btn)
   (let* ((tilde (position #\~ btn))
@@ -77,7 +68,6 @@
            (setf (hunchentoot:session-value 'userid) key)
            (hunchentoot:redirect (hunchentoot:request-uri*))))))
   (hunchentoot:redirect (hunchentoot:request-uri*)))
-
 
 (defun activate (acts)
   (when (assoc "AUTH" (form-data) :test #'equal)
@@ -108,28 +98,103 @@
     "err: unk:post:controller"))
 
 (defmacro a-fld (name obj)
-  `(funcall
-    (intern
-     (format nil "A-~A" ,name)
-     (find-package "WIZARD"))
-    ,obj))
-
-
-(defmacro with-let-infld (body)
-  `(let ((namefld   (getf infld :fld))
-         (captfld   (getf infld :name))
-         (permfld   (getf infld :perm))
-         (typedata  (getf infld :typedata))
-         (access    (getf infld :access))
-         (iface     (getf infld :iface)))
-     ,body))
-
+  `(if (equal val :clear)
+       ""
+       (funcall
+        (intern
+         (format nil "A-~A" ,name)
+         (find-package "WIZARD"))
+        ,obj)))
 
 (defun show-fld (captfld tplfunc namefld valuefld)
   (tpl:fld
    (list :fldname captfld
          :fldcontent (funcall tplfunc (list :name namefld
                                             :value valuefld)))))
+
+(defmacro with-let-infld (body)
+  `(let ((namefld   (getf infld :fld))
+         (captfld   (getf infld :name))
+         (permfld   (getf infld :perm))
+         (typedata  (getf infld :typedata)))
+     ,body))
+
+(defmacro with-infld-typedata-cond (default &rest cases)
+  `(with-let-infld
+       (cond ,@(loop :for case :in cases :collect
+                  `((equal typedata ',(car case)) ,(cadr case)))
+             (t ,default))))
+
+(defmacro with-in-fld-case (fields &rest cases)
+  `(loop :for infld :in ,fields :collect
+      (let ((typefld (car infld)))
+        (ecase typefld
+          ,@(loop :for case :in cases :by #'cddr :collect
+              (list case (getf cases case)))))))
+
+(defmacro show-linear (fields)
+  `(with-in-fld-case ,fields
+     :fld    (with-infld-typedata-cond (format nil "<br />err:unk2 typedata: ~A | ~A" namefld typedata)
+               ((:str)      (show-fld captfld #'tpl:strupd  namefld (a-fld namefld val)))
+               ((:pswd)     (show-fld captfld #'tpl:pswdupd namefld (a-fld namefld val)))
+               ((:num)      (show-fld captfld #'tpl:strupd  namefld (a-fld namefld val)))
+               ((:interval) (show-fld captfld #'tpl:strupd namefld (a-fld namefld val)))
+               ((:list-of-keys supplier-status)
+                (tpl:fld
+                 (list :fldname captfld
+                       :fldcontent (tpl:strview (list :value (getf *supplier-status* (a-fld namefld val)))))))
+               ((:list-of-str)
+                (tpl:fld
+                 (list :fldname captfld
+                       :fldcontent (tpl:textupd (list :name namefld
+                                                      :value (a-fld namefld val)))))))
+     :btn    (tpl:btn (list :name (getf infld :btn) :value (getf infld :value)))
+     :popbtn (with-let-infld
+                 (let* ((popid (getf infld :popbtn))
+                        (popup (with-in-fld-case (getf infld :fields)
+                                 :fld    (with-infld-typedata-cond (format nil "err:unk5 typedata: ~A" typedata)
+                                           ((:str)   (show-fld captfld #'tpl:strupd namefld))
+                                           ((:num)   (show-fld captfld #'tpl:strupd namefld ""))
+                                           ((:link resource))
+                                           (tpl:selres
+                                            (list :name "res"
+                                                  :options
+                                                  (mapcar #'(lambda (x)
+                                                              (list :id (car x)
+                                                                    :name (a-name (cdr x))))
+                                                          (cons-hash-list *RESOURCE*)))))
+                                 :btn    (tpl:btn (list :name (format nil "~A" (getf infld :btn))
+                                                        :value (format nil "~A" (getf infld :value)))))))
+                   (push (list :id popid  :title (getf infld :title)  :left 200  :width 730
+                               :content (tpl:frmobj (list :flds popup)))
+                         popups)
+                   (tpl:popbtn (list :value (getf infld :value) :popid popid))))
+     :col    (tpl:col (list :title (getf infld :col)
+                            :content (tpl:frmtbl
+                                      (list :objs (show-collection (funcall (getf infld :val))
+                                                                   (getf infld :fields))))))))
+
+(defmacro show-collection (cons-val-list fields)
+  `(loop :for obj :in ,cons-val-list :collect
+      (with-in-fld-case ,fields
+        :fld    (with-infld-typedata-cond (format nil "err:unk3 typedata: ~A" typedata)
+                  ((:str)    (tpl:strview (list :value (a-fld (getf infld :fld) (cdr obj)))))
+                  ((:num))   (tpl:strview (list :value (a-fld (getf infld :fld) (cdr obj))))
+                  ((:link resource)
+                   (a-name (a-fld (getf infld :fld) (cdr obj)))))
+        :btn    (tpl:btn (list :name (format nil "~A~~~A"  (getf infld :btn) (car obj))
+                               :value (format nil "~A" (getf infld :value))))
+        :popbtn (let* ((popid (format nil "~A~~~A" (getf infld :popbtn) (car obj)))
+                       (popup (with-in-fld-case (getf infld :fields)
+                                :fld     (with-infld-typedata-cond (format nil "err:unk4 typedata: ~A" typedata)
+                                           ((:str)     (show-fld captfld #'tpl:strupd namefld (a-fld namefld (cdr obj))))
+                                           ((:pswd)    (show-fld captfld #'tpl:strupd namefld (a-fld namefld (cdr obj)))))
+                                :btn     (tpl:btn (list :name (format nil "~A~~~A" (getf infld :btn) (car obj))
+                                                        :value (format nil "~A" (getf infld :value)))))))
+                  (push (list :id popid  :title (getf infld :title)  :left 200  :width 730
+                              :content (tpl:frmobj (list :flds popup)))
+                        popups)
+                  (tpl:popbtn (list :value (getf infld :value) :popid popid))))))
 
 (defun show-acts (acts)
   (let* ((personal  (let ((userid (hunchentoot:session-value 'userid)))
@@ -144,105 +209,18 @@
              (list :title (getf act :title)
                    :content
                    (let ((val (funcall (getf act :val))))
-                     (cond ((equal val :clear) ;; :CLEAR
-                            (tpl:frmobj
-                             (list :flds
-                                   (loop :for infld :in (getf act :fields) :collect
-                                      (let ((typefld (car infld)))
-                                        (ecase typefld
-                                          (:fld
-                                           (with-let-infld
-                                               (cond ((equal typedata '(:str))   (show-fld captfld #'tpl:strupd  namefld ""))
-                                                     ((equal typedata '(:pswd))  (show-fld captfld #'tpl:pswdupd namefld ""))
-                                                     ((equal typedata '(:num))   (show-fld captfld #'tpl:pswdupd namefld ""))
-                                                     ((equal typedata '(:interval)) (show-fld captfld #'tpl:strupd  namefld ""))
-                                                     (t (format nil "<br />err:unk1 typedata: ~A" typedata)))))
-                                          (:btn
-                                           (tpl:btn (list :name (getf infld :btn) :value (getf infld :value))))))))))
-                           ((or (equal 'ADMIN (type-of val))     ;; ADMIN
+                     (cond ((or (equal :clear val)
+                                (equal 'ADMIN (type-of val))     ;; ADMIN
                                 (equal 'SUPPLIER (type-of val))  ;; SUPPLIER
                                 (equal 'TENDER (type-of val))    ;; TENDER
                                 (equal 'BUILDER (type-of val))   ;; BUILDER
                                 (equal 'EXPERT (type-of val))    ;; EXPERT
                                 (equal 'RESOURCE (type-of val))) ;; EXPERT
                             (tpl:frmobj
-                             (list :flds
-                                   (loop :for infld :in (getf act :fields) :collect
-                                      (let ((typefld (car infld)))
-                                        (ecase typefld
-                                          (:fld
-                                           (with-let-infld
-                                               (cond ((equal typedata '(:str))  (show-fld captfld #'tpl:strupd  namefld (a-fld namefld val)))
-                                                     ((equal typedata '(:pswd)) (show-fld captfld #'tpl:pswdupd namefld (a-fld namefld val)))
-                                                     ((equal typedata '(:num))  (show-fld captfld #'tpl:strupd  namefld (a-fld namefld val)))
-                                                     ((equal typedata '(:list-of-links tender))
-                                                      (show-collection
-                                                       (funcall access)
-                                                       ;; iface
-                                                       (eval (read-from-string
-                                                              (gen-fields
-                                                               iface
-                                                               ;; '(name (:btn "Страница тендера"
-                                                               ;;         :act (hunchentoot:redirect
-                                                               ;;               (format nil "/tender/~A" (get-btn-key (caar (form-data)))))))
-                                                               'tender)
-                                                              ))))
-                                                     ((equal typedata '(:list-of-keys supplier-status))
-                                                      (tpl:fld
-                                                       (list :fldname captfld
-                                                             :fldcontent (tpl:strview (list :value (getf *supplier-status* (a-fld namefld val)))))))
-                                                     ((equal typedata '(:list-of-str))
-                                                      (tpl:fld
-                                                       (list :fldname captfld
-                                                             :fldcontent (tpl:textupd (list :name namefld
-                                                                                            :value (a-fld namefld val))))))
-                                                     ((equal typedata '(list-of-str)) (show-fld captfld #'tpl:strupd  namefld (a-fld namefld val)))
-                                                     (t (format nil "<br />err:unk2 typedata: ~A | ~A" namefld typedata)))))
-                                          (:btn
-                                           (tpl:btn (list :name (getf infld :btn) :value (getf infld :value))))
-
-                                          (:popbtn
-                                           (with-let-infld
-                                               (let* ((popid (getf infld :popbtn))
-                                                      (popup (loop :for infld :in (getf infld :fields) :collect
-                                                                (let ((typefld (car infld)))
-                                                                  (ecase typefld
-                                                                    (:fld
-                                                                     (with-let-infld
-                                                                         (cond ((equal typedata '(:str))
-                                                                                (show-fld captfld #'tpl:strupd namefld))
-                                                                               ((equal typedata '(:num))
-                                                                                (show-fld captfld #'tpl:strupd namefld ""))
-                                                                               ((equal typedata '(:link resource))
-                                                                                (tpl:selres
-                                                                                 (list :name "res"
-                                                                                       :options
-                                                                                       (mapcar #'(lambda (x)
-                                                                                                   (list :id (car x)
-                                                                                                         :name (a-name (cdr x))))
-                                                                                               (cons-hash-list *RESOURCE*))
-                                                                                       )))
-                                                                               (t (format nil "err:unk5 typedata: ~A" typedata)))
-                                                                       ))
-                                                                    (:btn
-                                                                     (tpl:btn (list :name (format nil "~A" (getf infld :btn))
-                                                                                    :value (format nil "~A" (getf infld :value))))))))))
-                                                 (push (list :id popid  :title (getf infld :title)  :left 200  :width 730
-                                                             :content (tpl:frmobj (list :flds popup)))
-                                                       popups)
-                                                 (tpl:popbtn (list :value (getf infld :value) :popid popid)))))
-
-                                          (:col
-                                           (tpl:col (list :title (getf infld :col)
-                                                          :content
-                                                          ;; (format nil "~A" infld)
-                                                          ;; )))
-                                                          ;; (format nil "~A" (getf infld :fields)))))
-                                                          (show-collection (funcall (getf infld :val))
-                                                                           (getf infld :fields)))))
-                                          ))))))
+                             (list :flds (show-linear (getf act :fields)))))
                            ((equal 'cons (type-of val)) ;; COLLECTION
-                            (show-collection val (getf act :fields)))
+                            (tpl:frmtbl
+                             (list :objs (show-collection val (getf act :fields)))))
                            (t "<div style=\"padding-left: 2px\">Нет объектов</div>")))))))
     (tpl:root
      (list
@@ -250,44 +228,3 @@
       :popups popups
       :navpoints (menu)
       :content content))))
-
-;; (eval (read-from-string "(values 1 2)"))
-
-
-(defmacro show-collection (cons-val-list fields)
-  `(tpl:frmtbl
-   (list :objs
-         (loop :for obj :in ,cons-val-list :collect
-            (loop :for infld :in ,fields :collect
-               (let ((typefld (car infld)))
-                 (ecase typefld
-                   (:fld
-                    (with-let-infld
-                        (cond ((or (equal typedata '(:str))
-                                   (equal typedata '(:num)))
-                               (tpl:strview (list :value (a-fld (getf infld :fld) (cdr obj)))))
-                              ((equal typedata '(:link resource))
-                               (a-name (a-fld (getf infld :fld) (cdr obj))))
-                              (t (format nil "err:unk3 typedata: ~A" typedata)))))
-                   (:btn
-                    (tpl:btn (list :name (format nil "~A~~~A"  (getf infld :btn) (car obj))
-                                   :value (format nil "~A" (getf infld :value)))))
-                   (:popbtn
-                    (let* ((popid (format nil "~A~~~A" (getf infld :popbtn) (car obj)))
-                           (popup (loop :for infld :in (getf infld :fields) :collect
-                                     (let ((typefld (car infld)))
-                                       (ecase typefld
-                                         (:fld
-                                          (with-let-infld
-                                              (cond ((equal typedata '(:str))
-                                                     (show-fld captfld #'tpl:strupd namefld (a-fld namefld (cdr obj))))
-                                                    ((equal typedata '(:pswd))
-                                                     (show-fld captfld #'tpl:strupd namefld (a-fld namefld (cdr obj))))
-                                                    (t (format nil "err:unk4 typedata: ~A" typedata)))))
-                                         (:btn
-                                          (tpl:btn (list :name (format nil "~A~~~A" (getf infld :btn) (car obj))
-                                                         :value (format nil "~A" (getf infld :value))))))))))
-                      (push (list :id popid  :title (getf infld :title)  :left 200  :width 730
-                                  :content (tpl:frmobj (list :flds popup)))
-                            popups)
-                      (tpl:popbtn (list :value (getf infld :value) :popid popid)))))))))))

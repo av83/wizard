@@ -165,23 +165,9 @@
                                     (getf entity :fields))))
          (name      (cadr (find-if #'(lambda (x)
                                        (equal (car x) fld))
-                                   (getf entity :fields))))
-         (access    (if (equal (car typedata) :list-of-links)
-                        (format nil "~%~32T:access (lambda () ~A)~%~32T:iface ~A"
-                                (subseq (with-output-to-string (*standard-output*)
-                                          (pprint (nth 4 (find-if #'(lambda (x)
-                                                                      (equal (car x) fld))
-                                                                  (getf entity :fields)))))
-                                        1)
-                                (subseq (with-output-to-string (*standard-output*)
-                                          (pprint (nth 5 (find-if #'(lambda (x)
-                                                                      (equal (car x) fld))
-                                                                  (getf entity :fields)))))
-                                        1))
-                        "")))
-    (format nil "~%~25T (list :fld \"~A\" :perm 111 :typedata '~A :name \"~A\"~A)"
+                                   (getf entity :fields)))))
+    (format nil "~%~25T (list :fld \"~A\" :perm 111 :typedata '~A :name \"~A\")"
             fld
             (subseq (with-output-to-string (*standard-output*)  (pprint typedata)) 1)
             name
-            access
             )))

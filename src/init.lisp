@@ -140,7 +140,7 @@
        (tender (make-instance 'TENDER
                               :name                "Первый тендер"
                               :status              :active
-                              :owner               (gethash 6 *USER*)
+                              :owner               (gethash 22 *USER*)
                               :active-date         "15.12.2012"
                               :all                 "15.12.2012-21.01.2013"
                               :claim               "15.12.2012-21.01.2013"
@@ -156,7 +156,7 @@
                               )))
   (setf (gethash (hash-table-count *TENDER*) *TENDER*)
         tender)
-  (push tender (a-tenders (gethash 6 *USER*))))
+  (push tender (a-tenders (gethash 22 *USER*))))
 
 
 ;; dbg out
