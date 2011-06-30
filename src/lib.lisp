@@ -68,22 +68,6 @@
                     btn)))
     (parse-integer id)))
 
-(defun change-expert-password ()
-  (let ((key (get-btn-key (caar (last (form-data))))))
-    (setf (a-password (gethash key *USER*))
-          (cdr (assoc "PASSWORD" (form-data) :test #'equal))))
-  (hunchentoot:redirect (hunchentoot:request-uri*)))
-
-(defun delete-expert ()
-  (let ((key (get-btn-key (caar (form-data)))))
-    (remhash key *USER*))
-  (hunchentoot:redirect (hunchentoot:request-uri*)))
-
-(defun approve-supplier-fair ()
-  (let ((key (get-btn-key (caar (form-data)))))
-    (setf (a-status (gethash key *USER*))
-          :fair))
-  (hunchentoot:redirect (hunchentoot:request-uri*)))
 
 (defun supplier-request-fair ()
   (setf (a-status (gethash 3 *USER*))
@@ -282,7 +266,7 @@
                                          (:btn
                                           (tpl:btn (list :name (format nil "~A~~~A" (getf infld :btn) (car obj))
                                                          :value (format nil "~A" (getf infld :value))))))))))
-                      (push (list :id popid  :title (getf infld :title)  :left 200  :width 500
+                      (push (list :id popid  :title (getf infld :title)  :left 200  :width 730
                                   :content (tpl:frmobj (list :flds popup)))
                             popups)
                       (tpl:popbtn (list :value (getf infld :value) :popid popid)))))))))))

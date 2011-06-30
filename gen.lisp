@@ -57,8 +57,8 @@
     (loop :for place :in *places* :do
        (unless (null (getf place :navpoint))
          (push (list :link (getf place :url) :title (getf place :navpoint)) menu))
-       ;; (setf *controllers* nil)
        (let ((controllers))
+         (format t "~%--------")
          (format out "~%~%(restas:define-route ~A-page (\"~A\")"
                  (string-downcase (getf place :place))
                  (getf place :url))
@@ -66,14 +66,12 @@
                  (loop :for action :in (eval (getf place :actions)) :collect
                     (multiple-value-bind (str ctrs)
                         (gen-action action) ;; Вот оно ключевое :)
-                      (unless (null ctrs)
-                        (loop :for ctr :in ctrs :do
-                           (unless (null ctr)
-                             (setf controllers (append controllers (list ctr)))
-                             ;; (format t "~%~%: ~A | ~A" (car ctr) (cdr ctr))
-                             )))
+                      (loop :for ctr :in ctrs :do
+                         (setf controllers (append controllers ctr)))
                       str))
                  (format nil  "~%    (show-acts acts))"))
+         (loop :for ctr :in controllers :do                  ;;
+            (format t "~%~A | ~A" (car ctr) (cadr ctr)))     ;;
          (format out "~%~%(restas:define-route ~A-page/post (\"~A\" :method :post)"
                  (string-downcase (getf place :place))
                  (getf place :url))
@@ -81,7 +79,7 @@
                  (loop :for controller :in controllers :collect
                     (format nil "(\"~A\" . ,(lambda () ~A))"
                             (car controller)
-                            (subseq (with-output-to-string (*standard-output*) (pprint (cdr controller))) 1)
+                            (subseq (with-output-to-string (*standard-output*) (pprint (cadr controller))) 1)
                             )))))
     (format out "~%~%~%(defun menu ()  '")
     (pprint (reverse menu) out)
@@ -97,24 +95,65 @@
              (multiple-value-bind (str ctrs)
                  (gen-fields (eval (getf action :fields))
                              (getf action :entity))
-               (setf controllers ctrs)
+               (setf controllers (append controllers (list ctrs)))
                str))
      controllers)))
 
-
 (defun gen-fields (fields entity)
+  ;; (format t "~%gen-fields : ~A : ~A" fields entity)
   (let ((controllers))
     (values
      (format nil "(list ~{~A~})"
              (loop :for fld :in fields :collect
                 (etypecase fld
-                  (symbol   (gen-fld-symb fld entity))
-                  (cons     (multiple-value-bind (str ctr)
-                                (gen-fld-cons fld)
-                              (push ctr controllers)
-                              str)))))
+                  (symbol
+                   (gen-fld-symb fld entity))
+                  (cons
+                   (multiple-value-bind (str ctrs)
+                       (gen-fld-cons fld)
+                     (loop :for ctr :in ctrs :do
+                        (setf controllers (append controllers (list ctr))))
+                     str)))))
      controllers)))
 
+(defun gen-fld-cons (fld)
+  (let ((instr (car fld)))
+    (ecase instr
+      (:btn
+       (let ((btntype (nth 2 fld)))
+         (ecase btntype
+           (:act
+            (let ((gen (gensym "B")))
+              (values
+               (format nil "~%~25T (list :btn \"~A\" :perm 111 :value \"~A\")"
+                            gen
+                            (getf fld instr))
+               (list (list gen (getf fld :act))))))
+           (:popup
+            (let ((popup (eval (getf fld :popup)))
+                  (gen   (gensym "P")))
+              (multiple-value-bind (str ctrs)
+                  (gen-fields (eval (getf popup :fields))
+                              (getf popup :entity))
+                ;; (format t "~%---| ~A" ctrs)
+                (values
+                 (format nil "~%~25T (list :popbtn \"~A\" ~%~31T :value \"~A\" ~%~31T :perm 111 ~%~31T :title \"~A\" ~%~31T :fields ~A)"
+                         gen
+                         (getf fld instr)
+                         (getf popup :caption)
+                         str)
+                 ctrs))))
+           )))
+      (:col
+       (multiple-value-bind (str ctrs)
+           (gen-fields (eval (getf fld :fields))
+                       (getf fld :entity))
+         (values
+          (format nil "~%~25T (list :col \"~A\" :perm 111 ~%~32T:val (lambda () ~A)~%~32T:fields ~A)"
+                  (getf fld instr)
+                  (getf fld :val)
+                  str)
+          ctrs))))))
 
 
 (defun gen-fld-symb (fld entity-param)
@@ -146,42 +185,3 @@
             name
             access
             )))
-
-(defun gen-fld-cons (fld)
-  (let ((instr (car fld)))
-    (ecase instr
-      (:btn
-       (let ((ctr))
-         (values
-          (if (null (getf fld :popup))
-              (format nil "~%~25T (list :btn \"~A\" :perm 111 :value \"~A\")"
-                      (let ((gen (gensym "B")))
-                        (setf ctr (cons gen (getf fld :act)))
-                        ;; (setf ctr `(,gen . ,(getf fld :act)))
-                        ;; (push `(,gen . ,(getf fld :act)) *controllers*)
-                        gen)
-                      (getf fld instr))
-              ;; ELSE
-              (let ((popup (eval (getf fld :popup))))
-                (format nil "~%~25T (list :popbtn \"~A\" ~%~31T :value \"~A\" ~%~31T :perm 111 ~%~31T :title \"~A\" ~%~31T :fields (list ~{~A~}))"
-                        (gensym "P")
-                        (getf fld instr)
-                        (getf popup :caption)
-                        (loop :for fld :in (eval (getf popup :fields)) :collect
-                           (etypecase fld
-                             (symbol   (gen-fld-symb fld popup))
-                             (cons     (gen-fld-cons fld)))))))
-          ctr)))
-      (:col
-       (let ((controllers))
-         (values
-          (format nil "~%~25T (list :col \"~A\" :perm 111 ~%~32T:val (lambda () ~A)~%~32T:fields ~A)"
-                  (getf fld instr)
-                  (getf fld :val)
-                  (multiple-value-bind (str ctrs)
-                      (gen-fields (eval (getf fld :fields))
-                                  (getf fld :entity))
-                    (setf controllers (car ctrs))
-                    str))
-          controllers))))))
-

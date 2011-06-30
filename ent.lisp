@@ -379,22 +379,27 @@
         :entity            admin
         :val               (cur-user)
         :fields            '(login password
-                             (:btn "Изменить пароль" :act
+                             (:btn "Изменить пароль"
+                              :act
                               (progn
                                 (setf (a-login (cur-user))     (cdr (assoc "LOGIN" (form-data) :test #'equal)))
                                 (setf (a-password (cur-user))  (cdr (assoc "PASSWORD" (form-data) :test #'equal)))
-                                (hunchentoot:redirect (hunchentoot:request-uri*))))))
+                                (hunchentoot:redirect (hunchentoot:request-uri*)))
+                              )))
        (:caption           "Создать аккаунт эксперта"
         :perm              :admin
         :entity            expert
         :val               :clear
         :fields            '(login password name
-                             (:btn "Создать новый аккаунт эксперта" :act (progn
-                                                                           (make-instance 'expert
-                                                                                          :login (cdr (assoc "LOGIN" (form-data) :test #'equal))
-                                                                                          :password (cdr (assoc "PASSWORD" (form-data) :test #'equal))
-                                                                                          :name (cdr (assoc "NAME" (form-data) :test #'equal)))
-                                                                           (hunchentoot:redirect (hunchentoot:request-uri*))))))
+                             (:btn "Создать новый аккаунт эксперта"
+                              :act
+                              (progn
+                                (make-instance 'expert
+                                               :login (cdr (assoc "LOGIN" (form-data) :test #'equal))
+                                               :password (cdr (assoc "PASSWORD" (form-data) :test #'equal))
+                                               :name (cdr (assoc "NAME" (form-data) :test #'equal)))
+                                (hunchentoot:redirect (hunchentoot:request-uri*)))
+                              )))
        (:caption           "Эксперты"
         :perm              :admin
         :entity            expert
@@ -403,14 +408,34 @@
                             (cons-hash-list *USER*))
         :fields            '(name login
                              (:btn "Удалить"
-                              :popup '(:caption           "Действительно удалить?"
-                                       :fields             '((:btn "Подтверждаю удаление" :act (delete-expert)))))
+                              :popup '(:caption            "Действительно удалить?"
+                                       :entity             expert
+                                       :perm               :admin
+                                       :fields             '((:btn "Подтверждаю удаление"
+                                                              :act "Подтверждаю удаление"
+                                                              ;; (progn
+                                                              ;;   (let ((key (get-btn-key (caar (form-data)))))
+                                                              ;;     (remhash key *USER*))
+                                                              ;;   (hunchentoot:redirect (hunchentoot:request-uri*)))
+                                                              )
+                                                             (:btn "Подтверждаю удаление2"
+                                                              :act "Подтверждаю удаление2")
+                                                             (:btn "Подтверждаю удаление3"
+                                                              :act "Подтверждаю удаление3"))))
                              (:btn "Сменить пароль"
                               :popup '(:caption           "Смена пароля эксперта"
-                                       :pern              :admin
                                        :entity            expert
+                                       :perm              :admin
                                        :fields            '(password
-                                                            (:btn "Изменить пароль эксперта" :act (change-expert-password)))))))
+                                                            (:btn "Изменить пароль эксперта"
+                                                             :act "Изменить пароль эксперта"
+                                                             ;; (progn
+                                                             ;;        (let ((key (get-btn-key (caar (last (form-data))))))
+                                                             ;;          (setf (a-password (gethash key *USER*))
+                                                             ;;                (cdr (assoc "PASSWORD" (form-data) :test #'equal))))
+                                                             ;;        (hunchentoot:redirect (hunchentoot:request-uri*)))
+                                                             ))))))
+
        (:caption           "Заявки поставщиков на добросовестность"
         :perm              :admin
         :entity            supplier
@@ -423,8 +448,14 @@
                               :popup '(:caption           "Подтвердить заявку поставщика"
                                        :perm               :admin
                                        :entity             supplier
-                                       :fields             '((:btn "Сделать добросовестным" :act (approve-supplier-fair)))))))))
-
+                                       :fields             '((:btn "Сделать добросовестным"
+                                                              :act "Сделать добросовестным"
+                                                              ;; (progn (let ((key (get-btn-key (caar (form-data)))))
+                                                              ;;               (setf (a-status (gethash key *USER*))
+                                                              ;;                     :fair))
+                                                              ;;             (hunchentoot:redirect (hunchentoot:request-uri*)))
+                                                              ))))))
+       ))
     ;; Список экспертов
     (:place                experts
      :url                  "/expert"
@@ -434,9 +465,11 @@
         :perm              :all
         :entity            expert
         :val               (remove-if-not #'(lambda (x) (equal (type-of (cdr x)) 'EXPERT)) (cons-hash-list *USER*))
-        :fields            '(name login (:btn "Страница эксперта"
-                                         :act (hunchentoot:redirect
-                                               (format nil "/expert/~A" (get-btn-key (caar (form-data))))))))))
+        :fields            '(name login
+                             (:btn "Страница эксперта" :act "Страница эксперта"
+                               ;; (hunchentoot:redirect
+                               ;;  (format nil "/expert/~A" (get-btn-key (caar (form-data))))))
+                             )))))
 
     ;; Страница эксперта
     (:place                expert
@@ -457,9 +490,11 @@
         :perm              :all
         :entity            supplier
         :val               (remove-if-not #'(lambda (x) (equal (type-of (cdr x)) 'SUPPLIER))  (cons-hash-list *USER*))
-        :fields            '(name login (:btn "Страница поставщика"
-                                         :act (hunchentoot:redirect
-                                               (format nil "/supplier/~A" (get-btn-key (caar (form-data))))))))))
+        :fields            '(name login
+                             (:btn "Страница поставщика" :act "Страница поставщика"
+                              ;; (hunchentoot:redirect
+                              ;;       (format nil "/supplier/~A" (get-btn-key (caar (form-data))))))
+                             )))))
 
     ;; Страница поставщика
     (:place                supplier
@@ -474,7 +509,10 @@
         :perm              (and :self :unfair)
         :entity            supplier
         :val               (gethash 3 *USER*)
-        :fields            '((:btn "Отправить заявку на добросовестность" :act (supplier-request-fair))))
+        :fields            '((:btn "Отправить заявку на добросовестность"
+                              :act "Отправить заявку на добросовестность"
+                              ;; (supplier-request-fair)
+                              )))
        (:caption           "Список ресурсов, которые я поставляю"
         :perm              :self
         :entity            supplier-resource-price
@@ -484,9 +522,13 @@
         :fields            '(resource price
                              (:btn "Удалить"
                               :popup '(:caption           "Удаление ресурса"
-                                       :pern              :admin
+                                       :perm              :admin
                                        :entity            expert
-                                       :fields            '((:btn "Удалить ресурс" :act (del-supplier-resource-price)))))))
+                                       :fields            '((:btn "Удалить ресурс"
+                                                             :act "Удалить ресурс"
+                                                             (del-supplier-resource-price)
+                                                             ))))
+                             ))
        (:caption           "Мои заявки на тендеры"
         :perm              :self
         :entity            offer
@@ -502,9 +544,13 @@
         :perm              :all
         :entity            builder
         :val               (remove-if-not #'(lambda (x) (equal (type-of (cdr x)) 'BUILDER)) (cons-hash-list *USER*))
-        :fields            '(name login (:btn "Страница застройщика"
-                                         :act (hunchentoot:redirect
-                                               (format nil "/builder/~A" (get-btn-key (caar (form-data))))))))))
+        :fields            '(name login
+                             (:btn "Страница застройщика"
+                              :act "Страница застройщика"
+                              ;; (hunchentoot:redirect
+                              ;;                  (format nil "/builder/~A" (get-btn-key (caar (form-data)))))
+                              )
+                             ))))
 
     ;; Страница застройщика
     (:place                builder
@@ -522,25 +568,30 @@
                                                                           (gethash (parse-integer (nth 2 (request-list))) *USER*)))
                                                  (cons-hash-list *TENDER*))
                               :fields '(name (:btn "Страница тендера"
-                                              :act (hunchentoot:redirect
-                                                    (format nil "/tender/~A" (get-btn-key (caar (form-data))))))))
+                                              :act "Страница тендера"
+                                              ;; (hunchentoot:redirect
+                                              ;;  (format nil "/tender/~A" (get-btn-key (caar (form-data)))))
+                                              )))
                              rating))
        (:caption           "Объявить новый тендер"
         :perm              :self
         :entity            tender
         :val               :clear
         :fields            '(name all claim analize interview result
-                             (:btn "Объявить тендер" :act (create-tender)
+                             (:btn "Объявить тендер"
+                              :act "Объявить тендер"
+                              ;; (create-tender)
                               :hooks
                               '((:change resources   (set-field price (calc-tender-price (request resources))))
-                                (:change resources   (set-field suppliers (calc-suppliers (request resources))))))))))
+                                (:change resources   (set-field suppliers (calc-suppliers (request resources))))))
+                             ))
     ;; (:other   '(:owner      (get-current-user-id)
     ;;               :price      (calc-tender-price (request resources))
     ;;               :suppliers  (calc-suppliers (request resources))
     ;;               :offerts    nil
     ;;               :winner     nil))
     ;;   (:status    :unactive)))))))
-
+       ))
 
     ;; Список тендеров
     (:place                tenders
@@ -551,9 +602,12 @@
         :perm              :all
         :entity            builder
         :val               (cons-hash-list *TENDER*)
-        :fields            '(name status owner (:btn "Страница тендера"
-                                                :act (hunchentoot:redirect
-                                                      (format nil "/tender/~A" (get-btn-key (caar (form-data))))))))))
+        :fields            '(name status owner
+                             (:btn "Страница тендера"
+                              :act  "Страница тендера"
+                              ;; (hunchentoot:redirect
+                              ;;        (format nil "/tender/~A" (get-btn-key (caar (form-data))))))
+                             )))))
 
     ;; Страница тендера (поставщик может откликнуться)
     (:place                tender
@@ -574,7 +628,8 @@
                               '(:caption           "Действительно отменить?"
                                 :perm               :owner
                                 :entity             tender
-                                :fields             '((:btn "Подтверждаю отмену" :act (cancel-tender)))))))))
+                                :fields             '((:btn "Подтверждаю отмену" :act (cancel-tender)))))
+                             ))))
 
     ;; Список ресурсов
     (:place                resources
@@ -585,9 +640,12 @@
         :perm              :all
         :entity            resource
         :val               (cons-hash-list *RESOURCE*)
-        :fields            '(name category resource-type unit (:btn "Страница ресурса"
-                                                               :act (hunchentoot:redirect
-                                                                     (format nil "/resource/~A" (get-btn-key (caar (form-data))))))))))
+        :fields            '(name category resource-type unit
+                             (:btn "Страница ресурса"
+                              :act "Страница ресурса"
+                              ;; (hunchentoot:redirect
+                              ;;  (format nil "/resource/~A" (get-btn-key (caar (form-data)))))
+                              )))))
 
     ;; Страница ресурса
     (:place                resource
@@ -596,4 +654,5 @@
      '((:caption           "Ресурс"
         :entity            resource
         :val               (gethash (parse-integer (caddr (request-list))) *RESOURCE*)
-        :fields            '(name category resource-type unit suppliers))))))
+        :fields            '(name category resource-type unit suppliers))))
+    ))
