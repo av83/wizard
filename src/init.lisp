@@ -64,6 +64,14 @@
                      :login "builder1"
                      :password "builder1"))
 
+;; 7 - builder2
+(setf (gethash (hash-table-count *USER*) *USER*)
+      (make-instance 'BUILDER
+                     :name "Застройщик-2"
+                     :login "builder2"
+                     :password "builder2"))
+
+
 
 ;; RESOURCES
 

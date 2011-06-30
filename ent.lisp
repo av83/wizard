@@ -501,7 +501,57 @@
         :entity            supplier
         :val               (gethash (parse-integer (caddr (request-list))) *USER*)
         :fields            '(name status juridical-address actual-address contacts email site heads inn kpp ogrn
-                             bank-name bik corresp-account client-account addresses contact-person resources sale offers))
+                             bank-name bik corresp-account client-account addresses contact-person resources sale offers
+                             (:btn "Сохранить"
+                              :act
+                              (progn
+                                (let ((obj (gethash (parse-integer (caddr (request-list))) *USER*)))
+                                  (setf (A-NAME obj) (cdr (ASSOC "NAME" (FORM-DATA) :test #'equal)))
+                                  (setf (A-JURIDICAL-ADDRESS obj) (cdr (ASSOC "JURIDICAL-ADDRESS" (FORM-DATA) :test #'equal)))
+                                  (setf (A-ACTUAL-ADDRESS obj) (cdr (ASSOC "ACTUAL-ADDRESS" (FORM-DATA) :test #'equal)))
+                                  (setf (A-CONTACTS obj) (cdr (ASSOC "CONTACTS" (FORM-DATA) :test #'equal)))
+                                  (setf (A-EMAIL obj) (cdr (ASSOC "EMAIL" (FORM-DATA) :test #'equal)))
+                                  (setf (A-SITE obj) (cdr (ASSOC "SITE" (FORM-DATA) :test #'equal)))
+                                  (setf (A-HEADS obj) (cdr (ASSOC "HEADS" (FORM-DATA) :test #'equal)))
+                                  (setf (A-INN obj) (cdr (ASSOC "INN" (FORM-DATA) :test #'equal)))
+                                  (setf (A-KPP obj) (cdr (ASSOC "KPP" (FORM-DATA) :test #'equal)))
+                                  (setf (A-OGRN obj) (cdr (ASSOC "OGRN" (FORM-DATA) :test #'equal)))
+                                  (setf (A-BANK-NAME obj) (cdr (ASSOC "BANK-NAME" (FORM-DATA) :test #'equal)))
+                                  (setf (A-BIK obj) (cdr (ASSOC "BIK" (FORM-DATA) :test #'equal)))
+                                  (setf (A-CORRESP-ACCOUNT obj) (cdr (ASSOC "CORRESP-ACCOUNT" (FORM-DATA) :test #'equal)))
+                                  (setf (A-CLIENT-ACCOUNT obj) (cdr (ASSOC "CLIENT-ACCOUNT" (FORM-DATA) :test #'equal)))
+                                  (setf (A-ADDRESSES obj) (cdr (ASSOC "ADDRESSES" (FORM-DATA) :test #'equal)))
+                                  (setf (A-CONTACT-PERSON obj) (cdr (ASSOC "CONTACT-PERSON" (FORM-DATA) :test #'equal)))
+                                  (hunchentoot:redirect (hunchentoot:request-uri*))
+                                  ;; (format nil "~A" (form-data))
+                                  )))
+                             (:col              "Список поставляемых ресурсов"
+                              :perm             111
+                              :entity            supplier-resource-price
+                              :val               (remove-if-not #'(lambda (x) (equal (a-owner (cdr x))
+                                                                                     (gethash 3 *USER*)))
+                                                  (cons-hash-list *SUPPLIER-RESOURCE-PRICE*))
+                              :fields            '(resource price
+                                                   (:btn "Удалить"
+                                                    :popup '(:caption           "Удаление ресурса"
+                                                             :perm              :admin
+                                                             :entity            supplier-resource-price
+                                                             :fields            '((:btn "Удалить ресурс"
+                                                                                   :act
+                                                                                   (progn
+                                                                                     (let ((key (get-btn-key (caar (form-data)))))
+                                                                                       (remhash key *SUPPLIER-RESOURCE-PRICE*))
+                                                                                     (hunchentoot:redirect (hunchentoot:request-uri*)))))))))
+                             (:btn "Добавить ресурс"
+                              :popup '(:caption            "Добавление ресурса"
+                                       :perm               111
+                                       :entity             supplier-resource-price
+                                       :fields             '(resource price
+                                                             (:btn "Добавить ресурс"
+                                                              :act
+                                                              (progn
+                                                                (format nil "~A" (form-data)))))))
+                             ))
        (:caption           "Отправить заявку на добросовестность" ;; заявка на статус добросовестного поставщика (изменяет статус поставщика)
         :perm              (and :self :unfair)
         :entity            supplier

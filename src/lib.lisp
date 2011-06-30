@@ -187,23 +187,50 @@
                                                                ;;               (format nil "/tender/~A" (get-btn-key (caar (form-data)))))))
                                                                'tender)
                                                               ))))
-                                                     ((equal typedata '(list-of-keys supplier-status))
+                                                     ((equal typedata '(:list-of-keys supplier-status))
                                                       (tpl:fld
                                                        (list :fldname captfld
-                                                             :fldcontent (tpl:strview (list :value (a-fld namefld val))))))
+                                                             :fldcontent (tpl:strview (list :value (getf *supplier-status* (a-fld namefld val)))))))
+                                                     ((equal typedata '(:list-of-str))
+                                                      (tpl:fld
+                                                       (list :fldname captfld
+                                                             :fldcontent (tpl:textupd (list :name namefld
+                                                                                            :value (a-fld namefld val))))))
                                                      ((equal typedata '(list-of-str)) (show-fld captfld #'tpl:strupd  namefld (a-fld namefld val)))
                                                      (t (format nil "<br />err:unk2 typedata: ~A | ~A" namefld typedata)))))
                                           (:btn
                                            (tpl:btn (list :name (getf infld :btn) :value (getf infld :value))))
+
                                           (:popbtn
-                                           "<br />todo: popup")
+                                           (with-let-infld
+                                               (let* ((popid (getf infld :popbtn))
+                                                      (popup (loop :for infld :in (getf infld :fields) :collect
+                                                                (let ((typefld (car infld)))
+                                                                  (ecase typefld
+                                                                    (:fld
+                                                                     (with-let-infld
+                                                                         (cond ((equal typedata '(:str))
+                                                                                (show-fld captfld #'tpl:strupd namefld))
+                                                                               ((equal typedata '(:num))
+                                                                                (show-fld captfld #'tpl:strupd namefld ""))
+                                                                               ((equal typedata '(:link resource))
+                                                                                (show-fld captfld #'tpl:strupd namefld "выбор одного из ресурсов"))
+                                                                               (t (format nil "err:unk5 typedata: ~A" typedata)))
+                                                                       ))
+                                                                    (:btn
+                                                                     (tpl:btn (list :name (format nil "~A" (getf infld :btn))
+                                                                                    :value (format nil "~A" (getf infld :value))))))))))
+                                                 (push (list :id popid  :title (getf infld :title)  :left 200  :width 730
+                                                             :content (tpl:frmobj (list :flds popup)))
+                                                       popups)
+                                                 (tpl:popbtn (list :value (getf infld :value) :popid popid)))))
+
                                           (:col
                                            (tpl:col (list :title (getf infld :col)
                                                           :content
                                                           ;; (format nil "~A" infld)
                                                           ;; )))
                                                           ;; (format nil "~A" (getf infld :fields)))))
-
                                                           (show-collection (funcall (getf infld :val))
                                                                            (getf infld :fields)))))
                                           ))))))
