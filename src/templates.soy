@@ -310,6 +310,18 @@
   <input type="text" name="{$name}" value="{$value}" /> <br />{\n}
 {/template}
 
+{template selopt}
+  <OPTION value="{$id}">{$name}</OPTION>{\n}
+{/template}
+
+{template selres}
+  <SELECT name="{$name}" size="10">
+    {foreach $option in $options}
+      {call selopt data="$option" /}
+    {/foreach}
+  </SELECT>
+{/template}
+
 {template textupd}
   <textarea name="{$name}" rows="5" col="120" />{$value}</textarea> <br />{\n}
 {/template}

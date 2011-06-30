@@ -214,7 +214,14 @@
                                                                                ((equal typedata '(:num))
                                                                                 (show-fld captfld #'tpl:strupd namefld ""))
                                                                                ((equal typedata '(:link resource))
-                                                                                (show-fld captfld #'tpl:strupd namefld "выбор одного из ресурсов"))
+                                                                                (tpl:selres
+                                                                                 (list :name "res"
+                                                                                       :options
+                                                                                       (mapcar #'(lambda (x)
+                                                                                                   (list :id (car x)
+                                                                                                         :name (a-name (cdr x))))
+                                                                                               (cons-hash-list *RESOURCE*))
+                                                                                       )))
                                                                                (t (format nil "err:unk5 typedata: ~A" typedata)))
                                                                        ))
                                                                     (:btn

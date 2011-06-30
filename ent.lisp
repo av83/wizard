@@ -369,6 +369,57 @@
      :actions
      '((:caption           "Главная страница"
         :perm              :all)))
+    ;; Новости
+    (:place                news
+     :url                  "/news"
+     :navpoint             "Новости"
+     :actions
+     '((:caption           "Новости"
+        :perm              :all)))
+    ;; Ресурсы
+    (:place                resources
+     :url                  "/resources"
+     :navpoint             "Каталог ресурсов"
+     :actions
+     '((:caption           "Категории"
+        :perm              :all
+        :entity            category
+        :val               (cons-hash-list *CATEGORY*)
+        :fields            '(name parent child-categoryes resources
+                             (:btn "Показать ресурсы"
+                              :act
+                              (hunchentoot:redirect
+                               (format nil "/resources/~A" (get-btn-key (caar (form-data)))))
+                              )))))
+    (:place                resources-category
+     :url                  "/resources/:id"
+     :navpoint             "Каталог ресурсов"
+     :actions
+     '((:caption           "Категории"
+        :perm              :all
+        :entity            category
+        :val               (cons-hash-list *CATEGORY*)
+        :fields            '(name parent child-categoryes resources
+                             (:btn "Показать ресурсы"
+                              :act
+                              (hunchentoot:redirect
+                               (format nil "/resources/~A" (get-btn-key (caar (form-data)))))
+                              )))
+       (:caption           "Ресурсы категории"
+        :perm              :all
+        :entity            resource
+        :val               (remove-if-not #'(lambda (x)
+                                              (equal (a-category (cdr x))
+                                                     (gethash (parse-integer (caddr (request-list))) *CATEGORY*)))
+                            (cons-hash-list *RESOURCE*))
+        :fields            '(name parent child-categoryes resources
+                             (:btn "Показать ресурсы"
+                              :act
+                              (hunchentoot:redirect
+                               (format nil "/resources/~A" (get-btn-key (caar (form-data)))))
+                              )))
+       ))
+
     ;; Личный кабинет Администратора
     (:place                admin
      :url                  "/admin"
@@ -430,7 +481,13 @@
                                                                       (setf (a-password (gethash key *USER*))
                                                                             (cdr (assoc "PASSWORD" (form-data) :test #'equal))))
                                                                     (hunchentoot:redirect (hunchentoot:request-uri*)))
-                                                             ))))))
+                                                             ))))
+                             (:btn "Страница эксперта"
+                              :act
+                              (hunchentoot:redirect
+                               (format nil "/expert/~A" (get-btn-key (caar (form-data)))))
+                              )
+                             ))
 
        (:caption           "Заявки поставщиков на добросовестность"
         :perm              :admin
@@ -550,7 +607,16 @@
                                                              (:btn "Добавить ресурс"
                                                               :act
                                                               (progn
-                                                                (format nil "~A" (form-data)))))))
+                                                                (setf (gethash (hash-table-count *SUPPLIER-RESOURCE-PRICE*) *SUPPLIER-RESOURCE-PRICE*)
+                                                                      (make-instance 'SUPPLIER-RESOURCE-PRICE
+                                                                                     :owner (gethash 3 *USER*)
+                                                                                     :resource (gethash
+                                                                                                (cdr (assoc "res" (form-data) :test #'equal))
+                                                                                                *RESOURCE*)
+                                                                                     :price (cdr (assoc "PRICE" (form-data) :test #'equal))))
+                                                                (hunchentoot:redirect (hunchentoot:request-uri*)))
+                                                              ;; (format nil "~A" (form-data)
+                                                              ))))
                              ))
        (:caption           "Отправить заявку на добросовестность" ;; заявка на статус добросовестного поставщика (изменяет статус поставщика)
         :perm              (and :self :unfair)
