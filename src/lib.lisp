@@ -21,6 +21,9 @@
 (defun cur-user ()
   (gethash (hunchentoot:session-value 'userid) *USER*))
 
+(defun cur-id ()
+  (parse-integer (caddr (request-list))))
+
 (defun form-data ()
   (hunchentoot:post-parameters*))
 
@@ -139,10 +142,23 @@
                ((:pswd)     (show-fld captfld #'tpl:pswdupd namefld (a-fld namefld val)))
                ((:num)      (show-fld captfld #'tpl:strupd  namefld (a-fld namefld val)))
                ((:interval) (show-fld captfld #'tpl:strupd namefld (a-fld namefld val)))
+               ((:date)     (show-fld captfld #'tpl:strupd namefld (a-fld namefld val)))
+               ((:link supplier)
+                (tpl:fld
+                 (list :fldname captfld
+                       :fldcontent "")))
                ((:list-of-keys supplier-status)
                 (tpl:fld
                  (list :fldname captfld
                        :fldcontent (tpl:strview (list :value (getf *supplier-status* (a-fld namefld val)))))))
+               ((:list-of-keys tender-status)
+                (tpl:fld
+                 (list :fldname captfld
+                       :fldcontent (tpl:strview (list :value (getf *tender-status* (a-fld namefld val)))))))
+               ((:link builder)
+                (tpl:fld
+                 (list :fldname captfld
+                       :fldcontent (tpl:strview (list :value (a-name (a-fld namefld val)))))))
                ((:list-of-str)
                 (tpl:fld
                  (list :fldname captfld
@@ -154,7 +170,7 @@
                         (popup (with-in-fld-case (getf infld :fields)
                                  :fld    (with-infld-typedata-cond (format nil "err:unk5 typedata: ~A" typedata)
                                            ((:str)   (show-fld captfld #'tpl:strupd namefld))
-                                           ((:num)   (show-fld captfld #'tpl:strupd namefld ""))
+                                           ((:num)   (show-fld captfld #'tpl:strupd namefld))
                                            ((:link resource))
                                            (tpl:selres
                                             (list :name "res"
@@ -179,9 +195,16 @@
       (with-in-fld-case ,fields
         :fld    (with-infld-typedata-cond (format nil "err:unk3 typedata: ~A" typedata)
                   ((:str)    (tpl:strview (list :value (a-fld (getf infld :fld) (cdr obj)))))
-                  ((:num))   (tpl:strview (list :value (a-fld (getf infld :fld) (cdr obj))))
+                  ((:num)    (tpl:strview (list :value (a-fld (getf infld :fld) (cdr obj)))))
+                  ((:list-of-keys tender-status)
+                   (tpl:strview (list :value (getf *tender-status* (a-fld (getf infld :fld) (cdr obj))))))
+                  ((:link builder)
+                   (a-name (a-fld (getf infld :fld) (cdr obj))))
                   ((:link resource)
-                   (a-name (a-fld (getf infld :fld) (cdr obj)))))
+                   (a-name (a-fld (getf infld :fld) (cdr obj))))
+                  ((:link tender)
+                   (a-name (a-fld (getf infld :fld) (cdr obj))))
+                  )
         :btn    (tpl:btn (list :name (format nil "~A~~~A"  (getf infld :btn) (car obj))
                                :value (format nil "~A" (getf infld :value))))
         :popbtn (let* ((popid (format nil "~A~~~A" (getf infld :popbtn) (car obj)))
@@ -194,7 +217,9 @@
                   (push (list :id popid  :title (getf infld :title)  :left 200  :width 730
                               :content (tpl:frmobj (list :flds popup)))
                         popups)
-                  (tpl:popbtn (list :value (getf infld :value) :popid popid))))))
+                  (tpl:popbtn (list :value (getf infld :value) :popid popid)))
+        :calc   (tpl:strview (list :value (funcall (getf infld :calc) obj)))
+        )))
 
 (defun show-acts (acts)
   (let* ((personal  (let ((userid (hunchentoot:session-value 'userid)))

@@ -5,24 +5,22 @@
 (defparameter *used-package* '(cl iter))
 
 (defun gen-fld-symb (fld entity-param)
-  (let* ((entity    (find-if #'(lambda (entity)
-                                 (equal (getf entity :entity) entity-param))
-                             *entityes*))
-         (typedata  (caddr (find-if #'(lambda (x)
-                                        (equal (car x) fld))
-                                    (getf entity :fields))))
-         (name      (cadr (find-if #'(lambda (x)
-                                       (equal (car x) fld))
-                                   (getf entity :fields)))))
+  (let* ((entity    (find-if #'(lambda (entity)     (equal (getf entity :entity) entity-param))    *entityes*))
+         (typedata  (caddr (find-if #'(lambda (x)   (equal (car x) fld))                           (getf entity :fields))))
+         (name      (cadr (find-if #'(lambda (x)    (equal (car x) fld))                           (getf entity :fields)))))
     (format nil "~%~25T (list :fld \"~A\" :perm 111 :typedata '~A :name \"~A\")"
             fld
             (subseq (with-output-to-string (*standard-output*)  (pprint typedata)) 1)
-            name
-            )))
+            name)))
 
 (defun gen-fld-cons (fld)
   (let ((instr (car fld)))
     (ecase instr
+      (:calc
+       (values
+        (format nil "~%~25T (list :calc (lambda (obj) ~A) :perm 111)"
+                (subseq (with-output-to-string (*standard-output*) (pprint (getf fld instr))) 1))
+        nil))
       (:btn
        (let ((btntype (nth 2 fld)))
          (ecase btntype
@@ -46,8 +44,7 @@
                          (getf fld instr)
                          (getf popup :caption)
                          str)
-                 ctrs))))
-           )))
+                 ctrs)))))))
       (:col
        (multiple-value-bind (str ctrs)
            (gen-fields (eval (getf fld :fields))
@@ -144,7 +141,7 @@
        (unless (null (getf place :navpoint))
          (push (list :link (getf place :url) :title (getf place :navpoint)) menu))
        (let ((controllers))
-         (format t "~%--------")
+         ;; (format t "~%--------")
          (format out "~%~%(restas:define-route ~A-page (\"~A\")"
                  (string-downcase (getf place :place))
                  (getf place :url))
@@ -156,8 +153,8 @@
                          (setf controllers (append controllers ctr)))
                       str))
                  (format nil  "~%    (show-acts acts))"))
-         (loop :for ctr :in controllers :do                  ;;
-            (format t "~%~A | ~A" (car ctr) (cadr ctr)))     ;;
+         ;; (loop :for ctr :in controllers :do                  ;;
+            ;; (format t "~%~A | ~A" (car ctr) (cadr ctr)))     ;;
          (format out "~%~%(restas:define-route ~A-page/post (\"~A\" :method :post)"
                  (string-downcase (getf place :place))
                  (getf place :url))

@@ -16,33 +16,7 @@
   `(setf (gethash (hash-table-count ,hash) ,hash)
         (make-instance ,class ,@init)))
 
-;; USERS
-
-;; ADMIN
-(push-hash *USER* 'ADMIN :login "admin" :password "admin")
-;; EXPERT
-(loop :for i :from 1 :to 9 :do
-   (push-hash *USER* 'EXPERT
-     :name (format nil "Эксперт-~A" i)
-     :login (format nil "exp~A" i)
-     :password (format nil "exp~A" i)))
-;; SUPPLIER
-(loop :for i :from 0 :to 9 :do
-   (push-hash *USER* 'SUPPLIER
-     :status (nth (* 2 (random (floor (length *supplier-status*) 2)))
-                  *supplier-status*)
-     :name (format nil "Поставщик-~A" i)
-     :login (format nil "supp~A" i)
-     :password (format nil "supp~A" i)))
-;; BUILDER
-(loop :for i :from 0 :to 9 :do
-   (push-hash *USER* 'BUILDER
-     :name (format nil "Застройщик-~A" i)
-     :login (format nil "buil~A" i)
-     :password (format nil "buil~A" i)))
-
 ;; RESOURCES & CATEGORYES
-
 (loop :for cat :in '("Строительные товары" "Крепеж" "Оснастка" "Инструменты") :do
    (let ((category (push-hash *CATEGORY* 'CATEGORY
                      :name cat
@@ -61,115 +35,103 @@
                           )))
           (push resource (a-resources category))))))
 
+;; ADMIN
+(push-hash *USER* 'ADMIN :login "admin" :password "admin")
+
+;; EXPERTS
+(loop :for i :from 1 :to 9 :do
+   (push-hash *USER* 'EXPERT
+     :name (format nil "Эксперт-~A" i)
+     :login (format nil "exp~A" i)
+     :password (format nil "exp~A" i)))
+
+;; BUILDERS
+(loop :for i :from 0 :to 9 :do
+   (push-hash *USER* 'BUILDER
+     :name (format nil "Застройщик-~A" i)
+     :login (format nil "buil~A" i)
+     :password (format nil "buil~A" i)))
+
+;; TENDERS
+(let ((builders (mapcar #'cdr
+                        (remove-if-not #'(lambda (x)
+                                           (equal (type-of (cdr x)) 'BUILDER))
+                                       (cons-hash-list *USER*)))))
+  (loop :for builder :in builders :do
+     (loop :for i :from 0 :to 5 :do
+        (let ((tender (push-hash *TENDER* 'TENDER
+                        :name        (format nil "Тендер-~A от ~A" i (a-name builder))
+                        :status      (nth (* 2 (random (floor (length *supplier-status*) 2)))
+                                          *tender-status*)
+                        :owner       builder
+                        ;; :active-date ;; Дата, когда тендер стал активным (первые сутки новые тендеры видят только добростовестные поставщики)
+                        ;; :all                 "Срок проведения"
+                        ;; :claim               "Срок подачи заявок"
+                        ;; :analize             "Срок рассмотрения заявок"
+                        ;; :interview           "Срок проведения интервью"
+                        ;; :result              "Срок подведения итогов"
+                        ;; :winner              "Победитель тендера"
+                        ;; :price               "Рекомендуемая стоимость" ;; вычисляется автоматически на основании заявленных ресурсов
+                        :resources   (let ((resource-count (hash-table-count *RESOURCE*))
+                                           (all-resources  (cons-hash-list *RESOURCE*)))
+                                       (remove-duplicates
+                                        (loop :for r :from 0 :to (+ 3 (random 4)) :collect
+                                           (cdr (nth (random resource-count) all-resources)))))
+                        ;; :suppliers           "Поставщики"                 (:list-of-links supplier) ;; строится по ресурсам автоматически
+                        ;; :offerts             "Откликнувшиеся поставщики"  (:list-of-links supplier)
+                        )))
+          (setf (a-documents tender)
+                (loop :for d :from 0 :to (+ 3 (random 4)) :collect
+                   (let ((doc (push-hash *DOCUMENT* 'DOCUMENT
+                                :name (format nil "Документ-~A из тендера ~A" d i)
+                                :filename (format nil "~A-~A.doc" d i)
+                                :tender tender)))
+                     doc)))))))
 
 
-
-;; Categoryes
-(setf (gethash (hash-table-count *USER*) *USER*)
-      (make-instance 'ADMIN
-                     :login "admin"
-                     :password "admin"))
-
-
-
-
-
-
-
-;; RESOURCES
-
-(setf (gethash (hash-table-count *RESOURCE*) *RESOURCE*)
-      (make-instance 'RESOURCE
-                     :name "Блок бетонный"
-                     :resource-type :matherial
-                     :unit "шт"))
-
-(setf (gethash (hash-table-count *RESOURCE*) *RESOURCE*)
-      (make-instance 'RESOURCE
-                     :name "Труба сантехническая"
-                     :resource-type :material
-                     :unit "шт"))
-
-(setf (gethash (hash-table-count *RESOURCE*) *RESOURCE*)
-      (make-instance 'RESOURCE
-                     :name "Плита перекрытия"
-                     :resource-type :material
-                     :unit "шт"))
-
-(setf (gethash (hash-table-count *RESOURCE*) *RESOURCE*)
-      (make-instance 'RESOURCE
-                     :name "Стеклопакет"
-                     :resource-type :material
-                     :unit "шт"))
-
-
-;; 0 - supplier-resource-prcie for supplier1
-(setf (gethash (hash-table-count *SUPPLIER-RESOURCE-PRICE*) *SUPPLIER-RESOURCE-PRICE*)
-      (make-instance 'SUPPLIER-RESOURCE-PRICE
-                     :owner (gethash 3 *USER*)
-                     :resource  (make-instance 'RESOURCE
-                                               :name "Стеклопакет"
-                                               :resource-type :material
-                                               :unit "шт")
-                     :price 10000))
-
-;; 1 - supplier-resource-prcie for supplier1
-(setf (gethash (hash-table-count *SUPPLIER-RESOURCE-PRICE*) *SUPPLIER-RESOURCE-PRICE*)
-      (make-instance 'SUPPLIER-RESOURCE-PRICE
-                     :owner (gethash 3 *USER*)
-                     :resource  (make-instance 'RESOURCE
-                                               :name "Утеплитель"
-                                               :resource-type :material
-                                               :unit "шт")
-                     :price 10000))
-
-
-;; 2 - supplier-resource-prcie for supplier2
-(setf (gethash (hash-table-count *SUPPLIER-RESOURCE-PRICE*) *SUPPLIER-RESOURCE-PRICE*)
-      (make-instance 'SUPPLIER-RESOURCE-PRICE
-                     :owner (gethash 4 *USER*)
-                     :resource  (make-instance 'RESOURCE
-                                               :name "Стеклопакет"
-                                               :resource-type :material
-                                               :unit "шт")
-                     :price 10000))
-
-
-;; tender 0 (builder 1)
-(let* ((id (hash-table-count *TENDER*))
-       (tender (make-instance 'TENDER
-                              :name                "Первый тендер"
-                              :status              :active
-                              :owner               (gethash 22 *USER*)
-                              :active-date         "15.12.2012"
-                              :all                 "15.12.2012-21.01.2013"
-                              :claim               "15.12.2012-21.01.2013"
-                              :analize             "15.12.2012-21.01.2013"
-                              :interview           "15.12.2012-21.01.2013"
-                              :result              "15.12.2012-21.01.2013"
-                              ;; :winner              ""
-                              ;; :price               "Рекомендуемая стоимость"    (:num) ;; вычисляется автоматически на основании заявленных ресурсов
-                              ;; :resources           "Ресурсы"                    (:list-of-links resource)
-                              ;; :documents           "Документы"                  (:list-of-links document) ;; закачка и удаление файлов
-                              ;; :suppliers           "Поставщики"                 (:list-of-links supplier) ;; строится по ресурсам автоматически
-                              ;; :offerts             "Откликнувшиеся поставщики"  (:list-of-links supplier)
-                              )))
-  (setf (gethash (hash-table-count *TENDER*) *TENDER*)
-        tender)
-  (push tender (a-tenders (gethash 22 *USER*))))
-
-
-;; dbg out
-(maphash #'(lambda (k v)
-             (print (list k v (a-login v) (a-password v))))
-         *USER*)
-
-(maphash #'(lambda (k v)
-             (print (list k v (a-name v) (a-resources v))))
-         *CATEGORY*)
-
-(maphash #'(lambda (k v)
-             (print (list k v (a-name v) (a-category v))))
-         *RESOURCE*)
-
-
+;; SUPPLIERS
+(loop :for i :from 0 :to 9 :do
+   (let ((supplier (push-hash *USER* 'SUPPLIER
+                     :status (nth (* 2 (random (floor (length *supplier-status*) 2)))
+                                  *supplier-status*)
+                     :name (format nil "Поставщик-~A" i)
+                     :login (format nil "supp~A" i)
+                     :password (format nil "supp~A" i))))
+     (setf (a-resources supplier)
+           (let* ((all-resources   (cons-hash-list *RESOURCE*))
+                  (sel-resources   (loop :for r :from 0 :to (+ 3 (random 4)) :collect
+                                      (nth (random (length all-resources)) all-resources))))
+             (loop :for cons-res :in sel-resources :collect
+                (push-hash *SUPPLIER-RESOURCE-PRICE* 'SUPPLIER-RESOURCE-PRICE
+                  :owner     supplier
+                  :resource  (cdr cons-res)
+                  :price     (random 1000)))))
+     (setf (a-offers supplier)
+           (let* ((all-tenders    (cons-hash-list *TENDER*))
+                  (sel-tenders    (loop :for tnd :from 0 :to (+ 3 (random 4)) :collect
+                                     (cdr (nth (random (length all-tenders)) all-tenders)))))
+             (loop :for tender :in sel-tenders :collect
+                (let ((offer (push-hash *OFFER* 'OFFER
+                               :owner     supplier
+                               :tender    tender)))
+                  (setf (a-resources offer)
+                        (let* ((tender-resources (a-resources tender))
+                               (sel-tender-resources (loop :for tr :from 0 :to (random (length tender-resources)) :collect
+                                                        (nth tr tender-resources))))
+                          (loop :for sel-res :in sel-tender-resources :collect
+                             (push-hash *OFFER-RESOURCE* 'OFFER-RESOURCE
+                               :owner     supplier
+                               :offer     offer
+                               :resource  sel-res
+                               :price     (random 1000)))))
+                  offer))))
+     (setf (a-sales supplier)
+           (let ((supp-resources (mapcar #'a-resource (a-resources supplier))))
+             (loop :for sale :from 0 :to (random (length supp-resources)) :collect
+                (push-hash *SALE* 'SALE
+                  :name      (format nil "Распродажа-~A" sale)
+                  :owner     supplier
+                  :resource  (nth sale supp-resources)
+                  :procent   (random 100)
+                  :price     (random 1000)))))
+     ))
