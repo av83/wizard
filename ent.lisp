@@ -456,11 +456,15 @@
         :entity            resource
         :val               (gethash (parse-integer (caddr (request-list)))  *RESOURCE*)
         :fields            '(name category resource-type unit
-                             (:btn "Сохранить"
-                              :act
-                              (hunchentoot:redirect
-                               (format nil "/resource/~A" (get-btn-key (caar (form-data)))))
-                              )))))
+                             ;; Убрано, т.к. ресурсы редактированию не подвергаются
+                             ;; (:btn "Сохранить"
+                             ;;  :act
+                             ;;  (let ((obj (gethash (cur-id) *RESOURCE*)))
+                             ;;    (setf (a-name obj)      (cdr (assoc "NAME"    (form-data) :test #'equal)))
+                             ;;    (setf (a-unit obj)      (cdr (assoc "UNIT"     (form-data) :test #'equal)))
+                             ;;    (hunchentoot:redirect (hunchentoot:request-uri*)))
+                             ;;  )
+                             ))))
 
 
     ;; Личный кабинет Администратора
@@ -597,7 +601,19 @@
     (:place                supplier
      :url                  "/supplier/:id"
      :actions
-     '((:caption           "Поставщик"
+     '((:caption           "Изменить себе пароль"
+        :perm              :admin
+        :entity            admin
+        :val               (cur-user)
+        :fields            '(login password
+                             (:btn "Изменить пароль"
+                              :act
+                              (progn
+                                (setf (a-login (cur-user))     (cdr (assoc "LOGIN" (form-data) :test #'equal)))
+                                (setf (a-password (cur-user))  (cdr (assoc "PASSWORD" (form-data) :test #'equal)))
+                                (hunchentoot:redirect (hunchentoot:request-uri*)))
+                              )))
+       (:caption           "Поставщик"
         :entity            supplier
         :val               (gethash (parse-integer (caddr (request-list))) *USER*)
         :fields            '(name status juridical-address actual-address contacts email site heads inn kpp ogrn
@@ -640,9 +656,16 @@
                                                              :fields            '((:btn "Удалить ресурс"
                                                                                    :act
                                                                                    (progn
-                                                                                     (let ((key (get-btn-key (caar (form-data)))))
-                                                                                       (remhash key *SUPPLIER-RESOURCE-PRICE*))
-                                                                                     (hunchentoot:redirect (hunchentoot:request-uri*)))))))))
+                                                                                     (let* ((key (get-btn-key (caar (FORM-DATA))))
+                                                                                            (supp-res (gethash key *SUPPLIER-RESOURCE-PRICE*)))
+                                                                                       (delete-if #'(lambda (x)
+                                                                                                      (equal x supp-res))
+                                                                                                  (a-resources (gethash (cur-id) *USER*)))
+                                                                                       (remhash key *SUPPLIER-RESOURCE-PRICE*)
+                                                                                       (format nil "~A" (form-data))
+                                                                                       (hunchentoot:redirect (hunchentoot:request-uri*)))
+                                                                                     )
+                                                                                   ))))))
                              (:btn "Добавить ресурс"
                               :popup '(:caption            "Добавление ресурса"
                                        :perm               111

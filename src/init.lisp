@@ -28,8 +28,8 @@
         (let ((resource (push-hash *RESOURCE* 'RESOURCE
                           :name (format nil "Ресурс-~A из ~A" i (a-name category))
                           :category category
-                          :resource-type (nth (* 2 (random (floor (length *resource-type*) 2)))
-                                              *resource-type*)
+                          :resource-type (nth (* 2 (random (floor (length *resource-types*) 2)))
+                                              *resource-types*)
                           :unit "шт."
                           ;; :suppliers
                           )))
