@@ -357,6 +357,16 @@
             (when (equal (cdr cons) obj)
               (return cons))))))
 
+(defmacro del-inner-obj (form-element hash inner-lst)
+  `(let* ((key  (get-btn-key ,form-element))
+          (hobj (gethash key ,hash)))
+     (setf ,inner-lst
+           (remove-if #'(lambda (x)
+                          (equal x hobj))
+                      ,inner-lst))
+     (remhash key ,hash)
+     (hunchentoot:redirect (hunchentoot:request-uri*))))
+
 
 ;; Мы считаем, что если у пользователя есть права на редактирование
 ;; всего объекта или части его полей - то эти поля показываются как
@@ -655,16 +665,10 @@
                                                              :entity            supplier-resource-price
                                                              :fields            '((:btn "Удалить ресурс"
                                                                                    :act
-                                                                                   (progn
-                                                                                     (let* ((key (get-btn-key (caar (FORM-DATA))))
-                                                                                            (supp-res (gethash key *SUPPLIER-RESOURCE-PRICE*)))
-                                                                                       (delete-if #'(lambda (x)
-                                                                                                      (equal x supp-res))
-                                                                                                  (a-resources (gethash (cur-id) *USER*)))
-                                                                                       (remhash key *SUPPLIER-RESOURCE-PRICE*)
-                                                                                       (format nil "~A" (form-data))
-                                                                                       (hunchentoot:redirect (hunchentoot:request-uri*)))
-                                                                                     )
+                                                                                   (del-inner-obj
+                                                                                    (caar (form-data))
+                                                                                    *SUPPLIER-RESOURCE-PRICE*
+                                                                                    (a-resources (gethash (cur-id) *USER*)))
                                                                                    ))))))
                              (:btn "Добавить ресурс"
                               :popup '(:caption            "Добавление ресурса"
@@ -682,45 +686,56 @@
                                                                                      :price (cdr (assoc "PRICE" (form-data) :test #'equal))))
                                                                 (hunchentoot:redirect (hunchentoot:request-uri*)))
                                                               ))))
-                             (:col               "Список заявок на тендеры"
-                              :perm              111
-                              :entity            offer
-                              :val               (cons-inner-objs *OFFER* (a-offers (gethash (cur-id) *USER*)))
-                              :fields            '(tender
-                                                   (:btn "Страница заявки" :act (go-to-offer))
-                                                   (:btn "Удалить заявку"
-                                                    :popup '(:caption           "Удаление заявки"
-                                                             :perm              :admin
-                                                             :entity            supplier-resource-price
-                                                             :fields            '((:btn "Удалить ресурс"
-                                                                                   :act
-                                                                                   (progn
-                                                                                     (let ((key (get-btn-key (caar (form-data)))))
-                                                                                       (remhash key *SUPPLIER-RESOURCE-PRICE*))
-                                                                                     (hunchentoot:redirect (hunchentoot:request-uri*)))))))))
-                             (:col               "Список распродаж"
-                              :perm              111
-                              :entity            sale
-                              :val               (cons-inner-objs *SALE* (a-sales (gethash (cur-id) *USER*)))
-                              :fields            '(name
-                                                   (:btn "Страница распродажи" :act (go-to-sale))
-                                                   (:btn "Удалить распродажу"
-                                                    :popup '(:caption           "Удаление распродажи"
-                                                             :perm              :admin
-                                                             :entity            supplier-resource-price
-                                                             :fields            '((:btn "Удалить распродажу"
-                                                                                   :act
-                                                                                   (progn
-                                                                                     (let ((key (get-btn-key (caar (form-data)))))
-                                                                                       (remhash key *SUPPLIER-RESOURCE-PRICE*))
-                                                                                     (hunchentoot:redirect (hunchentoot:request-uri*)))))))))
-                             (:btn "Добавить распродажу"
-                              :popup '(:caption            "Добавление расподажи"
-                                       :perm               111
-                                       :entity             sale
-                                       :fields             '((:btn "Добавить ресурс"
-                                                              :act (create-sale)
-                                                              ))))
+                             ;; (:col               "Список заявок на тендеры"
+                             ;;  :perm              111
+                             ;;  :entity            offer
+                             ;;  :val               (cons-inner-objs *OFFER* (a-offers (gethash (cur-id) *USER*)))
+                             ;;  :fields            '(tender
+                             ;;                       (:btn "Страница заявки" :act (go-to-offer))
+                             ;;                       (:btn "Удалить заявку"
+                             ;;                        :popup '(:caption           "Удаление заявки"
+                             ;;                                 :perm              :admin
+                             ;;                                 :entity            supplier-resource-price
+                             ;;                                 :fields            '((:btn "Удалить заявку"
+                             ;;                                                       :act
+                             ;;                                                       (progn
+                             ;;                                                         (let* ((key (get-btn-key (caar (FORM-DATA))))
+                             ;;                                                                (supp-res (gethash key *OFFER*)))
+                             ;;                                                           (delete-if #'(lambda (x)
+                             ;;                                                                          (equal x supp-res))
+                             ;;                                                                      (a-resources (gethash (cur-id) *USER*)))
+                             ;;                                                           (remhash key *SUPPLIER-RESOURCE-PRICE*)
+                             ;;                                                           (format nil "~A" (form-data))
+                             ;;                                                           (hunchentoot:redirect (hunchentoot:request-uri*)))
+                             ;;                                                         )
+
+                             ;;                                                       (progn
+                             ;;                                                         (let ((key (get-btn-key (caar (form-data)))))
+                             ;;                                                           (remhash key *SUPPLIER-RESOURCE-PRICE*))
+                             ;;                                                         (hunchentoot:redirect (hunchentoot:request-uri*)))))))))
+                             ;; (:col               "Список распродаж"
+                             ;;  :perm              111
+                             ;;  :entity            sale
+                             ;;  :val               (cons-inner-objs *SALE* (a-sales (gethash (cur-id) *USER*)))
+                             ;;  :fields            '(name
+                             ;;                       (:btn "Страница распродажи" :act (go-to-sale))
+                             ;;                       (:btn "Удалить распродажу"
+                             ;;                        :popup '(:caption           "Удаление распродажи"
+                             ;;                                 :perm              :admin
+                             ;;                                 :entity            supplier-resource-price
+                             ;;                                 :fields            '((:btn "Удалить распродажу"
+                             ;;                                                       :act
+                             ;;                                                       (progn
+                             ;;                                                         (let ((key (get-btn-key (caar (form-data)))))
+                             ;;                                                           (remhash key *SUPPLIER-RESOURCE-PRICE*))
+                             ;;                                                         (hunchentoot:redirect (hunchentoot:request-uri*)))))))))
+                             ;; (:btn "Добавить распродажу"
+                             ;;  :popup '(:caption            "Добавление расподажи"
+                             ;;           :perm               111
+                             ;;           :entity             sale
+                             ;;           :fields             '((:btn "Добавить ресурс"
+                             ;;                                  :act (create-sale)
+                             ;;                                  ))))
                              ))
        (:caption           "Отправить заявку на добросовестность" ;; заявка на статус добросовестного поставщика (изменяет статус поставщика)
         :perm              (and :self :unfair)
