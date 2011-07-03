@@ -135,3 +135,4 @@
                   :procent   (random 100)
                   :price     (random 1000)))))
      ))
+

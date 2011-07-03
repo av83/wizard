@@ -159,6 +159,10 @@
                 (tpl:fld
                  (list :fldname captfld
                        :fldcontent (tpl:strview (list :value (a-name (a-fld namefld val)))))))
+               ((:link tender)
+                (tpl:fld
+                 (list :fldname captfld
+                       :fldcontent (tpl:strview (list :value (a-name (a-fld namefld val)))))))
                ((:list-of-str)
                 (tpl:fld
                  (list :fldname captfld
@@ -198,11 +202,15 @@
                   ((:num)    (tpl:strview (list :value (a-fld (getf infld :fld) (cdr obj)))))
                   ((:list-of-keys tender-status)
                    (tpl:strview (list :value (getf *tender-status* (a-fld (getf infld :fld) (cdr obj))))))
+                  ((:list-of-keys resource-types)
+                   (tpl:strview (list :value (getf *resource-types* (a-fld (getf infld :fld) (cdr obj))))))
                   ((:link builder)
                    (a-name (a-fld (getf infld :fld) (cdr obj))))
                   ((:link resource)
                    (a-name (a-fld (getf infld :fld) (cdr obj))))
                   ((:link tender)
+                   (a-name (a-fld (getf infld :fld) (cdr obj))))
+                  ((:link supplier)
                    (a-name (a-fld (getf infld :fld) (cdr obj))))
                   )
         :btn    (tpl:btn (list :name (format nil "~A~~~A"  (getf infld :btn) (car obj))
@@ -239,7 +247,8 @@
                                           (equal 'TENDER (type-of val))    ;; TENDER
                                           (equal 'BUILDER (type-of val))   ;; BUILDER
                                           (equal 'EXPERT (type-of val))    ;; EXPERT
-                                          (equal 'RESOURCE (type-of val))) ;; EXPERT
+                                          (equal 'RESOURCE (type-of val))  ;; RESOURCE
+                                          (equal 'OFFER (type-of val))) ;; OFFER
                                       (tpl:frmobj (list :flds (show-linear (getf act :fields)))))
                                      ((equal 'cons (type-of val))          ;; COLLECTION
                                       (tpl:frmtbl (list :objs (show-collection val (getf act :fields)))))

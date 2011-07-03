@@ -27,7 +27,7 @@
     ))
 
 ;; Возможные типы ресурсов: машины, материалы etc
-(defparameter *resource-type*
+(defparameter *resource-types*
   '(:machine "машина" :material "материал"))
 
 ;; Возможные статусы тендеров
@@ -850,6 +850,44 @@
                                 :fields             '((:btn "Подтверждаю отмену" :act (cancel-tender)))))
                              ))))
 
+    ;; Заявки на тендер
+    (:place                offers
+     :url                  "/offers"
+     :navpoint             "Заявки на участие в тендере"
+     :actions
+     '((:caption           "Заявки на участие в тендере"
+        :perm              :all
+        :entity            offer
+        :val               (cons-hash-list *OFFER*)
+        :fields            '(owner tender
+                             (:btn "Страница заявки"
+                              :act
+                              (hunchentoot:redirect
+                               (format nil "/offer/~A" (get-btn-key (caar (form-data)))))
+                              )))))
+
+    ;; Страница заявки на тендер
+    (:place                offer
+     :url                  "/offer/:id"
+     :actions
+     '((:caption           "Заявка на тендер"
+        :entity            offer
+        :val               (gethash (cur-id) *OFFER*)
+        :fields            '(tender
+                             ;; resources
+                             (:col              "Ресурсы оферты"
+                              :perm             111
+                              :entity           offer-resource
+                              :val              (cons-inner-objs *OFFER-RESOURCE* (a-resources (gethash (cur-id) *OFFER*)))
+                              :fields '(resource price
+                                        (:btn   "Удалить из оферты"
+                                         :act   (delete-res-from-tender))
+                                        (:btn   "Страница ресурса"
+                                         :act   (hunchentoot:redirect
+                                                 (format nil "/resource/~A" (get-btn-key (caar (last (form-data)))))))))
+                             (:btn "Добавить ресурс" :act (add-resource-to-offer))
+                             ))))
+
     ;; Рейтинг компаний
     (:place                rating
      :url                  "/rating"
@@ -858,42 +896,6 @@
      '((:caption           "Рейтинг компаний"
         :perm              :all)))
 
-    ;; Оферты
-    (:place                offerts
-     :url                  "/oferts"
-     :navpoint             "Оферты"
-     :actions
-     '((:caption           "Оферты"
-        :perm              :all
-        :entity            offer
-        :val               (cons-hash-list *OFFER*)
-        :fields            '(owner tender
-                             (:btn "Страница оферты"
-                              :act
-                              (hunchentoot:redirect
-                               (format nil "/offer/~A" (get-btn-key (caar (form-data)))))
-                              )))))
-    ;; Страница оферты
-    (:place                offer
-     :url                  "/offer/:id"
-     :actions
-     '((:caption           "Оферта"
-        :entity            offer
-        :val               (gethash (cur-id) *OFFER*)
-        :fields            '(owner tender resources
-                             ;; resources
-                             (:col              "Ресурсы оферты"
-                              :perm             111
-                              :entity           offer
-                              :val              (cons-inner-objs *RESOURCE* (a-resources (gethash (cur-id) *OFFER*)))
-                              :fields '(name
-                                        (:btn   "Удалить из оферты"
-                                         :act   (delete-res-from-tender))
-                                        (:btn   "Страница ресурса"
-                                         :act   (hunchentoot:redirect
-                                                 (format nil "/resource/~A" (get-btn-key (caar (last (form-data)))))))))
-                             (:btn "Добавить ресурс" :act (add-resource-to-offer))
-                             ))))
 
     ;; Календарь событий
     (:place                calendar
