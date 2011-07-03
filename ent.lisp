@@ -366,6 +366,16 @@
      (remhash key ,hash)
      (hunchentoot:redirect (hunchentoot:request-uri*))))
 
+(defmacro with-obj-save (obj &rest flds)
+  `(progn
+     ,@(loop :for fld :in flds :collect
+          `(setf (,(intern (format nil "A-~A" (symbol-name fld))) ,obj)
+                 (cdr (assoc ,(symbol-name fld) (form-data) :test #'equal))))
+     (hunchentoot:redirect (hunchentoot:request-uri*))))
+
+
+;; (macroexpand-1 '(with-obj-save ooo name addr))
+
 
 ;; Мы считаем, что если у пользователя есть права на редактирование
 ;; всего объекта или части его полей - то эти поля показываются как
@@ -424,7 +434,7 @@
         :entity            resource
         :val               (remove-if-not #'(lambda (x)
                                               (equal (a-category (cdr x))
-                                                     (gethash (parse-integer (caddr (request-list))) *CATEGORY*)))
+                                                     (gethash (cur-id) *CATEGORY*)))
                             (cons-hash-list *RESOURCE*))
         :fields            '(name resource-type unit
                              (:btn "Страница ресурса"
@@ -463,7 +473,7 @@
      '((:caption           "Ресурс"
         :perm              :all
         :entity            resource
-        :val               (gethash (parse-integer (caddr (request-list)))  *RESOURCE*)
+        :val               (gethash (cur-id)  *RESOURCE*)
         :fields            '(name category resource-type unit
                              ;; Убрано, т.к. ресурсы редактированию не подвергаются
                              ;; (:btn "Сохранить"
@@ -588,7 +598,7 @@
      '((:caption           "Эксперт"
         :perm              :all
         :entity            expert
-        :val               (gethash (parse-integer (caddr (request-list))) *USER*)
+        :val               (gethash (cur-id) *USER*)
         :fields            '(name))))
 
     ;; Список поставщиков
@@ -624,7 +634,7 @@
                               )))
        (:caption           "Поставщик"
         :entity            supplier
-        :val               (gethash (parse-integer (caddr (request-list))) *USER*)
+        :val               (gethash (cur-id) *USER*)
         :fields            '(name status juridical-address actual-address contacts email site heads inn kpp ogrn
                              bank-name bik corresp-account client-account addresses contact-person
                              ;; resources
@@ -633,23 +643,10 @@
                              (:btn "Сохранить"
                               :act
                               (progn
-                                (let ((obj (gethash (parse-integer (caddr (request-list))) *USER*)))
-                                  (setf (A-NAME obj) (cdr (ASSOC "NAME" (FORM-DATA) :test #'equal)))
-                                  (setf (A-JURIDICAL-ADDRESS obj) (cdr (ASSOC "JURIDICAL-ADDRESS" (FORM-DATA) :test #'equal)))
-                                  (setf (A-ACTUAL-ADDRESS obj) (cdr (ASSOC "ACTUAL-ADDRESS" (FORM-DATA) :test #'equal)))
-                                  (setf (A-CONTACTS obj) (cdr (ASSOC "CONTACTS" (FORM-DATA) :test #'equal)))
-                                  (setf (A-EMAIL obj) (cdr (ASSOC "EMAIL" (FORM-DATA) :test #'equal)))
-                                  (setf (A-SITE obj) (cdr (ASSOC "SITE" (FORM-DATA) :test #'equal)))
-                                  (setf (A-HEADS obj) (cdr (ASSOC "HEADS" (FORM-DATA) :test #'equal)))
-                                  (setf (A-INN obj) (cdr (ASSOC "INN" (FORM-DATA) :test #'equal)))
-                                  (setf (A-KPP obj) (cdr (ASSOC "KPP" (FORM-DATA) :test #'equal)))
-                                  (setf (A-OGRN obj) (cdr (ASSOC "OGRN" (FORM-DATA) :test #'equal)))
-                                  (setf (A-BANK-NAME obj) (cdr (ASSOC "BANK-NAME" (FORM-DATA) :test #'equal)))
-                                  (setf (A-BIK obj) (cdr (ASSOC "BIK" (FORM-DATA) :test #'equal)))
-                                  (setf (A-CORRESP-ACCOUNT obj) (cdr (ASSOC "CORRESP-ACCOUNT" (FORM-DATA) :test #'equal)))
-                                  (setf (A-CLIENT-ACCOUNT obj) (cdr (ASSOC "CLIENT-ACCOUNT" (FORM-DATA) :test #'equal)))
-                                  (setf (A-ADDRESSES obj) (cdr (ASSOC "ADDRESSES" (FORM-DATA) :test #'equal)))
-                                  (setf (A-CONTACT-PERSON obj) (cdr (ASSOC "CONTACT-PERSON" (FORM-DATA) :test #'equal)))
+                                (let ((obj (gethash (cur-id) *USER*)))
+                                  (with-obj-save obj
+                                    NAME JURIDICAL-ADDRESS ACTUAL-ADDRESS CONTACTS EMAIL SITE HEADS INN KPP OGRN BANK-NAME
+                                    BIK CORRESP-ACCOUNT CLIENT-ACCOUNT ADDRESSES CONTACT-PERSON)
                                   (hunchentoot:redirect (hunchentoot:request-uri*))
                                   ;; (format nil "~A" (form-data))
                                   )))
@@ -837,13 +834,22 @@
                               :entity           tender
                               :val              (remove-if-not #'(lambda (x)
                                                                    (equal (a-owner (cdr x))
-                                                                          (gethash (parse-integer (nth 2 (request-list))) *USER*)))
+                                                                          (gethash (cur-id) *USER*)))
                                                  (cons-hash-list *TENDER*))
                               :fields '(name (:btn "Страница тендера"
                                               :act
                                               (hunchentoot:redirect
                                                (format nil "/tender/~A" (get-btn-key (caar (last (form-data) 2))))))))
-                             rating))
+                             rating
+                             (:btn "Сохранить"
+                              :act
+                              (progn
+                                (let ((obj (gethash (cur-id) *USER*)))
+                                  (with-obj-save obj
+                                    NAME JURIDICAL-ADDRESS INN KPP OGRN BANK-NAME BIK CORRESP-ACCOUNT CLIENT-ACCOUNT RATING)
+                                  ;; (format nil "~A" (form-data))
+                                  ))
+                              )))
        (:caption           "Объявить новый тендер"
         :perm              :self
         :entity            tender
