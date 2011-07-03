@@ -116,25 +116,26 @@
                               (tpi (car (nth 2 field))))
                           (format nil "~<(~A ~23:T :initarg :~A ~53:T :initform nil :accessor ~A)~:>"
                                   `(,fld ,fld ,(format nil "A-~A" fld))))))))
-       (let ((perm (getf entity :perm)))
-         (unless (null (getf perm :create))
-           (format out "~%~%(defmethod initialize-instance :after ((object ~A) &key)"
-                   (getf entity :entity))
-           (format out "~%  ;; Здесь будет проверка прав~%  ;; ...~%  ;; Запись в контейнер")
-           (format out "~%  (setf (gethash (hash-table-count *~A*) *~A*) object)"
-                   (getf entity :container)
-                   (getf entity :container))
-           (format out ")"))
-         (unless (null (getf perm :view))
-           (format out "~%~%(defmethod view ((object ~A) &key)"
-                   (getf entity :entity))
-           (format out "~%  ;; Здесь будет проверка прав~%  ;; ...~%  ;; Печать")
-           (let ((fields (getf entity :fields)))
-             (loop :for fld :in fields :collect
-                (let ((caption (cadr fld))
-                      (name    (car fld)))
-                  (format out "~%  (format t \"~A~A : ~A\" (~A object))" "~%" caption "~A" name))))
-           (format out ")")))))
+       ;; (let ((perm (getf entity :perm)))
+       ;;   (unless (null (getf perm :create))
+       ;;     (format out "~%~%(defmethod initialize-instance :after ((object ~A) &key)"
+       ;;             (getf entity :entity))
+       ;;     (format out "~%  ;; Здесь будет проверка прав~%  ;; ...~%  ;; Запись в контейнер")
+       ;;     (format out "~%  (setf (gethash (hash-table-count *~A*) *~A*) object)"
+       ;;             (getf entity :container)
+       ;;             (getf entity :container))
+       ;;     (format out ")"))
+       ;;   (unless (null (getf perm :view))
+       ;;     (format out "~%~%(defmethod view ((object ~A) &key)"
+       ;;             (getf entity :entity))
+       ;;     (format out "~%  ;; Здесь будет проверка прав~%  ;; ...~%  ;; Печать")
+       ;;     (let ((fields (getf entity :fields)))
+       ;;       (loop :for fld :in fields :collect
+       ;;          (let ((caption (cadr fld))
+       ;;                (name    (car fld)))
+       ;;            (format out "~%  (format t \"~A~A : ~A\" (~A object))" "~%" caption "~A" name))))
+       ;;     (format out ")")))
+       ))
   ;; Places
   (let ((menu))
     (loop :for place :in *places* :do
