@@ -24,3 +24,6 @@ sbcl --lose-on-corruption --disable-ldb --dynamic-space-size 1024
 смотреть?
 [06:03] dmitry_vk> rigidus: это можно сделать через MOP. См. методы
 slot-value-using-class и (setf slot-value-using-class)
+
+
+

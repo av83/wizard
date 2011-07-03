@@ -143,14 +143,14 @@
                ((:num)      (show-fld captfld #'tpl:strupd  namefld (a-fld namefld val)))
                ((:interval) (show-fld captfld #'tpl:strupd namefld (a-fld namefld val)))
                ((:date)     (show-fld captfld #'tpl:strupd namefld (a-fld namefld val)))
-               ((:link supplier)
-                (tpl:fld
-                 (list :fldname captfld
-                       :fldcontent "")))
                ((:list-of-keys supplier-status)
                 (tpl:fld
                  (list :fldname captfld
                        :fldcontent (tpl:strview (list :value (getf *supplier-status* (a-fld namefld val)))))))
+               ((:list-of-keys resource-types)
+                (tpl:fld
+                 (list :fldname captfld
+                       :fldcontent (tpl:strview (list :value (getf *resource-types* (a-fld namefld val)))))))
                ((:list-of-keys tender-status)
                 (tpl:fld
                  (list :fldname captfld
@@ -159,6 +159,17 @@
                 (tpl:fld
                  (list :fldname captfld
                        :fldcontent (tpl:strview (list :value (a-name (a-fld namefld val)))))))
+               ((:link category)
+                (tpl:fld
+                 (list :fldname captfld
+                       :fldcontent (tpl:strview (list :value (a-name (a-fld namefld val)))))))
+               ((:link supplier)
+                (tpl:fld
+                 (list :fldname captfld
+                       :fldcontent (tpl:strview (list :value (let ((it (a-fld namefld val)))
+                                                               (if (null it)
+                                                                   ""
+                                                                   (a-name it))))))))
                ((:link tender)
                 (tpl:fld
                  (list :fldname captfld

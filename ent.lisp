@@ -451,12 +451,12 @@
     (:place                resource
      :url                  "/resource/:id"
      :actions
-     '((:caption           "Ресурсы"
+     '((:caption           "Ресурс"
         :perm              :all
         :entity            resource
         :val               (gethash (parse-integer (caddr (request-list)))  *RESOURCE*)
         :fields            '(name category resource-type unit
-                             (:btn "Страница ресурса"
+                             (:btn "Сохранить"
                               :act
                               (hunchentoot:redirect
                                (format nil "/resource/~A" (get-btn-key (caar (form-data)))))
