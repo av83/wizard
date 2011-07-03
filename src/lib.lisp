@@ -259,7 +259,8 @@
                                           (equal 'BUILDER (type-of val))   ;; BUILDER
                                           (equal 'EXPERT (type-of val))    ;; EXPERT
                                           (equal 'RESOURCE (type-of val))  ;; RESOURCE
-                                          (equal 'OFFER (type-of val))) ;; OFFER
+                                          (equal 'OFFER (type-of val))     ;; OFFER
+                                          (equal 'SALE (type-of val)))     ;; SALE
                                       (tpl:frmobj (list :flds (show-linear (getf act :fields)))))
                                      ((equal 'cons (type-of val))          ;; COLLECTION
                                       (tpl:frmtbl (list :objs (show-collection val (getf act :fields)))))
