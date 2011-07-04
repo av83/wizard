@@ -321,7 +321,7 @@
                            ((:update (and :owner :unactive))))
       (suppliers           "Поставщики"                 (:list-of-links supplier) ;; строится по ресурсам автоматически
                            ((:update :system)))
-      (offerts             "Откликнувшиеся поставщики"  (:list-of-links supplier)
+      (offers              "Заявки"                     (:list-of-links offer)
                            ((:update-field :system))))
      :perm
      (:create :builder
@@ -748,21 +748,32 @@
                              (:col              "Тендеры застройщика"
                               :perm             111
                               :entity           tender
-                              :val              (cons-inner-objs *TENDER* (a-tenders (gethash (cur-id) *USER*)))
+                              :val              (cons-inner-objs *TENDER* (a-tenders (gethash 11 *USER*)))
                               :fields           '(name (:btn "Страница тендера"
-                                                        :act (to "/tender/~A" (caar (last (form-data) 2))))))))
+                                                        :act (to "/tender/~A" (caar (last (form-data)))))))))
        (:caption           "Объявить новый тендер"
         :perm              :self
         :entity            tender
         :val               :clear
         :fields            '(name all claim analize interview result
                              (:btn "Объявить тендер (+)"
-                              :act (let ((id (hash-table-count *TENDER*)))
+                              :act
+                              ;; (format nil "~A" (form-data))
+                              (let ((id (hash-table-count *TENDER*)))
                                      (setf (gethash id *TENDER*)
                                            (make-instance 'TENDER
-                                                          :name (cdr (ASSOC "NAME" (FORM-DATA) :test #'equal))))
+                                                          :name      (cdr (ASSOC "NAME" (FORM-DATA) :test #'equal))
+                                                          :status    :unactive
+                                                          :owner     (gethash (cur-id) *USER*)
+                                                          :all       (cdr (ASSOC "ALL" (FORM-DATA) :test #'equal))
+                                                          :claim     (cdr (ASSOC "CLAIM" (FORM-DATA) :test #'equal))
+                                                          :analize   (cdr (ASSOC "ANALIZE" (FORM-DATA) :test #'equal))
+                                                          :interview (cdr (ASSOC "INTERVIEW" (FORM-DATA) :test #'equal))
+                                                          :result    (cdr (ASSOC "RESULT" (FORM-DATA) :test #'equal))
+                                                          ))
                                      (hunchentoot:redirect
-                                      (format nil "/tender/~A" id))))))))
+                                      (format nil "/tender/~A" id)))
+                              )))))
 
     ;; Список тендеров
     (:place                tenders
@@ -784,7 +795,10 @@
      '((:caption           "Тендер"
         :entity            tender
         :val               (gethash (cur-id) *TENDER*)
-        :fields            '(name status owner active-date all claim analize interview result winner price
+        :fields            '(name status owner active-date all claim analize interview result ;; winner price
+                             (:btn "Сохранить" :act (let ((obj (gethash (cur-id) *TENDER*)))
+                                                      (with-obj-save obj
+                                                        name active-date all claim analize interview result)))
                              ;; resources
                              (:col              "Ресурсы тендера"
                               :perm             111
@@ -792,11 +806,37 @@
                               :val              (cons-inner-objs *RESOURCE* (a-resources (gethash (cur-id) *TENDER*)))
                               :fields '(name
                                         (:btn   "Удалить из тендера"
-                                         :act   (delete-res-from-tender))
+                                         :act   (let ((etalon (gethash (get-btn-key (caar (last (form-data)))) *RESOURCE*)))
+                                                  (setf (a-resources (gethash (cur-id) *TENDER*))
+                                                        (remove-if #'(lambda (x)
+                                                                       (equal x etalon))
+                                                                   (a-resources (gethash (cur-id) *TENDER*))))
+                                                  (hunchentoot:redirect (hunchentoot:request-uri*))))
                                         (:btn   "Страница ресурса"
-                                         :act   (hunchentoot:redirect
-                                                (format nil "/resource/~A" (get-btn-key (caar (last (form-data)))))))))
-                             (:btn "Добавить ресурс" :act (add-resource-to-tender))
+                                         :act   (to "/resource/~A" (caar (last (form-data)))))))
+                             (:btn "Добавить ресурс"
+                              :popup '(:caption           "Выберите ресурсы"
+                                       :perm              (and :active :fair)
+                                       :entity            resource
+                                       :val               (cons-hash-list *RESOURCE*)
+                                       :fields            '(
+                                                            (:col "Выберите ресурс"
+                                                             :perm 222
+                                                             :entity resource
+                                                             :val (cons-hash-list *RESOURCE*)
+                                                             :fields '(name
+                                                                       (:btn "Добавить ресурс"
+                                                                        :act
+                                                                        ;; (format nil "~A" (get-btn-key (caar (last (form-data)))))
+                                                                        (progn
+                                                                          (push
+                                                                           (gethash (get-btn-key (caar (last (form-data)))) *RESOURCE*)
+                                                                           (a-resources (gethash (cur-id) *TENDER*)))
+                                                                          (hunchentoot:redirect (hunchentoot:request-uri*)))
+                                                                        ))
+                                                             ))))
+
+
                              ;; documents
                              (:col              "Документы тендера"
                               :perm             111
@@ -806,8 +846,7 @@
                                         (:btn   "Удалить из тендера"
                                          :act   (delete-doc-from-tender))
                                         (:btn   "Страница документа"
-                                         :act   (hunchentoot:redirect
-                                                 (format nil "/document/~A" (get-btn-key (caar (last (form-data)))))))))
+                                         :act   (to "/document/~A" (caar (last (form-data)))))))
                              (:btn "Добавить документ" :act (add-document-to-tender))
                              ;; suppliers
                              (:col              "Поставщики ресурсов"
@@ -822,16 +861,22 @@
                              (:col              "Заявки на тендер"
                               :perm             111
                               :entity           offer
-                              :val              (remove-if-not #'(lambda (x) (equal (type-of (cdr x)) 'SUPPLIER)) (cons-hash-list *USER*))
-                              :fields '(name
-                                        (:btn "Страница заявки"
-                                         :act (to "/supplier/~A"  (caar (last (form-data)))))))
+                              :val              (cons-inner-objs *OFFER* (a-offers (gethash (cur-id) *TENDER*)))
+                              :fields '((:btn "Страница заявки" :act (to "/offer/~A"  (caar (last (form-data)))))))
                              ;;
                              (:btn "Ответить заявкой на тендер"
                               :popup '(:caption           "Выберите ресурсы"
                                        :perm              (and :active :fair)
                                        :entity            resource
-                                       :fields            '((:btn "Участвовать в тендере" :act (create-offer)))))
+                                       :fields            '((:btn "Участвовать в тендере"
+                                                             :act
+                                                             (let* ((id    (hash-table-count *OFFER*))
+                                                                    (offer (setf (gethash id *OFFER*)
+                                                                                 (make-instance 'OFFER
+                                                                                                :owner (cur-user)
+                                                                                                :tender (gethash (cur-id) *TENDER*)))))
+                                                               (push offer (a-offers (gethash (cur-id) *TENDER*)))
+                                                               (hunchentoot:redirect (format nil "/offer/~A" id)))))))
                              ;;
                              (:btn "Отменить тендер"
                               :popup
@@ -868,10 +913,51 @@
                               :val              (cons-inner-objs *OFFER-RESOURCE* (a-resources (gethash (cur-id) *OFFER*)))
                               :fields '(resource price
                                         (:btn   "Удалить из оферты"
-                                         :act   (delete-res-from-tender))
+                                         :act   (del-inner-obj
+                                                 (caar (last (form-data)))
+                                                 *OFFER-RESOURCE*
+                                                 (a-resources (gethash (cur-id) *OFFER*))))
+                                         ;; (let* ((id (get-btn-key (caar (last (form-data)))))
+                                         ;;               (etalon (gethash id *OFFER-RESOURCE*)))
+                                         ;;          (setf (a-resources (gethash (cur-id) *OFFER*))
+                                         ;;                (remove-if #'(lambda (x)
+                                         ;;                               (equal etalon x))
+                                         ;;                           (a-resources (gethash (cur-id) *OFFER*)))
+
                                         (:btn   "Страница ресурса"
                                          :act   (to "/resource/~A" (caar (last (form-data)))))))
-                             (:btn "Добавить ресурс" :act (add-resource-to-offer))))))
+                             (:btn "Добавить ресурс"
+                              :popup '(:caption           "Выберите ресурсы"
+                                       :perm              (and :active :fair)
+                                       :entity            resource
+                                       :val               (cons-hash-list *RESOURCE*)
+                                       :fields            '(
+                                                            (:col "Выберите ресурс"
+                                                             :perm 222
+                                                             :entity resource
+                                                             :val (cons-hash-list *RESOURCE*)
+                                                             :fields '(name
+                                                                       (:btn "Добавить ресурс"
+                                                                        :popup '(:caption "Укажите цену"
+                                                                                 :perm    1111
+                                                                                 :entity  resource
+                                                                                 :val     :clear
+                                                                                 :fields  '((:calc "<input type=\"text\" name=\"INPRICE\" />")
+                                                                                            (:btn "Задать цену"
+                                                                                             :act
+                                                                                             (let ((res-id (get-btn-key(caar (last (form-data)))))
+                                                                                                   (in (cdr (assoc "INPRICE" (form-data) :test #'equal)))
+                                                                                                   (id (hash-table-count *OFFER-RESOURCE*)))
+                                                                                               (push
+                                                                                                (setf (gethash id *OFFER-RESOURCE*)
+                                                                                                      (make-instance 'OFFER-RESOURCE
+                                                                                                                     :owner (cur-user)
+                                                                                                                     :offer (gethash (cur-id) *OFFER*)
+                                                                                                                     :resource (gethash res-id *RESOURCE*)
+                                                                                                                     :price in))
+                                                                                                (a-resources (gethash (cur-id) *OFFER*)))
+                                                                                               (hunchentoot:redirect (hunchentoot:request-uri*)))
+                                                                                             )))))))))))))
 
     ;; Рейтинг компаний
     (:place                rating

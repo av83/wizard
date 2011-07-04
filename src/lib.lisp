@@ -186,6 +186,7 @@
                                  :fld    (with-infld-typedata-cond (format nil "err:unk5 typedata: ~A" typedata)
                                            ((:str)   (show-fld captfld #'tpl:strupd namefld))
                                            ((:num)   (show-fld captfld #'tpl:strupd namefld))
+
                                            ((:link resource))
                                            (tpl:selres
                                             (list :name "res"
@@ -195,7 +196,12 @@
                                                                     :name (a-name (cdr x))))
                                                           (cons-hash-list *RESOURCE*)))))
                                  :btn    (tpl:btn (list :name (format nil "~A" (getf infld :btn))
-                                                        :value (format nil "~A" (getf infld :value)))))))
+                                                        :value (format nil "~A" (getf infld :value))))
+                                 :col    (tpl:col (list :title (getf infld :col)
+                                                        :content (tpl:frmtbl
+                                                                  (list :objs (show-collection (funcall (getf infld :val))
+                                                                                               (getf infld :fields))))))
+                                 )))
                    (push (list :id popid  :title (getf infld :title)  :left 200  :width 730
                                :content (tpl:frmobj (list :flds popup)))
                          popups)
@@ -216,7 +222,9 @@
                   ((:list-of-keys resource-types)
                    (tpl:strview (list :value (getf *resource-types* (a-fld (getf infld :fld) (cdr obj))))))
                   ((:link builder)
-                   (a-name (a-fld (getf infld :fld) (cdr obj))))
+                   (a-name (a-fld (getf infld :fld) (cdr obj)))
+                   )
+                  ;; (a-name (a-fld (getf infld :fld) (cdr obj))))
                   ((:link resource)
                    (a-name (a-fld (getf infld :fld) (cdr obj))))
                   ((:link tender)
@@ -230,9 +238,12 @@
                        (popup (with-in-fld-case (getf infld :fields)
                                 :fld     (with-infld-typedata-cond (format nil "err:unk4 typedata: ~A" typedata)
                                            ((:str)     (show-fld captfld #'tpl:strupd namefld (a-fld namefld (cdr obj))))
+                                           ((:num)     (show-fld captfld #'tpl:strupd namefld (a-fld namefld (cdr obj))))
                                            ((:pswd)    (show-fld captfld #'tpl:strupd namefld (a-fld namefld (cdr obj)))))
                                 :btn     (tpl:btn (list :name (format nil "~A~~~A" (getf infld :btn) (car obj))
-                                                        :value (format nil "~A" (getf infld :value)))))))
+                                                        :value (format nil "~A" (getf infld :value))))
+                                :calc    (tpl:strview (list :value (funcall (getf infld :calc) obj)))
+                                )))
                   (push (list :id popid  :title (getf infld :title)  :left 200  :width 730
                               :content (tpl:frmobj (list :flds popup)))
                         popups)

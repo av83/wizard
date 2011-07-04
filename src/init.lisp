@@ -78,7 +78,7 @@
                                         (loop :for r :from 0 :to (+ 3 (random 4)) :collect
                                            (cdr (nth (random resource-count) all-resources)))))
                         ;; :suppliers           "Поставщики"                 (:list-of-links supplier) ;; строится по ресурсам автоматически
-                        ;; :offerts             "Откликнувшиеся поставщики"  (:list-of-links supplier)
+                        ;; :offers              "Заявки"                     (:list-of-links supplier)
                         )))
           (setf (a-documents tender)
                 (loop :for d :from 0 :to (+ 3 (random 4)) :collect
@@ -86,7 +86,8 @@
                                 :name (format nil "Документ-~A из тендера ~A" d i)
                                 :filename (format nil "~A-~A.doc" d i)
                                 :tender tender)))
-                     doc)))))))
+                     doc)))
+          (push tender (a-tenders builder))))))
 
 
 ;; SUPPLIERS
@@ -124,6 +125,7 @@
                                :offer     offer
                                :resource  sel-res
                                :price     (random 1000)))))
+                  (push offer (a-offers tender))
                   offer))))
      (setf (a-sales supplier)
            (let ((supp-resources (mapcar #'a-resource (a-resources supplier))))
@@ -136,3 +138,8 @@
                   :price     (random 1000)))))
      ))
 
+
+;; (loop :for ten :in (cons-hash-list *TENDER*) :do
+;;    (print
+;;     (list (car ten) (a-offers (cdr ten)))))
+;; (a-name (gethash 60 *tender*))
