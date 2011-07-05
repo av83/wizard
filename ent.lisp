@@ -847,12 +847,61 @@
                                          :act   (delete-doc-from-tender))
                                         (:btn   "Страница документа"
                                          :act   (to "/document/~A" (caar (last (form-data)))))))
-                             (:btn "Добавить документ" :act (add-document-to-tender))
+                             (:btn "Добавить документ"
+                              :popup '(:caption           "Загрузите документ"
+                                       :perm              (and :active :fair)
+                                       :entity            resource
+                                       :val               (cons-hash-list *RESOURCE*)
+                                       :fields            '(
+                                                            (:col "Выберите ресурс"
+                                                             :perm 222
+                                                             :entity resource
+                                                             :val (cons-hash-list *RESOURCE*)
+                                                             :fields '(name
+                                                                       (:btn "Добавить ресурс"
+                                                                        :act
+                                                                        ;; (format nil "~A" (get-btn-key (caar (last (form-data)))))
+                                                                        (progn
+                                                                          (push
+                                                                           (gethash (get-btn-key (caar (last (form-data)))) *RESOURCE*)
+                                                                           (a-resources (gethash (cur-id) *TENDER*)))
+                                                                          (hunchentoot:redirect (hunchentoot:request-uri*)))
+                                                                        ))
+                                                             ))))
+
+
+
                              ;; suppliers
                              (:col              "Поставщики ресурсов"
                               :perm             111
                               :entity           tender
-                              :val              (remove-if-not #'(lambda (x) (equal (type-of (cdr x)) 'SUPPLIER)) (cons-hash-list *USER*))
+                              :val
+                              ;; (remove-if-not #'(lambda (x)
+                              ;;                                      (equal (type-of (cdr x))
+                              ;;                                             'SUPPLIER))
+                              ;;                    (cons-hash-list *USER*))
+                              (let ((tender-resources   (a-resources (gethash (cur-id) *TENDER*)))
+                                                      (all-suppliers      (remove-if-not #'(lambda (x)
+                                                                                             (equal (type-of (cdr x))
+                                                                                                    'SUPPLIER))
+                                                                                         (cons-hash-list *USER*)))
+                                                      (supplier-resource  (mapcar #'(lambda (x)
+                                                                                      (cons (a-resource (cdr x))
+                                                                                            (a-owner (cdr x))))
+                                                                                  (cons-hash-list *SUPPLIER-RESOURCE-PRICE*)))
+                                                      (result)
+                                                      (rs))
+                                                  (loop :for tr :in tender-resources :do
+                                                     (loop :for sr :in supplier-resource :do
+                                                        (when (equal tr (car sr))
+                                                          (push (cdr sr) result))))
+                                                  (setf result (remove-duplicates result))
+                                                  (loop :for rd :in result :do
+                                                     (loop :for as :in all-suppliers :do
+                                                        (if (equal rd (cdr as))
+                                                            (push as rs))
+                                                        ))
+                                                  rs)
                               :fields '(name
                                         (:btn "Отправить приглашение"  :act (delete-from-tender))
                                         (:btn "Страница поставщика"    :act (to "/supplier/~A"  (caar (last (form-data)))))))
@@ -883,7 +932,7 @@
                               '(:caption           "Действительно отменить?"
                                 :perm               :owner
                                 :entity             tender
-                                :fields             '((:btn "Подтверждаю отмену" :act (cancel-tender)))))
+                                :fields             '((:btn "Подтверждаю отмену" :act (hunchentoot:redirect (format nil "/tender"))))))
                              ))))
 
     ;; Заявки на тендер
