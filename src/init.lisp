@@ -1,5 +1,6 @@
 (in-package #:wizard)
 
+;;
 ;; Containers
 
 (defparameter *USER*                        (make-hash-table :test #'equal))
