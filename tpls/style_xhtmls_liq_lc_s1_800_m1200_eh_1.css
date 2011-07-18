@@ -1,0 +1,130 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font: 12pt Verdana;
+}
+a {
+	color: blue;
+	outline: none;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+p {
+	margin: 0 0 18px
+}
+img {
+	border: none;
+}
+input {
+	vertical-align: middle;
+}
+#wrapper {
+	min-width: 800px;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+
+/* Header
+-----------------------------------------------------------------------------*/
+#header {
+	height: 260px;
+	background: #FFFFFF;
+}
+
+
+/* Middle
+-----------------------------------------------------------------------------*/
+#middle {
+	border-left: 250px solid #FFFFFF;
+	height: 1%;
+	position: relative;
+}
+#middle:after {
+	content: '.';
+	display: block;
+	clear: both;
+	visibility: hidden;
+	height: 0;
+}
+#container {
+	width: 100%;
+	float: left;
+	overflow: hidden;
+	margin-right: -100%;
+}
+#content {
+	padding: 0 20px;
+}
+
+
+/* Sidebar Left
+-----------------------------------------------------------------------------*/
+#sideLeft {
+	float: left;
+	width: 250px;
+	position: relative;
+	background: #FFFFFF;
+	left: -250px;
+}
+
+
+/* Footer
+-----------------------------------------------------------------------------*/
+#footer {
+	height: 100px;
+	background: #FFFFFF;
+}
+
+
+/* Top Menu
+-----------------------------------------------------------------------------*/
+#menu a {
+  display:block;
+  width:120px;
+  background: url("button.gif") 0 0 no-repeat;
+  margin: 1em 0;
+  padding:7px 0 10px 20px;
+  font: bold 14px/1 sans-serif;
+  color:#c60;
+  text-decoration: none;
+}
+
+#menu a:hover {
+  background-position: -157px 0;
+  color: #E9BE75;
+}
+
+#menu a:active {
+  background-position: -314px 0;
+  color:white;
+}
+
+/* h1-h3
+-----------------------------------------------------------------------------*/
+h2 {
+  color: #FF6600;
+  border-bottom: 3px solid #FF6600;
+  font: 16pt Verdana;
+}
+h3 {
+  color: #FF6600;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-decoration: underline;
+  font: 14pt Verdana;
+}
+
+.menuelt {
+    padding: 10px 10px 10px 30px;
+    border-top: 1px solid black;
+}
+.menueltlink {
+    text-decoration: none;
+    font-weight: bold;
+    color: #FF6600;
+}
