@@ -1,0 +1,22 @@
+.list {
+    margin-top: 15px;
+}
+
+.list .item {
+    margin-bottom: 10px;
+}
+
+.list .item .caption {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.list .item .caption a {
+    text-decoration: none;
+}
+
+.list .item .subcaption {
+    color: #666666;
+    font-size: 12px;
+    font-style: italic;
+}

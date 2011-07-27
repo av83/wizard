@@ -1,0 +1,64 @@
+.paperA4 {
+    overflow: hidden;
+    width: 210mm;
+    min-height: 297mm;
+    padding: 10mm 10mm 10mm 20mm;
+    border: 1px dotted;
+    margin: 0 auto 0;
+}
+
+.header_description {
+    float:right;
+    text-align: right;
+}
+
+.reportCaption {
+    margin-top:40px;
+    margin-bottom: 40px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.title {
+    font-weight: bold;
+    font-style: italic;
+    font-size: 15px;
+}
+
+.winners1st {
+    margin-top: 40px;
+}
+
+.winners2st {
+    margin-top: 40px;
+}
+
+.footer {
+    margin-top: 50px;
+}
+
+.footer_line {
+    margin: 2px 2px 5px 2px;
+    overflow:hidden;
+}
+
+.footer_line_caption {
+    float:left;
+    height: 20px;
+}
+
+.footer_line_sign {
+    float:left;
+    width:200px;
+    height: 20px;
+    border-bottom: 1px solid;
+}
+
+.footer_line_date {
+    float: left;
+    height: 20px;
+}
+
+.tenderInfo {
+    min-height: 100px;
+}

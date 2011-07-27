@@ -1,0 +1,162 @@
+/* ------- DEFAULT ------- */
+.jextcurrency .error {
+	color: #f00;
+	font-weight: bold;
+}
+
+.jextcurrency div {
+	display: block;
+	overflow: hidden;
+}
+
+.jextcurrency .title h3 { /* additional title text */
+	
+}
+
+.jextcurrency .rates {
+	width: 100%;
+}
+
+.jextcurrency .rates .item1 {
+	width: 65%;
+	float: left;
+}
+
+.jextcurrency .rates .item2 {
+	width: 35%;
+	clear: right;
+	float: left;
+}
+
+.jextcurrency .rates .item {
+	border-bottom: 1px solid #ccc;
+	padding-top: 3px;
+}
+
+.jextcurrency .rates .item1 .scale {
+	width: 27px;
+	overflow: inherit;
+	float: left;
+	text-align: right !important;
+}
+
+.jextcurrency img {
+	padding: 0px 5px 0px 5px;
+}
+
+.jextcurrency span.positive {
+	color: green;
+	font-weight: normal;
+	font-size: 80%;
+	margin-left: 3px;
+}
+
+.jextcurrency span.negative {
+	color: red;
+	font-weight: normal;
+	font-size: 80%;
+	margin-left: 3px;
+}
+
+.jextcurrency .notes {
+	line-height: 120%;
+	padding-top: 7px;
+	font-size: 0.9em;
+	text-align: right;
+	color: #777;
+	clear: both;
+	float: right;
+}
+
+.jextcurrency .notes a#notes {
+	color: #777;
+	text-decoration: none;
+}
+
+.jextcurrency .author {
+	border-bottom: 1px solid #eee;
+	font-size: 0.8em;
+	color: #ddd;
+	text-align: left;
+	margin: 5px 0px 0px auto;
+	float: left;
+}
+
+.jextcurrency a#author {
+	color: #ddd !important;
+	text-decoration: none;
+}
+
+/* ------- HORIZONTAL ------- */
+.wz-jextcurrency {
+	font-family: tahoma, arial;
+	background-color: #ebffbe;
+	color: #555;
+}
+
+.wz-jextcurrency span {
+	margin-right: 3px;
+}
+
+.wz-jextcurrency div.rate {
+	white-space: nowrap;
+	display: inline;
+}
+
+.wz-jextcurrency span.title {
+	font-weight: bold;
+}
+
+.wz-jextcurrency span.positive,.wz-jextcurrency span.negative {
+	font-size: 90%;
+	border-right: 2px solid #aaa;
+}
+
+.wz-jextcurrency span.negative {
+	color: red;
+}
+
+.wz-jextcurrency span.positive {
+	color: green;
+}
+
+.wz-jextcurrency span.author {
+	margin-left: 2px;
+	color: #ddd;
+	font-size: 80%
+}
+
+.wz-jextcurrency span a#author {
+	color: #ddd;
+	text-decoration: none;
+}
+
+/* ------- BID & ASK ------- */
+.jextcurrency .forex div {
+	float: left;
+}
+
+.jextcurrency .forex .item1,.jextcurrency .forex .item2,.jextcurrency .forex .item3
+	{
+	text-align: center;
+}
+
+.jextcurrency .forex .top {
+	font-weight: normal !important;
+	background-color: #ddd !important;
+}
+
+.jextcurrency .forex .item1 {
+	width: 70px;
+}
+
+.jextcurrency .forex  .item2 {
+	width: 35%;
+	font-weight: bold;
+}
+
+.jextcurrency .forex  .item3 {
+	width: 35%;
+	font-weight: bold;
+	clear: right;
+}

@@ -1,0 +1,54 @@
+/* 
+    Document   : tender
+    Created on : 27.05.2011, 10:58:14
+    Author     : VadimA
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+.tender_list_item {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.tender_list_item .name a {
+    text-decoration: none;
+}
+
+.tender_list_item .begin,
+.tender_list_item .end {
+    font-size: 12px;
+}
+
+.tender_list_item.unread .name a {
+    font-weight: bold;
+}
+
+.tenderCarryingOutPeriod {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    color: #666;
+    font-style: italic;
+    font-size: 11px;
+    float: left;
+}
+
+.tender_caption {
+    padding: 0 5px 0 15px;
+}
+
+.tender_name {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.tender_text {
+    font-size: 10px;
+    font-style: italic;
+    color: #b5b5b5;
+}

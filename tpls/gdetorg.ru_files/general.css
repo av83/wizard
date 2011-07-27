@@ -1,0 +1,254 @@
+/* Основные стили */
+
+.block h2,
+.block h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.block h2 {
+    font-size: 16px;
+}
+
+.block h3 {
+    font-size: 14px;
+}
+
+.block p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.block p a {
+    text-decoration: none;
+}
+
+
+.block p strong {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.error,
+.validationError {
+    color: red;
+    margin-bottom: 10px;
+}
+
+.error {
+    font-size: 14px;
+}
+
+.input .validationError {
+    font-size: 12px;
+    margin-top: -5px;
+}
+
+.input span {
+    display: block;
+    font-size: 14px;
+}
+
+.input input,
+.input select,
+.input textarea {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.pageWide input,
+.pageWide textarea {
+    width: 420px;
+}
+
+.pageWide select {
+    width: 430px;
+}
+
+.pageWide textarea {
+    height: 150px;
+}
+
+.halfPageWide input,
+.halfPageWide select,
+.halfPageWide textarea {
+    width: 190px;
+}
+
+.floatRight {
+    float: right !important;
+}
+
+.floatLeft {
+    float: left !important;
+    margin-right: 10px;
+}
+
+.clearFloat:after {
+    content: ".";
+    visibility: hidden;
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+.ajaxLoader {
+    margin-top: 8px;
+}
+
+.list {
+    margin-top: 15px;
+}
+
+.item {
+    margin-bottom: 10px;
+}
+
+.item .caption {
+    font-size: 14px;
+    display: block;
+}
+
+.item .caption a {
+    text-decoration: none;
+}
+
+.item .subcaption a {
+    text-decoration: none;
+}
+
+.item .subcaption {
+    font-size: 12px;
+    font-style: italic;
+    color: #666;
+}
+
+.button {
+    height: 30px;
+    color: white;
+    font-size: 11px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    float: left;
+}
+
+.button .left {
+    width: 7px;
+    height: 30px;
+    float: left;
+    background: url(/images/buttonLeft.png) no-repeat 0 0;
+}
+
+.button:hover .left {
+    background: url(/images/buttonLeft.png) no-repeat 0 -33px;
+}
+
+.button .text {
+    height: 20px;
+    float: left;
+    background: url(/images/buttonLine.png) repeat-x 0 0;
+    padding: 7px 8px 3px !important;
+}
+.button:hover .text{
+    background: url(/images/buttonLine.png) repeat-x 0 -33px;
+}
+
+.button .right {
+    width: 7px;
+    height: 30px;
+    float: left;
+    background: url(/images/buttonRight.png) no-repeat 0 0;
+}
+
+.button:hover .right {
+    background: url(/images/buttonRight.png) no-repeat 0 -33px;
+}
+
+.buttonContainer {
+    overflow: auto;
+}
+
+.buttonContainer .button {
+    float: left;
+    margin-right: 10px;
+}
+
+.buttonContainer span {
+    float: left;
+    margin-right: 10px;
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.dashed {
+    border-bottom: 1px dashed;
+}
+
+a.dashed {
+    text-decoration: none;
+    border-bottom-color: #0072BC;
+}
+
+.postIndex input {
+    width: 60px;
+}
+
+.city select {
+    width: 355px;
+}
+
+.house input {
+    width: 30px;
+}
+
+.office input {
+    width: 30px;
+}
+
+.phone input {
+    width: 179px;
+}
+
+.notFound {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.atChecking {
+    color: blue;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.comment {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    color: #666;
+    font-style: italic;
+    font-size: 11px;
+}
+
+.itemCountBlock {
+    color: grey;
+    display: block;
+    font-size: 16px;
+    font-style: italic;
+    margin-bottom: 10px;
+    margin-top: -10px;
+}
+
+.printZone {
+    float:right;
+    cursor: pointer;
+}
+
+.printZoneText {
+    font-style: italic;
+    font-size: 11px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    color: #666;
+}

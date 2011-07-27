@@ -1,0 +1,22 @@
+.file {
+    margin-bottom: 5px
+}
+
+.file a.name {
+    text-decoration: none;
+}
+
+.file .extension,
+.file .size {
+    color: #666;
+    margin-left: 3px;
+    font-style: italic;
+    font-size: 11px;
+}
+
+.file .delete {
+    margin-left: 5px;
+    text-decoration: none;
+    border-bottom: 1px dashed #0072BC;
+    font-style: italic;
+}

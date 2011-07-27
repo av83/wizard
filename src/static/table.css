@@ -1,0 +1,29 @@
+.odd {
+    background-color: #ffffcc;
+}
+
+.even {
+    background-color: #ffcc99;
+}
+.table {
+   /* width: 670px;*/
+    line-height: 16px;
+    margin-bottom: 10px;
+    border: 1px solid #ff6600;
+}
+
+
+.table td {
+    padding: 3px 3px 3px 5px;
+}
+
+.table td.first {
+    /*width: 250px;*/
+    font-weight: bold;
+    border-left: 1px solid gainsboro;
+}
+
+.table td {
+    border-bottom: 1px solid gainsboro;
+    border-right: 1px solid gainsboro;
+}

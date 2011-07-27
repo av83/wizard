@@ -1,0 +1,22 @@
+.content {
+    width: 710px;
+}
+
+.contentBoxBG {
+    width: 702px;
+    background: url(/images/contentBoxLineWide.png) repeat-y 0 0;
+}
+
+.contentBoxTop {
+    width: 710px;
+    background: url(/images/contentBoxTopWide.png) no-repeat 0 0;
+}
+
+.contentBoxBottom {
+    width: 710px;
+    background: url(/images/contentBoxBottomWide.png) no-repeat 0 0;
+}
+
+.lineDividerBlock {
+    width: 710px;
+}

@@ -1,20 +1,44 @@
-// -*- mode: closure-template-html -*-
+// -*- mode: closure-template-html; fill-column: 130 -*-
 
 {namespace tpl}
 
 
 {template root}
-  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">{\n}
-  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">{\n}
-    <head>{\n}
-	  <title>{$headtitle}</title>{\n}
-	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />{\n}
-	  <!-- link rel="stylesheet" type="text/css" media="screen" href="/style.css" / -->{\n}
-      <link rel="stylesheet" media="screen" type="text/css" href="/default.css" /> <!-- сетка и типовая -->{\n}
-      <link rel="stylesheet" media="screen" type="text/css" href="/unique.css" /> <!-- уникальные стили -->{\n}
-      <link rel="stylesheet" media="screen" type="text/css" href="/templateBanner.css" /> <!-- стили банеров -->{\n}
-	  <link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico" />{\n}
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xml:lang="ru-ru" xmlns="http://www.w3.org/1999/xhtml" lang="ru-ru"><head>
+
+      <link rel="stylesheet" href="/default.css" type="text/css" />
+      <link rel="stylesheet" href="/unique.css" type="text/css" />
+
+      <link rel="stylesheet" href="/content.css" type="text/css" />
+
+      <link rel="stylesheet" href="/general.css" type="text/css" />
+      <link rel="stylesheet" href="/templateBanner.css" type="text/css" />
+
+      <script type="text/javascript" src="/jquery-1.js"></script>
+      <script type="text/javascript" src="/general.js"></script>
+      <script type="text/javascript" src="/jquery.js"></script>
+
+      <!-- base href="http://gdetorg.ru/index.php" -->
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+      <meta name="robots" content="index, follow" />
+      <meta name="keywords" content="joomla, Joomla" />
+
+      <title>{$headtitle}</title>
+
+      <link href="/index.php?format=feed&amp;type=rss" rel="alternate" type="application/rss+xml" title="RSS 2.0" />
+      <link href="/index.php?format=feed&amp;type=atom" rel="alternate" type="application/atom+xml" title="Atom 1.0" />
+      <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+      <link rel="stylesheet" href="/jextcurrency.css" type="text/css" />
+
+      <script type="text/javascript" src="/jquery-1.js"></script>
+      <script type="text/javascript" src="/jquery-ui-1.js"></script>
+      <script type="text/javascript" src="/video.js"></script>
+      <script type="text/javascript" src="/mootools.js"></script>
+      <script type="text/javascript" src="/caption.js"></script>
+
       <script>
+        {literal}
         function ShowHide(id)
         {
         if (document.getElementById(id).style.display == 'none') {
@@ -24,167 +48,520 @@
         }
         return false;
         }
+        {/literal}
       </script>
-    </head>{\n}
-    <body id="top">{\n}
-      <div id="main" class="main">{\n}
-        <div class="header">
-          <div class="headerMainBlock">
-            <div class="headerLogoBox">
-              <img alt="" src="/header_logo.png" />
-              <span style="font-size: 12px;"> Единый строительный портал Cеверо-Запада </span>
-            </div>
-            <div id="search" class="headerSearchBox" style="display:none">
-              <div class="headerBGleft"></div>
-              <div class="headerBGright"></div>
-              <form id="topSearchForm" method="get" action="/search/">
-                <input type="text" maxlength="150" size="15" value="" name="q" />
-                <select name="f[]">
-                  <option value="n">в новостях</option>
-                  <option value="p">в проектах</option>
-                  <option value="c">в компаниях</option>
-                  <option value="t">в тендерах</option>
-                  <option value="a">в отчётах</option>
-                  <option value="j">в решениях суда</option>
-                  <option value="0" selected="selected">везде</option>
-                </select>
-                <div id="topSearchButton" class="buttonBox">
-                  <div class="buttonLeft"></div>
-                  <div class="buttonText">Искать</div>
-                  <div class="buttonRight"></div>
-                </div>
-              </form>
-            </div>
-            {$personal |noAutoescape}
-          </div>
+
+
+    </head>
+    <body>
+      <div class="main" id="main">
+        <div class="bannerTop">
+          <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+                  codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
+                  height="90"
+                  width="970"
+                  border="0">
+			<param name="movie"
+                   value="http://gdetorg.ru/images/banners/fce0fe9db7e465113e59b2c5225e70f4.swf" />
+            <embed src="/fce0fe9db7e465113e59b2c5225e70f4.swf"
+                   loop="false"
+                   pluginspage="http://www.macromedia.com/go/get/flashplayer"
+                   type="application/x-shockwave-flash"
+                   height="90"
+                   width="970" />
+		  </object>
         </div>
 
+        <div class="header">
 
-        <div class="body">{\n}
+          <div class="syslinks">
+            <span>
+              <a href="/"
+                 title="ГдеСтройТорг.ру"
+                 onclick="setThisHomePage(); return false;">
+                <img src="i_files/make_startup.png" />
+              </a>
+              <a href="/"
+                 title="ГдеСтройТорг.ру"
+                 onclick="try{window.external.AddFavorite(this.href, this.title); return false;} catch(e) {}"
+                 rel="sidebar">
+                <img src="/add_favorite.png" alt="добавить в избранное" />
+              </a>
+              <a href="#">
+                <img src="/rss.png" />
+              </a>
+            </span>
+          </div><!-- syslinks -->
+
+          <div class="headerMainBlock">
+
+            <div class="headerLogoBox">
+              <a href="/">
+                <img src="/logo.png" alt="" />
+              </a>
+              <span>
+                Единый строительный портал Cеверо-Запада
+              </span>
+            </div><!-- headerLogoBox -->
+
+            <div class="headerHorzMenuBlock">
+              <div>
+                <table width="100%" border="0" cellpadding="0" cellspacing="1">
+                  <tbody>
+                    <tr>
+                      <td nowrap="nowrap">
+                        <div class="mainlevel">
+                          <div class="horzmenu_item_left"></div>
+                          <div class="horzmenu_item_center">
+                            <a href="#privateoffice">Личный кабинет</a>
+                          </div>
+                          <div class="horzmenu_item_right"></div>
+                          <div style="clear: both;"></div>
+                        </div>
+                        <div class="mainlevel">
+                          <div class="horzmenu_item_left"></div>
+                          <div class="horzmenu_item_center">
+                            <a href="#newtender">Объявить тендер</a>
+                          </div>
+                          <div class="horzmenu_item_right"></div>
+                          <div style="clear: both;"></div>
+                        </div>
+                        <div class="mainlevel">
+                          <div class="horzmenu_item_left">
+                          </div>
+                          <div class="horzmenu_item_center">
+                            <a href="#ratings">Рейтинги</a>
+                          </div>
+                          <div class="horzmenu_item_right"></div>
+                          <div style="clear: both;"></div>
+                        </div>
+                        <div class="mainlevel">
+                          <div class="horzmenu_item_left">
+                          </div>
+                          <div class="horzmenu_item_center">
+                            <a href="#bonuses">Акции</a>
+                          </div>
+                          <div class="horzmenu_item_right"></div>
+                          <div style="clear: both;"></div>
+                        </div>
+                        <div class="mainlevel">
+                          <div class="horzmenu_item_left"></div>
+                          <div class="horzmenu_item_center">
+                            <a href="#services">Услуги портала</a>
+                          </div>
+                          <div class="horzmenu_item_right"></div>
+                          <div style="clear: both;"></div>
+                        </div>
+                        <div class="mainlevel">
+                          <div class="horzmenu_item_left"></div>
+                          <div class="horzmenu_item_center">
+                            <a href="http://gdetorg.ru/bulletinboard">Доска объявлений</a>
+                          </div>
+                          <div class="horzmenu_item_right"></div>
+                          <div style="clear: both;"></div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="headerHorzMenuBlockLine"></div>
+            </div><!-- headerHorzMenuBlock -->
+            <div style="clear: both;"></div>
+
+          </div> <!-- headerMainBlock -->
+
+        </div><!-- header -->
+
+        <div class="body">
 
           {foreach $popup in $popups}
             {call popup data="$popup" /}
           {/foreach}
 
-          <div class="popupLayer"></div>{\n}
+          <div class="sidebarR">
+            {$personal |noAutoescape}
+            <div class="ktostroitru">
+              <a href="http://www.ktostroit.ru/">
+                <img src="/ktostroit.png" alt="КтоСтроит.ру" />
+              </a>
+            </div>
+
+            <div class="currencies">
+              <div class="sidebarBox">
+
+                <div class="sidebarBoxBG">
+                  <div class="sidebarBoxTop"></div>
+                  <div class="sidebarBoxTitle">Курсы валют</div>
+                  <div class="sidebarBoxContent">
+                    <div class="jextcurrency"
+                         style="width: 100%;">
+                      <div class="title">
+                        <h3>Курсы валют на 27.07.2011</h3>
+                      </div>
+                      <div class="rates">
+                        <div class="item">
+                          <div class="item1">
+                            <img title="USD" alt="USD" src="/USD.gif" />
+                            <div class="scale">1</div>
+                            USD
+                          </div>
+                          <div class="item2">
+                            27,546
+                            <span class="negative" title="вчера: 27,741">
+                              -0,195
+                            </span>
+                          </div>
+                          <div style="clear: both;"></div>
+                        </div>
+                        <div class="item">
+                          <div class="item1">
+                            <img title="EUR" alt="EUR" src="/EUR.gif" />
+                            <div class="scale">1</div>
+                            EUR
+                          </div>
+                          <div class="item2">
+                            39,939
+                            <span class="positive" title="вчера: 39,837">
+                              0,102
+                            </span>
+                          </div>
+                          <div style="clear: both;"></div>
+                        </div>
+                      </div>
+                      <div class="notes">
+                        Источник:
+                        <strong>
+                          <a id="notes" href="http://www.cbr.ru/" target="_blank">
+                            ЦБ РФ
+                          </a>
+                        </strong>
+                      </div>
+                      <div style="clear: both;"></div>
+                    </div><!-- jextcurrency -->
+                  </div><!-- sidebarBoxContent -->
+                  <div class="sidebarBoxBottom"></div>
+                </div><!-- sidebarBoxBG -->
+              </div><!-- sidebarBox -->
+            </div><!-- currencies -->
+
+            <div class="bannerRight1">
+              <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+                      codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
+                      height="285"
+                      width="220"
+                      border="0">
+				<param name="movie" value="http://gdetorg.ru/images/banners/e6d280f9e4de573def2237540e47ec7b.swf" />
+                <embed src="/e6d280f9e4de573def2237540e47ec7b.swf"
+                       loop="false"
+                       pluginspage="http://www.macromedia.com/go/get/flashplayer"
+                       type="application/x-shockwave-flash"
+                       height="285"
+                       width="220" />
+			  </object>
+            </div><!-- bannerRight1 -->
+
+          </div><!-- sidebarR -->
 
           <div class="sidebarL">
             <div class="sidebarBox menu">
-              <div class="sidebarBoxBG">
-                <div class="sidebarBoxTop"></div>
-                <div class="menuLeftLine">
-                  {foreach $elt in $navpoints}
-                    {call navelt data="$elt" /}
-                  {/foreach}
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
+              <ul class="menu">
+                <li id="current" class="active item1">
+                  <a href="http://gdetorg.ru/">
+                    <span>Главная</span>
+                  </a>
+                </li>
+                {foreach $elt in $navpoints}
+                  {call navelt data="$elt" /}
+                {/foreach}
+              </ul>
+            </div><!-- sidebarBox menu -->
+
+            <div class="sidebarBox search">
+
+              <form action="index.php" method="post">
+                <div class="search_box">
+                  <input name="searchword"
+                         maxlength="20"
+                         class="search_input"
+                         type="text" />
+                  <div class="button"
+                       onclick="jQuery(this).parent('div').parent('form').submit()">
+                    <div class="left"></div>
+                    <div class="text">Поиск</div>
+                    <div class="right"></div>
+                  </div>
                 </div>
-                <div class="sidebarBoxBottom"></div>
-              </div>
+
+                <input name="task" value="search" type="hidden" />
+                <input name="option" value="com_search" type="hidden" />
+                <input name="Itemid" value="1" type="hidden" />
+              </form>
+
+              <p>
+                <a href="http://gdetorg.ru/component/content/article/27">
+                  <img src="i_files/sending.jpg" alt="Рассылка" border="0" />
+                </a>
+                <a href="#">
+                  <img src="i_files/suppliers_map.png" alt="Карта поставщиков" border="0" />
+                </a>
+              </p>
+
+            </div><!-- sidebarBox search -->
+
+            <div class="sidebarBox banners">
+              <div class="sidebarBox">
+                <div class="sidebarBoxBG">
+                  <div class="sidebarBoxTop"></div>
+                  <div class="sidebarBoxContent contentOpinion bannerContent">
+                    <div class="mr3">
+                      <a href="http://www.expertiza.spb.ru/" target="_blank">
+                        <img src="/expertiza.jpg" alt="Баннер" />
+                      </a>
+                    </div>
+                    <div>
+                      <a href="http://www.gov.spb.ru/gov/admin/otrasl/komstroy" target="_blank">
+                        <img src="/komstroy.jpg" alt="Баннер" />
+                      </a>
+                    </div>
+                    <div class="mr3">
+                      <a href="http://www.stroysoyuz.ru/" target="_blank">
+                        <img src="/stroysoyuz.jpg" alt="Баннер" />
+                      </a>
+                    </div>
+                    <div>
+                      <a href="http://www.spbexp.ru/" target="_blank">
+                        <img src="/spbexp.jpg" alt="Баннер" />
+                      </a>
+                    </div>
+                    <div class="mr3">
+                      <a href="http://www.stateinvest.spb.ru/" target="_blank">
+                        <img src="/stateinvest.jpg" alt="Баннер" />
+                      </a>
+                    </div>
+                    <div>
+                      <a href="http://www.kgainfo.spb.ru/" target="_blank">
+                        <img src="/kgainfo.jpg" alt="Баннер" />
+                      </a>
+                    </div>
+                    <div class="mr3">
+                      <a href="http://www.guion.spb.ru/" target="_blank">
+                        <img src="/guion.jpg" alt="Баннер" />
+                      </a>
+                    </div>
+                    <div>
+                      <a href="http://www.uksrest.ru/" target="_blank">
+                        <img src="/uksrest.jpg" alt="Баннер" />
+                      </a>
+                    </div>
+                  </div><!-- sidebarBoxContent contentOpinion bannerContent -->
+                  <div class="sidebarBoxBottom"></div>
+                </div><!-- sidebarBoxBG -->
+              </div><!-- sidebarBox -->
+            </div><!-- sidebarBox banners -->
+
+            <div class="sidebarBox support">
+              <span>
+                <a href="http://gdetorg.ru/index.php">
+                  <img src="i_files/sitemap.png" alt="Карта портала" border="0" />
+                </a>
+                <a href="http://gdetorg.ru/2011-03-16-14-57-19/3">
+                  <img src="i_files/help.png" alt="Помощь" border="0" />
+                </a>
+                <a href="http://gdetorg.ru/index.php">
+                  <img src="i_files/support.png" alt="Тех.поддержка" border="0" />
+                </a>
+              </span>
+            </div><!-- sidebarBox support -->
+
+          </div><!-- sidebarL -->
+
+
+          <div class="content">
+
+            <div class="bannerCenter1">
+              <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+                      codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
+                      height="90"
+                      width="470"
+                      border="0">
+				<param name="movie" value="http://gdetorg.ru/images/banners/383f5b31bf2ccc2d5d0d622052d245b0.swf" />
+                <embed src="/383f5b31bf2ccc2d5d0d622052d245b0.swf"
+                       loop="false"
+                       pluginspage="http://www.macromedia.com/go/get/flashplayer"
+                       type="application/x-shockwave-flash"
+                       height="90"
+                       width="470" />
+			  </object>
             </div>
-          </div>
 
-          <div class="sidebarR">{\n}
+            <div class="contentBox">
+              <div class="contentBoxBG">
+                <div class="contentBoxTop">
+                </div>
+                <div class="contentBoxTitle">
+                  <div class="pageTitle">
+                    Новости строительного рынка
+                    <div class="contentBoxTitleBorder"></div>
+                  </div>
+                </div>
+                <div class="contentBoxContent">
 
-            {call right1 /}
-            {call right2 /}
+                  <ul class="latestnews">
+	                <li class="latestnews">
+		              <a href="http://gdetorg.ru/component/content/article/3-2011-03-16-15-32-56/11-2011-07-22-07-00-36"
+                         class="latestnews">
+			            В Ленинградской области построят дом для военных</a>
+	                </li>
+	                <li class="latestnews">
+		              <a href="http://gdetorg.ru/component/content/article/3-2011-03-16-15-32-56/15-2011-07-22-08-21-29"
+                         class="latestnews">
+			            Аренда вместо очереди
+                      </a>
+	                </li>
+	                <li class="latestnews">
+		              <a href="http://gdetorg.ru/component/content/article/3-2011-03-16-15-32-56/16-2011-07-22-08-24-06"
+                         class="latestnews">
+			            Губернатор настаивает на развитии рынка аренды жилья</a>
+	                </li>
+                  </ul>
 
-          </div>{\n}
+                </div><!-- contentBoxContent -->
+                <div class="contentBoxBottom"></div>
+              </div><!-- contentBoxBG -->
+            </div><!-- contentBox -->
 
-          {foreach $contentBlock in $content}
-            {call contentBlock data="$contentBlock" /}
-          {/foreach}
+            <div class="contentBox">
+              <div class="contentBoxBG">
+                <div class="contentBoxTop"></div>
+                <div class="contentBoxTitle">
+                  <div class="pageTitle">
+                    Скидки, акции, предложения
+                    <div class="contentBoxTitleBorder"></div>
+                  </div>
+                </div>
+                <div class="contentBoxContent">
+                  <div>
+                    <table class="discountTable" width="98%">
+                      <tbody>
+                        <tr class="discountTableRow">
+                          <th>Предложение</th>
+                          <th>Компания</th>
+                          <th>Условия</th>
+                        </tr>
+                        <tr class="discountTableRow">
+                          <td class="discountTableCell discount_resource">
+                            <a href="http://gdetorg.ru/component/discounts/101"> 50% пескосоляная смесь</a>
+                          </td>
+                          <td class="discountTableCell discount_company">
+                            <a href="http://gdetorg.ru/component/suppliers/3/basicdetails"> АРВЭЛ ООО</a>
+                          </td>
+                          <td class="discountTableCell discount_condition"></td>
+                        </tr>
 
-        </div>{\n}
-      </div>{\n}
-    </div>{\n}
-  </body>{\n}
-  </html>{\n}
+                        <tr class="discountTableRow">
+                          <td class="discountTableCell discount_resource">
+                            <a href="http://gdetorg.ru/component/discounts/100">
+                              Ленты изоляционные липкие марки ЛСЭПЛ , шириной 20-30 мм, толщиной 0,14 - 0,19 мм
+                            </a>
+                          </td>
+                          <td class="discountTableCell discount_company">
+                            <a href="http://gdetorg.ru/component/suppliers/3/basicdetails"> АРВЭЛ ООО</a>
+                          </td>
+                          <td class="discountTableCell discount_condition"></td>
+                        </tr>
+                        <tr class="discountTableRow">
+                          <td class="discountTableCell discount_resource">
+                            <a href="http://gdetorg.ru/component/discounts/98"> 50% пескосоляная смесь</a>
+                          </td>
+                          <td class="discountTableCell discount_company">
+                            <a href="http://gdetorg.ru/component/suppliers/3/basicdetails"> АРВЭЛ ООО</a>
+                          </td>
+                          <td class="discountTableCell discount_condition">Условие2</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div>
+                    <strong>
+                      <a href="http://gdetorg.ru/component/discounts/"> Все скидки </a>
+                    </strong>
+                  </div>
+
+                </div><!-- contentBoxContent -->
+                <div class="contentBoxBottom"></div>
+              </div><!-- contentBoxBG -->
+            </div><!-- contentBox -->
+
+            <div class="contentBox">
+              <div class="contentBoxBG">
+                <div class="contentBoxTop"></div>
+                <div class="contentBoxTitle">
+                  <div class="pageTitle">
+                    Рейтинг компаний
+                    <div class="contentBoxTitleBorder"></div>
+                  </div>
+                </div>
+                <div class="contentBoxContent ">
+                  <ol>
+                    <li>АВН-Строй, ООО&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * * *&nbsp;* *</li>
+                    <li>Алладин, ООО, ПКФ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *&nbsp;* *</li>
+                    <li>Империя СПб, ООО&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* * *</li>
+                    <li>Мегалит, ООО&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * *</li>
+                  </ol>
+                  <p>* <a href="http://gdetorg.ru/index.php"><strong>Весь рейтинг</strong></a></p>
+                </div>
+                <div class="contentBoxBottom"></div>
+              </div><!-- contentBoxBG -->
+            </div><!-- contentBox -->
+
+
+            <div class="componentheading">
+	          gdetorg.ru</div>
+            <table class="blog" cellpadding="0" cellspacing="0">
+              <tbody>
+                <tr>
+	              <td valign="top">
+				  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div><!-- content -->
+        </div><!-- body -->
+
+        <div class="footer">
+          <span>
+            <p>
+              <a href="http://gdetorg.ru/index.php">Карта сайта</a>
+              <a href="http://gdetorg.ru/2011-03-16-14-57-19/3">Помощь</a>
+              <a href="http://gdetorg.ru/index.php">Тех.поддержка</a>
+              <a href="http://gdetorg.ru/2011-03-16-14-57-19">О портале</a>
+              <a href="http://gdetorg.ru/index.php">Подписка</a>
+              <a href="http://gdetorg.ru/2011-03-16-14-57-19/2">Реклама</a>
+            </p>
+          </span>
+        </div><!-- footer -->
+      </div><!-- main -->
+    </body>
+  </html>
 {/template}
 
 
 {template loginform}
   <div class="headerPersonalBox italic personEnter">
-    <div style="margin-top: -30px; margin-left: -230px; position:
-                absolute; z-index: 1000; text-align: right; width:
-                400px;"> </div>
+    <a class="icoLink showAuth"
+       href="http://gdetorg.ru/component/user/login?backurl=%2Findex.php">
+      <img src="/ico_key.png" alt="" />
+    </a>
     <a class="dashedLink showAuth" href="#"
        onclick="ShowHide('popupLogin'); return false;">Вход</a>
     <span>|</span>
-    <a class="dashedLink showAuth" href="#"
-    onclick="ShowHide('trest'); return false;">Регистрация</a>
+    <a href="#"
+       onclick="ShowHide('trest'); return false;">
+      Регистрация
+    </a>
   </div>
 {/template}
 

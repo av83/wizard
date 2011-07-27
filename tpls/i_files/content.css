@@ -1,0 +1,40 @@
+.content {
+/*    width: 478px;*/
+}
+
+.contentBoxBG {
+/*    width: 470px;
+    background: url(/images/contentBoxLine.png) repeat-y 0 0;*/
+    background: #ffffff;
+    border: 1px solid #d5d5d5;
+    margin: 0 10px 2px 2px;
+}
+
+.contentBoxTop {
+  /*  width: 478px;*/
+  /*  background: url(/images/contentBoxTop.png) no-repeat 0 0;*/
+}
+
+.contentBoxBottom {
+/*    width: 478px;
+    background: url(/images/contentBoxBottom.png) no-repeat 0 0;*/
+}
+
+.lineDividerBlock {
+    width: 450px;
+}
+
+.contentheading {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.createdate {
+    font-style: italic;
+    font-size: 10px;
+    color: #b5b5b5;
+}
+
+.panes div {
+    display: none;
+}
