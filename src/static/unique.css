@@ -18,10 +18,10 @@
 }
 .personEdit .catalogEditPartBlock div span {
 	display:block;
-	font-weight:bold;	
+	font-weight:bold;
 }
 .personEdit .catalogEditPartBlock .accessBlockEdit  div span {
-	font-weight:normal;	
+	font-weight:normal;
 }
 .personEdit .catalogEditPartBlock .buttonBox div,
 .personEdit .catalogEditPartBlock .wideInputBox div,
@@ -34,7 +34,7 @@
 .addFileList ol li .italicText {
 	font-weight:normal;
 }
-.accessBlockEdit .catalogEditPartBlock .wideInputBox span, 
+.accessBlockEdit .catalogEditPartBlock .wideInputBox span,
 .companyEdit .catalogEditPartBlock .wideInputBox span {
 	font-weight:normal;
 }
@@ -122,7 +122,7 @@
 }
 .headerMainBlock {
 	/*height:116px;*/
-	background:#ffffff /*url(/images/header_line.gif)*/ repeat-x 0 0;
+	background:#ffffff /*url(/header_line.gif)*/ repeat-x 0 0;
 	padding-bottom:21px;
 	margin:0 12px;
 }
@@ -160,7 +160,7 @@
 	float:left;
 	position:relative;
 	background:url(/img/searchBGline.png) repeat-x 0 0;
-	margin:35px 5px 0;	
+	margin:35px 5px 0;
 }
 .headerSearchBox form {
 	overflow:hidden;
@@ -206,40 +206,40 @@
 	width:4px;
 	height:27px;
 	float:left;
-	background:url(/images/buttonLeft.png) no-repeat 0 0;
+	background:url(/buttonLeft.png) no-repeat 0 0;
 }
 .buttonRight {
 	width:4px;
 	height:27px;
 	float:left;
-	background:url(/images/buttonRight.png) no-repeat 0 0;
+	background:url(/buttonRight.png) no-repeat 0 0;
 }
 .buttonText {
 	height:20px;
 	float:left;
-	background:url(/images/buttonLine.png) repeat-x 0 0;
+	background:url(/buttonLine.png) repeat-x 0 0;
 	padding:4px 8px 3px !important;
 }
 .buttonBox:hover  .buttonLeft {
-	background:url(/images/buttonLeft.png) no-repeat 0 -30px;
+	background:url(/buttonLeft.png) no-repeat 0 -30px;
 }
 .buttonBox:hover  .buttonRight {
-	background:url(/images/buttonRight.png) no-repeat 0 -30px;
+	background:url(/buttonRight.png) no-repeat 0 -30px;
 }
 .buttonBox:hover  .buttonText{
-	background:url(/images/buttonLine.png) repeat-x 0 -30px;
+	background:url(/buttonLine.png) repeat-x 0 -30px;
 }
 .buttonBox.noActive {
 	cursor:default;
 }
 .buttonBox.noActive  .buttonLeft {
-	background:url(/images/buttonLeft.png) no-repeat 0 -60px;
+	background:url(/buttonLeft.png) no-repeat 0 -60px;
 }
 .buttonBox.noActive  .buttonRight {
-	background:url(/images/buttonRight.png) no-repeat 0 -60px;
+	background:url(/buttonRight.png) no-repeat 0 -60px;
 }
 .buttonBox.noActive  .buttonText{
-	background:url(/images/buttonLine.png) repeat-x 0 -60px;
+	background:url(/buttonLine.png) repeat-x 0 -60px;
 }
 .rightPersonalBox {
 	/*width:195px;
@@ -265,12 +265,12 @@
     float: left;
 }
 .headerHorzMenuBlockLine {
-    width: 662px;
+    width: 880px;
     position: relative;
     left: -62px;
     /*border-bottom: 6px solid #FF6600;*/
     height: 8px;
-    background: url("/images/hmenu_border.png") repeat-x scroll 0 0 transparent;
+    background: url("/hmenu_border.png") repeat-x scroll 0 0 transparent;
 }
 
 .mainlevel {
@@ -304,15 +304,15 @@
 #active_menu .horzmenu_item_left {
     width: 5px;
     height: 24px;
-    background: url(/images/horzmenu_left.png) no-repeat scroll transparent;
+    background: url(/horzmenu_left.png) no-repeat scroll transparent;
 }
 #active_menu .horzmenu_item_right {
     width: 5px;
     height: 24px;
-    background: url(/images/horzmenu_right.png) no-repeat scroll transparent;
+    background: url(/horzmenu_right.png) no-repeat scroll transparent;
 }
 #active_menu .horzmenu_item_center {
-    background: url(/images/horzmenu_center.png) repeat-x #ff6600;
+    background: url(/horzmenu_center.png) repeat-x #ff6600;
 }
 #active_menu .horzmenu_item_center a {
     color: #FFFFFF;
@@ -330,7 +330,7 @@
 	padding-left:4px;
 }
 .personOut {
-	
+
 }
 .personOut .personEnterBox {
 	display:block;
@@ -369,7 +369,7 @@
     padding-left: 15px;
 }
 
-.menu a, 
+.menu a,
 .sidebarBoxTitle a,
 .contentBoxTitle a {
 	text-decoration:none;
@@ -377,7 +377,7 @@
 .sidebarBoxBG {
 	width:221px;
 	position:relative;
-	background:url(/images/sidebarBoxLine.png) repeat-y 0 0;
+	background:url(/sidebarBoxLine.png) repeat-y 0 0;
 	padding:0 4px;
 }
 .menuLeftLine {
@@ -385,16 +385,16 @@
 }
 .sidebarBoxTop {
 	width:229px;
-	height:2px; 
-	background:url(/images/sidebarBoxTop.png) no-repeat 0 0;
+	height:2px;
+	background:url(/sidebarBoxTop.png) no-repeat 0 0;
 	position:absolute;
 	top:-2px;
 	left:0;
 }
 .sidebarBoxBottom {
 	width:229px;
-	height:6px; 
-	background:url(/images/sidebarBoxBottom.png) no-repeat 0 0;
+	height:6px;
+	background:url(/sidebarBoxBottom.png) no-repeat 0 0;
 	position:absolute;
 	bottom:-6px;
 	left:0;
@@ -420,7 +420,7 @@
 }
 
 .menu #current {
-    background: url("/images/active_menu_bullet.png") no-repeat scroll left center transparent;
+    background: url("/active_menu_bullet.png") no-repeat scroll left center transparent;
 }
 
 #current a {
@@ -611,17 +611,17 @@
 	padding:2px 0 15px;
 }
 .contentBoxBG {
-	position:relative; 
+	position:relative;
 	padding:0 4px;
 }
 .contentBoxTop {
-	height:2px; 
+	height:2px;
 	position:absolute;
 	top:-2px;
 	left:0;
 }
 .contentBoxBottom {
-	height:6px; 
+	height:6px;
 	position:absolute;
 	bottom:-6px;
 	left:0;
@@ -641,7 +641,7 @@
 .contentBoxTitleBorder {
     height: 7px;
     clear: both;
-    background: url(/images/header_border.png) repeat-x transparent;
+    background: url(/header_border.png) repeat-x transparent;
 }
 
 .commentMainBlock {
@@ -726,7 +726,7 @@
 }
 .contentNews {
 	overflow:hidden;
-	padding:0; 
+	padding:0;
 	margin:0;
 }
 .contentNews .contentNewsList {
@@ -865,20 +865,20 @@
 }
 .pagerCommentsBlock .active,
 .pagerCommentsBlock .active:hover {
-	background:#ff6600 url(/images/pagerLeft.png) no-repeat 0 0;
+	background:#ff6600 url(/pagerLeft.png) no-repeat 0 0;
 	cursor:default;
 }
 .pagerCommentsBlock .active span,
 .pagerCommentsBlock .active:hover span {
-	background:url(/images/pagerRight.png) no-repeat top right transparent;
+	background:url(/pagerRight.png) no-repeat top right transparent;
 	cursor:default;
 }
 .pagerCommentsBlock span:hover {
-	background:#f42e00 url(/images/pagerLeftHover.gif) no-repeat 0 0;
+	background:#f42e00 url(/pagerLeftHover.gif) no-repeat 0 0;
 	cursor:pointer;
 }
 .pagerCommentsBlock span:hover span {
-	background:url(/images/pagerRightHover.gif) no-repeat right top;
+	background:url(/pagerRightHover.gif) no-repeat right top;
 }
 .pagerCommentsBlock  span:hover a,
 .pagerCommentsBlock  span a.dashedLink:hover {
@@ -968,15 +968,15 @@
 }
 
 .pagerCommentsBlock .active .paginator_left {
-    background: url("/images/pagerLeft.png") no-repeat scroll 0 0 transparent;
+    background: url("/pagerLeft.png") no-repeat scroll 0 0 transparent;
 }
 
 .pagerCommentsBlock .active .paginator_body {
-    background: url("/images/pagerCenter.png") repeat-x scroll 0 0 transparent;
+    background: url("/pagerCenter.png") repeat-x scroll 0 0 transparent;
 }
 
 .pagerCommentsBlock .active .paginator_right {
-    background: url("/images/pagerRight.png") no-repeat scroll 0 0 transparent;
+    background: url("/pagerRight.png") no-repeat scroll 0 0 transparent;
 }
 
 .mentionBlock {
@@ -997,7 +997,7 @@
 	padding-left:8px;
 }
 .dateList span a {
-	text-decoration:none; 
+	text-decoration:none;
 	border-bottom:1px dashed #0072bc;
 }
 .dateList span a:hover {
@@ -1102,7 +1102,7 @@
     /*overflow: visible, hidden; с подменю - visible иначе hidden*/
     height: 33px;
     white-space:nowrap;
-    background: url(/images/menu_center.png) repeat-x;
+    background: url(/menu_center.png) repeat-x;
 }
 
 .catalogSelection .cs_element {
@@ -1118,27 +1118,27 @@
     float: left;
     width: 5px;
     height: 33px;
-    background: url(/images/menu_center.png) repeat-x;
+    background: url(/menu_center.png) repeat-x;
 }
 
 .catalogSelection .first .cs_element_left {
     float: left;
     width: 5px;
     height: 33px;
-    background: url(/images/menu_left.png) no-repeat transparent;
+    background: url(/menu_left.png) no-repeat transparent;
 }
 
 .catalogSelection .cs_element_active .cs_element_left {
     float: left;
     width: 5px;
     height: 61px;
-    background: url(/images/menu_sel_left.png) no-repeat transparent;
+    background: url(/menu_sel_left.png) no-repeat transparent;
 }
 
 .catalogSelection .cs_element .cs_element_center{
     float: left;
     height: 33px;
-    background: url(/images/menu_center.png) repeat-x;
+    background: url(/menu_center.png) repeat-x;
     padding: 6px 0 2px;
 }
 
@@ -1151,7 +1151,7 @@
 .catalogSelection .cs_element_active .cs_element_center{
     float: left;
     height: 61px;
-    background: url(/images/menu_sel_center.png) repeat-x;
+    background: url(/menu_sel_center.png) repeat-x;
     padding: 6px 0 2px;
     color: #ffffff;
     font-weight: bold;
@@ -1161,21 +1161,21 @@
     float: left;
     width: 5px;
     height: 33px;
-    background: url(/images/menu_center.png) repeat-x;
+    background: url(/menu_center.png) repeat-x;
 }
 
 .catalogSelection .last .cs_element_right {
     float: left;
     width: 5px;
     height: 33px;
-    background: url(/images/menu_right.png) no-repeat transparent;
+    background: url(/menu_right.png) no-repeat transparent;
 }
 
 .catalogSelection .cs_element_active .cs_element_right {
     float: left;
     width: 5px;
     height: 61px;
-    background: url(/images/menu_sel_right.png) no-repeat transparent;
+    background: url(/menu_sel_right.png) no-repeat transparent;
 }
 
 .catalogSelection .cs_element_active {
@@ -1201,27 +1201,27 @@
     float: left;
     width: 4px;
     height: 49px;
-    background: url(/images/tab_inactive.png) repeat-x;
+    background: url(/tab_inactive.png) repeat-x;
 }
 
 .catalogTabselection .first .cs_element_left {
     float: left;
     width: 4px;
     height: 49px;
-    background: url(/images/tab_inactive.png) repeat-x transparent;
+    background: url(/tab_inactive.png) repeat-x transparent;
 }
 
 .catalogTabselection .cs_element_active .cs_element_left {
     float: left;
     width: 14px;
     height: 49px;
-    background: url(/images/tab_active_left.png) no-repeat transparent;
+    background: url(/tab_active_left.png) no-repeat transparent;
 }
 
 .catalogTabselection .cs_element .cs_element_center{
     float: left;
     height: 49px;
-    background: url(/images/tab_inactive.png) repeat-x;
+    background: url(/tab_inactive.png) repeat-x;
     padding: 10px 0 5px;
     color: #ff6600;
     font-weight: bold;
@@ -1230,7 +1230,7 @@
 .catalogTabselection .cs_element_active .cs_element_center{
     float: left;
     height: 49px;
-    background: url(/images/tab_active_center.png) repeat-x;
+    background: url(/tab_active_center.png) repeat-x;
     padding: 10px 0 5px;
     color: #333333;
     font-weight: bold;
@@ -1240,21 +1240,21 @@
     float: left;
     width: 4px;
     height: 49px;
-    background: url(/images/tab_inactive.png) repeat-x;
+    background: url(/tab_inactive.png) repeat-x;
 }
 
 .catalogTabselection .last .cs_element_right {
     float: left;
     width: 4px;
     height: 49px;
-    background: url(/images/tab_inactive.png) repeat-x transparent;
+    background: url(/tab_inactive.png) repeat-x transparent;
 }
 
 .catalogTabselection .cs_element_active .cs_element_right {
     float: left;
     width: 14px;
     height: 49px;
-    background: url(/images/tab_active_right.png) no-repeat transparent;
+    background: url(/tab_active_right.png) no-repeat transparent;
 }
 
 
@@ -1264,7 +1264,7 @@
     overflow: hidden;
     height: 33px;
     white-space:nowrap;
-    background: url("/images/menu_sel_center.png") repeat-x scroll 0 0 transparent;
+    background: url("/menu_sel_center.png") repeat-x scroll 0 0 transparent;
     clear: both;
     position: relative;
     z-index: 0;
@@ -1441,7 +1441,7 @@
 	color:#010000;
 }
 .contactsBlock {
-	
+
 }
 .contactsBlockInner {
 	display:none;
@@ -1478,7 +1478,7 @@
 	padding:7px 0 8px;
 }
 .accessBlock {
-	
+
 }
 .accessBlockInner {
 	display:none;
@@ -1827,7 +1827,7 @@
 	width:330px;
 }
 .dataEditBox .shortInput {
-	padding-right:0 !important; 
+	padding-right:0 !important;
 	padding-bottom:27px;
 }
 .dataEditBox .shortInput input {
@@ -1901,7 +1901,7 @@
 .catalogItemEdit .partnersBlock,
 .catalogItemEdit .recommenBlock {
 	overflow:hidden;
-} 
+}
 .catalogItemEdit {
 
 }
@@ -1928,29 +1928,29 @@
 .catalogItemEdit .dataLinksBlock {
 	padding:0;
 }
-.catalogItemEdit .formOpinionText { 
-	
+.catalogItemEdit .formOpinionText {
+
 }
 .catalogItemEdit .formOpinionText .commentMainTitle {
 	padding:23px 0 12px;
 }
-.catalogItemEdit .formOpinionText .italicText { 
+.catalogItemEdit .formOpinionText .italicText {
 	float:none;
 	padding-top:2px;
 }
-.catalogItemEdit .formOpinionText ol { 
+.catalogItemEdit .formOpinionText ol {
 	padding-left:20px;
 	margin-bottom:-16px;
 }
-.catalogItemEdit .formOpinionText ol li { 
+.catalogItemEdit .formOpinionText ol li {
 	font-size:12px;
 	padding-bottom:10px;
 }
-.catalogItemEdit .formOpinionText ol li a { 
+.catalogItemEdit .formOpinionText ol li a {
 	font-size:16px;
 	line-height:20px;
 }
-.catalogItemEdit .formOpinionText li a img { 
+.catalogItemEdit .formOpinionText li a img {
 	margin-bottom:-1px;
 }
 .accessBlockEdit {
@@ -1994,7 +1994,7 @@
 	padding:5px 0 0 10px !important;
 }
 .recommenBlock {
-	
+
 }
 .recommenBlock .italicText {
 	display:inline;
@@ -2392,7 +2392,7 @@
 	padding-bottom:18px;
 }
 .addContactBlock {
-	
+
 }
 .contactsEdit .addContactBlock .widthInput03 input {
 	width:180px;
@@ -2464,7 +2464,7 @@
 	margin:10px 0 0 0;
 }
 .accessEdit {
-	
+
 }
 .addAccessBlock .wideInputBox .italicText {
 	padding-left:7px;
@@ -2477,7 +2477,7 @@
 	margin-top:2px;
 }
 .accessListBox {
-	
+
 }
 .accessList {
 	overflow:hidden;
@@ -2665,7 +2665,7 @@
 	color: #333333;
 }
 .listMessage {
-	
+
 }
 .listMessage .commentMainTitle {
 	padding-bottom:23px;
@@ -2676,7 +2676,7 @@
 }
 .listMessage .lineDividerBlock {
 	margin-top:0;
-	margin-bottom:20px;	
+	margin-bottom:20px;
 }
 .listMessage .itemCompany {
 	line-height:17px;
@@ -2744,7 +2744,7 @@
 	padding-bottom:15px;
 }
 .catalogItemProject {
-	
+
 }
 .projectEdit {
 	padding-top:15px;
@@ -2789,7 +2789,7 @@
 	padding-right:8px !important;
 	padding-bottom:5px !important;
 }
-.projectEdit .leftBlock span, 
+.projectEdit .leftBlock span,
 .projectEdit .smallBlock .leftBlock span {
 	display:block;
 	float:left !important;
@@ -2882,15 +2882,15 @@
 }
 .projectEdit .addFileList .wideInput {
 	margin-top:-33px;
-} 
+}
 .projectEdit .addFileList .wideInput input,
 .projectEdit .addFileList .wideInput textarea {
 	width:380px;
-} 
+}
 .projectEdit .addFileList .wideInput textarea {
 	height:130px;
 	margin-bottom:5px;
-} 
+}
 .projectEdit .addFileList .addFileForm {
 	padding-left:0;
 	margin-top:3px;
@@ -2902,7 +2902,7 @@
 	width:240px;
 	margin-top:1px;
 	margin-bottom:0;
-} 
+}
 .projectEdit .addItemReportBlock  {
 	display:block;
 	margin:13px 0 15px !important;
@@ -2946,7 +2946,7 @@
 .widthInput10 input,
 .projectEdit .addWorker .wideInputBox div input {
 	width:330px;
-} 
+}
 .projectEdit .addWorker {
 	padding-bottom:25px;
 }
@@ -3238,7 +3238,7 @@
 	display:inline;
 }
 .servicesListBlock {
-	
+
 }
 .servicesListBlock .itemCompany  {
 	padding-bottom:30px;
@@ -3353,7 +3353,7 @@ input.buttonFile {
 	right:0;
 	opacity:0;
 	cursor:pointer;
-}	
+}
 /* ================== end ===========================*/
 
 .objectEdit {
@@ -3583,7 +3583,7 @@ input.buttonFile {
 	margin-bottom:0;
 }
 .foundItemsList {
-	
+
 }
 .foundItemsList ol {
 	padding-top:18px;
@@ -3607,10 +3607,10 @@ input.buttonFile {
 	padding:0 0 3px;
 }
 .searchResults .contentNewsList a {
-	text-decoration:none;	
+	text-decoration:none;
 }
 .searchResults .contentNewsList span {
-	display:inline;	
+	display:inline;
 	float:none;
 	padding-right:0;
 }
@@ -3646,7 +3646,7 @@ input.buttonFile {
 	right:0;
 	padding:9px 10px 20px 17px;
 	border:1px solid #d5d5d5;
-	z-index:2000; 
+	z-index:2000;
 }
 .popapCancel {
 	position:absolute;
@@ -3985,7 +3985,7 @@ input.buttonFile {
 .personEdit .accessBlockEdit .wideInput {
 	padding-bottom:5px;
 }
-.companyPartnersEdit, 
+.companyPartnersEdit,
 .partnersBlock {
 	padding-bottom:25px;
 }
@@ -4044,10 +4044,10 @@ input.buttonFile {
 .accessBlockEdit03 {
 	margin-top:-13px;
 }
-.accessBlockEdit03 .wideInputBox, 
+.accessBlockEdit03 .wideInputBox,
 .accessBlockEdit03 .wideInput,
-.addFileList .accessBlockEdit03 .wideInputBox, 
-.addFileList .accessBlockEdit03 .wideInput 
+.addFileList .accessBlockEdit03 .wideInputBox,
+.addFileList .accessBlockEdit03 .wideInput
 {
 	padding-left:0 !important;
 }
@@ -4066,17 +4066,17 @@ input.buttonFile {
 	padding-left:0;
 }
 .banners {
-	
-} 
+
+}
 .banners .sidebarBoxContent {
 	padding:4px 3px 3px;
-} 
+}
 .bannerContent div {
 	float:left;
-} 
+}
 .bannerContent img {
 	margin:0;
-} 
+}
 .linkGoFurther {
 	display:block;
 	text-align:right;
@@ -4100,7 +4100,7 @@ input.buttonFile {
 	zoom:1;
 }
 .browserBlockList div {
-	float:left;	
+	float:left;
 	width:90px;
 	text-align:center;
 	padding-right:10px;
@@ -4127,11 +4127,11 @@ input.buttonFile {
 	float:right;
 	padding:0 0 0 10px;
 }
-.opinionContentChange a {	
+.opinionContentChange a {
 	margin:0 0 0 3px;
 }
 .opinionContentChange img {
-	
+
 	margin-bottom:-2px;
 }
 .dataLinksBlock  .opinionContentChange .dashedLink,
@@ -4169,7 +4169,7 @@ input.buttonFile {
 }
 .personEdit form div span {
 	display:block;
-	font-weight:bold;	
+	font-weight:bold;
 }
 .catalogItemTender form {
 	padding-top:0;
@@ -4184,7 +4184,7 @@ input.buttonFile {
 }
 .dataEditBox .personEdit form div span {
 	font-weight:normal;
-	line-height:18px;	
+	line-height:18px;
 	padding-bottom:5px;
 }
 */
@@ -4198,12 +4198,12 @@ input.buttonFile {
 }
 
 /* =========================  2010.10.29  ========================= */
-.contactsBlockInner .contentOpinion div 
+.contactsBlockInner .contentOpinion div
 {
 	width:108px
 }
 
-.contactsBlockInner .contentOpinion .italicText 
+.contactsBlockInner .contentOpinion .italicText
 {
 	padding-left:120px;
 }
@@ -4232,7 +4232,7 @@ div.forum-reply-field-author, div.forum-reply-field-email{
 
 /* =========================  2010.11.12 autocomplete ========================= */
 .preloader {
-	background: white url('/images/autocomplete-indicator.gif') right center no-repeat;
+	background: white url('/autocomplete-indicator.gif') right center no-repeat;
 }
 
 /* =========================  2010.11.15 catalog sublevel ========================= */
@@ -4241,7 +4241,7 @@ div.forum-reply-field-author, div.forum-reply-field-email{
 }
 /* =========================  2010.12.06 ========================= */
 body, html {
-    background:#ff6600 url(/images/mainBGrep.png) repeat 0 0;
+    background:#ff6600 url(/mainBGrep.png) repeat 0 0;
 }
 .main {
     background:transparent;
@@ -4281,7 +4281,7 @@ body, html {
 .popapBodyBG {
     background-image:url(/img/mainBGrep_active.gif);
 }
-.show {display: block;} 
+.show {display: block;}
 
 .predel {
 	font-size:12px !important;
@@ -4289,7 +4289,7 @@ body, html {
 	display:block !important;
 	clear:both !important;
 	font-style:normal !important;
-	color:#000 !important	
+	color:#000 !important
 }
 
 .projectEdit .addFileForm  .predel {position:relative; top:-14px}
@@ -4322,7 +4322,7 @@ body, html {
 .menuDividerBlock{
     clear: both;
     height: 34px;
-    background: url(/images/gradient_center.png) transparent repeat-x;
+    background: url(/gradient_center.png) transparent repeat-x;
 }
 
 .contentpaneopen {

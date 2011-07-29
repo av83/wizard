@@ -932,7 +932,7 @@
 
 {template popup}
   <div id="{$id}" class="popupBox" style="position: absolute; top:
-  0px; left: {$left}px; width: {$width}px;  display: none;">
+  0px; left: {$left}px; width: {$width}px;  display: none; background-color: yellow;">
     <div class="popupCancel">
       <a href="#popupCancel" onclick="ShowHide('{$id}')">
         <img alt="" src="/popupCancel.gif" />

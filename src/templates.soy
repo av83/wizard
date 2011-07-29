@@ -395,127 +395,9 @@
 			  </object>
             </div>
 
-            <div class="contentBox">
-              <div class="contentBoxBG">
-                <div class="contentBoxTop">
-                </div>
-                <div class="contentBoxTitle">
-                  <div class="pageTitle">
-                    Новости строительного рынка
-                    <div class="contentBoxTitleBorder"></div>
-                  </div>
-                </div>
-                <div class="contentBoxContent">
-
-                  <ul class="latestnews">
-	                <li class="latestnews">
-		              <a href="http://gdetorg.ru/component/content/article/3-2011-03-16-15-32-56/11-2011-07-22-07-00-36"
-                         class="latestnews">
-			            В Ленинградской области построят дом для военных</a>
-	                </li>
-	                <li class="latestnews">
-		              <a href="http://gdetorg.ru/component/content/article/3-2011-03-16-15-32-56/15-2011-07-22-08-21-29"
-                         class="latestnews">
-			            Аренда вместо очереди
-                      </a>
-	                </li>
-	                <li class="latestnews">
-		              <a href="http://gdetorg.ru/component/content/article/3-2011-03-16-15-32-56/16-2011-07-22-08-24-06"
-                         class="latestnews">
-			            Губернатор настаивает на развитии рынка аренды жилья</a>
-	                </li>
-                  </ul>
-
-                </div><!-- contentBoxContent -->
-                <div class="contentBoxBottom"></div>
-              </div><!-- contentBoxBG -->
-            </div><!-- contentBox -->
-
-            <div class="contentBox">
-              <div class="contentBoxBG">
-                <div class="contentBoxTop"></div>
-                <div class="contentBoxTitle">
-                  <div class="pageTitle">
-                    Скидки, акции, предложения
-                    <div class="contentBoxTitleBorder"></div>
-                  </div>
-                </div>
-                <div class="contentBoxContent">
-                  <div>
-                    <table class="discountTable" width="98%">
-                      <tbody>
-                        <tr class="discountTableRow">
-                          <th>Предложение</th>
-                          <th>Компания</th>
-                          <th>Условия</th>
-                        </tr>
-                        <tr class="discountTableRow">
-                          <td class="discountTableCell discount_resource">
-                            <a href="http://gdetorg.ru/component/discounts/101"> 50% пескосоляная смесь</a>
-                          </td>
-                          <td class="discountTableCell discount_company">
-                            <a href="http://gdetorg.ru/component/suppliers/3/basicdetails"> АРВЭЛ ООО</a>
-                          </td>
-                          <td class="discountTableCell discount_condition"></td>
-                        </tr>
-
-                        <tr class="discountTableRow">
-                          <td class="discountTableCell discount_resource">
-                            <a href="http://gdetorg.ru/component/discounts/100">
-                              Ленты изоляционные липкие марки ЛСЭПЛ , шириной 20-30 мм, толщиной 0,14 - 0,19 мм
-                            </a>
-                          </td>
-                          <td class="discountTableCell discount_company">
-                            <a href="http://gdetorg.ru/component/suppliers/3/basicdetails"> АРВЭЛ ООО</a>
-                          </td>
-                          <td class="discountTableCell discount_condition"></td>
-                        </tr>
-                        <tr class="discountTableRow">
-                          <td class="discountTableCell discount_resource">
-                            <a href="http://gdetorg.ru/component/discounts/98"> 50% пескосоляная смесь</a>
-                          </td>
-                          <td class="discountTableCell discount_company">
-                            <a href="http://gdetorg.ru/component/suppliers/3/basicdetails"> АРВЭЛ ООО</a>
-                          </td>
-                          <td class="discountTableCell discount_condition">Условие2</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <div>
-                    <strong>
-                      <a href="http://gdetorg.ru/component/discounts/"> Все скидки </a>
-                    </strong>
-                  </div>
-
-                </div><!-- contentBoxContent -->
-                <div class="contentBoxBottom"></div>
-              </div><!-- contentBoxBG -->
-            </div><!-- contentBox -->
-
-            <div class="contentBox">
-              <div class="contentBoxBG">
-                <div class="contentBoxTop"></div>
-                <div class="contentBoxTitle">
-                  <div class="pageTitle">
-                    Рейтинг компаний
-                    <div class="contentBoxTitleBorder"></div>
-                  </div>
-                </div>
-                <div class="contentBoxContent ">
-                  <ol>
-                    <li>АВН-Строй, ООО&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * * *&nbsp;* *</li>
-                    <li>Алладин, ООО, ПКФ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *&nbsp;* *</li>
-                    <li>Империя СПб, ООО&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* * *</li>
-                    <li>Мегалит, ООО&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * *</li>
-                  </ol>
-                  <p>* <a href="http://gdetorg.ru/index.php"><strong>Весь рейтинг</strong></a></p>
-                </div>
-                <div class="contentBoxBottom"></div>
-              </div><!-- contentBoxBG -->
-            </div><!-- contentBox -->
-
+            {foreach $contentBlock in $content}
+              {call contentBlock data="$contentBlock" /}
+            {/foreach}
 
             <div class="componentheading">
 	          gdetorg.ru</div>
@@ -574,8 +456,12 @@
     Добро пожаловать, {$user}
     <span>|</span>
     <form method="post">
-      <input type="submit" name="LOGOUT" value="Выход"
-             style="background-color: #E0E0E0;" />
+      <input type="hidden" name="LOGOUT" value="Выход" />
+      <div class="button" onclick="jQuery(this).parent('form').submit()">
+        <div class="left"></div>
+        <div class="text">Выход</div>
+        <div class="right"></div>
+      </div>
     </form>
   </div>
 {/template}
@@ -585,71 +471,19 @@
 {template contentBlock}
   <div class="contentBox">{\n}
     <div class="contentBoxBG">{\n}
+      <div class="contentBoxTop"></div>{\n}
       <div class="contentBoxTitle">{\n}
-        <div class="pageTitle">{$title}</div>{\n}
+        <div class="pageTitle">{\n}
+          {$title}
+          <div class="contentBoxTitleBorder"></div>{\n}
+        </div>{\n}
       </div>{\n}
-      <div class="contentBoxContent"
-           style="margin-right: 0;
-                  padding-right: 5px;
-                  padding-bottom: 5px;
-                  padding-top: 5px;">{\n}
+      <div class="contentBoxContent ">{\n}
         {$content |noAutoescape}{\n}
       </div>{\n}
-    </div>{\n}
-  </div>{\n}
-{/template}
-
-
-{template right1}
-  <div class="sidebarBox">
-    <div class="sidebarBoxBG">
-      <div class="sidebarBoxTop"></div>
-      <div class="sidebarBoxTitle">Решения суда</div>
-      <div class="sidebarBoxContent contentJudge">
-        <span class="textTitle">Дело № А56-55540/2009</span>
-        <span class="italicText">
-          Истец: ОСАО "Ингосстрах"
-          <br />
-          Ответчик:
-          <a href="/catalog/17080/company/52478/">ЗАО "ВАД"</a>
-        </span>
-        <p style="margin-top: 4px;">
-          <span style="font-size: 11px;">Решение:</span>
-          <br />
-          Удовлетворить встречный иск полностью или частично
-        </p>
-      </div>
-      <div class="sidebarBoxBottom"></div>
-    </div>
-  </div>
-{/template}
-
-
-{template right2}
-  <div class="sidebarBox">
-    <div class="sidebarBoxBG">
-      <div class="sidebarBoxTop"></div>
-      <div class="sidebarBoxTitle">
-        <a href="/tenders/146038/">Тендер дня</a>
-      </div>
-      <div class="sidebarBoxContent contentJudge">
-        <span class="textTitle">на выполнение работ по реставрационному
-          ремонту интерьеров придела Святого Климента и Святого Петра собора,
-          входящего в состав объекта культурного наследия федерального
-          значения «Собор Спасо-Преображенский» (Санкт-Петербург,
-          Преображенская пл. 1)</span>
-        <span class="italicText">Открытый конкурс</span>
-        <br />
-        <span class="italicText">Начало: 27 мая 2011</span>
-        <br />
-        <span class="italicText">Окончание: 05 июля 2011</span>
-        <div class="blockLink italicText icoLink02">
-          <a href="/tenders/">Все тендеры</a>
-        </div>
-      </div>
-      <div class="sidebarBoxBottom"></div>
-    </div>
-  </div>
+      <div class="contentBoxBottom"></div>{\n}
+    </div><!-- contentBoxBG -->{\n}
+  </div><!-- contentBox -->{\n}
 {/template}
 
 
@@ -663,8 +497,8 @@
 {template fld}
   <table>{\n}
     <tr>{\n}
-      <td width="350">{\n}
-          <div style="width: 350px;">{\n}
+      <td width="250">{\n}
+          <div style="width: 250px;">{\n}
             {$fldname}{\n}
           </div>{\n}
     </td>{\n}
@@ -710,14 +544,41 @@
 
 
 {template btn}
-  <input type="submit" name="{$name}" value="{$value}"
-         style="background-color: #E0E0E0;"/>
+  <input type="hidden" name="{$name}" value="{$value}" />
+  <div class="button" onclick="jQuery(this).parent('form').submit()">
+    <div class="left"></div>
+    <div class="text">#{$value}#</div>
+    <div class="right"></div>
+  </div>
+{/template}
+
+{template btnlin}
+  <input type="hidden" name="{$name}" value="{$value}" />
+  <div class="button" onclick="jQuery(this).parent('form').submit()">
+    <div class="left"></div>
+    <div class="text">[{$value}]</div>
+    <div class="right"></div>
+  </div>
+{/template}
+
+
+{template btncol}
+  <form method="post">
+    <input type="hidden" name="{$name}" value="{$value}" />
+    <div class="button" onclick="jQuery(this).parent('form').submit()">
+      <div class="left"></div>
+      <div class="text">*{$value}*</div>
+      <div class="right"></div>
+    </div>
+  </form>
 {/template}
 
 {template popbtn}
-  <input type="button" name="{$name}" value="{$value}"
-         style="background-color: #E0E0E0;"
-         onclick="ShowHide('{$popid}');" />
+  <div class="button" onclick="ShowHide('{$popid}');">
+    <div class="left"></div>
+    <div class="text">%{$value}%</div>
+    <div class="right"></div>
+  </div>
 {/template}
 
 {template frmobj}
@@ -729,7 +590,7 @@
 {/template}
 
 {template frmtbl}
-  <form method="post">
+
     <table border="0" bgcolor="#DCDCDC" width="100%">
       {foreach $obj in $objs}
         <tr>
@@ -743,12 +604,14 @@
         </tr>
       {/foreach}
     </table>
-  </form>
+
 {/template}
 
 {template popup}
-  <div id="{$id}" class="popupBox" style="position: absolute; top:
-  0px; left: {$left}px; width: {$width}px;  display: none;">
+  <div id="{$id}"
+       class="popupBox"
+       style="position: absolute; top: 0px; left: {$left}px; width: {$width}px;  display: none;
+              background-color: yellow; border: 1px dotted red; z-index: 999999999; padding: 20px;">
     <div class="popupCancel">
       <a href="#popupCancel" onclick="ShowHide('{$id}')">
         <img alt="" src="/popupCancel.gif" />

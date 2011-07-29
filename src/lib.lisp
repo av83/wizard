@@ -179,7 +179,7 @@
                  (list :fldname captfld
                        :fldcontent (tpl:textupd (list :name namefld
                                                       :value (a-fld namefld val)))))))
-     :btn    (tpl:btn (list :name (getf infld :btn) :value (getf infld :value)))
+     :btn    (tpl:btnlin (list :name (getf infld :btn) :value (getf infld :value)))
      :popbtn (with-let-infld
                  (let* ((popid (getf infld :popbtn))
                         (popup (with-in-fld-case (getf infld :fields)
@@ -232,8 +232,8 @@
                   ((:link supplier)
                    (a-name (a-fld (getf infld :fld) (cdr obj))))
                   )
-        :btn    (tpl:btn (list :name (format nil "~A~~~A"  (getf infld :btn) (car obj))
-                               :value (format nil "~A" (getf infld :value))))
+        :btn    (tpl:btncol (list :name (format nil "~A~~~A"  (getf infld :btn) (car obj))
+                                  :value (format nil "~A" (getf infld :value))))
         :popbtn (let* ((popid (format nil "~A~~~A" (getf infld :popbtn) (car obj)))
                        (popup (with-in-fld-case (getf infld :fields)
                                 :fld     (with-infld-typedata-cond (format nil "err:unk4 typedata: ~A" typedata)
