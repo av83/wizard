@@ -278,7 +278,6 @@
                                      (t "<div style=\"padding-left: 2px\">Нет объектов</div>")))))))
     (tpl:root
      (list
-      :grid (tpl:grid)
       :personal personal
       :popups popups
       :navpoints (menu)
