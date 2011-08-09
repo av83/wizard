@@ -3,39 +3,114 @@
 {namespace tpl}
 
 
+{template grid}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title></title>
+  <script type="text/javascript" src="/jquery-1.6.2.min.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen" href="/jquery-ui-1.8.1.custom.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="/ui.jqgrid.css" />
+  <script src="/grid.locale-en.js" type="text/javascript"></script>
+  <script src="/jquery.jqGrid.min.js" type="text/javascript"></script>
+  <style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-size: 75%;
+  }
+  </style>
+{literal}
+<script type="text/javascript">
+  $(function(){
+      $("#list").jqGrid({
+            url:'/grid',
+            datatype: 'xml',
+            mtype: 'GET',
+            colNames:['Inv No','Date', 'Amount','Tax','Total','Notes'],
+            colModel :[
+                       {name:'invid',   index:'invid', width:55},
+                       {name:'invdate', index:'invdate', width:90},
+                       {name:'amount',  index:'amount', width:80, align:'right'},
+                       {name:'tax',     index:'tax', width:80, align:'right'},
+                       {name:'total',   index:'total', width:80, align:'right'},
+                       {name:'note',    index:'note', width:150, sortable:false}
+                        ],
+            pager: '#pager',
+            rowNum:10,
+            rowList:[10,20,30],
+            sortname: 'invid',
+            sortorder: 'desc',
+            viewrecords: true,
+            gridview: true,
+            caption: 'test'
+            });
+    });
+</script>
+{/literal}
+
+
+  </head>
+  <body>
+
+    <table id="list"><tr><td/></tr></table>
+    <div id="pager"></div>
+
+
+  </body>
+  </html>
+
+{/template}
+
+
 {template root}
-  <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-  <html xml:lang="ru-ru" xmlns="http://www.w3.org/1999/xhtml" lang="ru-ru"><head>
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">{\n}
+  <html xml:lang="ru-ru" xmlns="http://www.w3.org/1999/xhtml" lang="ru-ru">{\n}
+    <head>{\n}
 
-      <link rel="stylesheet" href="/default.css" type="text/css" />
-      <link rel="stylesheet" href="/unique.css" type="text/css" />
+      <link rel="stylesheet" href="/default.css" type="text/css" />{\n}
+      <link rel="stylesheet" href="/unique.css" type="text/css" />{\n}
 
-      <link rel="stylesheet" href="/content.css" type="text/css" />
+      <link rel="stylesheet" href="/content.css" type="text/css" />{\n}
 
-      <link rel="stylesheet" href="/general.css" type="text/css" />
-      <link rel="stylesheet" href="/templateBanner.css" type="text/css" />
+      <link rel="stylesheet" href="/general.css" type="text/css" />{\n}
+      <link rel="stylesheet" href="/templateBanner.css" type="text/css" />{\n}
 
-      <script type="text/javascript" src="/jquery-1.js"></script>
-      <script type="text/javascript" src="/general.js"></script>
-      <script type="text/javascript" src="/jquery.js"></script>
+      <link rel="stylesheet" type="text/css" media="screen" href="/jquery-ui-1.8.1.custom.css" />
+      <link rel="stylesheet" type="text/css" media="screen" href="/css/ui.jqgrid.css" />
 
-      <!-- base href="http://gdetorg.ru/index.php" -->
-      <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-      <meta name="robots" content="index, follow" />
-      <meta name="keywords" content="joomla, Joomla" />
+      <script type="text/javascript" src="/jquery-1.6.2.min.js"></script>
+      <script type="text/javascript" src="/grid.locale-en.js"></script>
+      <script type="text/javascript" src="/js/jquery.jqGrid.min.js"></script>
+
+      <!-- script type="text/javascript" src="/jquery-1.js"></script -->{\n}
+      <script type="text/javascript" src="/general.js"></script>{\n}
+      <!-- script type="text/javascript" src="/jquery.js"></script -->{\n}
+
+      <!-- base href="http://gdetorg.ru/index.php" -->{\n}
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8" />{\n}
+      <meta name="robots" content="index, follow" />{\n}
 
       <title>{$headtitle}</title>
 
-      <link href="/index.php?format=feed&amp;type=rss" rel="alternate" type="application/rss+xml" title="RSS 2.0" />
-      <link href="/index.php?format=feed&amp;type=atom" rel="alternate" type="application/atom+xml" title="Atom 1.0" />
-      <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-      <link rel="stylesheet" href="/jextcurrency.css" type="text/css" />
+      <!-- link rel="stylesheet" type="text/css" media="screen" href="css/ui-lightness/jquery-ui-1.7.1.custom.css" / -->{\n}
 
-      <script type="text/javascript" src="/jquery-1.js"></script>
-      <script type="text/javascript" src="/jquery-ui-1.js"></script>
-      <script type="text/javascript" src="/video.js"></script>
-      <script type="text/javascript" src="/mootools.js"></script>
-      <script type="text/javascript" src="/caption.js"></script>
+      <!-- script src="js/jquery-1.4.2.min.js" type="text/javascript"></script -->{\n}
+      <!-- script src="js/i18n/grid.locale-en.js" type="text/javascript"></script -->{\n}
+      <!-- script src="js/jquery.jqGrid.min.js" type="text/javascript"></script -->{\n}
+
+
+      <link href="/index.php?format=feed&amp;type=rss" rel="alternate" type="application/rss+xml" title="RSS 2.0" />{\n}
+      <link href="/index.php?format=feed&amp;type=atom" rel="alternate" type="application/atom+xml" title="Atom 1.0" />{\n}
+      <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />{\n}
+      <link rel="stylesheet" href="/jextcurrency.css" type="text/css" />{\n}
+
+      <script type="text/javascript" src="/jquery-1.js"></script>{\n}
+      <script type="text/javascript" src="/jquery-ui-1.js"></script>{\n}
+      <script type="text/javascript" src="/video.js"></script>{\n}
+      <script type="text/javascript" src="/mootools.js"></script>{\n}
+      <script type="text/javascript" src="/caption.js"></script>{\n}
 
       <script>
         {literal}
@@ -54,6 +129,11 @@
 
     </head>
     <body>
+
+wefewfw
+<table id="list"><tr><td/></tr></table>
+<div id="pager"></div>
+
       <div class="main" id="main">
         <div class="bannerTop">
           <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
@@ -398,6 +478,8 @@
             {foreach $contentBlock in $content}
               {call contentBlock data="$contentBlock" /}
             {/foreach}
+
+            {$grid |noAutoescape}
 
             <div class="componentheading">
 	          gdetorg.ru</div>
