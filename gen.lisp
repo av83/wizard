@@ -1,6 +1,6 @@
 (in-package #:WIZARD)
 
-(defparameter *required* '(restas closure-template restas-directory-publisher))
+(defparameter *required* '(restas closure-template restas-directory-publisher cl-json))
 (defparameter *my-package* 'wizard)
 (defparameter *used-package* '(cl iter))
 

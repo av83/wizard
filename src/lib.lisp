@@ -212,6 +212,7 @@
                                                                    (getf infld :fields))))))))
 
 (defmacro show-collection (cons-val-list fields)
+  "Deprecated. For reference."
   `(loop :for obj :in ,cons-val-list :collect
       (with-in-fld-case ,fields
         :fld    (with-infld-typedata-cond (format nil "err:unk3 typedata: ~A" typedata)
@@ -251,6 +252,9 @@
         :calc   (tpl:strview (list :value (funcall (getf infld :calc) obj)))
         )))
 
+;; (defmacro show-grid (cons-val-list fields)
+;;   `(tpl:container (list :content (tpl:jqgrid (list :id "myxa")))))
+
 (defun show-acts (acts)
   (let* ((personal  (let ((userid (hunchentoot:session-value 'userid)))
                       (if (null userid)
@@ -274,7 +278,16 @@
                                           (equal 'SALE (type-of val)))     ;; SALE
                                       (tpl:frmobj (list :flds (show-linear (getf act :fields)))))
                                      ((equal 'cons (type-of val))          ;; COLLECTION
-                                      (tpl:frmtbl (list :objs (show-collection val (getf act :fields)))))
+                                      ;; (tpl:frmtbl (list :objs (show-collection val (getf act :fields))))
+                                      ;; (show-grid vak (getf act :fields))
+                                      "
+                                      <table id=\"rowed2\"></table>
+                                      <div id=\"prowed2\"></div>
+                                      <br />
+                                      <script src=\"/jqgen\" type=\"text/javascript\"> </script>
+"
+
+                                      )
                                      (t "<div style=\"padding-left: 2px\">Нет объектов</div>")))))))
     (tpl:root
      (list
@@ -282,6 +295,67 @@
       :popups popups
       :navpoints (menu)
       :content content))))
+
+(defun replace-all (string part replacement &key (test #'char=))
+  "Returns a new string in which all the occurences of the part
+is replaced with replacement."
+  (with-output-to-string (out)
+    (loop with part-length = (length part)
+       for old-pos = 0 then (+ pos part-length)
+       for pos = (search part string
+                         :start2 old-pos
+                         :test test)
+       do (write-string string out
+                        :start old-pos
+                        :end (or pos (length string)))
+       when pos do (write-string replacement out)
+       while pos)))
+
+
+(restas:define-route jqgen ("/jqgen")
+  ;; (alexandria:read-file-into-string (path "src/static/rowedex2.js")))
+  (format nil "jQuery('#~A').jqGrid(~A)~%~A"
+          "rowed2"
+          (replace-all
+           (json:encode-json-to-string
+            '(("url"      . "/rowed")
+              ("datatype" . "json")
+              ("colNames" . ("Actions" "Inv No" "Date"  "Client" "Amount" "Tax" "Total" "Notes"))
+              ("colModel" . ((("name" . "act")      ("index" . "act")       ("width" . "100")  ("sortable" . nil)  ("editable" . nil))
+                             (("name" . "id")       ("index" . "id")        ("width" . "55")   ("sortable" . nil)  ("editable" . t))
+                             (("name" . "invdate")  ("index" . "invdate")   ("width" . "100")  ("sortable" . nil)  ("editable" . t))
+                             (("name" . "name")     ("index" . "name")      ("width" . "100")  ("sortable" . nil)  ("editable" . t))
+                             (("name" . "amount")   ("index" . "amount")    ("width" . "100")  ("sortable" . nil)  ("editable" . t) ("align" . "right"))
+                             (("name" . "tax")      ("index" . "tax")       ("width" . "100")  ("sortable" . nil)  ("editable" . t) ("align" . "right"))
+                             (("name" . "total")    ("index" . "total")     ("width" . "100")  ("sortable" . nil)  ("editable" . t) ("align" . "right"))
+                             (("name" . "note")     ("index" . "note")      ("width" . "100")  ("sortable" . nil)  ("editable" . t))))
+              ("rowNum"   . 10)
+              ("rowList"  . (10 20 30))
+              ("pager"    . "#prowed2")
+              ("sortname" . "id")
+              ("viewrecords" . t)
+              ("sortorder" . "desc")
+              ("gridComplete" . "-=|=-")
+              ("editurl"  . "/rowed")
+              ("caption" . "Testttttt")))
+           "\"-=|=-\","
+           (alexandria:read-file-into-string (path "src/static/rowedex3.js")))
+          "jQuery('#rowed2').jqGrid('navGrid','#prowed2',{edit:false,add:false,del:false});"
+          ))
+
+(defparameter a (make-hash-table :test #'equal))
+(setf (gethash "me" a) "bbb")
+a
+(json:encode-json a)
+
+
+
+ '(
+   ((foo . (1 2 3))
+    (bar . t)
+    (baz . #\!))
+   "quux" 4/17 4.25))
+
 
 
 (restas:define-route grid ("/grid")
@@ -401,3 +475,59 @@
 (restas:define-route rowed/post ("/rowed" :method :post)
   "{\"page\":\"1\",\"total\":2,\"records\":\"13\",\"rows\":[{\"id\":\"13\",\"cell\":[\"\",\"13\",\"2007-10-06\",\"Client 3\",\"1000.00\",\"0.00\",\"1000.00\",null]},{\"id\":\"12\",\"cell\":[\"\",\"12\",\"2007-10-06\",\"Client 2\",\"700.00\",\"140.00\",\"840.00\",null]},{\"id\":\"11\",\"cell\":[\"\",\"11\",\"2007-10-06\",\"Client 1\",\"600.00\",\"120.00\",\"720.00\",null]},{\"id\":\"10\",\"cell\":[\"\",\"10\",\"2007-10-06\",\"Client 2\",\"100.00\",\"20.00\",\"120.00\",null]},{\"id\":\"9\",\"cell\":[\"\",\"9\",\"2007-10-06\",\"Client 1\",\"200.00\",\"40.00\",\"240.00\",null]},{\"id\":\"8\",\"cell\":[\"\",\"8\",\"2007-10-06\",\"Client 3\",\"200.00\",\"0.00\",\"200.00\",null]},{\"id\":\"7\",\"cell\":[\"\",\"7\",\"2007-10-05\",\"Client 2\",\"120.00\",\"12.00\",\"134.00\",null]},{\"id\":\"6\",\"cell\":[\"\",\"6\",\"2007-10-05\",\"Client 1\",\"50.00\",\"10.00\",\"60.00\",\"\"]},{\"id\":\"5\",\"cell\":[\"\",\"5\",\"2007-10-05\",\"Client 3\",\"100.00\",\"0.00\",\"100.00\",\"no tax at all\"]},{\"id\":\"4\",\"cell\":[\"\",\"4\",\"2007-10-04\",\"Client 3\",\"150.00\",\"0.00\",\"150.00\",\"no tax\"]}]}")
 
+;; (defun jq-script (id pager)
+;;   (format nil "  <script type=\"text/javascript\">
+;; jQuery("#rowed2").jqGrid({
+;;     url:'/rowed',
+;;     datatype: "json",
+;;     colNames:['Actions','Inv No','Date', 'Client', 'Amount','Tax','Total','Notes'],
+;;     colModel:[
+;;         {name:'act',index:'act', width:100,sortable:false},
+;;         {name:'id',index:'id', width:55},
+;;         {name:'invdate',index:'invdate', width:90, editable:true},
+;;         {name:'name',index:'name', width:100,editable:true},
+;;         {name:'amount',index:'amount', width:80, align:"right",editable:true},
+;;         {name:'tax',index:'tax', width:80, align:"right",editable:true},
+;;         {name:'total',index:'total', width:80,align:"right",editable:true},
+;;         {name:'note',index:'note', width:150, sortable:false,editable:true}
+;;     ],
+;;     rowNum:10,
+;;     rowList:[10,20,30],
+;;     pager: '#prowed2',
+;;     sortname: 'id',
+;;     viewrecords: true,
+;;     sortorder: "desc",
+;;     gridComplete: function(){
+;;         var ids = jQuery("#rowed2").jqGrid('getDataIDs');
+;;         for(var i=0;i<ids.length;i++){
+;;             var cl = ids[i];
+;;             be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#rowed2').jqGrid('editRow','"+cl+"');\"  />";
+;;             se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#rowed2').jqGrid('saveRow','"+cl+"');\"  />";
+;;             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#rowed2').jqGrid('restoreRow','"+cl+"');\" />";
+;;             my = "<input style='height:22px;width:30px;' type='button' value='my' onclick=\"location.href='http://ya.ru';\" />";
+;;             jQuery("#rowed2").jqGrid('setRowData',ids[i],{act:be+se+ce+my});
+;;             }
+;;             },
+;;             editurl: "/rowed",
+;;             caption:"Custom edit "
+;;             });
+;;   jQuery("#rowed2").jqGrid('navGrid',"#prowed2",{edit:false,add:false,del:false});
+
+;;   </script>
+;;   <table id=\"~A\">
+;;     <tr>
+;;       <td></td>
+;;     </tr>
+;;   </table>
+;;   <div id=\"~A\"></div>
+
+
+;; jQuery("#rowed2").jqGrid({
+;;     url:'/rowed',
+;;     datatype: "json",
+
+
+
+;; " id pager id pager))
+
+;; (print (jq-script "test" "pager"))
