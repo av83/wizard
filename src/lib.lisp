@@ -252,8 +252,42 @@
         :calc   (tpl:strview (list :value (funcall (getf infld :calc) obj)))
         )))
 
-;; (defmacro show-grid (cons-val-list fields)
-;;   `(tpl:container (list :content (tpl:jqgrid (list :id "myxa")))))
+(defmacro show-grid (cons-val-list fields)
+  `(let ((grd (gensym "J"))
+         (pgr (gensym "P"))
+         (col-names)
+         (col-model))
+     (with-in-fld-case ,fields
+       :fld    (progn
+                 (push (getf infld :name) col-names)
+                 (let* ((in-name (getf infld :fld))
+                        (model `(("name"  . ,in-name)
+                                ("index" . ,in-name)
+                                ("width" . "300")
+                                ("sortable" . nil)
+                                ("editable" . t))))
+                   (push model col-model)))
+       :btn    ""
+       :popbtn ""
+       :calc   "")
+     (setf col-names (reverse col-names))
+     (setf col-model (reverse col-model))
+     (grid-helper grd pgr
+                  (json:encode-json-to-string
+                   `(("url"      . "/rowed")
+                     ("datatype" . "json")
+                     ("colNames" . ,col-names)
+                     ("colModel" . ,col-model)
+                     ("rowNum"   . 10)
+                     ("rowList"  . (10 20 30))
+                     ("pager"    . ,(format nil "#~A" pgr))
+                     ("sortname" . "id")
+                     ("viewrecords" . t)
+                     ("sortorder" . "desc")
+                     ("editurl"  . "/rowed")
+                     ("caption" . "show grid")))
+                  )))
+
 
 (defun show-acts (acts)
   (let* ((personal  (let ((userid (hunchentoot:session-value 'userid)))
@@ -278,15 +312,10 @@
                                           (equal 'SALE (type-of val)))     ;; SALE
                                       (tpl:frmobj (list :flds (show-linear (getf act :fields)))))
                                      ((equal 'cons (type-of val))          ;; COLLECTION
+                                      ;; (grid-helper)
                                       ;; (tpl:frmtbl (list :objs (show-collection val (getf act :fields))))
-                                      ;; (show-grid vak (getf act :fields))
-                                      "
-                                      <table id=\"rowed2\"></table>
-                                      <div id=\"prowed2\"></div>
-                                      <br />
-                                      <script src=\"/jqgen\" type=\"text/javascript\"> </script>
-"
-
+                                      (show-grid val (getf act :fields))
+                                      ;; (xxx)
                                       )
                                      (t "<div style=\"padding-left: 2px\">Нет объектов</div>")))))))
     (tpl:root
@@ -310,6 +339,75 @@ is replaced with replacement."
                         :end (or pos (length string)))
        when pos do (write-string replacement out)
        while pos)))
+
+
+(defun grid-helper (grd pgr jsn)
+  (format nil "<table id=\"~A\"></table><div id=\"~A\"></div>
+               <script type=\"text/javascript\">
+               jQuery('#~A').jqGrid(~A);
+               jQuery('#~A').jqGrid('navGrid','#~A',{edit:false,add:false,del:false});
+               </script>"
+          grd pgr grd jsn grd pgr))
+
+(defun xxx ()
+  (print
+   (grid-helper (gensym "J") (gensym "J")
+              (json:encode-json-to-string
+               '(("url"      . "/rowed")
+                 ("datatype" . "json")
+                 ("colNames" . ("Actions" "Inv No" "Date"  "Client" "Amount" "Tax" "Total" "Notes"))
+                 ("colModel" . ((("name" . "act")      ("index" . "act")       ("width" . "100")  ("sortable" . nil)  ("editable" . nil))
+                                (("name" . "id")       ("index" . "id")        ("width" . "55")   ("sortable" . nil)  ("editable" . t))
+                                (("name" . "invdate")  ("index" . "invdate")   ("width" . "100")  ("sortable" . nil)  ("editable" . t))
+                                (("name" . "name")     ("index" . "name")      ("width" . "100")  ("sortable" . nil)  ("editable" . t))
+                                (("name" . "amount")   ("index" . "amount")    ("width" . "100")  ("sortable" . nil)  ("editable" . t) ("align" . "right"))
+                                (("name" . "tax")      ("index" . "tax")       ("width" . "100")  ("sortable" . nil)  ("editable" . t) ("align" . "right"))
+                                (("name" . "total")    ("index" . "total")     ("width" . "100")  ("sortable" . nil)  ("editable" . t) ("align" . "right"))
+                                (("name" . "note")     ("index" . "note")      ("width" . "100")  ("sortable" . nil)  ("editable" . t))))
+                 ("rowNum"   . 10)
+                 ("rowList"  . (10 20 30))
+                 ("pager"    . "#prowed2")
+                 ("sortname" . "id")
+                 ("viewrecords" . t)
+                 ("sortorder" . "desc")
+                 ("gridComplete" . "-=|=-")
+                 ("editurl"  . "/rowed")
+                 ("caption" . "Testttttt3333")))
+              )))
+
+
+(defun jqgen ()
+  (format nil "<table id=\"rowed2\"></table><div id=\"prowed2\"></div><br />
+               <script type=\"text/javascript\">
+               jQuery('#~A').jqGrid(~A)~%~A
+               </script>"
+          "rowed2"
+          (replace-all
+           (json:encode-json-to-string
+            '(("url"      . "/rowed")
+              ("datatype" . "json")
+              ("colNames" . ("Actions" "Inv No" "Date"  "Client" "Amount" "Tax" "Total" "Notes"))
+              ("colModel" . ((("name" . "act")      ("index" . "act")       ("width" . "100")  ("sortable" . nil)  ("editable" . nil))
+                             (("name" . "id")       ("index" . "id")        ("width" . "55")   ("sortable" . nil)  ("editable" . t))
+                             (("name" . "invdate")  ("index" . "invdate")   ("width" . "100")  ("sortable" . nil)  ("editable" . t))
+                             (("name" . "name")     ("index" . "name")      ("width" . "100")  ("sortable" . nil)  ("editable" . t))
+                             (("name" . "amount")   ("index" . "amount")    ("width" . "100")  ("sortable" . nil)  ("editable" . t) ("align" . "right"))
+                             (("name" . "tax")      ("index" . "tax")       ("width" . "100")  ("sortable" . nil)  ("editable" . t) ("align" . "right"))
+                             (("name" . "total")    ("index" . "total")     ("width" . "100")  ("sortable" . nil)  ("editable" . t) ("align" . "right"))
+                             (("name" . "note")     ("index" . "note")      ("width" . "100")  ("sortable" . nil)  ("editable" . t))))
+              ("rowNum"   . 10)
+              ("rowList"  . (10 20 30))
+              ("pager"    . "#prowed2")
+              ("sortname" . "id")
+              ("viewrecords" . t)
+              ("sortorder" . "desc")
+              ("gridComplete" . "-=|=-")
+              ("editurl"  . "/rowed")
+              ("caption" . "Testttttt")))
+           "\"-=|=-\","
+           (alexandria:read-file-into-string (path "src/static/rowedex3.js")))
+          "jQuery('#rowed2').jqGrid('navGrid','#prowed2',{edit:false,add:false,del:false});"
+          ))
 
 
 (restas:define-route jqgen ("/jqgen")
@@ -342,20 +440,6 @@ is replaced with replacement."
            (alexandria:read-file-into-string (path "src/static/rowedex3.js")))
           "jQuery('#rowed2').jqGrid('navGrid','#prowed2',{edit:false,add:false,del:false});"
           ))
-
-(defparameter a (make-hash-table :test #'equal))
-(setf (gethash "me" a) "bbb")
-a
-(json:encode-json a)
-
-
-
- '(
-   ((foo . (1 2 3))
-    (bar . t)
-    (baz . #\!))
-   "quux" 4/17 4.25))
-
 
 
 (restas:define-route grid ("/grid")
