@@ -457,7 +457,7 @@
      '((:caption           "Ресурс"
         :perm              :all
         :entity            resource
-        :val               (gethash (cur-id)  *RESOURCE*)
+        :val               (gethash (cur-id) *RESOURCE*)
         :fields            '(name category resource-type unit))))
 
     ;; Личный кабинет Администратора
@@ -538,6 +538,7 @@
      '((:caption           "Эксперты"
         :perm              :all
         :entity            expert
+        :show              :collection
         :val               (remove-if-not #'(lambda (x) (equal (type-of (cdr x)) 'EXPERT)) (cons-hash-list *USER*))
         :fields            '(name login
                              (:btn "Страница эксперта"

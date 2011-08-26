@@ -464,22 +464,22 @@ is replaced with replacement."
 ;; </rows>")
 
 
-(defun example-json ()
-  (let ((page    1)
-        (total   2)
-        (records 13)) ;; всего в таблице
+(defun json-assembly (page total records rows)
+  "rows: `(id fld1 fld2 fld3...)"
   (json:encode-json-to-string
    `(("page"    . ,page)
      ("total"   . ,total)
      ("records" . ,records)
-     ("rows"    . ,(loop :for i from 1 :to 13 :collect
-                      `(("id"   . ,i)
-                        ("cell" . (,(format nil "Client ~A" i)
-                                    ,(random 50)
-                                    ,(random 50)
-                                    ,(random 50)
-                                    ,(random 50)
-                                    ,(random 50))))))))))
+     ("rows"    . ,(loop :for row :in rows :collect
+                      `(("id"   . ,(car row))
+                        ("cell" . ,(cdr row))))))))
+
+(defun example-json ()
+  (json-assembly 1 2 13
+                 (loop :for i from 1 :to 13 :collect
+                    `(,i
+                      ,(format nil "Client ~A" i)
+                      ,(random 50)))))
 
 (restas:define-route rowed ("/rowed")
   (example-json))
