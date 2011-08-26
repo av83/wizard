@@ -538,7 +538,7 @@
      '((:caption           "Эксперты"
         :perm              :all
         :entity            expert
-        :show              :collection
+        :grid              t
         :val               (remove-if-not #'(lambda (x) (equal (type-of (cdr x)) 'EXPERT)) (cons-hash-list *USER*))
         :fields            '(name login
                              (:btn "Страница эксперта"

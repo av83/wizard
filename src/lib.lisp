@@ -252,7 +252,7 @@
         :calc   (tpl:strview (list :value (funcall (getf infld :calc) obj)))
         )))
 
-(defmacro show-grid (cons-val-list fields)
+(defmacro show-grid (cons-val-list fields url)
   `(let ((grd (gensym "J"))
          (pgr (gensym "P"))
          (col-names)
@@ -274,7 +274,7 @@
      (setf col-model (reverse col-model))
      (grid-helper grd pgr
                   (json:encode-json-to-string
-                   `(("url"      . "/rowed")
+                   `(("url"      . ,url)
                      ("datatype" . "json")
                      ("colNames" . ,col-names)
                      ("colModel" . ,col-model)
@@ -314,7 +314,7 @@
                                      ((equal 'cons (type-of val))          ;; COLLECTION
                                       ;; (grid-helper)
                                       ;; (tpl:frmtbl (list :objs (show-collection val (getf act :fields))))
-                                      (show-grid val (getf act :fields))
+                                      (show-grid val (getf act :fields) (getf act :ajax-url))
                                       ;; (xxx)
                                       )
                                      (t "<div style=\"padding-left: 2px\">Нет объектов</div>")))))))
