@@ -61,24 +61,22 @@
   (let ((controllers)
         (ajaxdataset))
 
-    ;; (when (equal show :collection)
-    ;;   (loop :for fld :in fields :do
-    ;;      (unless (consp fld)
-    ;;        (setf ajaxdataset (append ajaxdataset (list fld)))))
-    ;;   (print ajaxdataset))
+    (when (equal show :collection)
+      (loop :for fld :in fields :do
+         (unless (consp fld)
+           (setf ajaxdataset (append ajaxdataset (list fld)))))
+      (print ajaxdataset))
 
     (values
      (format nil "(list ~{~A~})"
              (loop :for fld :in fields :collect
                 (etypecase fld
-                  (symbol
-                   (gen-fld-symb fld entity))
-                  (cons
-                   (multiple-value-bind (str ctrs)
-                       (gen-fld-cons fld)
-                     (loop :for ctr :in ctrs :do
-                        (setf controllers (append controllers (list ctr))))
-                     str)))))
+                  (symbol  (gen-fld-symb fld entity))
+                  (cons    (multiple-value-bind (str ctrs)
+                               (gen-fld-cons fld)
+                             (loop :for ctr :in ctrs :do
+                                (setf controllers (append controllers (list ctr))))
+                             str)))))
      controllers
      ajaxdataset
      )))
@@ -186,10 +184,12 @@
                             )))
          ;; (loop :for aja :in ajaxdataset :do                  ;;
          ;;    (format t "~%~A | ~A" (car aja) (cadr aja)))     ;;
-         (format out "~%~%(restas:define-route ~A-page/ajax (\"/ajaxdataset~A\")"
-                 (string-downcase (getf place :place))
-                 (getf place :url))
-         (format out "~%  (example-json))")
+         (unless (null ajaxdataset)
+           (format out "~%~%(restas:define-route ~A-page/ajax (\"/ajaxdataset~A\")"
+                   (string-downcase (getf place :place))
+                   (getf place :url))
+           (format out "~%  (example-json \"~A\"))" ajaxdataset)
+           )
          ;; (format out  "~%  (let ((session (hunchentoot:start-session))~%~7T (acts `(~{~%~A~}))) ~%       (activate acts)))"
          ;;         (loop :for controller :in controllers :collect
          ;;            (format nil "(\"~A\" . ,(lambda () ~A))"

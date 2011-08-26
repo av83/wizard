@@ -442,26 +442,6 @@ is replaced with replacement."
           ))
 
 
-;; (restas:define-route grid ("/grid")
-;;   "<rows>
-;; <page>1</page>
-;; <total>2</total>
-;; <records>13</records>
-;; <userdata name=\"tamount\">3820.00</userdata>
-;; <userdata name=\"ttax\">462.00</userdata>
-;; <userdata name=\"ttotal\">4284.00</userdata>
-;; −
-;; <row id=\"13\">
-;; <cell>13</cell>
-;; <cell>2007-10-06</cell>
-;; <cell>Client 3</cell>
-;; <cell>1000.00</cell>
-;; <cell>0.00</cell>
-;; <cell>1000.00</cell>
-;; <cell></cell>
-;; </row>
-;; ...
-;; </rows>")
 
 
 (defun json-assembly (page total records rows)
@@ -474,7 +454,7 @@ is replaced with replacement."
                       `(("id"   . ,(car row))
                         ("cell" . ,(cdr row))))))))
 
-(defun example-json ()
+(defun example-json (&rest rest)
   (json-assembly 1 2 13
                  (loop :for i from 1 :to 13 :collect
                     `(,i
