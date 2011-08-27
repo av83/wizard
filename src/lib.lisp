@@ -316,7 +316,7 @@
                                           (equal 'SALE (type-of val)))     ;; SALE
                                       (tpl:frmobj (list :flds (show-linear (getf act :fields)))))
                                      ((equal 'cons (type-of val))          ;; COLLECTION
-                                      (show-grid val (getf act :fields) (nth 0 (getf act :grid))))
+                                      (show-grid val (getf act :fields) (getf act :grid)))
                                      (t "<div style=\"padding-left: 2px\">Нет объектов</div>")))))))
     (tpl:root
      (list
@@ -454,12 +454,27 @@ is replaced with replacement."
                       `(("id"   . ,(car row))
                         ("cell" . ,(cdr row))))))))
 
-(defun example-json (&rest rest)
-  (json-assembly 1 2 13
-                 (loop :for i from 1 :to 13 :collect
-                    `(,i
-                      ,(format nil "Client ~A" i)
-                      ,(random 50)))))
+;; (let ((val (lambda () (REMOVE-IF-NOT #'(LAMBDA (X) (EQUAL (TYPE-OF (CDR X)) 'EXPERT))
+;;                                      (CONS-HASH-LIST *USER*)))))
+
+
+
+(defun example-json (val fields)
+  ;; (let* ((val (funcall val)))
+  (let ((val (lambda () (REMOVE-IF-NOT #'(LAMBDA (X) (EQUAL (TYPE-OF (CDR X)) 'EXPERT))
+                                       (CONS-HASH-LIST *USER*)))))
+    (json-assembly 1 2 9
+                   (loop :for item :in (funcall val) :collect
+                      (let ((id  (car item))
+                            (obj (cdr item)))
+                        `(,id
+                          ,(a-name obj)
+                          ,(a-login obj)))))))
+
+                   ;; (loop :for i from 1 :to 9 :collect
+                   ;;    `(,(car
+                   ;;      ,(format nil "Client ~A" i)
+                   ;;      ,(random 50)))))
 
 (restas:define-route rowed ("/rowed")
   (example-json))

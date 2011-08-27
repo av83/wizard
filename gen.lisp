@@ -185,7 +185,7 @@
            (format out "~%~%(restas:define-route ~A-page/ajax (\"/~A\")"
                    (string-downcase (getf place :place))
                    (string-downcase (nth 0 ajaxdataset)))
-           (format out "~%  (example-json ~A ~%~15T ~A))"
+           (format out "~%  (example-json ~%~2T ~A ~%~2T ~A))"
                    (nth 1 ajaxdataset)
                    (nth 2 ajaxdataset))
            )
