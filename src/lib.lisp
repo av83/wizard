@@ -316,7 +316,7 @@
                                           (equal 'SALE (type-of val)))     ;; SALE
                                       (tpl:frmobj (list :flds (show-linear (getf act :fields)))))
                                      ((equal 'cons (type-of val))          ;; COLLECTION
-                                      (show-grid val (getf act :fields) "/rowed"))
+                                      (show-grid val (getf act :fields) (nth 0 (getf act :grid))))
                                      (t "<div style=\"padding-left: 2px\">Нет объектов</div>")))))))
     (tpl:root
      (list

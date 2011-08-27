@@ -74,7 +74,7 @@
 (defun gen-action (action)
   (let* ((controllers)
          (ajaxdataset)
-         (grid     (getf action :grid))
+         (grid     (when (getf action :grid) (string-downcase (symbol-name (gensym "JG")))))
          (perm     (subseq (with-output-to-string (*standard-output*) (pprint (getf action :perm))) 1))
          (caption  (getf action :caption))
          (val      (subseq (with-output-to-string (*standard-output*) (pprint (getf action :val))) 1))
@@ -85,17 +85,15 @@
       (setf controllers (append controllers (list ctrs)))
       ;; #:GRID
       (when grid
-        (let ((flds))
-          (loop :for fld :in fields :do
-             (etypecase fld
-               (symbol  (setf flds (append flds (list fld))))
-               (cons    nil)))
-          (unless (null flds)
-            (setf ajaxdataset `(,(gensym "G") . (,entity ,flds))))))
+        (setf ajaxdataset (list grid
+                                (format nil "(lambda () ~A)" val)
+                                str)))
       ;; RET
       (values
-       (format nil "~%~14T (list :perm '~A ~%~20T :grid \"~A\"  ~%~20T :title \"~A\"~% ~20T :val (lambda () ~A)~% ~20T :fields ~A)"
-               perm ajaxdataset caption val str)
+       (format nil "~%~14T (list :perm '~A ~%~20T :grid ~A ~%~20T :title \"~A\"~% ~20T :val (lambda () ~A)~% ~20T :fields ~A)"
+               perm
+               (unless (null grid) (format nil "\"~A\"" grid))
+               caption val str)
        controllers
        ajaxdataset))))
 
@@ -186,8 +184,8 @@
          (unless (null ajaxdataset)
            (format out "~%~%(restas:define-route ~A-page/ajax (\"/~A\")"
                    (string-downcase (getf place :place))
-                   (nth 0 ajaxdataset))
-           (format out "~%  (example-json :~A '~A))"
+                   (string-downcase (nth 0 ajaxdataset)))
+           (format out "~%  (example-json ~A ~%~15T ~A))"
                    (nth 1 ajaxdataset)
                    (nth 2 ajaxdataset))
            )
