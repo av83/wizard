@@ -439,6 +439,7 @@
      :actions
      '((:caption           "Ресурсы"
         :perm              :all
+        :grid              t
         :entity            resource
         :val               (cons-hash-list *RESOURCE*)
         :fields            '(name resource-type unit

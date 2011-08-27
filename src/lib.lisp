@@ -458,23 +458,26 @@ is replaced with replacement."
 ;;                                      (CONS-HASH-LIST *USER*)))))
 
 
+;; (declaim (ftype (function (integer &key (:on-error symbol))) f))
+
 
 (defun example-json (val fields)
   ;; (let* ((val (funcall val)))
-  (let ((val (lambda () (REMOVE-IF-NOT #'(LAMBDA (X) (EQUAL (TYPE-OF (CDR X)) 'EXPERT))
-                                       (CONS-HASH-LIST *USER*)))))
-    (json-assembly 1 2 9
-                   (loop :for item :in (funcall val) :collect
-                      (let ((id  (car item))
-                            (obj (cdr item)))
-                        `(,id
-                          ,(a-name obj)
-                          ,(a-login obj)))))))
+  (json-assembly 1 2 9
+                 (loop :for item :in (funcall val) :collect
+                    (let ((obj (cdr item)))
+                      (append (list (car item))
+                              (loop
+                                 :for item
+                                 :in  (loop
+                                         :for item
+                                         :in  (remove-if #'null (loop
+                                                                   :for item
+                                                                   :in fields
+                                                                   :collect (getf item :fld)))
+                                         :collect (intern (format nil "A-~A" item) (find-package "WIZARD")))
+                                 :collect (funcall item obj)))))))
 
-                   ;; (loop :for i from 1 :to 9 :collect
-                   ;;    `(,(car
-                   ;;      ,(format nil "Client ~A" i)
-                   ;;      ,(random 50)))))
 
 (restas:define-route rowed ("/rowed")
   (example-json))

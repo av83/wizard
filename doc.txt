@@ -26,4 +26,13 @@ sbcl --lose-on-corruption --disable-ldb --dynamic-space-size 1024
 slot-value-using-class и (setf slot-value-using-class)
 
 
-
+[21:09] rigidus> dmitry_vk: а что означает эта декларация? (declaim (ftype (function (integer &key (:on-error symbol))) f))
+[21:09] dmitry_vk> Что f - это функция, которая принимает одно целое и
+имеет ключевой параметр :on-error типа symbol
+[21:10] dmitry_vk> LinkFly: хм, нет. :on-error - это имя параметра
+(имя - это keyword), а symbol - его тип
+[21:11] rigidus> а тип возвращаемого значения этой функции указать
+можно?
+[21:11] LinkFly> тогда норм:)
+[21:11] dmitry_vk> Да, можно, после списка аргументов:
+(ftype (function (arg-1-type .. arg-n-type) result-type))
