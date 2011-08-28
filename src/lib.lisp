@@ -337,39 +337,14 @@ is replaced with replacement."
        while pos)))
 
 
-(defun grid-helper (grd pgr jsn)
+(defun grid-helper (grid-id pager-id json-code)
   (format nil "<table id=\"~A\"></table><div id=\"~A\"></div>
                <script type=\"text/javascript\">
                jQuery('#~A').jqGrid(~A);
                jQuery('#~A').jqGrid('navGrid','#~A',{edit:false,add:false,del:false});
                </script>"
-          grd pgr grd jsn grd pgr))
+          grid-id pager-id grid-id json-code grid-id pager-id))
 
-;; (defun xxx ()
-;;   (print
-;;    (grid-helper (gensym "J") (gensym "J")
-;;               (json:encode-json-to-string
-;;                '(("url"      . "/rowed")
-;;                  ("datatype" . "json")
-;;                  ("colNames" . ("Actions" "Inv No" "Date"  "Client" "Amount" "Tax" "Total" "Notes"))
-;;                  ("colModel" . ((("name" . "act")      ("index" . "act")       ("width" . "100")  ("sortable" . nil)  ("editable" . nil))
-;;                                 (("name" . "id")       ("index" . "id")        ("width" . "55")   ("sortable" . nil)  ("editable" . t))
-;;                                 (("name" . "invdate")  ("index" . "invdate")   ("width" . "100")  ("sortable" . nil)  ("editable" . t))
-;;                                 (("name" . "name")     ("index" . "name")      ("width" . "100")  ("sortable" . nil)  ("editable" . t))
-;;                                 (("name" . "amount")   ("index" . "amount")    ("width" . "100")  ("sortable" . nil)  ("editable" . t) ("align" . "right"))
-;;                                 (("name" . "tax")      ("index" . "tax")       ("width" . "100")  ("sortable" . nil)  ("editable" . t) ("align" . "right"))
-;;                                 (("name" . "total")    ("index" . "total")     ("width" . "100")  ("sortable" . nil)  ("editable" . t) ("align" . "right"))
-;;                                 (("name" . "note")     ("index" . "note")      ("width" . "100")  ("sortable" . nil)  ("editable" . t))))
-;;                  ("rowNum"   . 10)
-;;                  ("rowList"  . (10 20 30))
-;;                  ("pager"    . "#prowed2")
-;;                  ("sortname" . "id")
-;;                  ("viewrecords" . t)
-;;                  ("sortorder" . "desc")
-;;                  ("gridComplete" . "-=|=-")
-;;                  ("editurl"  . "/rowed")
-;;                  ("caption" . "Testttttt3333")))
-;;               )))
 
 
 (defun jqgen ()
@@ -449,6 +424,7 @@ is replaced with replacement."
      ("rows"    . ,(loop :for row :in rows :collect
                       `(("id"   . ,(car row))
                         ("cell" . ,(cdr row))))))))
+
 
 (defun pager (val fields page rows-per-page)
   "[debugged 29.08.2011]"
