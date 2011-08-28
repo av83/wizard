@@ -279,18 +279,14 @@
                      ("datatype"    . "json")
                      ("colNames"    . ,col-names)
                      ("colModel"    . ,col-model)
-                     ("rowNum"      . 10)
-                     ("rowList"     . (10 20 30))
+                     ("rowNum"      . 3)
+                     ("rowList"     . (2 3 5))
                      ("pager"       . ,(format nil "#~A" pgr))
                      ("sortname"    . "id")
                      ("viewrecords" . t)
                      ("sortorder"   . "desc")
                      ("editurl"     . "/rowed")
                      ("caption"     . "show grid"))))))
-
-
-(pprint (macroexpand-1 '(show-grid val (getf act :fields) "/rowed")))
-
 
 
 (defun show-acts (acts)
@@ -487,7 +483,7 @@ is replaced with replacement."
 
 (defun example-json (val fields)
   (let* ((page            (- (parse-integer (hunchentoot:get-parameter "page")) 1))
-         (rows-per-page   4));(parse-integer (hunchentoot:get-parameter "rows"))))
+         (rows-per-page   (parse-integer (hunchentoot:get-parameter "rows"))))
     (multiple-value-bind (slice cnt-rows)
         (pager val fields page rows-per-page)
       (json-assembly  (+ page 1)  (ceiling cnt-rows rows-per-page)  (length slice) slice))))
