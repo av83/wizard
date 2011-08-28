@@ -537,6 +537,7 @@
      :navpoint             "Эксперты"
      :actions
      '((:caption           "Эксперты"
+        :grid              t
         :perm              :all
         :entity            expert
         :grid              t
@@ -560,6 +561,7 @@
      :navpoint             "Поставщики"
      :actions
      '((:caption           "Организации-поставщики"
+        :grid              t
         :perm              :all
         :entity            supplier
         :val               (remove-if-not #'(lambda (x) (equal (type-of (cdr x)) 'SUPPLIER))  (cons-hash-list *USER*))
@@ -673,6 +675,7 @@
      :navpoint             "Распродажи"
      :actions
      '((:caption           "Распродажи"
+        :grid              t
         :perm              :all
         :entity            sale
         :val               (cons-hash-list *SALE*)
@@ -729,6 +732,7 @@
      :navpoint             "Застройщики"
      :actions
      '((:caption           "Организации-застройщики"
+        :grid              t
         :perm              :all
         :entity            builder
         :val               (remove-if-not #'(lambda (x) (equal (type-of (cdr x)) 'BUILDER)) (cons-hash-list *USER*))
@@ -783,6 +787,7 @@
      :navpoint             "Тендеры"
      :actions
      '((:caption           "Тендеры"
+        :grid              t
         :perm              :all
         :entity            tender
         :val               (cons-hash-list *TENDER*)
@@ -943,6 +948,7 @@
      :navpoint             "Заявки на участие в тендере"
      :actions
      '((:caption           "Заявки на участие в тендере"
+        :grid              t
         :perm              :all
         :entity            offer
         :val               (cons-hash-list *OFFER*)

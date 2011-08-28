@@ -36,3 +36,4 @@ slot-value-using-class и (setf slot-value-using-class)
 [21:11] LinkFly> тогда норм:)
 [21:11] dmitry_vk> Да, можно, после списка аргументов:
 (ftype (function (arg-1-type .. arg-n-type) result-type))
+[21:12] LinkFly> можно даже нескольких через (values result-type ...)

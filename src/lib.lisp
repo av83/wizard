@@ -444,46 +444,54 @@ is replaced with replacement."
 
 
 
-(defun json-assembly (page total records rows)
+(defun json-assembly (cur-page total-page rows-per-page rows)
   "rows: `(id fld1 fld2 fld3...)"
   (json:encode-json-to-string
-   `(("page"    . ,page)
-     ("total"   . ,total)
-     ("records" . ,records)
+   `(("page"    . ,cur-page)
+     ("total"   . ,total-page)
+     ("records" . ,rows-per-page)
      ("rows"    . ,(loop :for row :in rows :collect
                       `(("id"   . ,(car row))
                         ("cell" . ,(cdr row))))))))
 
-;; (let ((val (lambda () (REMOVE-IF-NOT #'(LAMBDA (X) (EQUAL (TYPE-OF (CDR X)) 'EXPERT))
-;;                                      (CONS-HASH-LIST *USER*)))))
-
-
-;; (declaim (ftype (function (integer &key (:on-error symbol))) f))
+(defun pager (val fields page rows-per-page)
+  "[debugged 29.08.2011]"
+  (let* ((rows            (funcall val))
+         (cnt-rows        (length rows))
+         (slice-cons)
+         (fld-accessors))
+    ;; slice-cons
+    (loop :for num :from (* page rows-per-page) :below (* (+ 1 page) rows-per-page) :do
+       (let ((row (nth num rows)))
+         (unless (null row)
+           (push (nth num rows) slice-cons))))
+    ;; fld-accessors
+    (loop :for fld :in fields :collect
+       (let ((name (getf fld :fld)))
+         (unless (null name)
+           (when (equal '(:str) (getf fld :typedata)) ;; todo: perm check
+             (push (intern (format nil "A-~A" name) (find-package "WIZARD")) fld-accessors)))))
+    (values
+     ;; result: get values from obj
+     (loop :for cons :in (reverse slice-cons) :collect
+        (let* ((id  (car cons))
+               (obj (cdr cons))
+               (res (loop :for accessor :in (reverse fld-accessors) :collect
+                       (if (null accessor)
+                           "---"
+                           (funcall accessor obj)))))
+          (push id res)))
+     ;; cnt-rows - two result
+     cnt-rows)))
 
 
 (defun example-json (val fields)
-  ;; (let* ((val (funcall val)))
-  (json-assembly 1 2 9
-                 (loop :for item :in (funcall val) :collect
-                    (let ((obj (cdr item)))
-                      (append (list (car item))
-                              (loop
-                                 :for item
-                                 :in  (loop
-                                         :for item
-                                         :in  (remove-if #'null (loop
-                                                                   :for item
-                                                                   :in fields
-                                                                   :collect (getf item :fld)))
-                                         :collect (intern (format nil "A-~A" item) (find-package "WIZARD")))
-                                 :collect (funcall item obj)))))))
+  (let* ((page            (- (parse-integer (hunchentoot:get-parameter "page")) 1))
+         (rows-per-page   4));(parse-integer (hunchentoot:get-parameter "rows"))))
+    (multiple-value-bind (slice cnt-rows)
+        (pager val fields page rows-per-page)
+      (json-assembly  (+ page 1)  (ceiling cnt-rows rows-per-page)  (length slice) slice))))
 
-
-(restas:define-route rowed ("/rowed")
-  (example-json))
-
-(restas:define-route rowed/post ("/rowed" :method :post)
-  (example-json))
 
 ;; (defun jq-script (id pager)
 ;;   (format nil "  <script type=\"text/javascript\">
