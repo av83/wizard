@@ -254,8 +254,8 @@
 
 
 (defmacro show-grid (cons-val-list fields url)
-  `(let ((grd (gensym "J"))
-         (pgr (gensym "P"))
+  `(let ((grid-id (gensym "J"))
+         (pager-id (gensym "P"))
          (col-names)
          (col-model))
      (with-in-fld-case ,fields
@@ -273,20 +273,28 @@
        :calc    "")
      (setf col-names (reverse col-names))
      (setf col-model (reverse col-model))
-     (grid-helper grd pgr
-                  (json:encode-json-to-string
-                   `(("url"         . ,,url)
-                     ("datatype"    . "json")
-                     ("colNames"    . ,col-names)
-                     ("colModel"    . ,col-model)
-                     ("rowNum"      . 3)
-                     ("rowList"     . (2 3 5))
-                     ("pager"       . ,(format nil "#~A" pgr))
-                     ("sortname"    . "id")
-                     ("viewrecords" . t)
-                     ("sortorder"   . "desc")
-                     ("editurl"     . "/rowed")
-                     ("caption"     . "show grid"))))))
+     (grid-helper grid-id pager-id
+                  (replace-all
+                   (json:encode-json-to-string
+                    `(("url"         . ,,url)
+                      ("datatype"    . "json")
+                      ("colNames"    . ,col-names)
+                      ("colModel"    . ,col-model)
+                      ("rowNum"      . 3)
+                      ("rowList"     . (2 3 5))
+                      ("pager"       . ,(format nil "#~A" pager-id))
+                      ("sortname"    . "id")
+                      ("viewrecords" . t)
+                      ("sortorder"   . "desc")
+                      ("editurl"     . "/edit_url")
+                      ("gridComplete" . "-=|=-")
+                      ("caption"     . "")))
+                   "\"-=|=-\""
+                   (replace-all
+                    (alexandria:read-file-into-string (path "src/static/rowedex5.js"))
+                    "@:id:@"
+                    (format nil "~A" grid-id))
+                   ))))
 
 
 (defun show-acts (acts)
@@ -312,7 +320,10 @@
                                           (equal 'SALE (type-of val)))     ;; SALE
                                       (tpl:frmobj (list :flds (show-linear (getf act :fields)))))
                                      ((equal 'cons (type-of val))          ;; COLLECTION
-                                      (show-grid val (getf act :fields) (getf act :grid)))
+                                      (concatenate 'string
+                                                   ""
+                                                   ;; (alexandria:read-file-into-string (path "src/static/rowedex4.htm"))
+                                                   (show-grid val (getf act :fields) (getf act :grid))))
                                      (t "<div style=\"padding-left: 2px\">Нет объектов</div>")))))))
     (tpl:root
      (list
@@ -320,6 +331,7 @@
       :popups popups
       :navpoints (menu)
       :content content))))
+
 
 (defun replace-all (string part replacement &key (test #'char=))
   "Returns a new string in which all the occurences of the part
@@ -381,6 +393,9 @@ is replaced with replacement."
           ))
 
 
+(restas:define-route server-php ("/server.php")
+  "{\"page\":\"1\",\"total\":2,\"records\":\"13\",\"rows\":[{\"id\":\"13\",\"cell\":[\"nnn\",\"13\",\"2007-10-06\",\"Client 3\",\"1000.00\",\"0.00\",\"1000.00\",null]},{\"id\":\"12\",\"cell\":[\"\",\"12\",\"2007-10-06\",\"Client 2\",\"700.00\",\"140.00\",\"840.00\",null]},{\"id\":\"11\",\"cell\":[\"\",\"11\",\"2007-10-06\",\"Client 1\",\"600.00\",\"120.00\",\"720.00\",null]},{\"id\":\"10\",\"cell\":[\"\",\"10\",\"2007-10-06\",\"Client 2\",\"100.00\",\"20.00\",\"120.00\",null]},{\"id\":\"9\",\"cell\":[\"\",\"9\",\"2007-10-06\",\"Client 1\",\"200.00\",\"40.00\",\"240.00\",null]},{\"id\":\"8\",\"cell\":[\"\",\"8\",\"2007-10-06\",\"Client 3\",\"200.00\",\"0.00\",\"200.00\",null]},{\"id\":\"7\",\"cell\":[\"\",\"7\",\"2007-10-05\",\"Client 2\",\"120.00\",\"12.00\",\"134.00\",null]},{\"id\":\"6\",\"cell\":[\"\",\"6\",\"2007-10-05\",\"Client 1\",\"50.00\",\"10.00\",\"60.00\",\"\"]},{\"id\":\"5\",\"cell\":[\"\",\"5\",\"2007-10-05\",\"Client 3\",\"100.00\",\"0.00\",\"100.00\",\"no tax at all\"]},{\"id\":\"4\",\"cell\":[\"\",\"4\",\"2007-10-04\",\"Client 3\",\"150.00\",\"0.00\",\"150.00\",\"no tax\"]}]}")
+
 (restas:define-route jqgen ("/jqgen")
   ;; (alexandria:read-file-into-string (path "src/static/rowedex2.js")))
   (format nil "jQuery('#~A').jqGrid(~A)~%~A"
@@ -408,11 +423,8 @@ is replaced with replacement."
               ("editurl"  . "/rowed")
               ("caption" . "Testttttt")))
            "\"-=|=-\","
-           (alexandria:read-file-into-string (path "src/static/rowedex3.js")))
           "jQuery('#rowed2').jqGrid('navGrid','#prowed2',{edit:false,add:false,del:false});"
           ))
-
-
 
 
 (defun json-assembly (cur-page total-page rows-per-page rows)
@@ -463,61 +475,3 @@ is replaced with replacement."
     (multiple-value-bind (slice cnt-rows)
         (pager val fields page rows-per-page)
       (json-assembly  (+ page 1)  (ceiling cnt-rows rows-per-page)  (length slice) slice))))
-
-
-;; (defun jq-script (id pager)
-;;   (format nil "  <script type=\"text/javascript\">
-;; jQuery("#rowed2").jqGrid({
-;;     url:'/rowed',
-;;     datatype: "json",
-;;     colNames:['Actions','Inv No','Date', 'Client', 'Amount','Tax','Total','Notes'],
-;;     colModel:[
-;;         {name:'act',index:'act', width:100,sortable:false},
-;;         {name:'id',index:'id', width:55},
-;;         {name:'invdate',index:'invdate', width:90, editable:true},
-;;         {name:'name',index:'name', width:100,editable:true},
-;;         {name:'amount',index:'amount', width:80, align:"right",editable:true},
-;;         {name:'tax',index:'tax', width:80, align:"right",editable:true},
-;;         {name:'total',index:'total', width:80,align:"right",editable:true},
-;;         {name:'note',index:'note', width:150, sortable:false,editable:true}
-;;     ],
-;;     rowNum:10,
-;;     rowList:[10,20,30],
-;;     pager: '#prowed2',
-;;     sortname: 'id',
-;;     viewrecords: true,
-;;     sortorder: "desc",
-;;     gridComplete: function(){
-;;         var ids = jQuery("#rowed2").jqGrid('getDataIDs');
-;;         for(var i=0;i<ids.length;i++){
-;;             var cl = ids[i];
-;;             be = "<input style='height:22px;width:20px;' type='button' value='E' onclick=\"jQuery('#rowed2').jqGrid('editRow','"+cl+"');\"  />";
-;;             se = "<input style='height:22px;width:20px;' type='button' value='S' onclick=\"jQuery('#rowed2').jqGrid('saveRow','"+cl+"');\"  />";
-;;             ce = "<input style='height:22px;width:20px;' type='button' value='C' onclick=\"jQuery('#rowed2').jqGrid('restoreRow','"+cl+"');\" />";
-;;             my = "<input style='height:22px;width:30px;' type='button' value='my' onclick=\"location.href='http://ya.ru';\" />";
-;;             jQuery("#rowed2").jqGrid('setRowData',ids[i],{act:be+se+ce+my});
-;;             }
-;;             },
-;;             editurl: "/rowed",
-;;             caption:"Custom edit "
-;;             });
-;;   jQuery("#rowed2").jqGrid('navGrid',"#prowed2",{edit:false,add:false,del:false});
-
-;;   </script>
-;;   <table id=\"~A\">
-;;     <tr>
-;;       <td></td>
-;;     </tr>
-;;   </table>
-;;   <div id=\"~A\"></div>
-
-
-;; jQuery("#rowed2").jqGrid({
-;;     url:'/rowed',
-;;     datatype: "json",
-
-
-
-;; " id pager id pager))
-
-;; (print (jq-script "test" "pager"))
