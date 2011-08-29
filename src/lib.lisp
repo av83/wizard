@@ -281,14 +281,27 @@
        :calc    "")
      (setf col-names (reverse col-names))
      (setf col-model (reverse col-model))
-     (let ((grid-complete-js (format nil " function(){
-   var ids = jQuery(\"#~A\").jqGrid('getDataIDs');
-   for(var i=0;i < ids.length;i++){
-     var cl = ids[i];
-     be = \"<input style='height:22px;width:20px;' type='button' value='RR' />\";
-     jQuery(\"#~A\").jqGrid('setRowData',ids[i],{btns:be});
-     }
-     }" grid-id grid-id)))
+     (let* ((buttons
+             `(("be" . ,(format nil "\"<input type='button' value='E' onclick=\\\" jQuery('#~A').editRow('\"+cl+\"'); \\\" />\";" grid-id))
+               ("se" . ,(format nil "\"<input type='button' value='S' onclick=\\\" jQuery('#~A').saveRow('\"+cl+\"'); \\\" />\";" grid-id))
+               ("ce" . ,(format nil "\"<input type='button' value='C' onclick=\\\" jQuery('#~A').restoreRow('\"+cl+\"'); \\\" />\";" grid-id))))
+            (grid-complete-js
+             (format nil
+                     " function(){
+                        var ids = jQuery(\"#~A\").jqGrid('getDataIDs');
+                        for(var i=0;i < ids.length;i++){
+                          var cl = ids[i];
+                          ~A
+                          jQuery(\"#~A\").jqGrid('setRowData',ids[i],{~A});
+                        }
+                      }"
+                     grid-id
+                     (format nil "~{~A~}"
+                             (loop :for button :in buttons :collect (format nil "~A = ~A" (car button) (cdr button))))
+                     ;; "be = \"<input style='height:22px;width:20px;' type='button' value='RR' />\";"
+                     grid-id
+                     (format nil "btns:~{~A ~^+ ~}" (loop :for button :in buttons :collect (car button)))
+                     )))
        (grid-helper grid-id pager-id
                     (replace-all
                      (json:encode-json-to-string
