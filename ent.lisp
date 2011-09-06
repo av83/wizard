@@ -544,6 +544,8 @@
         :val               (remove-if-not #'(lambda (x) (equal (type-of (cdr x)) 'EXPERT)) (cons-hash-list *USER*))
         :fields            '(name login
                              (:btn "Страница эксперта"
+                              :act (to "/expert/~A" (caar (form-data))))
+                             (:btn "Доп кнопка"
                               :act (to "/expert/~A" (caar (form-data))))))))
     ;; Страница эксперта
     (:place                expert

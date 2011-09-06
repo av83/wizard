@@ -37,3 +37,34 @@ slot-value-using-class и (setf slot-value-using-class)
 [21:11] dmitry_vk> Да, можно, после списка аргументов:
 (ftype (function (arg-1-type .. arg-n-type) result-type))
 [21:12] LinkFly> можно даже нескольких через (values result-type ...)
+
+
+Кто бы там что ни говорил, а программирование под Unix не может не
+радовать своей простотой. Когда я писал программы под Windows
+взаимодействие с ОСью было куда менее простым и прозрачным. А если
+сюда ещё добавить мощь языка Common Lisp, а также хорошую лисп-систему
+(например SBCL), то разработка поднимается на принципиально другой
+уровень по сравнению с традиционным программированием на Си. Ниже
+представлена ф-ия безопасной записи в файл. Безопасной в том смысле,
+что если несколько процессов используют её для записи в один и тот же
+файл, то возможность коллизии (т.е. порчи записываемых одновременно
+данных) абсолютно исключена.
+
+(defparameter *safe-write-sleep* 0.01)
+(defun safe-write (pathname string &aux stream)
+  (setf stream (open pathname :direction :output :if-does-not-exist :create :if-exists :append))
+  (unwind-protect
+       (loop
+          until (block try-lock
+                  (handler-bind ((error (lambda (condition)
+                                          (if (= sb-posix:eagain
+                                                 (sb-posix:syscall-errno condition))
+                                              (return-from try-lock)
+                                              (error condition)))))
+                    (sb-posix:lockf stream sb-posix:f-tlock 0)
+                    (princ string stream)
+                    (close stream)))
+          do (sleep *safe-write-sleep*))
+    (close stream)))
+
+http://linkfly.livejournal.com/2891.html

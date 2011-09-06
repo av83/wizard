@@ -31,3 +31,8 @@ jQuery("#rowed2").jqGrid({
  editurl: "server.php",
  caption:"Custom edit " });
 jQuery("#rowed2").jqGrid('navGrid',"#prowed2",{edit:false,add:false,del:false});
+
+
+             ;; `(("be" . ,(format nil "\"<input type='button' value='E' onclick=\\\" jQuery('#~A').editRow('\"+cl+\"'); \\\" />\";" grid-id))
+             ;;   ("se" . ,(format nil "\"<input type='button' value='S' onclick=\\\" jQuery('#~A').saveRow('\"+cl+\"'); \\\" />\";" grid-id))
+             ;;   ("ce" . ,(format nil "\"<input type='button' value='C' onclick=\\\" jQuery('#~A').restoreRow('\"+cl+\"'); \\\" />\";" grid-id))))
