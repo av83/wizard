@@ -272,6 +272,7 @@
        :btn     (progn
                   (let* ((in-name  (getf infld :btn))
                          (in-capt  (getf infld :value))
+                         (btn-str  (format nil "\"<form method='post'><input type='submit' name='~A~~\"+cl+\"' value='~A' /></form>\"" in-name in-capt))
                          (model    `(("name"     . ,in-name)
                                      ("index"    . ,in-name)
                                      ("width"    . "200")
@@ -279,7 +280,7 @@
                                      ("editable" . nil))))
                     (push in-name col-names)
                     (push model col-model)
-                    (push `(,in-name . ,(format nil "\"<input type='button' value='~A' />\"" in-capt)) col-replace)
+                    (push `(,in-name . ,btn-str) col-replace)
                     ))
        :popbtn  ""
        :calc    "")
@@ -288,6 +289,7 @@
                      " function(){
                         var ids = jQuery(\"#~A\").jqGrid('getDataIDs');
                         for(var i=0;i < ids.length;i++){
+                          var cl = ids[i];
                           ~{~A~%~}
                         }
                       }"
@@ -375,46 +377,6 @@ is replaced with replacement."
                jQuery('#~A').jqGrid('navGrid','#~A',{edit:false,add:false,del:false});
                </script>"
           grid-id pager-id grid-id json-code grid-id pager-id))
-
-
-
-(defun jqgen ()
-  (format nil "<table id=\"rowed2\"></table><div id=\"prowed2\"></div><br />
-               <script type=\"text/javascript\">
-               jQuery('#~A').jqGrid(~A)~%~A
-               </script>"
-          "rowed2"
-          (replace-all
-           (json:encode-json-to-string
-            '(("url"      . "/rowed")
-              ("datatype" . "json")
-              ("colNames" . ("Actions" "Inv No" "Date"  "Client" "Amount" "Tax" "Total" "Notes"))
-              ("colModel" . ((("name" . "act")      ("index" . "act")       ("width" . "100")  ("sortable" . nil)  ("editable" . nil))
-                             (("name" . "id")       ("index" . "id")        ("width" . "55")   ("sortable" . nil)  ("editable" . t))
-                             (("name" . "invdate")  ("index" . "invdate")   ("width" . "100")  ("sortable" . nil)  ("editable" . t))
-                             (("name" . "name")     ("index" . "name")      ("width" . "100")  ("sortable" . nil)  ("editable" . t))
-                             (("name" . "amount")   ("index" . "amount")    ("width" . "100")  ("sortable" . nil)  ("editable" . t) ("align" . "right"))
-                             (("name" . "tax")      ("index" . "tax")       ("width" . "100")  ("sortable" . nil)  ("editable" . t) ("align" . "right"))
-                             (("name" . "total")    ("index" . "total")     ("width" . "100")  ("sortable" . nil)  ("editable" . t) ("align" . "right"))
-                             (("name" . "note")     ("index" . "note")      ("width" . "100")  ("sortable" . nil)  ("editable" . t))))
-              ("rowNum"   . 10)
-              ("rowList"  . (10 20 30))
-              ("pager"    . "#prowed2")
-              ("sortname" . "id")
-              ("viewrecords" . t)
-              ("sortorder" . "desc")
-              ("gridComplete" . "-=|=-")
-              ("editurl"  . "/rowed")
-              ("caption" . "Testttttt")))
-           "\"-=|=-\","
-           (alexandria:read-file-into-string (path "src/static/rowedex3.js")))
-          "jQuery('#rowed2').jqGrid('navGrid','#prowed2',{edit:false,add:false,del:false});"
-          ))
-
-
-(restas:define-route server-php ("/server.php")
-  "{\"page\":\"1\",\"total\":2,\"records\":\"13\",\"rows\":[{\"id\":\"13\",\"cell\":[\"nnn\",\"13\",\"2007-10-06\",\"Client 3\",\"1000.00\",\"0.00\",\"1000.00\",null]},{\"id\":\"12\",\"cell\":[\"\",\"12\",\"2007-10-06\",\"Client 2\",\"700.00\",\"140.00\",\"840.00\",null]},{\"id\":\"11\",\"cell\":[\"\",\"11\",\"2007-10-06\",\"Client 1\",\"600.00\",\"120.00\",\"720.00\",null]},{\"id\":\"10\",\"cell\":[\"\",\"10\",\"2007-10-06\",\"Client 2\",\"100.00\",\"20.00\",\"120.00\",null]},{\"id\":\"9\",\"cell\":[\"\",\"9\",\"2007-10-06\",\"Client 1\",\"200.00\",\"40.00\",\"240.00\",null]},{\"id\":\"8\",\"cell\":[\"\",\"8\",\"2007-10-06\",\"Client 3\",\"200.00\",\"0.00\",\"200.00\",null]},{\"id\":\"7\",\"cell\":[\"\",\"7\",\"2007-10-05\",\"Client 2\",\"120.00\",\"12.00\",\"134.00\",null]},{\"id\":\"6\",\"cell\":[\"\",\"6\",\"2007-10-05\",\"Client 1\",\"50.00\",\"10.00\",\"60.00\",\"\"]},{\"id\":\"5\",\"cell\":[\"\",\"5\",\"2007-10-05\",\"Client 3\",\"100.00\",\"0.00\",\"100.00\",\"no tax at all\"]},{\"id\":\"4\",\"cell\":[\"\",\"4\",\"2007-10-04\",\"Client 3\",\"150.00\",\"0.00\",\"150.00\",\"no tax\"]}]}")
-
 
 
 (defun json-assembly (cur-page total-page rows-per-page rows)

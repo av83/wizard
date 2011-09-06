@@ -36,3 +36,38 @@ jQuery("#rowed2").jqGrid('navGrid',"#prowed2",{edit:false,add:false,del:false});
              ;; `(("be" . ,(format nil "\"<input type='button' value='E' onclick=\\\" jQuery('#~A').editRow('\"+cl+\"'); \\\" />\";" grid-id))
              ;;   ("se" . ,(format nil "\"<input type='button' value='S' onclick=\\\" jQuery('#~A').saveRow('\"+cl+\"'); \\\" />\";" grid-id))
              ;;   ("ce" . ,(format nil "\"<input type='button' value='C' onclick=\\\" jQuery('#~A').restoreRow('\"+cl+\"'); \\\" />\";" grid-id))))
+
+                   ,(format nil "\"<input type='button' value='~A' onclick=\\\" jQuery('#~A').editRow('\"+cl+\"'); \\\" />\";"
+
+(defun jqgen ()
+  (format nil "<table id=\"rowed2\"></table><div id=\"prowed2\"></div><br />
+               <script type=\"text/javascript\">
+               jQuery('#~A').jqGrid(~A)~%~A
+               </script>"
+          "rowed2"
+          (replace-all
+           (json:encode-json-to-string
+            '(("url"      . "/rowed")
+              ("datatype" . "json")
+              ("colNames" . ("Actions" "Inv No" "Date"  "Client" "Amount" "Tax" "Total" "Notes"))
+              ("colModel" . ((("name" . "act")      ("index" . "act")       ("width" . "100")  ("sortable" . nil)  ("editable" . nil))
+                             (("name" . "id")       ("index" . "id")        ("width" . "55")   ("sortable" . nil)  ("editable" . t))
+                             (("name" . "invdate")  ("index" . "invdate")   ("width" . "100")  ("sortable" . nil)  ("editable" . t))
+                             (("name" . "name")     ("index" . "name")      ("width" . "100")  ("sortable" . nil)  ("editable" . t))
+                             (("name" . "amount")   ("index" . "amount")    ("width" . "100")  ("sortable" . nil)  ("editable" . t) ("align" . "right"))
+                             (("name" . "tax")      ("index" . "tax")       ("width" . "100")  ("sortable" . nil)  ("editable" . t) ("align" . "right"))
+                             (("name" . "total")    ("index" . "total")     ("width" . "100")  ("sortable" . nil)  ("editable" . t) ("align" . "right"))
+                             (("name" . "note")     ("index" . "note")      ("width" . "100")  ("sortable" . nil)  ("editable" . t))))
+              ("rowNum"   . 10)
+              ("rowList"  . (10 20 30))
+              ("pager"    . "#prowed2")
+              ("sortname" . "id")
+              ("viewrecords" . t)
+              ("sortorder" . "desc")
+              ("gridComplete" . "-=|=-")
+              ("editurl"  . "/rowed")
+              ("caption" . "Testttttt")))
+           "\"-=|=-\","
+           (alexandria:read-file-into-string (path "src/static/rowedex3.js")))
+          "jQuery('#rowed2').jqGrid('navGrid','#prowed2',{edit:false,add:false,del:false});"
+          ))
