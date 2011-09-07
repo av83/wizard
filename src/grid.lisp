@@ -1,6 +1,82 @@
 (in-package #:WIZARD)
 
 
+(defmacro show-linear (fields)
+  `(with-in-fld-case ,fields
+     :fld    (with-infld-typedata-cond (format nil "<br />err:unk2 typedata: ~A | ~A" namefld typedata)
+               ((:str)      (show-fld captfld #'tpl:strupd  namefld (a-fld namefld val)))
+               ((:pswd)     (show-fld captfld #'tpl:pswdupd namefld (a-fld namefld val)))
+               ((:num)      (show-fld captfld #'tpl:strupd  namefld (a-fld namefld val)))
+               ((:interval) (show-fld captfld #'tpl:strupd namefld (a-fld namefld val)))
+               ((:date)     (show-fld captfld #'tpl:strupd namefld (a-fld namefld val)))
+               ((:list-of-keys supplier-status)
+                (tpl:fld
+                 (list :fldname captfld
+                       :fldcontent (tpl:strview (list :value (getf *supplier-status* (a-fld namefld val)))))))
+               ((:list-of-keys resource-types)
+                (tpl:fld
+                 (list :fldname captfld
+                       :fldcontent (tpl:strview (list :value (getf *resource-types* (a-fld namefld val)))))))
+               ((:list-of-keys tender-status)
+                (tpl:fld
+                 (list :fldname captfld
+                       :fldcontent (tpl:strview (list :value (getf *tender-status* (a-fld namefld val)))))))
+               ((:link builder)
+                (tpl:fld
+                 (list :fldname captfld
+                       :fldcontent (tpl:strview (list :value (a-name (a-fld namefld val)))))))
+               ((:link category)
+                (tpl:fld
+                 (list :fldname captfld
+                       :fldcontent (tpl:strview (list :value (a-name (a-fld namefld val)))))))
+               ((:link supplier)
+                (tpl:fld
+                 (list :fldname captfld
+                       :fldcontent (tpl:strview (list :value (let ((it (a-fld namefld val)))
+                                                               (if (null it)
+                                                                   ""
+                                                                   (a-name it))))))))
+               ((:link tender)
+                (tpl:fld
+                 (list :fldname captfld
+                       :fldcontent (tpl:strview (list :value (a-name (a-fld namefld val)))))))
+               ((:list-of-str)
+                (tpl:fld
+                 (list :fldname captfld
+                       :fldcontent (tpl:textupd (list :name namefld
+                                                      :value (a-fld namefld val)))))))
+     :btn    (tpl:btnlin (list :name (getf infld :btn) :value (getf infld :value)))
+     :popbtn (with-let-infld
+                 (let* ((popid (getf infld :popbtn))
+                        (popup (with-in-fld-case (getf infld :fields)
+                                 :fld    (with-infld-typedata-cond (format nil "err:unk5 typedata: ~A" typedata)
+                                           ((:str)   (show-fld captfld #'tpl:strupd namefld))
+                                           ((:num)   (show-fld captfld #'tpl:strupd namefld))
+                                           ((:link resource))
+                                           (tpl:selres
+                                            (list :name "res"
+                                                  :options
+                                                  (mapcar #'(lambda (x)
+                                                              (list :id (car x)
+                                                                    :name (a-name (cdr x))))
+                                                          (cons-hash-list *RESOURCE*)))))
+                                 :btn    (tpl:btn (list :name (format nil "~A" (getf infld :btn))
+                                                        :value (format nil "~A" (getf infld :value))))
+                                 :col    (tpl:col (list :title (getf infld :col)
+                                                        :content (tpl:frmtbl
+                                                                  (list :objs (show-collection (funcall (getf infld :val))
+                                                                                               (getf infld :fields))))))
+                                 )))
+                   (push (list :id popid  :title (getf infld :title)  :left 200  :width 730
+                               :content (tpl:frmobj (list :flds popup)))
+                         popups)
+                   (tpl:popbtn (list :value (getf infld :value) :popid popid))))
+     :col    (tpl:col (list :title (getf infld :col)
+                            :content (tpl:frmtbl
+                                      (list :objs (show-collection (funcall (getf infld :val))
+                                                                   (getf infld :fields))))))))
+
+
 (defmacro show-grid (cons-val-list fields url)
   `(let ((grid-id (gensym "J"))
          (pager-id (gensym "P"))
@@ -106,6 +182,39 @@
                   (tpl:popbtn (list :value (getf infld :value) :popid popid)))
         :calc   (tpl:strview (list :value (funcall (getf infld :calc) obj)))
         )))
+
+
+(defun show-acts (acts)
+  (let* ((personal  (let ((userid (hunchentoot:session-value 'userid)))
+                      (if (null userid)
+                          (tpl:loginform)
+                          (tpl:logoutform (list :user (a-login (gethash userid *USER*)))))))
+         (popups    (list
+                     (list :id "trest"      :title "Регистрация" :content "TODO"           :left 200 :width 500)
+                     (list :id "popupLogin" :title "Вход"        :content (tpl:popuplogin) :left 720 :width 196)))
+         (content   (loop :for act :in acts :when (check-perm (getf act :perm) (cur-user) (getf act :val)) :collect
+                       (list :title (getf act :title)
+                             :content
+                             (let ((val (funcall (getf act :val))))
+                               (cond ((or (equal :clear val)
+                                          (equal 'ADMIN (type-of val))     ;; ADMIN
+                                          (equal 'SUPPLIER (type-of val))  ;; SUPPLIER
+                                          (equal 'TENDER (type-of val))    ;; TENDER
+                                          (equal 'BUILDER (type-of val))   ;; BUILDER
+                                          (equal 'EXPERT (type-of val))    ;; EXPERT
+                                          (equal 'RESOURCE (type-of val))  ;; RESOURCE
+                                          (equal 'OFFER (type-of val))     ;; OFFER
+                                          (equal 'SALE (type-of val)))     ;; SALE
+                                      (tpl:frmobj (list :flds (show-linear (getf act :fields)))))
+                                     ((equal 'cons (type-of val))          ;; COLLECTION
+                                      (show-grid val (getf act :fields) (getf act :grid))) ;; <----
+                                     (t "<div style=\"padding-left: 2px\">Нет объектов</div>")))))))
+    (tpl:root
+     (list
+      :personal personal
+      :popups popups
+      :navpoints (menu)
+      :content content))))
 
 
 (defun grid-helper (grid-id pager-id json-code)

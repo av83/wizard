@@ -161,8 +161,10 @@
     (:entity               offer
      :container            offer
      :fields
-     ((owner               "Поставщик ресурсов"         (:link supplier)                 (:update :nobody))
-      (tender              "Тендер"                     (:link tender)                   (:update :nobody))
+     ((owner               "Поставщик ресурсов"         (:link supplier)
+                           '(:update :nobody))
+      (tender              "Тендер"                     (:link tender)
+                           '(:update :nobody))
       (resources           "Ресурсы заявки"             (:list-of-links offer-resource)))
      :perm
      (:create (and :active :supplier) ;; создается связанный объект offer-resource, содержащие ресурсы заявки
@@ -176,9 +178,12 @@
     (:entity               offer-resource
      :container            offer-resource
      :fields
-     ((owner               "Поставщик"                  (:link supplier)                 ((:update :nobody)))
-      (offer               "Заявка"                     (:link offer)                    ((:update :nobody)))
-      (resource            "Ресурс"                     (:link resource)                 ((:update :nobody)))
+     ((owner               "Поставщик"                  (:link supplier)
+                           '(:update :nobody))
+      (offer               "Заявка"                     (:link offer)
+                           '(:update :nobody))
+      (resource            "Ресурс"                     (:link resource)
+                           '(:update :nobody))
       (price               "Цена поставщика"            (:num)))
      :perm
      (:create :owner
@@ -191,8 +196,10 @@
     (:entity               sale
      :container            sale
      :fields
-     ((name                "Распродажа"                 (:str)                           ((:update :owner)))
-      (owner               "Поставщик"                  (:link supplier)                 ((:update :admin)))
+     ((name                "Распродажа"                 (:str)
+                           '(:update :owner))
+      (owner               "Поставщик"                  (:link supplier)
+                           '(:update :admin))
       (resource            "Ресурс"                     (:link supplier-resource-price))
       (procent             "Процент скидки"             (:num))
       (price               "Цена со скидкой"            (:num))
@@ -208,7 +215,8 @@
     (:entity               supplier-resource-price
      :container            supplier-resource-price
      :fields
-     ((owner               "Поставщик"                  (:link supplier)                 ((:update :nobody)))
+     ((owner               "Поставщик"                  (:link supplier)
+                           '(:update :nobody))
       (resource            "Ресурс"                     (:link resource))
       (price               "Цена поставщика"            (:num)))
      :perm
@@ -243,7 +251,7 @@
       (tenders             "Тендеры"                    (:list-of-links tender)
                            '(:view   :all))
       (rating              "Рейтинг"                    (:num)
-                           ((:update :system))))
+                           '(:update :system)))
      :perm
      (:create :admin
       :delete :admin
@@ -296,33 +304,33 @@
       (status              "Статус"                     (:list-of-keys tender-status)
                            '(:view   :all))
       (owner               "Заказчик"                   (:link builder)
-                           ((:update :admin)))
+                           '(:update :admin))
       ;; Дата, когда тендер стал активным (первые сутки новые тендеры видят только добростовестные поставщики)
       (active-date         "Дата активации"             (:date)
-                           ((:update :system)))
+                           '(:update :system))
       (all                 "Срок проведения"            (:interval)
-                           ((:view   :all)
-                            (:update (or :admin  (and :owner :unactive)))))
+                           '(:view   :all
+                             :update (or :admin  (and :owner :unactive))))
       (claim               "Срок подачи заявок"         (:interval)
-                           ((:update (or :admin  (and :owner :unactive)))))
+                           '(:update (or :admin  (and :owner :unactive))))
       (analize             "Срок рассмотрения заявок"   (:interval)
-                           ((:update (or :admin  (and :owner :unactive)))))
+                           '(:update (or :admin  (and :owner :unactive))))
       (interview           "Срок проведения интервью"   (:interval)
-                           ((:update (or :admin  (and :owner :unactive)))))
+                           '(:update (or :admin  (and :owner :unactive))))
       (result              "Срок подведения итогов"     (:interval)
-                           ((:update (or :admin (and :owner :unactive)))))
+                           '(:update (or :admin (and :owner :unactive))))
       (winner              "Победитель тендера"         (:link supplier)
-                           ((:view   :finished)))
+                           '(:view   :finished))
       (price               "Рекомендуемая стоимость"    (:num) ;; вычисляется автоматически на основании заявленных ресурсов
-                           ((:update :system)))
+                           '(:update :system))
       (resources           "Ресурсы"                    (:list-of-links resource)
-                           ((:update (and :owner :unactive))))
+                           '(:update (and :owner :unactive)))
       (documents           "Документы"                  (:list-of-links document) ;; закачка и удаление файлов
-                           ((:update (and :owner :unactive))))
+                           '(:update (and :owner :unactive)))
       (suppliers           "Поставщики"                 (:list-of-links supplier) ;; строится по ресурсам автоматически
-                           ((:update :system)))
+                           '(:update :system))
       (offers              "Заявки"                     (:list-of-links offer)
-                           ((:update-field :system))))
+                           '(:update :system)))
      :perm
      (:create :builder
       :delete :admin
@@ -597,7 +605,7 @@
                                      (hunchentoot:redirect (hunchentoot:request-uri*))))
                              ;; resources
                              (:col               "Список поставляемых ресурсов"
-                              :perm              111
+                              :perm              222
                               :entity            supplier-resource-price
                               :val               (cons-inner-objs *SUPPLIER-RESOURCE-PRICE* (a-resources (gethash (cur-id) *USER*)))
                               :fields            '(resource price
@@ -626,7 +634,7 @@
                                                                 (hunchentoot:redirect (hunchentoot:request-uri*)))))))
                               ;; offers
                              (:col               "Список заявок на тендеры"
-                              :perm              111
+                              :perm              222
                               :entity            offer
                               :val               (cons-inner-objs *OFFER* (a-offers (gethash (cur-id) *USER*)))
                               :fields            '(tender
@@ -642,7 +650,7 @@
                                                                                          (a-offers (gethash (cur-id) *USER*)))))))))
                              ;; sale
                              (:col               "Список распродаж"
-                              :perm              111
+                              :perm              222
                               :entity            sale
                               :val               (cons-inner-objs *SALE* (a-sales (gethash (cur-id) *USER*)))
                               :fields            '(name
@@ -658,7 +666,7 @@
                                                                                          (a-sales (gethash (cur-id) *USER*)))))))))
                              (:btn "Добавить распродажу"
                               :popup '(:caption            "Добавление расподажи"
-                                       :perm               111
+                                       :perm               222
                                        :entity             sale
                                        :fields             '((:btn "Добавить распродажу"
                                                               :act (create-sale)))))))
@@ -754,7 +762,7 @@
                                        NAME JURIDICAL-ADDRESS INN KPP OGRN BANK-NAME BIK CORRESP-ACCOUNT CLIENT-ACCOUNT RATING)))
                              ;; tenders
                              (:col              "Тендеры застройщика"
-                              :perm             111
+                              :perm             222
                               :entity           tender
                               :val              (cons-inner-objs *TENDER* (a-tenders (gethash 11 *USER*)))
                               :fields           '(name (:btn "Страница тендера"
@@ -810,7 +818,7 @@
                                                         name active-date all claim analize interview result)))
                              ;; resources
                              (:col              "Ресурсы тендера"
-                              :perm             111
+                              :perm             222
                               :entity           tender
                               :val              (cons-inner-objs *RESOURCE* (a-resources (gethash (cur-id) *TENDER*)))
                               :fields '(name

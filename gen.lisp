@@ -6,12 +6,26 @@
 
 (defun gen-fld-symb (fld entity-param)
   (let* ((entity    (find-if #'(lambda (entity)     (equal (getf entity :entity) entity-param))    *entityes*))
-         (typedata  (caddr (find-if #'(lambda (x)   (equal (car x) fld))                           (getf entity :fields))))
-         (name      (cadr (find-if #'(lambda (x)    (equal (car x) fld))                           (getf entity :fields)))))
-    (format nil "~%~25T (list :fld \"~A\" :perm 111 :typedata '~A :name \"~A\")"
+         (name      (cadr   (find-if #'(lambda (x)   (equal (car x) fld))                           (getf entity :fields))))
+         (typedata  (caddr  (find-if #'(lambda (x)   (equal (car x) fld))                           (getf entity :fields))))
+         (fld-perm  (cadddr (find-if #'(lambda (x)   (equal (car x) fld))                           (getf entity :fields))))
+         (obj-perm  (getf entity :perm)))
+    (format nil "~%~25T (list :fld \"~A\" :typedata '~A :name \"~A\" ~%~31T :permlist '~A)"
             fld
             (subseq (with-output-to-string (*standard-output*)  (pprint typedata)) 1)
-            name)))
+            name
+            (let ((res-perm))
+              (loop :for perm :in obj-perm :by #'cddr :do
+                 (if (null (getf fld-perm perm))
+                     (setf (getf res-perm perm) (getf obj-perm perm))
+                     (setf (getf res-perm perm) (getf fld-perm perm))))
+              (bprint res-perm))
+            ;;      (if (null (getf fld-perm perm))
+            ;;          (setf (getf res-perm perm) (getf obj-perm perm))
+            ;;          (setf (getf res-perm perm) (getf fld-perm perm)))
+            ;;      (bprint obj-perm)))
+            )))
+
 
 (defun gen-fld-cons (fld)
   (let ((instr (car fld)))
@@ -153,14 +167,14 @@
          (push (list :link (getf place :url) :title (getf place :navpoint)) menu))
        (let ((controllers)
              (ajaxdataset))
-         (format t "~%--------::place::[~A]" (getf place :place)) ;;
+         ;; (format t "~%--------::place::[~A]" (getf place :place)) ;;
          (format out "~%~%(restas:define-route ~A-page (\"~A\")"
                  (string-downcase (getf place :place))
                  (getf place :url))
          (format out "~%  (let ((session (hunchentoot:start-session))~%~7T (acts (list ~{~A~}))) ~A)"
                  (loop :for action :in (eval (getf place :actions)) :collect
                     (progn
-                      (format t "~%--------------------caption: ~A" (getf action :caption)) ;;
+                      ;; (format t "~%--------------------caption: ~A" (getf action :caption)) ;;
                       (multiple-value-bind (str ctrs ajax)
                         (gen-action action) ;; <-------------------
                       (loop :for ctr :in ctrs :do
