@@ -85,14 +85,15 @@
          (col-replace))
      (with-in-fld-case ,fields
        :fld     (progn
-                  (push (getf infld :name) col-names)
-                  (let* ((in-name  (getf infld :fld))
-                         (model    `(("name"     . ,in-name)
-                                     ("index"    . ,in-name)
-                                     ("width"    . "200")
-                                     ("sortable" . t)
-                                     ("editable" . t)))) ;; rulez
-                    (push model col-model)))
+                  (when (check-perm (getf (getf infld :permlist) :view) 1 2)
+                    (push (getf infld :name) col-names)
+                    (let* ((in-name  (getf infld :fld))
+                           (model    `(("name"     . ,in-name)
+                                       ("index"    . ,in-name)
+                                       ("width"    . "200")
+                                       ("sortable" . t)
+                                       ("editable" . t)))) ;; rulez
+                      (push model col-model))))
        :btn     (progn
                   (let* ((in-name  (getf infld :btn))
                          (in-capt  (getf infld :value))

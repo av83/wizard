@@ -44,7 +44,8 @@
 (defun check-perm (perm subj obj)
   "TODO: logging"
   (eval (perm-check perm subj obj))
-  t)
+  ;; t
+  )
 
 ;; (perm-check '(or :admin (and :all :nobody)) 1 2)
 ;; (check-perm '(or :admin (or :all :nobody)) 1 2)
