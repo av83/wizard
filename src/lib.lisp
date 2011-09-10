@@ -92,11 +92,6 @@
        when pos do (write-string replacement out)
        while pos)))
 
-
-(defmacro bprint (param)
-  `(subseq (with-output-to-string (*standard-output*)  (pprint ,param)) 1))
-
-
 (defun activate (acts)
   "activation form processing"
   (when (assoc "AUTH" (form-data) :test #'equal)

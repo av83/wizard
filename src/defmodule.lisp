@@ -183,13 +183,13 @@
                      :fields (list 
                           (list :fld "NAME" :typedata '(:STR) :name "Имя" 
                                 :permlist '(:UPDATE :SYSTEM :VIEW :ALL :DELETE :SYSTEM :CREATE :SYSTEM))
-                          (list :btn "B3587" :perm 111 :value "Показать ресурсы")))))) 
+                          (list :btn "B1014" :perm 111 :value "Показать ресурсы")))))) 
     (show-acts acts)))
 
 (restas:define-route catalog-page/post ("/catalog" :method :post)
   (let ((session (hunchentoot:start-session))
         (acts `(
-("B3587" . ,(lambda () (TO "/category/~A" (CAAR (FORM-DATA)))))))) 
+("B1014" . ,(lambda () (TO "/category/~A" (CAAR (FORM-DATA)))))))) 
        (activate acts)))
 
 (restas:define-route category-page ("/category/:id")
@@ -202,7 +202,7 @@
                      :fields (list 
                           (list :fld "NAME" :typedata '(:STR) :name "Имя" 
                                 :permlist '(:UPDATE :SYSTEM :VIEW :ALL :DELETE :SYSTEM :CREATE :SYSTEM))
-                          (list :btn "B3588" :perm 111 :value "Показать ресурсы")))
+                          (list :btn "B1015" :perm 111 :value "Показать ресурсы")))
                (list :perm ':ALL 
                      :grid NIL 
                      :title "Ресурсы категории"
@@ -216,21 +216,21 @@
                                 :permlist '(:UPDATE :SYSTEM :VIEW :ALL :DELETE :SYSTEM :CREATE :SYSTEM))
                           (list :fld "UNIT" :typedata '(:STR) :name "Единица измерения" 
                                 :permlist '(:UPDATE :SYSTEM :VIEW :ALL :DELETE :SYSTEM :CREATE :SYSTEM))
-                          (list :btn "B3589" :perm 111 :value "Страница ресурса")))))) 
+                          (list :btn "B1016" :perm 111 :value "Страница ресурса")))))) 
     (show-acts acts)))
 
 (restas:define-route category-page/post ("/category/:id" :method :post)
   (let ((session (hunchentoot:start-session))
         (acts `(
-("B3588" . ,(lambda () (TO "/category/~A" (CAAR (FORM-DATA)))))
-("B3589" . ,(lambda () (TO "/resource/~A" (CAAR (FORM-DATA)))))))) 
+("B1015" . ,(lambda () (TO "/category/~A" (CAAR (FORM-DATA)))))
+("B1016" . ,(lambda () (TO "/resource/~A" (CAAR (FORM-DATA)))))))) 
        (activate acts)))
 
 (restas:define-route resources-page ("/resource")
   (let ((session (hunchentoot:start-session))
         (acts (list 
                (list :perm ':ALL 
-                     :grid "jg3590" 
+                     :grid "jg1017" 
                      :title "Ресурсы"
                      :val (lambda () (CONS-HASH-LIST *RESOURCE*))
                      :fields (list 
@@ -240,14 +240,14 @@
                                 :permlist '(:UPDATE :SYSTEM :VIEW :ALL :DELETE :SYSTEM :CREATE :SYSTEM))
                           (list :fld "UNIT" :typedata '(:STR) :name "Единица измерения" 
                                 :permlist '(:UPDATE :SYSTEM :VIEW :ALL :DELETE :SYSTEM :CREATE :SYSTEM))
-                          (list :btn "B3591" :perm 111 :value "Страница категории")
-                          (list :btn "B3592" :perm 111 :value "Страница ресурса")))))) 
+                          (list :btn "B1018" :perm 111 :value "Страница категории")
+                          (list :btn "B1019" :perm 111 :value "Страница ресурса")))))) 
     (show-acts acts)))
 
 (restas:define-route resources-page/post ("/resource" :method :post)
   (let ((session (hunchentoot:start-session))
         (acts `(
-("B3591" . ,(lambda () (HUNCHENTOOT:REDIRECT
+("B1018" . ,(lambda () (HUNCHENTOOT:REDIRECT
  (FORMAT NIL "/category/~A"
          (LET ((ETALON
                 (A-CATEGORY
@@ -256,10 +256,10 @@
             (FIND-IF
              #'(LAMBDA (CATEGORY-CONS) (EQUAL (CDR CATEGORY-CONS) ETALON))
              (CONS-HASH-LIST *CATEGORY*))))))))
-("B3592" . ,(lambda () (TO "/resource/~A" (CAAR (FORM-DATA)))))))) 
+("B1019" . ,(lambda () (TO "/resource/~A" (CAAR (FORM-DATA)))))))) 
        (activate acts)))
 
-(restas:define-route resources-page/ajax ("/jg3590")
+(restas:define-route resources-page/ajax ("/jg1017")
   (example-json 
    (lambda () (CONS-HASH-LIST *RESOURCE*)) 
    (list 
@@ -269,8 +269,8 @@
                                 :permlist '(:UPDATE :SYSTEM :VIEW :ALL :DELETE :SYSTEM :CREATE :SYSTEM))
                           (list :fld "UNIT" :typedata '(:STR) :name "Единица измерения" 
                                 :permlist '(:UPDATE :SYSTEM :VIEW :ALL :DELETE :SYSTEM :CREATE :SYSTEM))
-                          (list :btn "B3591" :perm 111 :value "Страница категории")
-                          (list :btn "B3592" :perm 111 :value "Страница ресурса"))))
+                          (list :btn "B1018" :perm 111 :value "Страница категории")
+                          (list :btn "B1019" :perm 111 :value "Страница ресурса"))))
 
 (restas:define-route resource-page ("/resource/:id")
   (let ((session (hunchentoot:start-session))
@@ -307,7 +307,7 @@
                                 :permlist '(:UPDATE :SELF :VIEW :SELF))
                           (list :fld "PASSWORD" :typedata '(:PSWD) :name "Пароль" 
                                 :permlist '(:UPDATE :SELF :VIEW :SELF))
-                          (list :btn "B3593" :perm 111 :value "Изменить пароль")))
+                          (list :btn "B1020" :perm 111 :value "Изменить пароль")))
                (list :perm ':ADMIN 
                      :grid NIL 
                      :title "Создать аккаунт эксперта"
@@ -322,7 +322,7 @@
                           (list :fld "NAME" :typedata '(:STR) :name "ФИО" 
                                 :permlist '(:UPDATE (OR :ADMIN :SELF) :VIEW (OR :ADMIN :SELF) :DELETE :ADMIN :CREATE
  :ADMIN))
-                          (list :btn "B3594" :perm 111 :value "Создать новый аккаунт эксперта")))
+                          (list :btn "B1021" :perm 111 :value "Создать новый аккаунт эксперта")))
                (list :perm ':ADMIN 
                      :grid NIL 
                      :title "Эксперты"
@@ -335,13 +335,13 @@
                           (list :fld "LOGIN" :typedata '(:STR) :name "Логин" 
                                 :permlist '(:UPDATE (OR :ADMIN :SELF) :VIEW (OR :ADMIN :SELF) :DELETE :ADMIN :CREATE
  :ADMIN))
-                          (list :popbtn "P3595" 
+                          (list :popbtn "P1022" 
                                 :value "Удалить" 
                                 :perm 111 
                                 :title "Действительно удалить?" 
                                 :fields (list 
-                          (list :btn "B3596" :perm 111 :value "Подтверждаю удаление")))
-                          (list :popbtn "P3597" 
+                          (list :btn "B1023" :perm 111 :value "Подтверждаю удаление")))
+                          (list :popbtn "P1024" 
                                 :value "Сменить пароль" 
                                 :perm 111 
                                 :title "Смена пароля эксперта" 
@@ -349,8 +349,8 @@
                           (list :fld "PASSWORD" :typedata '(:PSWD) :name "Пароль" 
                                 :permlist '(:UPDATE (OR :ADMIN :SELF) :VIEW (OR :ADMIN :SELF) :DELETE :ADMIN :CREATE
  :ADMIN))
-                          (list :btn "B3598" :perm 111 :value "Изменить пароль эксперта")))
-                          (list :btn "B3599" :perm 111 :value "Страница эксперта")))
+                          (list :btn "B1025" :perm 111 :value "Изменить пароль эксперта")))
+                          (list :btn "B1026" :perm 111 :value "Страница эксперта")))
                (list :perm ':ADMIN 
                      :grid NIL 
                      :title "Заявки поставщиков на добросовестность"
@@ -366,36 +366,32 @@
                           (list :fld "LOGIN" :typedata '(:STR) :name "Логин" 
                                 :permlist '(:UPDATE (OR :ADMIN :SELF) :VIEW :ALL :DELETE :ADMIN :CREATE
  (OR :ADMIN :NOT-LOGGED)))
-                          (list :popbtn "P3600" 
+                          (list :popbtn "P1027" 
                                 :value "Подтвердить заявку" 
                                 :perm 111 
                                 :title "Подтвердить заявку поставщика" 
                                 :fields (list 
-                          (list :btn "B3601" :perm 111 :value "Сделать добросовестным")))))))) 
+                          (list :btn "B1028" :perm 111 :value "Сделать добросовестным")))))))) 
     (show-acts acts)))
 
 (restas:define-route admin-page/post ("/admin" :method :post)
   (let ((session (hunchentoot:start-session))
         (acts `(
-("B3593" . ,(lambda () (LET ((OBJ (CUR-USER)))
+("B1020" . ,(lambda () (LET ((OBJ (CUR-USER)))
   (WITH-OBJ-SAVE OBJ LOGIN PASSWORD))))
-("B3594" . ,(lambda () (PROGN
- (PUSH-HASH *USER*
-     'EXPERT
-   :LOGIN
-   (CDR (ASSOC "LOGIN" (FORM-DATA) :TEST #'EQUAL))
-   :PASSWORD
-   (CDR (ASSOC "PASSWORD" (FORM-DATA) :TEST #'EQUAL))
-   :NAME
-   (CDR (ASSOC "NAME" (FORM-DATA) :TEST #'EQUAL)))
+("B1021" . ,(lambda () (PROGN
+ (PUSH-HASH *USER* 'EXPERT :LOGIN
+  (CDR (ASSOC "LOGIN" (FORM-DATA) :TEST #'EQUAL)) :PASSWORD
+  (CDR (ASSOC "PASSWORD" (FORM-DATA) :TEST #'EQUAL)) :NAME
+  (CDR (ASSOC "NAME" (FORM-DATA) :TEST #'EQUAL)))
  (HUNCHENTOOT:REDIRECT (HUNCHENTOOT:REQUEST-URI*)))))
-("B3596" . ,(lambda () (LET ((KEY (GET-BTN-KEY (CAAR (FORM-DATA)))))
+("B1023" . ,(lambda () (LET ((KEY (GET-BTN-KEY (CAAR (FORM-DATA)))))
   (REMHASH KEY *USER*)
   (HUNCHENTOOT:REDIRECT (HUNCHENTOOT:REQUEST-URI*)))))
-("B3598" . ,(lambda () (LET ((OBJ (GETHASH (GET-BTN-KEY (CAAR (LAST (FORM-DATA)))) *USER*)))
+("B1025" . ,(lambda () (LET ((OBJ (GETHASH (GET-BTN-KEY (CAAR (LAST (FORM-DATA)))) *USER*)))
   (WITH-OBJ-SAVE OBJ PASSWORD))))
-("B3599" . ,(lambda () (TO "/expert/~A" (CAAR (FORM-DATA)))))
-("B3601" . ,(lambda () (LET ((KEY (GET-BTN-KEY (CAAR (FORM-DATA)))))
+("B1026" . ,(lambda () (TO "/expert/~A" (CAAR (FORM-DATA)))))
+("B1028" . ,(lambda () (LET ((KEY (GET-BTN-KEY (CAAR (FORM-DATA)))))
   (SETF (A-STATUS (GETHASH KEY *USER*)) :FAIR)
   (HUNCHENTOOT:REDIRECT (HUNCHENTOOT:REQUEST-URI*)))))))) 
        (activate acts)))
@@ -404,7 +400,7 @@
   (let ((session (hunchentoot:start-session))
         (acts (list 
                (list :perm ':ALL 
-                     :grid "jg3602" 
+                     :grid "jg1029" 
                      :title "Эксперты"
                      :val (lambda () (REMOVE-IF-NOT #'(LAMBDA (X) (EQUAL (TYPE-OF (CDR X)) 'EXPERT))
                (CONS-HASH-LIST *USER*)))
@@ -415,18 +411,18 @@
                           (list :fld "LOGIN" :typedata '(:STR) :name "Логин" 
                                 :permlist '(:UPDATE (OR :ADMIN :SELF) :VIEW (OR :ADMIN :SELF) :DELETE :ADMIN :CREATE
  :ADMIN))
-                          (list :btn "B3603" :perm 111 :value "Страница эксперта")
-                          (list :btn "B3604" :perm 111 :value "Доп кнопка")))))) 
+                          (list :btn "B1030" :perm 111 :value "Страница эксперта")
+                          (list :btn "B1031" :perm 111 :value "Доп кнопка")))))) 
     (show-acts acts)))
 
 (restas:define-route experts-page/post ("/expert" :method :post)
   (let ((session (hunchentoot:start-session))
         (acts `(
-("B3603" . ,(lambda () (TO "/expert/~A" (CAAR (FORM-DATA)))))
-("B3604" . ,(lambda () (TO "/expert/~A" (CAAR (FORM-DATA)))))))) 
+("B1030" . ,(lambda () (TO "/expert/~A" (CAAR (FORM-DATA)))))
+("B1031" . ,(lambda () (TO "/expert/~A" (CAAR (FORM-DATA)))))))) 
        (activate acts)))
 
-(restas:define-route experts-page/ajax ("/jg3602")
+(restas:define-route experts-page/ajax ("/jg1029")
   (example-json 
    (lambda () (REMOVE-IF-NOT #'(LAMBDA (X) (EQUAL (TYPE-OF (CDR X)) 'EXPERT))
                (CONS-HASH-LIST *USER*))) 
@@ -437,8 +433,8 @@
                           (list :fld "LOGIN" :typedata '(:STR) :name "Логин" 
                                 :permlist '(:UPDATE (OR :ADMIN :SELF) :VIEW (OR :ADMIN :SELF) :DELETE :ADMIN :CREATE
  :ADMIN))
-                          (list :btn "B3603" :perm 111 :value "Страница эксперта")
-                          (list :btn "B3604" :perm 111 :value "Доп кнопка"))))
+                          (list :btn "B1030" :perm 111 :value "Страница эксперта")
+                          (list :btn "B1031" :perm 111 :value "Доп кнопка"))))
 
 (restas:define-route expert-page ("/expert/:id")
   (let ((session (hunchentoot:start-session))
@@ -462,7 +458,7 @@
   (let ((session (hunchentoot:start-session))
         (acts (list 
                (list :perm ':ALL 
-                     :grid "jg3605" 
+                     :grid "jg1032" 
                      :title "Организации-поставщики"
                      :val (lambda () (REMOVE-IF-NOT #'(LAMBDA (X) (EQUAL (TYPE-OF (CDR X)) 'SUPPLIER))
                (CONS-HASH-LIST *USER*)))
@@ -473,16 +469,16 @@
                           (list :fld "LOGIN" :typedata '(:STR) :name "Логин" 
                                 :permlist '(:UPDATE (OR :ADMIN :SELF) :VIEW :ALL :DELETE :ADMIN :CREATE
  (OR :ADMIN :NOT-LOGGED)))
-                          (list :btn "B3606" :perm 111 :value "Страница поставщика")))))) 
+                          (list :btn "B1033" :perm 111 :value "Страница поставщика")))))) 
     (show-acts acts)))
 
 (restas:define-route suppliers-page/post ("/supplier" :method :post)
   (let ((session (hunchentoot:start-session))
         (acts `(
-("B3606" . ,(lambda () (TO "/supplier/~A" (CAAR (FORM-DATA)))))))) 
+("B1033" . ,(lambda () (TO "/supplier/~A" (CAAR (FORM-DATA)))))))) 
        (activate acts)))
 
-(restas:define-route suppliers-page/ajax ("/jg3605")
+(restas:define-route suppliers-page/ajax ("/jg1032")
   (example-json 
    (lambda () (REMOVE-IF-NOT #'(LAMBDA (X) (EQUAL (TYPE-OF (CDR X)) 'SUPPLIER))
                (CONS-HASH-LIST *USER*))) 
@@ -493,7 +489,7 @@
                           (list :fld "LOGIN" :typedata '(:STR) :name "Логин" 
                                 :permlist '(:UPDATE (OR :ADMIN :SELF) :VIEW :ALL :DELETE :ADMIN :CREATE
  (OR :ADMIN :NOT-LOGGED)))
-                          (list :btn "B3606" :perm 111 :value "Страница поставщика"))))
+                          (list :btn "B1033" :perm 111 :value "Страница поставщика"))))
 
 (restas:define-route supplier-page ("/supplier/:id")
   (let ((session (hunchentoot:start-session))
@@ -509,7 +505,7 @@
                           (list :fld "PASSWORD" :typedata '(:PSWD) :name "Пароль" 
                                 :permlist '(:UPDATE (OR :ADMIN :SELF) :VIEW :ALL :DELETE :ADMIN :CREATE
  (OR :ADMIN :NOT-LOGGED)))
-                          (list :btn "B3607" :perm 111 :value "Изменить пароль")))
+                          (list :btn "B1034" :perm 111 :value "Изменить пароль")))
                (list :perm 'NIL 
                      :grid NIL 
                      :title "Поставщик"
@@ -566,7 +562,7 @@
                           (list :fld "CONTACT-PERSON" :typedata '(:STR) :name "Контактное лицо" 
                                 :permlist '(:UPDATE (OR :ADMIN :SELF) :VIEW :ALL :DELETE :ADMIN :CREATE
  (OR :ADMIN :NOT-LOGGED)))
-                          (list :btn "B3608" :perm 111 :value "Сохранить")
+                          (list :btn "B1035" :perm 111 :value "Сохранить")
                           (list :col "Список поставляемых ресурсов" :perm 111 
                                 :val (lambda () (CONS-INNER-OBJS
                                                  *SUPPLIER-RESOURCE-PRICE*
@@ -577,18 +573,18 @@
                                 :permlist '(:UPDATE :OWNER :VIEW :ALL :DELETE :OWNER :CREATE :OWNER))
                           (list :fld "PRICE" :typedata '(:NUM) :name "Цена поставщика" 
                                 :permlist '(:UPDATE :OWNER :VIEW :ALL :DELETE :OWNER :CREATE :OWNER))
-                          (list :popbtn "P3609" 
+                          (list :popbtn "P1036" 
                                 :value "Удалить" 
                                 :perm 111 
                                 :title "Удаление ресурса" 
                                 :fields (list 
-                          (list :btn "B3610" :perm 111 :value "Удалить ресурс")))))
-                          (list :popbtn "P3611" 
+                          (list :btn "B1037" :perm 111 :value "Удалить ресурс")))))
+                          (list :popbtn "P1038" 
                                 :value "Добавить ресурс" 
                                 :perm 111 
                                 :title "Добавление ресурса" 
                                 :fields (list 
-                          (list :btn "B3612" :perm 111 :value "Добавить ресурс")))
+                          (list :btn "B1039" :perm 111 :value "Добавить ресурс")))
                           (list :col "Список заявок на тендеры" :perm 111 
                                 :val (lambda () (CONS-INNER-OBJS *OFFER*
                                                                  (A-OFFERS
@@ -599,13 +595,13 @@
                           (list :fld "TENDER" :typedata '(:LINK TENDER) :name "Тендер" 
                                 :permlist '(:UPDATE (AND :ACTIVE :OWNER) :VIEW :ALL :DELETE (AND :OWNER :ACTIVE) :CREATE
  (AND :ACTIVE :SUPPLIER)))
-                          (list :btn "B3613" :perm 111 :value "Страница заявки")
-                          (list :popbtn "P3614" 
+                          (list :btn "B1040" :perm 111 :value "Страница заявки")
+                          (list :popbtn "P1041" 
                                 :value "Удалить заявку" 
                                 :perm 111 
                                 :title "Удаление заявки" 
                                 :fields (list 
-                          (list :btn "B3615" :perm 111 :value "Удалить заявку")))))
+                          (list :btn "B1042" :perm 111 :value "Удалить заявку")))))
                           (list :col "Список распродаж" :perm 111 
                                 :val (lambda () (CONS-INNER-OBJS *SALE*
                                                                  (A-SALES
@@ -615,55 +611,51 @@
                                 :fields (list 
                           (list :fld "NAME" :typedata '(:STR) :name "Распродажа" 
                                 :permlist '(:UPDATE :OWNER :VIEW :ALL :DELETE :OWNER :CREATE :SUPPLIER))
-                          (list :btn "B3616" :perm 111 :value "Страница распродажи")
-                          (list :popbtn "P3617" 
+                          (list :btn "B1043" :perm 111 :value "Страница распродажи")
+                          (list :popbtn "P1044" 
                                 :value "Удалить распродажу" 
                                 :perm 111 
                                 :title "Удаление распродажи" 
                                 :fields (list 
-                          (list :btn "B3618" :perm 111 :value "Удалить распродажу")))))
-                          (list :popbtn "P3619" 
+                          (list :btn "B1045" :perm 111 :value "Удалить распродажу")))))
+                          (list :popbtn "P1046" 
                                 :value "Добавить распродажу" 
                                 :perm 111 
                                 :title "Добавление расподажи" 
                                 :fields (list 
-                          (list :btn "B3620" :perm 111 :value "Добавить распродажу")))))
+                          (list :btn "B1047" :perm 111 :value "Добавить распродажу")))))
                (list :perm '(AND :SELF :UNFAIR) 
                      :grid NIL 
                      :title "Отправить заявку на добросовестность"
                      :val (lambda () (GETHASH (CUR-ID) *USER*))
                      :fields (list 
-                          (list :btn "B3621" :perm 111 :value "Отправить заявку на добросовестность")))))) 
+                          (list :btn "B1048" :perm 111 :value "Отправить заявку на добросовестность")))))) 
     (show-acts acts)))
 
 (restas:define-route supplier-page/post ("/supplier/:id" :method :post)
   (let ((session (hunchentoot:start-session))
         (acts `(
-("B3607" . ,(lambda () (LET ((OBJ (CUR-USER)))
+("B1034" . ,(lambda () (LET ((OBJ (CUR-USER)))
   (WITH-OBJ-SAVE OBJ LOGIN PASSWORD))))
-("B3608" . ,(lambda () (LET ((OBJ (GETHASH (CUR-ID) *USER*)))
+("B1035" . ,(lambda () (LET ((OBJ (GETHASH (CUR-ID) *USER*)))
   (WITH-OBJ-SAVE OBJ NAME JURIDICAL-ADDRESS ACTUAL-ADDRESS CONTACTS EMAIL SITE
                  HEADS INN KPP OGRN BANK-NAME BIK CORRESP-ACCOUNT
                  CLIENT-ACCOUNT ADDRESSES CONTACT-PERSON)
   (HUNCHENTOOT:REDIRECT (HUNCHENTOOT:REQUEST-URI*)))))
-("B3610" . ,(lambda () (DEL-INNER-OBJ (CAAR (FORM-DATA)) *SUPPLIER-RESOURCE-PRICE*
+("B1037" . ,(lambda () (DEL-INNER-OBJ (CAAR (FORM-DATA)) *SUPPLIER-RESOURCE-PRICE*
                (A-RESOURCES (GETHASH (CUR-ID) *USER*)))))
-("B3612" . ,(lambda () (PROGN
- (PUSH-HASH *SUPPLIER-RESOURCE-PRICE*
-     'SUPPLIER-RESOURCE-PRICE
-   :OWNER
-   (GETHASH (CUR-USER) *USER*)
-   :RESOURCE
-   (GETHASH (CDR (ASSOC "res" (FORM-DATA) :TEST #'EQUAL)) *RESOURCE*)
-   :PRICE
-   (CDR (ASSOC "PRICE" (FORM-DATA) :TEST #'EQUAL)))
+("B1039" . ,(lambda () (PROGN
+ (PUSH-HASH *SUPPLIER-RESOURCE-PRICE* 'SUPPLIER-RESOURCE-PRICE :OWNER
+  (GETHASH (CUR-USER) *USER*) :RESOURCE
+  (GETHASH (CDR (ASSOC "res" (FORM-DATA) :TEST #'EQUAL)) *RESOURCE*) :PRICE
+  (CDR (ASSOC "PRICE" (FORM-DATA) :TEST #'EQUAL)))
  (HUNCHENTOOT:REDIRECT (HUNCHENTOOT:REQUEST-URI*)))))
-("B3613" . ,(lambda () (TO "/offer/~A" (CAAR (FORM-DATA)))))
-("B3615" . ,(lambda () (DEL-INNER-OBJ (CAAR (FORM-DATA)) *OFFER* (A-OFFERS (GETHASH (CUR-ID) *USER*)))))
-("B3616" . ,(lambda () (TO "/sale/~A" (CAAR (FORM-DATA)))))
-("B3618" . ,(lambda () (DEL-INNER-OBJ (CAAR (FORM-DATA)) *SALE* (A-SALES (GETHASH (CUR-ID) *USER*)))))
-("B3620" . ,(lambda () (CREATE-SALE)))
-("B3621" . ,(lambda () (PROGN
+("B1040" . ,(lambda () (TO "/offer/~A" (CAAR (FORM-DATA)))))
+("B1042" . ,(lambda () (DEL-INNER-OBJ (CAAR (FORM-DATA)) *OFFER* (A-OFFERS (GETHASH (CUR-ID) *USER*)))))
+("B1043" . ,(lambda () (TO "/sale/~A" (CAAR (FORM-DATA)))))
+("B1045" . ,(lambda () (DEL-INNER-OBJ (CAAR (FORM-DATA)) *SALE* (A-SALES (GETHASH (CUR-ID) *USER*)))))
+("B1047" . ,(lambda () (CREATE-SALE)))
+("B1048" . ,(lambda () (PROGN
  (SETF (A-STATUS (GETHASH (CUR-ID) *USER*)) :REQUEST)
  (HUNCHENTOOT:REDIRECT (HUNCHENTOOT:REQUEST-URI*)))))))) 
        (activate acts)))
@@ -672,28 +664,28 @@
   (let ((session (hunchentoot:start-session))
         (acts (list 
                (list :perm ':ALL 
-                     :grid "jg3622" 
+                     :grid "jg1049" 
                      :title "Распродажи"
                      :val (lambda () (CONS-HASH-LIST *SALE*))
                      :fields (list 
                           (list :fld "NAME" :typedata '(:STR) :name "Распродажа" 
                                 :permlist '(:UPDATE :OWNER :VIEW :ALL :DELETE :OWNER :CREATE :SUPPLIER))
-                          (list :btn "B3623" :perm 111 :value "Страница распродажи")))))) 
+                          (list :btn "B1050" :perm 111 :value "Страница распродажи")))))) 
     (show-acts acts)))
 
 (restas:define-route sales-page/post ("/sale" :method :post)
   (let ((session (hunchentoot:start-session))
         (acts `(
-("B3623" . ,(lambda () (TO "/sale/~A" (CAAR (FORM-DATA)))))))) 
+("B1050" . ,(lambda () (TO "/sale/~A" (CAAR (FORM-DATA)))))))) 
        (activate acts)))
 
-(restas:define-route sales-page/ajax ("/jg3622")
+(restas:define-route sales-page/ajax ("/jg1049")
   (example-json 
    (lambda () (CONS-HASH-LIST *SALE*)) 
    (list 
                           (list :fld "NAME" :typedata '(:STR) :name "Распродажа" 
                                 :permlist '(:UPDATE :OWNER :VIEW :ALL :DELETE :OWNER :CREATE :SUPPLIER))
-                          (list :btn "B3623" :perm 111 :value "Страница распродажи"))))
+                          (list :btn "B1050" :perm 111 :value "Страница распродажи"))))
 
 (restas:define-route sale-page ("/sale/:id")
   (let ((session (hunchentoot:start-session))
@@ -713,22 +705,22 @@
                                 :permlist '(:UPDATE :OWNER :VIEW :ALL :DELETE :OWNER :CREATE :SUPPLIER))
                           (list :fld "NOTES" :typedata '(:LIST-OF-STR) :name "Дополнительные условия" 
                                 :permlist '(:UPDATE :OWNER :VIEW :ALL :DELETE :OWNER :CREATE :SUPPLIER))
-                          (list :btn "B3624" :perm 111 :value "Сохранить")
-                          (list :btn "B3625" :perm 111 :value "Удалить распродажу")))))) 
+                          (list :btn "B1051" :perm 111 :value "Сохранить")
+                          (list :btn "B1052" :perm 111 :value "Удалить распродажу")))))) 
     (show-acts acts)))
 
 (restas:define-route sale-page/post ("/sale/:id" :method :post)
   (let ((session (hunchentoot:start-session))
         (acts `(
-("B3624" . ,(lambda () (SAVE-SALE)))
-("B3625" . ,(lambda () (DELETE-SALE)))))) 
+("B1051" . ,(lambda () (SAVE-SALE)))
+("B1052" . ,(lambda () (DELETE-SALE)))))) 
        (activate acts)))
 
 (restas:define-route builders-page ("/builder")
   (let ((session (hunchentoot:start-session))
         (acts (list 
                (list :perm ':ALL 
-                     :grid "jg3626" 
+                     :grid "jg1053" 
                      :title "Организации-застройщики"
                      :val (lambda () (REMOVE-IF-NOT #'(LAMBDA (X) (EQUAL (TYPE-OF (CDR X)) 'BUILDER))
                (CONS-HASH-LIST *USER*)))
@@ -737,16 +729,16 @@
                                 :permlist '(:UPDATE (OR :ADMIN :SELF) :VIEW :ALL :DELETE :ADMIN :CREATE :ADMIN))
                           (list :fld "LOGIN" :typedata '(:STR) :name "Логин" 
                                 :permlist '(:UPDATE (OR :ADMIN :SELF) :VIEW :ALL :DELETE :ADMIN :CREATE :ADMIN))
-                          (list :btn "B3627" :perm 111 :value "Страница застройщика")))))) 
+                          (list :btn "B1054" :perm 111 :value "Страница застройщика")))))) 
     (show-acts acts)))
 
 (restas:define-route builders-page/post ("/builder" :method :post)
   (let ((session (hunchentoot:start-session))
         (acts `(
-("B3627" . ,(lambda () (TO "/builder/~A" (CAAR (FORM-DATA)))))))) 
+("B1054" . ,(lambda () (TO "/builder/~A" (CAAR (FORM-DATA)))))))) 
        (activate acts)))
 
-(restas:define-route builders-page/ajax ("/jg3626")
+(restas:define-route builders-page/ajax ("/jg1053")
   (example-json 
    (lambda () (REMOVE-IF-NOT #'(LAMBDA (X) (EQUAL (TYPE-OF (CDR X)) 'BUILDER))
                (CONS-HASH-LIST *USER*))) 
@@ -755,7 +747,7 @@
                                 :permlist '(:UPDATE (OR :ADMIN :SELF) :VIEW :ALL :DELETE :ADMIN :CREATE :ADMIN))
                           (list :fld "LOGIN" :typedata '(:STR) :name "Логин" 
                                 :permlist '(:UPDATE (OR :ADMIN :SELF) :VIEW :ALL :DELETE :ADMIN :CREATE :ADMIN))
-                          (list :btn "B3627" :perm 111 :value "Страница застройщика"))))
+                          (list :btn "B1054" :perm 111 :value "Страница застройщика"))))
 
 (restas:define-route builder-page ("/builder/:id")
   (let ((session (hunchentoot:start-session))
@@ -785,7 +777,7 @@
                                 :permlist '(:UPDATE (OR :ADMIN :SELF) :VIEW :ALL :DELETE :ADMIN :CREATE :ADMIN))
                           (list :fld "RATING" :typedata '(:NUM) :name "Рейтинг" 
                                 :permlist '(:UPDATE (OR :ADMIN :SELF) :VIEW :ALL :DELETE :ADMIN :CREATE :ADMIN))
-                          (list :btn "B3628" :perm 111 :value "Сохранить")
+                          (list :btn "B1055" :perm 111 :value "Сохранить")
                           (list :col "Тендеры застройщика" :perm 111 
                                 :val (lambda () (CONS-INNER-OBJS *TENDER*
                                                                  (A-TENDERS
@@ -795,7 +787,7 @@
                           (list :fld "NAME" :typedata '(:STR) :name "Название" 
                                 :permlist '(:UPDATE (OR :ADMIN :OWNER) :VIEW (AND :LOGGED (OR :STALE (AND :FRESH :FAIR)))
  :DELETE :ADMIN :CREATE :BUILDER))
-                          (list :btn "B3629" :perm 111 :value "Страница тендера")))))
+                          (list :btn "B1056" :perm 111 :value "Страница тендера")))))
                (list :perm ':SELF 
                      :grid NIL 
                      :title "Объявить новый тендер"
@@ -819,17 +811,17 @@
                           (list :fld "RESULT" :typedata '(:INTERVAL) :name "Срок подведения итогов" 
                                 :permlist '(:UPDATE (OR :ADMIN :OWNER) :VIEW (AND :LOGGED (OR :STALE (AND :FRESH :FAIR)))
  :DELETE :ADMIN :CREATE :BUILDER))
-                          (list :btn "B3630" :perm 111 :value "Объявить тендер (+)")))))) 
+                          (list :btn "B1057" :perm 111 :value "Объявить тендер (+)")))))) 
     (show-acts acts)))
 
 (restas:define-route builder-page/post ("/builder/:id" :method :post)
   (let ((session (hunchentoot:start-session))
         (acts `(
-("B3628" . ,(lambda () (LET ((OBJ (GETHASH (CUR-ID) *USER*)))
+("B1055" . ,(lambda () (LET ((OBJ (GETHASH (CUR-ID) *USER*)))
   (WITH-OBJ-SAVE OBJ NAME JURIDICAL-ADDRESS INN KPP OGRN BANK-NAME BIK
                  CORRESP-ACCOUNT CLIENT-ACCOUNT RATING))))
-("B3629" . ,(lambda () (TO "/tender/~A" (CAAR (LAST (FORM-DATA))))))
-("B3630" . ,(lambda () (LET ((ID (HASH-TABLE-COUNT *TENDER*)))
+("B1056" . ,(lambda () (TO "/tender/~A" (CAAR (LAST (FORM-DATA))))))
+("B1057" . ,(lambda () (LET ((ID (HASH-TABLE-COUNT *TENDER*)))
   (SETF (GETHASH ID *TENDER*)
           (MAKE-INSTANCE 'TENDER :NAME
                          (CDR (ASSOC "NAME" (FORM-DATA) :TEST #'EQUAL)) :STATUS
@@ -849,7 +841,7 @@
   (let ((session (hunchentoot:start-session))
         (acts (list 
                (list :perm ':ALL 
-                     :grid "jg3631" 
+                     :grid "jg1058" 
                      :title "Тендеры"
                      :val (lambda () (CONS-HASH-LIST *TENDER*))
                      :fields (list 
@@ -862,16 +854,16 @@
                           (list :fld "OWNER" :typedata '(:LINK BUILDER) :name "Заказчик" 
                                 :permlist '(:UPDATE (OR :ADMIN :OWNER) :VIEW (AND :LOGGED (OR :STALE (AND :FRESH :FAIR)))
  :DELETE :ADMIN :CREATE :BUILDER))
-                          (list :btn "B3632" :perm 111 :value "Страница тендера")))))) 
+                          (list :btn "B1059" :perm 111 :value "Страница тендера")))))) 
     (show-acts acts)))
 
 (restas:define-route tenders-page/post ("/tender" :method :post)
   (let ((session (hunchentoot:start-session))
         (acts `(
-("B3632" . ,(lambda () (TO "/tender/~A" (CAAR (FORM-DATA)))))))) 
+("B1059" . ,(lambda () (TO "/tender/~A" (CAAR (FORM-DATA)))))))) 
        (activate acts)))
 
-(restas:define-route tenders-page/ajax ("/jg3631")
+(restas:define-route tenders-page/ajax ("/jg1058")
   (example-json 
    (lambda () (CONS-HASH-LIST *TENDER*)) 
    (list 
@@ -884,7 +876,7 @@
                           (list :fld "OWNER" :typedata '(:LINK BUILDER) :name "Заказчик" 
                                 :permlist '(:UPDATE (OR :ADMIN :OWNER) :VIEW (AND :LOGGED (OR :STALE (AND :FRESH :FAIR)))
  :DELETE :ADMIN :CREATE :BUILDER))
-                          (list :btn "B3632" :perm 111 :value "Страница тендера"))))
+                          (list :btn "B1059" :perm 111 :value "Страница тендера"))))
 
 (restas:define-route tender-page ("/tender/:id")
   (let ((session (hunchentoot:start-session))
@@ -921,7 +913,7 @@
                           (list :fld "RESULT" :typedata '(:INTERVAL) :name "Срок подведения итогов" 
                                 :permlist '(:UPDATE (OR :ADMIN :OWNER) :VIEW (AND :LOGGED (OR :STALE (AND :FRESH :FAIR)))
  :DELETE :ADMIN :CREATE :BUILDER))
-                          (list :btn "B3633" :perm 111 :value "Сохранить")
+                          (list :btn "B1060" :perm 111 :value "Сохранить")
                           (list :col "Ресурсы тендера" :perm 111 
                                 :val (lambda () (CONS-INNER-OBJS *RESOURCE*
                                                                  (A-RESOURCES
@@ -932,9 +924,9 @@
                           (list :fld "NAME" :typedata '(:STR) :name "Название" 
                                 :permlist '(:UPDATE (OR :ADMIN :OWNER) :VIEW (AND :LOGGED (OR :STALE (AND :FRESH :FAIR)))
  :DELETE :ADMIN :CREATE :BUILDER))
-                          (list :btn "B3634" :perm 111 :value "Удалить из тендера")
-                          (list :btn "B3635" :perm 111 :value "Страница ресурса")))
-                          (list :popbtn "P3636" 
+                          (list :btn "B1061" :perm 111 :value "Удалить из тендера")
+                          (list :btn "B1062" :perm 111 :value "Страница ресурса")))
+                          (list :popbtn "P1063" 
                                 :value "Добавить ресурс" 
                                 :perm 111 
                                 :title "Выберите ресурсы" 
@@ -944,7 +936,7 @@
                                 :fields (list 
                           (list :fld "NAME" :typedata '(:STR) :name "Наименование" 
                                 :permlist '(:UPDATE :SYSTEM :VIEW :ALL :DELETE :SYSTEM :CREATE :SYSTEM))
-                          (list :btn "B3637" :perm 111 :value "Добавить ресурс")))))
+                          (list :btn "B1064" :perm 111 :value "Добавить ресурс")))))
                           (list :col "Документы тендера" :perm 111 
                                 :val (lambda () (CONS-INNER-OBJS *DOCUMENT*
                                                                  (A-DOCUMENTS
@@ -955,9 +947,9 @@
                           (list :fld "NAME" :typedata '(:STR) :name "Название" 
                                 :permlist '(:UPDATE (OR :ADMIN :OWNER) :VIEW (AND :LOGGED (OR :STALE (AND :FRESH :FAIR)))
  :DELETE :ADMIN :CREATE :BUILDER))
-                          (list :btn "B3638" :perm 111 :value "Удалить из тендера")
-                          (list :btn "B3639" :perm 111 :value "Страница документа")))
-                          (list :popbtn "P3640" 
+                          (list :btn "B1065" :perm 111 :value "Удалить из тендера")
+                          (list :btn "B1066" :perm 111 :value "Страница документа")))
+                          (list :popbtn "P1067" 
                                 :value "Добавить документ" 
                                 :perm 111 
                                 :title "Загрузите документ" 
@@ -967,7 +959,7 @@
                                 :fields (list 
                           (list :fld "NAME" :typedata '(:STR) :name "Наименование" 
                                 :permlist '(:UPDATE :SYSTEM :VIEW :ALL :DELETE :SYSTEM :CREATE :SYSTEM))
-                          (list :btn "B3641" :perm 111 :value "Добавить ресурс")))))
+                          (list :btn "B1068" :perm 111 :value "Добавить ресурс")))))
                           (list :col "Поставщики ресурсов" :perm 111 
                                 :val (lambda () (LET ((TENDER-RESOURCES
                                                        (A-RESOURCES
@@ -1020,9 +1012,9 @@
                           (list :fld "NAME" :typedata '(:STR) :name "Название" 
                                 :permlist '(:UPDATE (OR :ADMIN :OWNER) :VIEW (AND :LOGGED (OR :STALE (AND :FRESH :FAIR)))
  :DELETE :ADMIN :CREATE :BUILDER))
-                          (list :btn "B3642" :perm 111 :value "Отправить приглашение")
-                          (list :btn "B3643" :perm 111 :value "Страница поставщика")))
-                          (list :btn "B3644" :perm 111 :value "Добавить своего поставщика")
+                          (list :btn "B1069" :perm 111 :value "Отправить приглашение")
+                          (list :btn "B1070" :perm 111 :value "Страница поставщика")))
+                          (list :btn "B1071" :perm 111 :value "Добавить своего поставщика")
                           (list :col "Заявки на тендер" :perm 111 
                                 :val (lambda () (CONS-INNER-OBJS *OFFER*
                                                                  (A-OFFERS
@@ -1030,61 +1022,61 @@
                                                                    (CUR-ID)
                                                                    *TENDER*))))
                                 :fields (list 
-                          (list :btn "B3645" :perm 111 :value "Страница заявки")))
-                          (list :popbtn "P3646" 
+                          (list :btn "B1072" :perm 111 :value "Страница заявки")))
+                          (list :popbtn "P1073" 
                                 :value "Ответить заявкой на тендер" 
                                 :perm 111 
                                 :title "Выберите ресурсы" 
                                 :fields (list 
-                          (list :btn "B3647" :perm 111 :value "Участвовать в тендере")))
-                          (list :popbtn "P3648" 
+                          (list :btn "B1074" :perm 111 :value "Участвовать в тендере")))
+                          (list :popbtn "P1075" 
                                 :value "Отменить тендер" 
                                 :perm 111 
                                 :title "Действительно отменить?" 
                                 :fields (list 
-                          (list :btn "B3649" :perm 111 :value "Подтверждаю отмену")))))))) 
+                          (list :btn "B1076" :perm 111 :value "Подтверждаю отмену")))))))) 
     (show-acts acts)))
 
 (restas:define-route tender-page/post ("/tender/:id" :method :post)
   (let ((session (hunchentoot:start-session))
         (acts `(
-("B3633" . ,(lambda () (LET ((OBJ (GETHASH (CUR-ID) *TENDER*)))
+("B1060" . ,(lambda () (LET ((OBJ (GETHASH (CUR-ID) *TENDER*)))
   (WITH-OBJ-SAVE OBJ NAME ACTIVE-DATE ALL CLAIM ANALIZE INTERVIEW RESULT))))
-("B3634" . ,(lambda () (LET ((ETALON (GETHASH (GET-BTN-KEY (CAAR (LAST (FORM-DATA)))) *RESOURCE*)))
+("B1061" . ,(lambda () (LET ((ETALON (GETHASH (GET-BTN-KEY (CAAR (LAST (FORM-DATA)))) *RESOURCE*)))
   (SETF (A-RESOURCES (GETHASH (CUR-ID) *TENDER*))
           (REMOVE-IF #'(LAMBDA (X) (EQUAL X ETALON))
                      (A-RESOURCES (GETHASH (CUR-ID) *TENDER*))))
   (HUNCHENTOOT:REDIRECT (HUNCHENTOOT:REQUEST-URI*)))))
-("B3635" . ,(lambda () (TO "/resource/~A" (CAAR (LAST (FORM-DATA))))))
-("B3637" . ,(lambda () (PROGN
+("B1062" . ,(lambda () (TO "/resource/~A" (CAAR (LAST (FORM-DATA))))))
+("B1064" . ,(lambda () (PROGN
  (PUSH (GETHASH (GET-BTN-KEY (CAAR (LAST (FORM-DATA)))) *RESOURCE*)
        (A-RESOURCES (GETHASH (CUR-ID) *TENDER*)))
  (HUNCHENTOOT:REDIRECT (HUNCHENTOOT:REQUEST-URI*)))))
-("B3638" . ,(lambda () (DELETE-DOC-FROM-TENDER)))
-("B3639" . ,(lambda () (TO "/document/~A" (CAAR (LAST (FORM-DATA))))))
-("B3641" . ,(lambda () (PROGN
+("B1065" . ,(lambda () (DELETE-DOC-FROM-TENDER)))
+("B1066" . ,(lambda () (TO "/document/~A" (CAAR (LAST (FORM-DATA))))))
+("B1068" . ,(lambda () (PROGN
  (PUSH (GETHASH (GET-BTN-KEY (CAAR (LAST (FORM-DATA)))) *RESOURCE*)
        (A-RESOURCES (GETHASH (CUR-ID) *TENDER*)))
  (HUNCHENTOOT:REDIRECT (HUNCHENTOOT:REQUEST-URI*)))))
-("B3642" . ,(lambda () (DELETE-FROM-TENDER)))
-("B3643" . ,(lambda () (TO "/supplier/~A" (CAAR (LAST (FORM-DATA))))))
-("B3644" . ,(lambda () (ADD-DOCUMENT-TO-TENDER)))
-("B3645" . ,(lambda () (TO "/offer/~A" (CAAR (LAST (FORM-DATA))))))
-("B3647" . ,(lambda () (LET* ((ID (HASH-TABLE-COUNT *OFFER*))
+("B1069" . ,(lambda () (DELETE-FROM-TENDER)))
+("B1070" . ,(lambda () (TO "/supplier/~A" (CAAR (LAST (FORM-DATA))))))
+("B1071" . ,(lambda () (ADD-DOCUMENT-TO-TENDER)))
+("B1072" . ,(lambda () (TO "/offer/~A" (CAAR (LAST (FORM-DATA))))))
+("B1074" . ,(lambda () (LET* ((ID (HASH-TABLE-COUNT *OFFER*))
        (OFFER
         (SETF (GETHASH ID *OFFER*)
                 (MAKE-INSTANCE 'OFFER :OWNER (CUR-USER) :TENDER
                                (GETHASH (CUR-ID) *TENDER*)))))
   (PUSH OFFER (A-OFFERS (GETHASH (CUR-ID) *TENDER*)))
   (HUNCHENTOOT:REDIRECT (FORMAT NIL "/offer/~A" ID)))))
-("B3649" . ,(lambda () (HUNCHENTOOT:REDIRECT (FORMAT NIL "/tender"))))))) 
+("B1076" . ,(lambda () (HUNCHENTOOT:REDIRECT (FORMAT NIL "/tender"))))))) 
        (activate acts)))
 
 (restas:define-route offers-page ("/offers")
   (let ((session (hunchentoot:start-session))
         (acts (list 
                (list :perm ':ALL 
-                     :grid "jg3650" 
+                     :grid "jg1077" 
                      :title "Заявки на участие в тендере"
                      :val (lambda () (CONS-HASH-LIST *OFFER*))
                      :fields (list 
@@ -1094,16 +1086,16 @@
                           (list :fld "TENDER" :typedata '(:LINK TENDER) :name "Тендер" 
                                 :permlist '(:UPDATE (AND :ACTIVE :OWNER) :VIEW :ALL :DELETE (AND :OWNER :ACTIVE) :CREATE
  (AND :ACTIVE :SUPPLIER)))
-                          (list :btn "B3651" :perm 111 :value "Страница заявки")))))) 
+                          (list :btn "B1078" :perm 111 :value "Страница заявки")))))) 
     (show-acts acts)))
 
 (restas:define-route offers-page/post ("/offers" :method :post)
   (let ((session (hunchentoot:start-session))
         (acts `(
-("B3651" . ,(lambda () (TO "/offer/~A" (CAAR (FORM-DATA)))))))) 
+("B1078" . ,(lambda () (TO "/offer/~A" (CAAR (FORM-DATA)))))))) 
        (activate acts)))
 
-(restas:define-route offers-page/ajax ("/jg3650")
+(restas:define-route offers-page/ajax ("/jg1077")
   (example-json 
    (lambda () (CONS-HASH-LIST *OFFER*)) 
    (list 
@@ -1113,7 +1105,7 @@
                           (list :fld "TENDER" :typedata '(:LINK TENDER) :name "Тендер" 
                                 :permlist '(:UPDATE (AND :ACTIVE :OWNER) :VIEW :ALL :DELETE (AND :OWNER :ACTIVE) :CREATE
  (AND :ACTIVE :SUPPLIER)))
-                          (list :btn "B3651" :perm 111 :value "Страница заявки"))))
+                          (list :btn "B1078" :perm 111 :value "Страница заявки"))))
 
 (restas:define-route offer-page ("/offer/:id")
   (let ((session (hunchentoot:start-session))
@@ -1136,9 +1128,9 @@
                                 :permlist '(:UPDATE (AND :ACTIVE :OWNER) :VIEW :ALL :DELETE :OWNER :CREATE :OWNER))
                           (list :fld "PRICE" :typedata '(:NUM) :name "Цена поставщика" 
                                 :permlist '(:UPDATE (AND :ACTIVE :OWNER) :VIEW :ALL :DELETE :OWNER :CREATE :OWNER))
-                          (list :btn "B3652" :perm 111 :value "Удалить из оферты")
-                          (list :btn "B3653" :perm 111 :value "Страница ресурса")))
-                          (list :popbtn "P3654" 
+                          (list :btn "B1079" :perm 111 :value "Удалить из оферты")
+                          (list :btn "B1080" :perm 111 :value "Страница ресурса")))
+                          (list :popbtn "P1081" 
                                 :value "Добавить ресурс" 
                                 :perm 111 
                                 :title "Выберите ресурсы" 
@@ -1148,22 +1140,22 @@
                                 :fields (list 
                           (list :fld "NAME" :typedata '(:STR) :name "Наименование" 
                                 :permlist '(:UPDATE :SYSTEM :VIEW :ALL :DELETE :SYSTEM :CREATE :SYSTEM))
-                          (list :popbtn "P3655" 
+                          (list :popbtn "P1082" 
                                 :value "Добавить ресурс" 
                                 :perm 111 
                                 :title "Укажите цену" 
                                 :fields (list 
                           (list :calc (lambda (obj) "<input type=\"text\" name=\"INPRICE\" />") :perm 111)
-                          (list :btn "B3656" :perm 111 :value "Задать цену")))))))))))) 
+                          (list :btn "B1083" :perm 111 :value "Задать цену")))))))))))) 
     (show-acts acts)))
 
 (restas:define-route offer-page/post ("/offer/:id" :method :post)
   (let ((session (hunchentoot:start-session))
         (acts `(
-("B3652" . ,(lambda () (DEL-INNER-OBJ (CAAR (LAST (FORM-DATA))) *OFFER-RESOURCE*
+("B1079" . ,(lambda () (DEL-INNER-OBJ (CAAR (LAST (FORM-DATA))) *OFFER-RESOURCE*
                (A-RESOURCES (GETHASH (CUR-ID) *OFFER*)))))
-("B3653" . ,(lambda () (TO "/resource/~A" (CAAR (LAST (FORM-DATA))))))
-("B3656" . ,(lambda () (LET ((RES-ID (GET-BTN-KEY (CAAR (LAST (FORM-DATA)))))
+("B1080" . ,(lambda () (TO "/resource/~A" (CAAR (LAST (FORM-DATA))))))
+("B1083" . ,(lambda () (LET ((RES-ID (GET-BTN-KEY (CAAR (LAST (FORM-DATA)))))
       (IN (CDR (ASSOC "INPRICE" (FORM-DATA) :TEST #'EQUAL)))
       (ID (HASH-TABLE-COUNT *OFFER-RESOURCE*)))
   (PUSH

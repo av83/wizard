@@ -351,6 +351,9 @@
       :view   :all
       :update :owner))))
 
+(defmacro bprint (param)
+  `(subseq (with-output-to-string (*standard-output*)  (pprint ,param)) 1))
+
 
 (defmacro cons-hash-list (hash)
   `(loop :for obj :being the :hash-values :in ,hash :using (hash-key key) :collect

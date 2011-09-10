@@ -68,3 +68,10 @@ slot-value-using-class и (setf slot-value-using-class)
     (close stream)))
 
 http://linkfly.livejournal.com/2891.html
+
+;; Получение имени пользователя
+SB-POSIX> (defun get-username (&aux (pid (getpid))) ;(getenv "USERNAME"))
+           (passwd-name
+            (getpwuid
+             (stat-uid
+              (stat (format nil "/proc/~A" pid))))))

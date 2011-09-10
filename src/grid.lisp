@@ -91,7 +91,7 @@
                                      ("index"    . ,in-name)
                                      ("width"    . "200")
                                      ("sortable" . t)
-                                     ("editable" . t))))
+                                     ("editable" . t)))) ;; rulez
                     (push model col-model)))
        :btn     (progn
                   (let* ((in-name  (getf infld :btn))
