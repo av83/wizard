@@ -92,7 +92,9 @@
                                        ("index"    . ,in-name)
                                        ("width"    . "200")
                                        ("sortable" . t)
-                                       ("editable" . t)))) ;; rulez
+                                       ("editable" . (if (check-perm (getf (getf infdls :permlist) :update)
+                                                                     t
+                                                                     nil)))))) ;; rulez
                       (push model col-model))))
        :btn     (progn
                   (let* ((in-name  (getf infld :btn))

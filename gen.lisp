@@ -41,8 +41,9 @@
            (:act
             (let ((gen (gensym "B")))
               (values
-               (format nil "~%~25T (list :btn \"~A\" :perm 111 :value \"~A\")"
+               (format nil "~%~25T (list :btn \"~A\" :perm '~A :value \"~A\")"
                        gen
+                       (bprint (getf fld :perm))
                        (getf fld instr))
                (list (list gen (getf fld :act))))))
            (:popup
