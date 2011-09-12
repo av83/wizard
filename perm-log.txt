@@ -1,0 +1,4 @@
+NIL
+NOBODY := NIL (1 : 2)
+ALL := T (NIL : #<FUNCTION (LAMBDA ()) {CA33655}>)
+ALL := T (NIL : #<FUNCTION (LAMBDA ()) {CA33655}>)

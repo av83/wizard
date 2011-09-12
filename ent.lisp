@@ -5,9 +5,11 @@
 
 (in-package #:WIZARD)
 
-;; Базовый класс, от которого наследуются все сущности
-(defclass entity ()
-  ())
+(defparameter *required* '(restas closure-template restas-directory-publisher cl-json))
+(defparameter *my-package* 'wizard)
+(defparameter *used-package* '(cl iter))
+
+(defclass entity () ())
 
 ;; Возможные типы ресурсов: машины, материалы etc
 (defparameter *resource-types*
@@ -319,40 +321,6 @@
       :delete (and :owner :unactive)
       :view   :all
       :update :owner))))
-
-
-(defmacro cons-hash-list (hash)
-  `(loop :for obj :being the :hash-values :in ,hash :using (hash-key key) :collect
-      (cons key obj)))
-
-(defmacro cons-inner-objs (hash inner-lst)
-  `(let ((inner-lst ,inner-lst)
-         (cons-hash (cons-hash-list ,hash)))
-      (loop :for obj :in inner-lst :collect
-         (loop :for cons :in cons-hash :collect
-            (when (equal (cdr cons) obj)
-              (return cons))))))
-
-(defmacro del-inner-obj (form-element hash inner-lst)
-  `(let* ((key  (get-btn-key ,form-element))
-          (hobj (gethash key ,hash)))
-     (setf ,inner-lst
-           (remove-if #'(lambda (x)
-                          (equal x hobj))
-                      ,inner-lst))
-     (remhash key ,hash)
-     (hunchentoot:redirect (hunchentoot:request-uri*))))
-
-(defmacro with-obj-save (obj &rest flds)
-  `(progn
-     ,@(loop :for fld :in flds :collect
-          `(setf (,(intern (format nil "A-~A" (symbol-name fld))) ,obj)
-                 (cdr (assoc ,(symbol-name fld) (form-data) :test #'equal))))
-     (hunchentoot:redirect (hunchentoot:request-uri*))))
-
-(defmacro to (format-str form-elt)
-  `(hunchentoot:redirect
-    (format nil ,format-str (get-btn-key ,form-elt))))
 
 
 ;; Мы считаем, что если у пользователя есть права на редактирование
@@ -1110,3 +1078,5 @@
         :perm              :all)))
 
     ))
+
+(print "ent.list finished")
