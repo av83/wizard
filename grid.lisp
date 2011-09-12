@@ -84,7 +84,7 @@
          (col-model)
          (col-replace))
      (with-in-fld-case ,fields
-       :fld     (when (check-perm (getf (getf infld :permlist) :view) (cur-user) (make-instance 'EXPERT)) ;; TODO: Expert is not valud obj!
+       :fld     (when (check-perm (getf (getf infld :permlist) :view) (cur-user) (make-instance 'EXPERT)) ;; TODO: Expert is not valid obj!
                     (push (getf infld :name) col-names)
                     (let* ((in-name  (getf infld :fld))
                            (model    `(("name"     . ,in-name)
@@ -95,7 +95,7 @@
                                                                      t
                                                                      nil)))))) ;; rulez
                       (push model col-model)))
-       :btn     (when (check-perm (getf infld :perm) (cur-user) (make-instance 'EXPERT)) ;; TODO: Expert is not valud obj!
+       :btn     (when (check-perm (getf infld :perm) (cur-user) (make-instance 'EXPERT)) ;; TODO: Expert is not valid obj!
                   (let* ((in-name  (getf infld :btn))
                          (in-capt  (getf infld :value))
                          (btn-str  (format nil "\"<form method='post'><input type='submit' name='~A~~\"+cl+\"' value='~A' /></form>\"" in-name in-capt))
