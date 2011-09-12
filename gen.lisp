@@ -1,5 +1,28 @@
 (in-package #:WIZARD)
 
+(defmacro bprint (var)
+  `(subseq (with-output-to-string (*standard-output*)  (pprint ,var)) 1))
+
+(defun get-username (&aux (pid (sb-posix:getpid))) ;(getenv "USERNAME"))
+  (sb-posix:passwd-name
+   (sb-posix:getpwuid
+    (sb-posix:stat-uid
+     (sb-posix:stat (format nil "/proc/~A" pid))))))
+
+(let ((path '(:RELATIVE "wizard")))
+  (setf asdf:*central-registry*
+        (remove-duplicates (append asdf:*central-registry*
+                                   (list (merge-pathnames
+                                          (make-pathname :directory path)
+                                          (user-homedir-pathname))))
+                           :test #'equal)))
+
+(defparameter *basedir*  (format nil "/home/~A/wizard/" (get-username)))
+
+(defun path (relative)
+  (merge-pathnames relative *basedir*))
+
+
 (defparameter *required* '(restas closure-template restas-directory-publisher cl-json))
 (defparameter *my-package* 'wizard)
 (defparameter *used-package* '(cl iter))
@@ -112,7 +135,7 @@
        controllers
        ajaxdataset))))
 
-(with-open-file (out "/home/rigidus/wizard/src/defmodule.lisp" :direction :output :if-exists :supersede)
+(with-open-file (out (path "src/defmodule.lisp") :direction :output :if-exists :supersede)
   ;; Required
   (format out "~{~%(require '~A)~}" *required*)
   (format out "~%~%(restas:define-module #:~A~%  (:use ~{#:~A ~}))~%~%(in-package #:~A)"
