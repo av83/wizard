@@ -159,8 +159,3 @@
         (ecase typefld
           ,@(loop :for case :in cases :by #'cddr :collect
               (list case (getf cases case)))))))
-
-
-
-
-

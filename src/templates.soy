@@ -7,464 +7,446 @@
   <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">{\n}
   <html xml:lang="ru-ru" xmlns="http://www.w3.org/1999/xhtml" lang="ru-ru">{\n}
     <head>{\n}
-
       <link rel="stylesheet" href="/default.css" type="text/css" />{\n}
       <link rel="stylesheet" href="/unique.css" type="text/css" />{\n}
-
       <link rel="stylesheet" href="/content.css" type="text/css" />{\n}
-
       <link rel="stylesheet" href="/general.css" type="text/css" />{\n}
       <link rel="stylesheet" href="/templateBanner.css" type="text/css" />{\n}
-
       <script type="text/javascript" src="/general.js"></script>{\n}
-
       <meta http-equiv="content-type" content="text/html; charset=UTF-8" />{\n}
       <meta name="robots" content="index, follow" />{\n}
-
       <title>{$headtitle}</title>
-
       <link href="/index.php?format=feed&amp;type=rss" rel="alternate" type="application/rss+xml" title="RSS 2.0" />{\n}
       <link href="/index.php?format=feed&amp;type=atom" rel="alternate" type="application/atom+xml" title="Atom 1.0" />{\n}
       <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />{\n}
       <link rel="stylesheet" href="/jextcurrency.css" type="text/css" />{\n}
-
       <script type="text/javascript" src="/jquery-1.js"></script>{\n}
       <script type="text/javascript" src="/jquery-ui-1.js"></script>{\n}
       <script type="text/javascript" src="/video.js"></script>{\n}
       <script type="text/javascript" src="/mootools.js"></script>{\n}
       <script type="text/javascript" src="/caption.js"></script>{\n}
+      <script type="text/javascript" src="/jquery-1.6.2.min.js"></script>{\n}
+      <link rel="stylesheet" type="text/css" media="screen" href="/jquery-ui-1.8.1.custom.css" />{\n}
+      <link rel="stylesheet" type="text/css" media="screen" href="/ui.jqgrid.css" />{\n}
+      <script src="/grid.locale-en.js" type="text/javascript"></script>{\n}
+      <script src="/jquery.jqGrid.min.js" type="text/javascript"></script>{\n}
+      <script src="/my.js" type="text/javascript"></script>{\n}
+      <style>{\n}
+        html, body {  margin: 0;   padding: 0;    font-size: 75%;  } {\n}
+      </style>{\n}
+    </head>{\n}
+    <body>{\n}
 
 
-      <script type="text/javascript" src="/jquery-1.6.2.min.js"></script>
-      <link rel="stylesheet" type="text/css" media="screen" href="/jquery-ui-1.8.1.custom.css" />
-      <link rel="stylesheet" type="text/css" media="screen" href="/ui.jqgrid.css" />
-      <script src="/grid.locale-en.js" type="text/javascript"></script>
-      <script src="/jquery.jqGrid.min.js" type="text/javascript"></script>
+      <div class="main" id="main">{\n}
+        <div class="bannerTop">{\n}
+          <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"{\n}
+                  codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"{\n}
+                  height="90"{\n}
+                  width="970"{\n}
+                  border="0">{\n}
+			<param name="movie"{\n}
+                   value="http://gdetorg.ru/images/banners/fce0fe9db7e465113e59b2c5225e70f4.swf" />{\n}
+            <embed src="/fce0fe9db7e465113e59b2c5225e70f4.swf"{\n}
+                   loop="false"{\n}
+                   pluginspage="http://www.macromedia.com/go/get/flashplayer"{\n}
+                   type="application/x-shockwave-flash"{\n}
+                   height="90"{\n}
+                   width="970" />{\n}
+		  </object>{\n}
+        </div>{\n}
 
-      <style>
-        html, body {
-        margin: 0;
-        padding: 0;
-        font-size: 75%;
-        }
-      </style>
+        <div class="header">{\n}
 
+          <div class="syslinks">{\n}
+            <span>{\n}
+              <a href="/"{\n}
+                 title="ГдеСтройТорг.ру"{\n}
+                 onclick="setThisHomePage(); return false;">{\n}
+                <img src="i_files/make_startup.png" />{\n}
+              </a>{\n}
+              <a href="/"{\n}
+                 title="ГдеСтройТорг.ру"{\n}
+                 onclick="try{window.external.AddFavorite(this.href, this.title); return false;} catch(e) {}"{\n}
+                 rel="sidebar">{\n}
+                <img src="/add_favorite.png" alt="добавить в избранное" />{\n}
+              </a>{\n}
+              <a href="#">{\n}
+                <img src="/rss.png" />{\n}
+              </a>{\n}
+            </span>{\n}
+          </div><!-- syslinks -->{\n}
 
+          <div class="headerMainBlock">{\n}
 
-    </head>
-    <body>
+            <div class="headerLogoBox">{\n}
+              <a href="/">{\n}
+                <img src="/logo.png" alt="" />{\n}
+              </a>{\n}
+              <span>{\n}
+                Единый строительный портал Cеверо-Запада{\n}
+              </span>{\n}
+            </div><!-- headerLogoBox -->{\n}
 
+            <div class="headerHorzMenuBlock">{\n}
+              <div>{\n}
+                <table width="100%" border="0" cellpadding="0" cellspacing="1">{\n}
+                  <tbody>{\n}
+                    <tr>{\n}
+                      <td nowrap="nowrap">{\n}
+                        <div class="mainlevel">{\n}
+                          <div class="horzmenu_item_left"></div>{\n}
+                          <div class="horzmenu_item_center">{\n}
+                            <a href="#privateoffice">Личный кабинет</a>{\n}
+                          </div>{\n}
+                          <div class="horzmenu_item_right"></div>{\n}
+                          <div style="clear: both;"></div>{\n}
+                        </div>{\n}
+                        <div class="mainlevel">{\n}
+                          <div class="horzmenu_item_left"></div>{\n}
+                          <div class="horzmenu_item_center">{\n}
+                            <a href="#newtender">Объявить тендер</a>{\n}
+                          </div>{\n}
+                          <div class="horzmenu_item_right"></div>{\n}
+                          <div style="clear: both;"></div>{\n}
+                        </div>{\n}
+                        <div class="mainlevel">{\n}
+                          <div class="horzmenu_item_left">{\n}
+                          </div>{\n}
+                          <div class="horzmenu_item_center">{\n}
+                            <a href="#ratings">Рейтинги</a>{\n}
+                          </div>{\n}
+                          <div class="horzmenu_item_right"></div>{\n}
+                          <div style="clear: both;"></div>{\n}
+                        </div>{\n}
+                        <div class="mainlevel">{\n}
+                          <div class="horzmenu_item_left">{\n}
+                          </div>{\n}
+                          <div class="horzmenu_item_center">{\n}
+                            <a href="#bonuses">Акции</a>{\n}
+                          </div>{\n}
+                          <div class="horzmenu_item_right"></div>{\n}
+                          <div style="clear: both;"></div>{\n}
+                        </div>{\n}
+                        <div class="mainlevel">{\n}
+                          <div class="horzmenu_item_left"></div>{\n}
+                          <div class="horzmenu_item_center">{\n}
+                            <a href="#services">Услуги портала</a>{\n}
+                          </div>{\n}
+                          <div class="horzmenu_item_right"></div>{\n}
+                          <div style="clear: both;"></div>{\n}
+                        </div>{\n}
+                        <div class="mainlevel">{\n}
+                          <div class="horzmenu_item_left"></div>{\n}
+                          <div class="horzmenu_item_center">{\n}
+                            <a href="http://gdetorg.ru/bulletinboard">Доска объявлений</a>{\n}
+                          </div>{\n}
+                          <div class="horzmenu_item_right"></div>{\n}
+                          <div style="clear: both;"></div>{\n}
+                        </div>{\n}
+                      </td>{\n}
+                    </tr>{\n}
+                  </tbody>{\n}
+                </table>{\n}
+              </div>{\n}
+              <div class="headerHorzMenuBlockLine"></div>{\n}
+            </div><!-- headerHorzMenuBlock -->{\n}
+            <div style="clear: both;"></div>{\n}
 
-      <div class="main" id="main">
-        <div class="bannerTop">
-          <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-                  codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
-                  height="90"
-                  width="970"
-                  border="0">
-			<param name="movie"
-                   value="http://gdetorg.ru/images/banners/fce0fe9db7e465113e59b2c5225e70f4.swf" />
-            <embed src="/fce0fe9db7e465113e59b2c5225e70f4.swf"
-                   loop="false"
-                   pluginspage="http://www.macromedia.com/go/get/flashplayer"
-                   type="application/x-shockwave-flash"
-                   height="90"
-                   width="970" />
-		  </object>
-        </div>
+          </div> <!-- headerMainBlock -->{\n}
 
-        <div class="header">
+        </div><!-- header -->{\n}
 
-          <div class="syslinks">
-            <span>
-              <a href="/"
-                 title="ГдеСтройТорг.ру"
-                 onclick="setThisHomePage(); return false;">
-                <img src="i_files/make_startup.png" />
-              </a>
-              <a href="/"
-                 title="ГдеСтройТорг.ру"
-                 onclick="try{window.external.AddFavorite(this.href, this.title); return false;} catch(e) {}"
-                 rel="sidebar">
-                <img src="/add_favorite.png" alt="добавить в избранное" />
-              </a>
-              <a href="#">
-                <img src="/rss.png" />
-              </a>
-            </span>
-          </div><!-- syslinks -->
-
-          <div class="headerMainBlock">
-
-            <div class="headerLogoBox">
-              <a href="/">
-                <img src="/logo.png" alt="" />
-              </a>
-              <span>
-                Единый строительный портал Cеверо-Запада
-              </span>
-            </div><!-- headerLogoBox -->
-
-            <div class="headerHorzMenuBlock">
-              <div>
-                <table width="100%" border="0" cellpadding="0" cellspacing="1">
-                  <tbody>
-                    <tr>
-                      <td nowrap="nowrap">
-                        <div class="mainlevel">
-                          <div class="horzmenu_item_left"></div>
-                          <div class="horzmenu_item_center">
-                            <a href="#privateoffice">Личный кабинет</a>
-                          </div>
-                          <div class="horzmenu_item_right"></div>
-                          <div style="clear: both;"></div>
-                        </div>
-                        <div class="mainlevel">
-                          <div class="horzmenu_item_left"></div>
-                          <div class="horzmenu_item_center">
-                            <a href="#newtender">Объявить тендер</a>
-                          </div>
-                          <div class="horzmenu_item_right"></div>
-                          <div style="clear: both;"></div>
-                        </div>
-                        <div class="mainlevel">
-                          <div class="horzmenu_item_left">
-                          </div>
-                          <div class="horzmenu_item_center">
-                            <a href="#ratings">Рейтинги</a>
-                          </div>
-                          <div class="horzmenu_item_right"></div>
-                          <div style="clear: both;"></div>
-                        </div>
-                        <div class="mainlevel">
-                          <div class="horzmenu_item_left">
-                          </div>
-                          <div class="horzmenu_item_center">
-                            <a href="#bonuses">Акции</a>
-                          </div>
-                          <div class="horzmenu_item_right"></div>
-                          <div style="clear: both;"></div>
-                        </div>
-                        <div class="mainlevel">
-                          <div class="horzmenu_item_left"></div>
-                          <div class="horzmenu_item_center">
-                            <a href="#services">Услуги портала</a>
-                          </div>
-                          <div class="horzmenu_item_right"></div>
-                          <div style="clear: both;"></div>
-                        </div>
-                        <div class="mainlevel">
-                          <div class="horzmenu_item_left"></div>
-                          <div class="horzmenu_item_center">
-                            <a href="http://gdetorg.ru/bulletinboard">Доска объявлений</a>
-                          </div>
-                          <div class="horzmenu_item_right"></div>
-                          <div style="clear: both;"></div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="headerHorzMenuBlockLine"></div>
-            </div><!-- headerHorzMenuBlock -->
-            <div style="clear: both;"></div>
-
-          </div> <!-- headerMainBlock -->
-
-        </div><!-- header -->
-
-        <div class="body">
-
+        <div class="body">{\n}
+            {$personal |noAutoescape}
           {foreach $popup in $popups}
             {call popup data="$popup" /}
           {/foreach}
 
-          <div class="sidebarR">
-            {$personal |noAutoescape}
-            <div class="ktostroitru">
-              <a href="http://www.ktostroit.ru/">
-                <img src="/ktostroit.png" alt="КтоСтроит.ру" />
-              </a>
-            </div>
+          <div class="sidebarR">{\n}
 
-            <div class="currencies">
-              <div class="sidebarBox">
+            <div class="ktostroitru">{\n}
+              <a href="http://www.ktostroit.ru/">{\n}
+                <img src="/ktostroit.png" alt="КтоСтроит.ру" />{\n}
+              </a>{\n}
+            </div>{\n}
 
-                <div class="sidebarBoxBG">
-                  <div class="sidebarBoxTop"></div>
-                  <div class="sidebarBoxTitle">Курсы валют</div>
-                  <div class="sidebarBoxContent">
-                    <div class="jextcurrency"
-                         style="width: 100%;">
-                      <div class="title">
-                        <h3>Курсы валют на 27.07.2011</h3>
-                      </div>
-                      <div class="rates">
-                        <div class="item">
-                          <div class="item1">
-                            <img title="USD" alt="USD" src="/USD.gif" />
-                            <div class="scale">1</div>
-                            USD
-                          </div>
-                          <div class="item2">
-                            27,546
-                            <span class="negative" title="вчера: 27,741">
-                              -0,195
-                            </span>
-                          </div>
-                          <div style="clear: both;"></div>
-                        </div>
-                        <div class="item">
-                          <div class="item1">
-                            <img title="EUR" alt="EUR" src="/EUR.gif" />
-                            <div class="scale">1</div>
-                            EUR
-                          </div>
-                          <div class="item2">
-                            39,939
-                            <span class="positive" title="вчера: 39,837">
-                              0,102
-                            </span>
-                          </div>
-                          <div style="clear: both;"></div>
-                        </div>
-                      </div>
-                      <div class="notes">
-                        Источник:
-                        <strong>
-                          <a id="notes" href="http://www.cbr.ru/" target="_blank">
-                            ЦБ РФ
-                          </a>
-                        </strong>
-                      </div>
-                      <div style="clear: both;"></div>
-                    </div><!-- jextcurrency -->
-                  </div><!-- sidebarBoxContent -->
-                  <div class="sidebarBoxBottom"></div>
-                </div><!-- sidebarBoxBG -->
-              </div><!-- sidebarBox -->
-            </div><!-- currencies -->
+            <div class="currencies">{\n}
+              <div class="sidebarBox">{\n}
 
-            <div class="bannerRight1">
-              <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-                      codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
-                      height="285"
-                      width="220"
-                      border="0">
-				<param name="movie" value="http://gdetorg.ru/images/banners/e6d280f9e4de573def2237540e47ec7b.swf" />
-                <embed src="/e6d280f9e4de573def2237540e47ec7b.swf"
-                       loop="false"
-                       pluginspage="http://www.macromedia.com/go/get/flashplayer"
-                       type="application/x-shockwave-flash"
-                       height="285"
-                       width="220" />
-			  </object>
-            </div><!-- bannerRight1 -->
+                <div class="sidebarBoxBG">{\n}
+                  <div class="sidebarBoxTop"></div>{\n}
+                  <div class="sidebarBoxTitle">Курсы валют</div>{\n}
+                  <div class="sidebarBoxContent">{\n}
+                    <div class="jextcurrency"{\n}
+                         style="width: 100%;">{\n}
+                      <div class="title">{\n}
+                        <h3>Курсы валют на 27.07.2011</h3>{\n}
+                      </div>{\n}
+                      <div class="rates">{\n}
+                        <div class="item">{\n}
+                          <div class="item1">{\n}
+                            <img title="USD" alt="USD" src="/USD.gif" />{\n}
+                            <div class="scale">1</div>{\n}
+                            USD{\n}
+                          </div>{\n}
+                          <div class="item2">{\n}
+                            27,546{\n}
+                            <span class="negative" title="вчера: 27,741">{\n}
+                              -0,195{\n}
+                            </span>{\n}
+                          </div>{\n}
+                          <div style="clear: both;"></div>{\n}
+                        </div>{\n}
+                        <div class="item">{\n}
+                          <div class="item1">{\n}
+                            <img title="EUR" alt="EUR" src="/EUR.gif" />{\n}
+                            <div class="scale">1</div>{\n}
+                            EUR{\n}
+                          </div>{\n}
+                          <div class="item2">{\n}
+                            39,939{\n}
+                            <span class="positive" title="вчера: 39,837">{\n}
+                              0,102{\n}
+                            </span>{\n}
+                          </div>{\n}
+                          <div style="clear: both;"></div>{\n}
+                        </div>{\n}
+                      </div>{\n}
+                      <div class="notes">{\n}
+                        Источник:{\n}
+                        <strong>{\n}
+                          <a id="notes" href="http://www.cbr.ru/" target="_blank">{\n}
+                            ЦБ РФ{\n}
+                          </a>{\n}
+                        </strong>{\n}
+                      </div>{\n}
+                      <div style="clear: both;"></div>{\n}
+                    </div><!-- jextcurrency -->{\n}
+                  </div><!-- sidebarBoxContent -->{\n}
+                  <div class="sidebarBoxBottom"></div>{\n}
+                </div><!-- sidebarBoxBG -->{\n}
+              </div><!-- sidebarBox -->{\n}
+            </div><!-- currencies -->{\n}
 
-          </div><!-- sidebarR -->
+            <div class="bannerRight1">{\n}
+              <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"{\n}
+                      codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"{\n}
+                      height="285"{\n}
+                      width="220"{\n}
+                      border="0">{\n}
+				<param name="movie" value="http://gdetorg.ru/images/banners/e6d280f9e4de573def2237540e47ec7b.swf" />{\n}
+                <embed src="/e6d280f9e4de573def2237540e47ec7b.swf"{\n}
+                       loop="false"{\n}
+                       pluginspage="http://www.macromedia.com/go/get/flashplayer"{\n}
+                       type="application/x-shockwave-flash"{\n}
+                       height="285"{\n}
+                       width="220" />{\n}
+			  </object>{\n}
+            </div><!-- bannerRight1 -->{\n}
 
-          <div class="sidebarL">
-            <div class="sidebarBox menu">
-              <ul class="menu">
-                <li id="current" class="active item1">
-                  <a href="http://gdetorg.ru/">
-                    <span>Главная</span>
-                  </a>
-                </li>
+          </div><!-- sidebarR -->{\n}
+
+          <div class="sidebarL">{\n}
+            <div class="sidebarBox menu">{\n}
+              <ul class="menu">{\n}
+                <li id="current" class="active item1" style="display:none">{\n}
+                  <a href="http://gdetorg.ru/">{\n}
+                    <span>Главная</span>{\n}
+                  </a>{\n}
+                </li>{\n}
                 {foreach $elt in $navpoints}
                   {call navelt data="$elt" /}
                 {/foreach}
-              </ul>
-            </div><!-- sidebarBox menu -->
+              </ul>{\n}
+            </div><!-- sidebarBox menu -->{\n}
 
-            <div class="sidebarBox search">
+            <div class="sidebarBox search">{\n}
 
-              <form action="index.php" method="post">
-                <div class="search_box">
-                  <input name="searchword"
-                         maxlength="20"
-                         class="search_input"
-                         type="text" />
-                  <div class="button"
-                       onclick="jQuery(this).parent('div').parent('form').submit()">
-                    <div class="left"></div>
-                    <div class="text">Поиск</div>
-                    <div class="right"></div>
-                  </div>
-                </div>
+              <form action="index.php" method="post">{\n}
+                <div class="search_box">{\n}
+                  <input name="searchword"{\n}
+                         maxlength="20"{\n}
+                         class="search_input"{\n}
+                         type="text" />{\n}
+                  <div class="button"{\n}
+                       onclick="jQuery(this).parent('div').parent('form').submit()">{\n}
+                    <div class="left"></div>{\n}
+                    <div class="text">Поиск</div>{\n}
+                    <div class="right"></div>{\n}
+                  </div>{\n}
+                </div>{\n}
+                <input name="task" value="search" type="hidden" />{\n}
+                <input name="option" value="com_search" type="hidden" />{\n}
+                <input name="Itemid" value="1" type="hidden" />{\n}
+              </form>{\n}
 
-                <input name="task" value="search" type="hidden" />
-                <input name="option" value="com_search" type="hidden" />
-                <input name="Itemid" value="1" type="hidden" />
-              </form>
+              <p>{\n}
+                <a href="http://gdetorg.ru/component/content/article/27">{\n}
+                  <img src="i_files/sending.jpg" alt="Рассылка" border="0" />{\n}
+                </a>{\n}
+                <a href="#">{\n}
+                  <img src="i_files/suppliers_map.png" alt="Карта поставщиков" border="0" />{\n}
+                </a>{\n}
+              </p>{\n}
 
-              <p>
-                <a href="http://gdetorg.ru/component/content/article/27">
-                  <img src="i_files/sending.jpg" alt="Рассылка" border="0" />
-                </a>
-                <a href="#">
-                  <img src="i_files/suppliers_map.png" alt="Карта поставщиков" border="0" />
-                </a>
-              </p>
+            </div><!-- sidebarBox search -->{\n}
 
-            </div><!-- sidebarBox search -->
+            <div class="sidebarBox banners">{\n}
+              <div class="sidebarBox">{\n}
+                <div class="sidebarBoxBG">{\n}
+                  <div class="sidebarBoxTop"></div>{\n}
+                  <div class="sidebarBoxContent contentOpinion bannerContent">{\n}
+                    <div class="mr3">{\n}
+                      <a href="http://www.expertiza.spb.ru/" target="_blank">{\n}
+                        <img src="/expertiza.jpg" alt="Баннер" />{\n}
+                      </a>{\n}
+                    </div>{\n}
+                    <div>{\n}
+                      <a href="http://www.gov.spb.ru/gov/admin/otrasl/komstroy" target="_blank">{\n}
+                        <img src="/komstroy.jpg" alt="Баннер" />{\n}
+                      </a>{\n}
+                    </div>{\n}
+                    <div class="mr3">{\n}
+                      <a href="http://www.stroysoyuz.ru/" target="_blank">{\n}
+                        <img src="/stroysoyuz.jpg" alt="Баннер" />{\n}
+                      </a>{\n}
+                    </div>{\n}
+                    <div>{\n}
+                      <a href="http://www.spbexp.ru/" target="_blank">{\n}
+                        <img src="/spbexp.jpg" alt="Баннер" />{\n}
+                      </a>{\n}
+                    </div>{\n}
+                    <div class="mr3">{\n}
+                      <a href="http://www.stateinvest.spb.ru/" target="_blank">{\n}
+                        <img src="/stateinvest.jpg" alt="Баннер" />{\n}
+                      </a>{\n}
+                    </div>{\n}
+                    <div>{\n}
+                      <a href="http://www.kgainfo.spb.ru/" target="_blank">{\n}
+                        <img src="/kgainfo.jpg" alt="Баннер" />{\n}
+                      </a>{\n}
+                    </div>{\n}
+                    <div class="mr3">{\n}
+                      <a href="http://www.guion.spb.ru/" target="_blank">{\n}
+                        <img src="/guion.jpg" alt="Баннер" />{\n}
+                      </a>{\n}
+                    </div>{\n}
+                    <div>{\n}
+                      <a href="http://www.uksrest.ru/" target="_blank">{\n}
+                        <img src="/uksrest.jpg" alt="Баннер" />{\n}
+                      </a>{\n}
+                    </div>{\n}
+                  </div><!-- sidebarBoxContent contentOpinion bannerContent -->{\n}
+                  <div class="sidebarBoxBottom"></div>{\n}
+                </div><!-- sidebarBoxBG -->{\n}
+              </div><!-- sidebarBox -->{\n}
+            </div><!-- sidebarBox banners -->{\n}
 
-            <div class="sidebarBox banners">
-              <div class="sidebarBox">
-                <div class="sidebarBoxBG">
-                  <div class="sidebarBoxTop"></div>
-                  <div class="sidebarBoxContent contentOpinion bannerContent">
-                    <div class="mr3">
-                      <a href="http://www.expertiza.spb.ru/" target="_blank">
-                        <img src="/expertiza.jpg" alt="Баннер" />
-                      </a>
-                    </div>
-                    <div>
-                      <a href="http://www.gov.spb.ru/gov/admin/otrasl/komstroy" target="_blank">
-                        <img src="/komstroy.jpg" alt="Баннер" />
-                      </a>
-                    </div>
-                    <div class="mr3">
-                      <a href="http://www.stroysoyuz.ru/" target="_blank">
-                        <img src="/stroysoyuz.jpg" alt="Баннер" />
-                      </a>
-                    </div>
-                    <div>
-                      <a href="http://www.spbexp.ru/" target="_blank">
-                        <img src="/spbexp.jpg" alt="Баннер" />
-                      </a>
-                    </div>
-                    <div class="mr3">
-                      <a href="http://www.stateinvest.spb.ru/" target="_blank">
-                        <img src="/stateinvest.jpg" alt="Баннер" />
-                      </a>
-                    </div>
-                    <div>
-                      <a href="http://www.kgainfo.spb.ru/" target="_blank">
-                        <img src="/kgainfo.jpg" alt="Баннер" />
-                      </a>
-                    </div>
-                    <div class="mr3">
-                      <a href="http://www.guion.spb.ru/" target="_blank">
-                        <img src="/guion.jpg" alt="Баннер" />
-                      </a>
-                    </div>
-                    <div>
-                      <a href="http://www.uksrest.ru/" target="_blank">
-                        <img src="/uksrest.jpg" alt="Баннер" />
-                      </a>
-                    </div>
-                  </div><!-- sidebarBoxContent contentOpinion bannerContent -->
-                  <div class="sidebarBoxBottom"></div>
-                </div><!-- sidebarBoxBG -->
-              </div><!-- sidebarBox -->
-            </div><!-- sidebarBox banners -->
+            <div class="sidebarBox support">{\n}
+              <span>{\n}
+                <a href="http://gdetorg.ru/index.php">{\n}
+                  <img src="i_files/sitemap.png" alt="Карта портала" border="0" />{\n}
+                </a>{\n}
+                <a href="http://gdetorg.ru/2011-03-16-14-57-19/3">{\n}
+                  <img src="i_files/help.png" alt="Помощь" border="0" />{\n}
+                </a>{\n}
+                <a href="http://gdetorg.ru/index.php">{\n}
+                  <img src="i_files/support.png" alt="Тех.поддержка" border="0" />{\n}
+                </a>{\n}
+              </span>{\n}
+            </div><!-- sidebarBox support -->{\n}
 
-            <div class="sidebarBox support">
-              <span>
-                <a href="http://gdetorg.ru/index.php">
-                  <img src="i_files/sitemap.png" alt="Карта портала" border="0" />
-                </a>
-                <a href="http://gdetorg.ru/2011-03-16-14-57-19/3">
-                  <img src="i_files/help.png" alt="Помощь" border="0" />
-                </a>
-                <a href="http://gdetorg.ru/index.php">
-                  <img src="i_files/support.png" alt="Тех.поддержка" border="0" />
-                </a>
-              </span>
-            </div><!-- sidebarBox support -->
-
-          </div><!-- sidebarL -->
+          </div><!-- sidebarL -->{\n}
 
 
-          <div class="content">
+          <div class="content">{\n}
 
-            <div class="bannerCenter1">
-              <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-                      codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
-                      height="90"
-                      width="470"
-                      border="0">
-				<param name="movie" value="http://gdetorg.ru/images/banners/383f5b31bf2ccc2d5d0d622052d245b0.swf" />
-                <embed src="/383f5b31bf2ccc2d5d0d622052d245b0.swf"
-                       loop="false"
-                       pluginspage="http://www.macromedia.com/go/get/flashplayer"
-                       type="application/x-shockwave-flash"
-                       height="90"
-                       width="470" />
-			  </object>
-            </div>
+            <div class="bannerCenter1">{\n}
+              <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"{\n}
+                      codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"{\n}
+                      height="90"{\n}
+                      width="470"{\n}
+                      border="0">{\n}
+				<param name="movie" value="http://gdetorg.ru/images/banners/383f5b31bf2ccc2d5d0d622052d245b0.swf" />{\n}
+                <embed src="/383f5b31bf2ccc2d5d0d622052d245b0.swf"{\n}
+                       loop="false"{\n}
+                       pluginspage="http://www.macromedia.com/go/get/flashplayer"{\n}
+                       type="application/x-shockwave-flash"{\n}
+                       height="90"{\n}
+                       width="470" />{\n}
+			  </object>{\n}
+            </div>{\n}
 
             {foreach $contentBlock in $content}
               {call contentBlock data="$contentBlock" /}
             {/foreach}
 
-            <div class="componentheading">
-	          gdetorg.ru</div>
-            <table class="blog" cellpadding="0" cellspacing="0">
-              <tbody>
-                <tr>
-	              <td valign="top">
-				  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="componentheading">{\n}
+	          gdetorg.ru</div>{\n}
+            <table class="blog" cellpadding="0" cellspacing="0">{\n}
+              <tbody>{\n}
+                <tr>{\n}
+	              <td valign="top">{\n}
+				  </td>{\n}
+                </tr>{\n}
+              </tbody>{\n}
+            </table>{\n}
 
-          </div><!-- content -->
-        </div><!-- body -->
+          </div><!-- content -->{\n}
+        </div><!-- body -->{\n}
 
-        <div class="footer">
-          <span>
-            <p>
-              <a href="http://gdetorg.ru/index.php">Карта сайта</a>
-              <a href="http://gdetorg.ru/2011-03-16-14-57-19/3">Помощь</a>
-              <a href="http://gdetorg.ru/index.php">Тех.поддержка</a>
-              <a href="http://gdetorg.ru/2011-03-16-14-57-19">О портале</a>
-              <a href="http://gdetorg.ru/index.php">Подписка</a>
-              <a href="http://gdetorg.ru/2011-03-16-14-57-19/2">Реклама</a>
-            </p>
-          </span>
-        </div><!-- footer -->
-      </div><!-- main -->
-    </body>
-  </html>
+        <div class="footer">{\n}
+          <span>{\n}
+            <p>{\n}
+              <a href="http://gdetorg.ru/index.php">Карта сайта</a>{\n}
+              <a href="http://gdetorg.ru/2011-03-16-14-57-19/3">Помощь</a>{\n}
+              <a href="http://gdetorg.ru/index.php">Тех.поддержка</a>{\n}
+              <a href="http://gdetorg.ru/2011-03-16-14-57-19">О портале</a>{\n}
+              <a href="http://gdetorg.ru/index.php">Подписка</a>{\n}
+              <a href="http://gdetorg.ru/2011-03-16-14-57-19/2">Реклама</a>{\n}
+            </p>{\n}
+          </span>{\n}
+        </div><!-- footer -->{\n}
+      </div><!-- main -->{\n}
+    </body>{\n}
+  </html>{\n}
 {/template}
 
 
 {template loginform}
-  <div class="headerPersonalBox italic personEnter">
-    <a class="icoLink showAuth"
-       href="http://gdetorg.ru/component/user/login?backurl=%2Findex.php">
-      <img src="/ico_key.png" alt="" />
-    </a>
-    <a class="dashedLink showAuth" href="#"
-       onclick="ShowHide('popupLogin'); return false;">Вход</a>
-    <span>|</span>
-    <a href="#"
-       onclick="ShowHide('trest'); return false;">
-      Регистрация
-    </a>
-  </div>
+  <div class="headerPersonalBox italic personEnter">{\n}
+    <a class="icoLink showAuth"{\n}
+       href="http://gdetorg.ru/component/user/login?backurl=%2Findex.php">{\n}
+      <img src="/ico_key.png" alt="" />{\n}
+    </a>{\n}
+    <a class="dashedLink showAuth" href="#"{\n}
+       onclick="ShowHide('popupLogin'); return false;">Вход</a>{\n}
+    <span>|</span>{\n}
+    <a href="#"{\n}
+       onclick="ShowHide('trest'); return false;">{\n}
+      Регистрация{\n}
+    </a>{\n}
+  </div>{\n}
 {/template}
 
 
 {template logoutform}
-  <div class="headerPersonalBox italic personEnter">
-    <div style="margin-top: -30px; margin-left: -230px; position:
-                absolute; z-index: 1000; text-align: right; width:
-                400px;"> </div>
-    Добро пожаловать, {$user}
-    <span>|</span>
-    <form method="post">
-      <input type="hidden" name="LOGOUT" value="Выход" />
-      <div class="button" onclick="jQuery(this).parent('form').submit()">
-        <div class="left"></div>
-        <div class="text">Выход</div>
-        <div class="right"></div>
-      </div>
-    </form>
-  </div>
+  <div class="headerPersonalBox italic personEnter">{\n}
+    <div style="margin-top: -30px; margin-left: -230px; position:{\n}
+                absolute; z-index: 1000; text-align: right; width:{\n}
+                400px;"> </div>{\n}
+    Добро пожаловать, {$user}{\n}
+    <span>|</span>{\n}
+    <form method="post">{\n}
+      <input type="hidden" name="LOGOUT" value="Выход" />{\n}
+      <div class="button" onclick="jQuery(this).parent('form').submit()">{\n}
+        <div class="left"></div>{\n}
+        <div class="text">Выход</div>{\n}
+        <div class="right"></div>{\n}
+      </div>{\n}
+    </form>{\n}
+  </div>{\n}
 {/template}
 
 
@@ -607,24 +589,24 @@
 {/template}
 
 {template popup}
-  <div id="{$id}"
-       class="popupBox"
-       style="position: absolute; top: 0px; left: {$left}px; width: {$width}px;  display: none;
-              background-color: yellow; border: 1px dotted red; z-index: 999999999; padding: 20px;">
-    <div class="popupCancel">
-      <a href="#popupCancel" onclick="ShowHide('{$id}')">
-        <img alt="" src="/popupCancel.gif" />
-      </a>
-    </div>
+  <div id="{$id}"{\n}
+       class="popupBox"{\n}
+       style="position: absolute; top: 0px; left: {$left}px; width: {$width}px;  display: none;{\n}
+              background-color: yellow; border: 1px dotted red; z-index: 999999999; padding: 20px;">{\n}
+    <div class="popupCancel">{\n}
+      <a href="#popupCancel" onclick="ShowHide('{$id}')">{\n}
+        <img alt="" src="/popupCancel.gif" />{\n}
+      </a>{\n}
+    </div>{\n}
 
-    <div class="popupEnterLink">
-      <a class="dashedLink italic" href="/registration/">{$title}</a>
-    </div>
+    <div class="popupEnterLink">{\n}
+      <a class="dashedLink italic" href="/registration/">{$title}</a>{\n}
+    </div>{\n}
 
-    <div class="popupCenter">
+    <div class="popupCenter">{\n}
       {$content |noAutoescape}
-    </div>
-  </div>
+    </div>{\n}
+  </div>{\n}
 {/template}
 
 {template popuplogin}

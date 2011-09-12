@@ -12,6 +12,11 @@
   (hunchentoot:redirect (hunchentoot:request-uri*)))
 
 
+;; Перед вызовом действия (даже если это показ поля) в процедуру проверки прав передается правило, субьект действия (пользователь)
+;; и объект действия (объект, над котором действие совершается), если разрешение получено - выполняется действие
+;; Разрешения полей перекрывают разрешения определенные для сущности, если они есть, иначе поля получают разрешения общие для сущности.
+
+
 (defun perm-check (perm subj obj)
   (cond ((consp    perm)
          (loop :for item :in perm :collect (perm-check item subj obj)))
@@ -41,13 +46,33 @@
            ))
         (t perm)))
 
-(defun check-perm (perm subj obj)
-  "TODO: logging"
-  (eval (perm-check perm subj obj))
-  ;; t
-  )
+(defparameter *safe-write-sleep* 0.01)
+(defun safe-write (pathname string &aux stream)
+  (setf stream (open pathname :direction :output :if-does-not-exist :create :if-exists :append))
+  (unwind-protect
+       (loop
+          until (block try-lock
+                  (handler-bind ((error (lambda (condition)
+                                          (if (= sb-posix:eagain
+                                                 (sb-posix:syscall-errno condition))
+                                              (return-from try-lock)
+                                              (error condition)))))
+                    (sb-posix:lockf stream sb-posix:f-tlock 0)
+                    (princ string stream)
+                    (close stream)))
+          do (sleep *safe-write-sleep*))
+    (close stream)))
 
+
+(defun check-perm (perm subj obj)
+  (let ((rs (perm-check perm subj obj)))
+    (safe-write (path "perm-log.txt") (format nil "~A := ~A (~A : ~A)~%" perm rs subj obj))
+    (eval rs)
+  ;; t
+  ))
+
+;; TEST
 ;; (perm-check '(or :admin (and :all :nobody)) 1 2)
 ;; (check-perm '(or :admin (or :all :nobody)) 1 2)
 ;; (check-perm ':nobody 1 2)
-;; (perm-check ':nobody 1 2)
+;; (check-perm ':nobody 1 2)
