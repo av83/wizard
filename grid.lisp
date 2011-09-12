@@ -84,8 +84,7 @@
          (col-model)
          (col-replace))
      (with-in-fld-case ,fields
-       :fld     (progn
-                  (when (check-perm (getf (getf infld :permlist) :view) 1 2)
+       :fld     (when (check-perm (getf (getf infld :permlist) :view) (cur-user) (make-instance 'EXPERT)) ;; TODO: Expert is not valud obj!
                     (push (getf infld :name) col-names)
                     (let* ((in-name  (getf infld :fld))
                            (model    `(("name"     . ,in-name)
@@ -95,8 +94,8 @@
                                        ("editable" . (if (check-perm (getf (getf infdls :permlist) :update)
                                                                      t
                                                                      nil)))))) ;; rulez
-                      (push model col-model))))
-       :btn     (progn
+                      (push model col-model)))
+       :btn     (when (check-perm (getf infld :perm) (cur-user) (make-instance 'EXPERT)) ;; TODO: Expert is not valud obj!
                   (let* ((in-name  (getf infld :btn))
                          (in-capt  (getf infld :value))
                          (btn-str  (format nil "\"<form method='post'><input type='submit' name='~A~~\"+cl+\"' value='~A' /></form>\"" in-name in-capt))
@@ -107,8 +106,7 @@
                                      ("editable" . nil))))
                     (push in-name col-names)
                     (push model col-model)
-                    (push `(,in-name . ,btn-str) col-replace)
-                    ))
+                    (push `(,in-name . ,btn-str) col-replace)))
        :popbtn  ""
        :calc    "")
      (let* ((grid-complete-js

@@ -33,30 +33,28 @@
                 (subseq (with-output-to-string (*standard-output*) (pprint (getf fld instr))) 1))
         nil))
       (:btn
-       (let ((btntype (nth 2 fld)))
-         (ecase btntype
-           (:act
-            (let ((gen (gensym "B")))
-              (values
-               (format nil "~%~25T (list :btn \"~A\" :perm '~A :value \"~A\")"
-                       gen
-                       (bprint (getf fld :perm))
-                       (getf fld instr))
-               (list (list gen (getf fld :act))))))
-           (:popup
-            (let ((popup (eval (getf fld :popup)))
-                  (gen   (gensym "P")))
-              (multiple-value-bind (str ctrs)
-                  (gen-fields (eval (getf popup :fields))
-                              (getf popup :entity))
-                ;; (format t "~%---| ~A" ctrs)
+       (cond ((not (null (getf fld :act)))
+              (let ((gen (gensym "B")))
                 (values
-                 (format nil "~%~25T (list :popbtn \"~A\" ~%~31T :value \"~A\" ~%~31T :perm 111 ~%~31T :title \"~A\" ~%~31T :fields ~A)"
+                 (format nil "~%~25T (list :btn \"~A\" :perm '~A :value \"~A\")"
                          gen
-                         (getf fld instr)
-                         (getf popup :caption)
-                         str)
-                 ctrs)))))))
+                         (bprint (getf fld :perm))
+                         (getf fld instr))
+                 (list (list gen (getf fld :act))))))
+             ((not (null (getf fld :popup)))
+              (let ((popup (eval (getf fld :popup)))
+                    (gen   (gensym "P")))
+                (multiple-value-bind (str ctrs)
+                    (gen-fields (eval (getf popup :fields))
+                                (getf popup :entity))
+                  ;; (format t "~%---| ~A" ctrs)
+                  (values
+                   (format nil "~%~25T (list :popbtn \"~A\" ~%~31T :value \"~A\" ~%~31T :perm 111 ~%~31T :title \"~A\" ~%~31T :fields ~A)"
+                           gen
+                           (getf fld instr)
+                           (getf popup :caption)
+                           str)
+                   ctrs))))))
       (:col
        (multiple-value-bind (str ctrs)
            (gen-fields (eval (getf fld :fields))

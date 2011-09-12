@@ -503,12 +503,12 @@
         :grid              t
         :val               (remove-if-not #'(lambda (x) (equal (type-of (cdr x)) 'EXPERT)) (cons-hash-list *USER*))
         :fields            '(name login
-                             (:btn "Страница эксперта"
-                              :act (to "/expert/~A" (caar (form-data)))
-                              :perm :all)
-                             (:btn "Доп кнопка"
-                              :act (to "/expert/~A" (caar (form-data)))
-                              :perm :all)))))
+                             (:btn  "Страница эксперта"
+                              :perm (or :admin :self)
+                              :act  (to "/expert/~A" (caar (form-data))))
+                             (:btn  "Доп кнопка"
+                              :perm (or :admin :self)
+                              :act  (to "/expert/~A" (caar (form-data))))))))
     ;; Страница эксперта
     (:place                expert
      :url                  "/expert/:id"

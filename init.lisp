@@ -13,9 +13,6 @@
 (defparameter *TENDER*                      (make-hash-table :test #'equal))
 (defparameter *DOCUMENT*                    (make-hash-table :test #'equal))
 
-(defmacro push-hash (hash class &body init)
-  `(setf (gethash (hash-table-count ,hash) ,hash)
-        (make-instance ,class ,@init)))
 
 ;; RESOURCES & CATEGORYES
 (loop :for cat :in '("Строительные товары" "Крепеж" "Оснастка" "Инструменты") :do

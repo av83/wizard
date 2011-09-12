@@ -5,6 +5,10 @@
   `(loop :for obj :being the :hash-values :in ,hash :using (hash-key key) :collect
       (cons key obj)))
 
+(defmacro push-hash (hash class &body init)
+  `(setf (gethash (hash-table-count ,hash) ,hash)
+         (make-instance ,class ,@init)))
+
 (defmacro cons-inner-objs (hash inner-lst)
   `(let ((inner-lst ,inner-lst)
          (cons-hash (cons-hash-list ,hash)))
