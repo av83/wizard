@@ -1,13 +1,9 @@
-(require 'RESTAS)
-
-(restas:define-module #:WIZARD
-    (:use #:CL #:ITER ))
-
 (in-package #:WIZARD)
 
-(defparameter *required* '(restas closure-template restas-directory-publisher cl-json))
-(defparameter *my-package* 'wizard)
-(defparameter *used-package* '(cl iter))
+(closure-template:compile-template :common-lisp-backend (path "templates.soy"))
+
+(restas:mount-submodule -static- (#:restas.directory-publisher)
+  (restas.directory-publisher:*directory* (path "static/")))
 
 (defclass entity () ())
 

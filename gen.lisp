@@ -66,6 +66,7 @@
                   str)
           ctrs))))))
 
+
 (defun gen-fields (fields entity)
   ;; (format t "~%gen-fields : ~A : ~A : ~A" fields entity show))
   (let ((controllers))
@@ -80,6 +81,7 @@
                                 (setf controllers (append controllers (list ctr))))
                              str)))))
      controllers)))
+
 
 (defun gen-action (action)
   (let* ((controllers)
@@ -107,11 +109,10 @@
        controllers
        ajaxdataset))))
 
+
 (with-open-file (out (path "defmodule.lisp") :direction :output :if-exists :supersede)
   ;; Required
-  (format out "~{~%(require '~A)~}" *required*)
-  (format out "~%~%(restas:define-module #:~A~%  (:use ~{#:~A ~}))~%~%(in-package #:~A)"
-          *my-package* *used-package* *my-package*)
+  (format out "(in-package #:~A)"  (package-name *package*))
   ;; Containers
   (let ((containers)
         (classes (make-hash-table :test #'equal)))

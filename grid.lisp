@@ -1,6 +1,41 @@
 (in-package #:WIZARD)
 
 
+(defmacro a-fld (name obj)
+  `(if (equal val :clear)
+       ""
+       (funcall
+        (intern
+         (format nil "A-~A" ,name)
+         (find-package "WIZARD"))
+        ,obj)))
+
+(defun show-fld (captfld tplfunc namefld valuefld)
+  (tpl:fld
+   (list :fldname captfld
+         :fldcontent (funcall tplfunc (list :name namefld
+                                            :value valuefld)))))
+(defmacro with-let-infld (body)
+  `(let ((namefld   (getf infld :fld))
+         (captfld   (getf infld :name))
+         (permfld   (getf infld :perm))
+         (typedata  (getf infld :typedata)))
+     ,body))
+
+(defmacro with-infld-typedata-cond (default &rest cases)
+  `(with-let-infld
+       (cond ,@(loop :for case :in cases :collect
+                  `((equal typedata ',(car case)) ,(cadr case)))
+             (t ,default))))
+
+(defmacro with-in-fld-case (fields &rest cases)
+  `(loop :for infld :in ,fields :collect
+      (let ((typefld (car infld)))
+        (ecase typefld
+          ,@(loop :for case :in cases :by #'cddr :collect
+               (list case (getf cases case)))))))
+
+
 (defmacro show-linear (fields)
   `(with-in-fld-case ,fields
      :fld    (with-infld-typedata-cond (format nil "<br />err:unk2 typedata: ~A | ~A" namefld typedata)
