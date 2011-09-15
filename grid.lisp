@@ -270,7 +270,7 @@
      ("records" . ,rows-per-page)
      ("rows"    . ,(loop :for row :in rows :collect
                       `(("id"   . ,(car row))
-                        ("cell" . ,(cdr row))))))))
+                        ("cell" . ,(list* "<a href=\"sss\">fdd</a>" (cdr row))))))))) ;; <------
 
 
 (defun pager (val fields page rows-per-page)

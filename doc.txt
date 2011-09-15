@@ -75,3 +75,25 @@ SB-POSIX> (defun get-username (&aux (pid (getpid))) ;(getenv "USERNAME"))
             (getpwuid
              (stat-uid
               (stat (format nil "/proc/~A" pid))))))
+
+
+[16:38] laser1234> (setenv "CL_SOURCE_REGISTRY"
+ "(:source-registry
+ (:tree \"/home/user/lisp/libs/\")
+ (:tree \"/home/user/projects/\")
+ :inherit-configuration)")
+[16:38] laser1234> Кусок init.el
+[16:38] laser1234> После этого lisp/libs/ и projects/ сканируются
+рекурсивно.
+[16:38] laser1234> (setenv "CL_SOURCE_REGISTRY"
+ "(:source-registry
+ (:tree \"/home/user/lisp/libs/\")
+ (:tree \"/home/user/projects/\")
+ :inherit-configuration)")
+[16:38] laser1234> Кусок init.el
+[16:38] laser1234> После этого lisp/libs/ и projects/ сканируются
+рекурсивно.
+[17:37] laser1234> Ну хорошо, тогда по старинке (push #"path/to/libs/"
+asdf:*central-registry*)
+[17:39] jsv> а чего через окружение, а не в
+~/.config/common-lisp/source-registry.conf?

@@ -1,6 +1,8 @@
 (in-package #:WIZARD)
 
-(closure-template:compile-template :common-lisp-backend (path "templates.soy"))
+;; (closure-template:compile-template :common-lisp-backend (path "templates.soy"))
+
+(closure-template:compile-template :common-lisp-backend #P"test.soy")
 
 (restas:mount-submodule -static- (#:restas.directory-publisher)
   (restas.directory-publisher:*directory* (path "static/")))
