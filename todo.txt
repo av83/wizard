@@ -1,6 +1,0 @@
-grid.lisp
-  popbtn
-  calc
-    ---> rules and functional
-  составные поля
-права для линейных отображений
