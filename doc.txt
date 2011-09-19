@@ -1,3 +1,6 @@
+
++++
+
 sbcl --lose-on-corruption --disable-ldb --dynamic-space-size 1024
 
 (require 'asdf)
